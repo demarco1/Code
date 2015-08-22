@@ -1,6 +1,6 @@
 <?php
 /**
- * Modifies Joomshopping shipping types (PAC, SEDEX and Carta registrada) to calculate cost during checkout
+ * Modifies Joomshopping shipping types (PAC, SEDEX and Carta registrada) to calculate correios cost during checkout
  * - see components/com_jshopping/controllers/checkout.php for relavent events
  * 
  * @copyright	Copyright (C) 2015 Aran Dunkley
@@ -12,10 +12,10 @@ defined('_JEXEC') or die;
 
 /**
  * @package		Joomla.Plugin
- * @subpackage	System.ligminchafreight
+ * @subpackage	System.correios
  * @since 2.5
  */
-class plgSystemLigminchaFreight extends JPlugin {
+class plgSystemCorreios extends JPlugin {
 
 	public static $cartaPrices = array(); // the table of prices per weight for carta registrada
 	public static $allbooks;              // whether the order consists only of book or not (whether carta registrada is allowed or not)
@@ -33,19 +33,19 @@ class plgSystemLigminchaFreight extends JPlugin {
 		// (or better, should be done from the xml with install/uninstall element, but couldn't get that to work either)
 		$db = JFactory::getDbo();
 		$tbl = '#__jshopping_shipping_ext_calc';
-		$db->setQuery( "SELECT 1 FROM `$tbl` WHERE `name`='LigminchaFreight'" );
+		$db->setQuery( "SELECT 1 FROM `$tbl` WHERE `name`='Correios'" );
 		$row = $db->loadRow();
 		if( !$row ) {
 
 			// Add the shipping type extension
 			$query = "INSERT INTO `$tbl` "
 				. "(`name`, `alias`, `description`, `params`, `shipping_method`, `published`, `ordering`) "
-				. "VALUES( 'LigminchaFreight', 'sm_ligmincha_freight', 'LigminchaFreight', '', '', 1, 1 )";
+				. "VALUES( 'Correios', 'sm_correios', 'Correios', '', '', 1, 1 )";
 			$db->setQuery( $query );
 			$db->query();
 
 			// Add our freight cost cache table
-			$tbl = '#__ligmincha_freight_cache';
+			$tbl = '#__correios_cache';
 			$query = "CREATE TABLE IF NOT EXISTS `$tbl` (
 				id     INT UNSIGNED NOT NULL AUTO_INCREMENT,
 				cep    INT UNSIGNED NOT NULL,
@@ -60,8 +60,8 @@ class plgSystemLigminchaFreight extends JPlugin {
 
 			// Copy the sm_ligmincha_freight class into the proper place
 			// (there's probably a proper way to do this from the xml file)
-			$path = JPATH_ROOT . '/components/com_jshopping/shippings/sm_ligmincha_freight';
-			$file = 'sm_ligmincha_freight.php';
+			$path = JPATH_ROOT . '/components/com_jshopping/shippings/sm_correios';
+			$file = 'sm_correios.php';
 			if( !is_dir( $path ) ) mkdir( $path );
 			copy( __DIR__ . "/$file", "$path/$file" );
 		}
@@ -76,24 +76,24 @@ class plgSystemLigminchaFreight extends JPlugin {
 		// Remove our extended shipping type
 		$db = JFactory::getDbo();
 		$tbl = '#__jshopping_shipping_ext_calc';
-		$db->setQuery( "DELETE FROM `$tbl` WHERE `name`='LigminchaFreight'" );
+		$db->setQuery( "DELETE FROM `$tbl` WHERE `name`='Correios'" );
 		$db->query();
 
 		// Remove our freight cost cache table
-		$tbl = '#__ligmincha_freight_cache';
+		$tbl = '#__correios_cache';
 		$db->setQuery( "DROP TABLE IF EXISTS `$tbl`" );
 		$db->query();
 
 		// Remove the script
-		$path = JPATH_ROOT . '/components/com_jshopping/shippings/sm_ligmincha_freight';
-		$file = 'sm_ligmincha_freight.php';
+		$path = JPATH_ROOT . '/components/com_jshopping/shippings/sm_correios';
+		$file = 'sm_correios.php';
 		if( file_exists( "$path/$file" ) ) unlink( "$path/$file" );
 		if( is_dir( $path ) ) rmdir( $path );
 	}
 
 	/**
 	 * If the order is not all books, remove the Carta registrada option
-	 * (the $allbooks settings is updated in checkout by sm_ligmincha_freight class)
+	 * (the $allbooks settings is updated in checkout by sm_correios class)
 	 */
 	public function onBeforeDisplayCheckoutStep4View( &$view ) {
 			if( !self::$allbooks ) unset( $view->shipping_methods[2] ); // TODO: we should remove this by name not assume that it's id is 2

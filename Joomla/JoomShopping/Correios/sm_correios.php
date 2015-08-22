@@ -3,7 +3,7 @@
 // No direct access
 defined('_JEXEC') or die;
 
-class sm_ligmincha_freight extends shippingextRoot {
+class sm_correios extends shippingextRoot {
 
 	var $version = 2;
 
@@ -30,11 +30,11 @@ class sm_ligmincha_freight extends shippingextRoot {
 
 		// Check if all products are books and gather their weights
 		$weights = array();
-		plgSystemLigminchaFreight::$allbooks = true;
+		plgSystemCorreios::$allbooks = true;
 		foreach( $cart->products as $item ) {
 			if( $item['category_id'] == 1 ) {
 				for( $i = 0; $i < $item['quantity']; $i++ ) $weights[] = $item['weight'];
-			} else plgSystemLigminchaFreight::$allbooks = false;
+			} else plgSystemCorreios::$allbooks = false;
 		}
 
 		// If it's one of ours, calculate the price
@@ -54,7 +54,7 @@ class sm_ligmincha_freight extends shippingextRoot {
 				$price = 0;
 				foreach( $weights as $w ) {
 					$i = 50*(int)($w*20); // price divisions are in multiples of 50 grams
-					$price += plgSystemLigminchaFreight::$cartaPrices[$i];
+					$price += plgSystemCorreios::$cartaPrices[$i];
 				}
 				$prices['shipping'] = $price;
 				$prices['package'] = 0;
@@ -66,7 +66,7 @@ class sm_ligmincha_freight extends shippingextRoot {
 	}
 
 	/**
-	 * Return a single price given a weight and shipping type
+	 * Return the cost for a given a weight and shipping type
 	 */
 	private function getFreightPrice( $weight, $type ) {
 		$vendor = JSFactory::getTable('vendor', 'jshop');
@@ -100,7 +100,7 @@ class sm_ligmincha_freight extends shippingextRoot {
 	private function getCache( $weight, $cep ) {
 		$weight *= 1000;
 		$db = JFactory::getDbo();
-		$tbl = '#__ligmincha_freight_cache';
+		$tbl = '#__correios_cache';
 
 		// Only keep cache entries forr a day
 		$expire = time() - 86400;
@@ -120,7 +120,7 @@ class sm_ligmincha_freight extends shippingextRoot {
 	private function setCache( $weight, $cep, $costs ) {
 		$weight *= 1000;
 		$db = JFactory::getDbo();
-		$tbl = '#__ligmincha_freight_cache';
+		$tbl = '#__correios_cache';
 
 		// Delete any of the same parameters
 		$query = "DELETE FROM `$tbl` WHERE cep=$cep AND weight=$weight";
