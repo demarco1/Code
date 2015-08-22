@@ -1,3 +1,3 @@
 # Extensoes
 
-Extensoes para nossa Joomla e MediaWiki
+Extensões para nossa Joomla e MediaWiki
