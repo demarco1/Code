@@ -1,3 +1,5 @@
+# Adds portugues language translations to the Joomshopping extension
+
 This extension needs to be zipped and installed in the Joomshopping components install/upgrade menu.
 
 Note that the zipfile must not contain any pathname prior to "components" or it will not install correctly, for exmaple in Linux do the following to zip it.
