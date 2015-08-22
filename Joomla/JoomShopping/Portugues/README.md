@@ -1,4 +1,4 @@
-# Adds portugues language translations to the Joomshopping extension
+## Brazilian-Portugues language translations for Joomshopping
 
 This extension needs to be zipped and installed in the Joomshopping components install/upgrade menu.
 
