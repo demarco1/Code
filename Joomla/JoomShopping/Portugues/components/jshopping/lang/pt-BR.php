@@ -44,7 +44,7 @@ define('_JSHOP_RABATT_ACTIVE', 'Activate');
 define('_JSHOP_RABATT_NON_SUPPORT', 'Discount code is not supported');
 define('_JSHOP_RABATT_NON_CORRECT', 'You have entered incorrect code.');
 define('_JSHOP_RABATT_USED', 'You have entered used code.');
-define('_JSHOP_BACK_TO_SHOP', 'Back to shop');
+define('_JSHOP_BACK_TO_SHOP', 'Voltar para a loja');
 define('_JSHOP_HAVE_NOT_ACCOUNT', 'New customer');
 define('_JSHOP_HAVE_ACCOUNT', 'Customer Login');
 define('_JSHOP_REGISTRATION', 'Registration');

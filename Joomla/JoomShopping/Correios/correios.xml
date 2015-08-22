@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="2.5" type="plugin" group="system">
-	<name>plg_system_ligminchafreight</name>
+	<name>plg_system_correios</name>
 	<author>Aran Dunkley</author>
 	<creationDate>August 2015</creationDate>
 	<copyright>Copyright (C) 2015 Aran Dunkley</copyright>
