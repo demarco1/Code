@@ -1488,17 +1488,3 @@ div.moduletable-headlines p {margin: 5px 0; border-bottom: 1px dashed #999;}
 div#content p.readmore	{text-align:right;margin-top:0;}
 
 .banneritem img	{border-radius: 4px;}
-
-/* VirtueMert */
-.product-price {
-	font-size: 150%;
-	float: right;
-	padding-right: 3px;
-}
-.product-price span {
-	color: #a00 !important;
-	font-weight: bold;
-}
-.spacer-buy-area .product-price {
-	padding-right: 21px;
-}
