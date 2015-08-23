@@ -8,7 +8,7 @@ class pm_pagseguro extends PaymentRoot{
 	}
 
 	function showAdminFormParams( $params ) {
-		$array_params = array('testmode', 'email_received', 'transaction_end_status', 'transaction_pending_status', 'transaction_failed_status');
+		$array_params = array('email_received', 'token', 'transaction_end_status', 'transaction_pending_status', 'transaction_failed_status');
 		foreach ($array_params as $key) {
 			if (!isset($params[$key])) $params[$key] = '';
 		} 
@@ -118,7 +118,7 @@ class pm_pagseguro extends PaymentRoot{
 		$return = $liveurlhost.SEFLink("index.php?option=com_jshopping&controller=checkout&task=step7&act=return&js_paymentclass=".$pm_method->payment_class);
 		$cancel_return = $liveurlhost.SEFLink("index.php?option=com_jshopping&controller=checkout&task=step7&act=cancel&js_paymentclass=".$pm_method->payment_class);
 
-		// Post the order data to PagSeguro
+		// Build data for the request
 		$vendor = JSFactory::getTable('vendor', 'jshop');
 		$data = array(
 			'email' => $email,
@@ -141,10 +141,26 @@ class pm_pagseguro extends PaymentRoot{
 			'shippingAddressState' => $order->d_state,
 			'shippingAddressCountry' => 'BRA'
 		);
-		$result = $this->post( 'https://ws.pagseguro.uol.com.br/v2/checkout/', $data );
-		$code = preg_match( '|<code>(.+?)</code>|', $result, $m ) ? $m[1] : false;
+
+		// Post the order data to PagSeguro
+		$options = array(
+			CURLOPT_POST => 1,
+			CURLOPT_HEADER => 0,
+			CURLOPT_URL => 'https://ws.pagseguro.uol.com.br/v2/checkout/',
+			CURLOPT_FRESH_CONNECT => 1,
+			CURLOPT_RETURNTRANSFER => 1,
+			CURLOPT_FORBID_REUSE => 1,
+			CURLOPT_TIMEOUT => 4,
+			CURLOPT_POSTFIELDS => http_build_query( $data )
+		);
+		$ch = curl_init();
+		curl_setopt_array( $ch, $data );
+		if( $result = curl_exec( $ch ) ) return $result;
+		else die( curl_error( $ch ) );
+		curl_close( $ch );
 
 		// If we received a code, redirect the client to PagSeguro tp complete the order
+		$code = preg_match( '|<code>(.+?)</code>|', $result, $m ) ? $m[1] : false;
 		if( $code ) {
 			JFactory::getApplication()->enqueueMessage( "Code: $code" );
 			header( "Location: https://pagseguro.uol.com.br/v2/checkout/payment.html?code=$code" );
