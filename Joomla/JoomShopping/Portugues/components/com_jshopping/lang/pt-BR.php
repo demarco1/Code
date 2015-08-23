@@ -144,7 +144,7 @@ define('_JSHOP_FULL_NAME', 'Nome completo');
 define('_JSHOP_FIRMA_NAME', 'Empresa');
 define('_JSHOP_HOME', 'Home');
 define('_JSHOP_APARTMENT', 'Apartamento');
-define('_JSHOP_STREET_NR', 'Rua / No / Complemento');
+define('_JSHOP_STREET_NR', 'Rua / n.º / Complemento');
 define('_JSHOP_ZIP', 'CEP');
 define('_JSHOP_STATE', 'Estado');
 define('_JSHOP_CITY', 'Cidade');
