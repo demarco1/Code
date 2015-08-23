@@ -1,5 +1,5 @@
 <?php
-defined('_JEXEC') or die('Restricted access');
+#defined('_JEXEC') or die('Restricted access');
 
 class pm_pagseguro extends PaymentRoot{
 	
