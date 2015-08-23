@@ -2,7 +2,7 @@
 #defined('_JEXEC') or die('Restricted access');
 
 class pm_pagseguro extends PaymentRoot{
-	
+
 	function showPaymentForm( $params, $pmconfigs ) {
 		include( dirname( __FILE__ ) . "/paymentform.php" );
 	}
@@ -120,26 +120,27 @@ class pm_pagseguro extends PaymentRoot{
 
 		// Build data for the request
 		$vendor = JSFactory::getTable('vendor', 'jshop');
+		$vendor->loadMain();
 		$data = array(
-			'email' => $email,
-			'token' => $token,
-			'senderName' => $vendor->shop_name,
-			'senderAreaCode' => $vendor->zip,
-			'senderEmail' => $vendor->email,
-			'currency' => $order->currency_code_iso,
-			'redirectURL' => $return,
-			'reference' => $order->order_id,
-			'itemId1' => $order->order_id,
-			'itemDescription1' => $item_name,
-			'itemAmount1' => $order->order_total,
-			'itemQuantity1' => 1,
-			'receiverEmail' => $order->email,
-			'shippingCost' => 0, // need to find shipping cost
-			'shippingAddressStreet' => $order->d_street,
-			'shippingAddressPostalCode' => $order->d_zip,
-			'shippingAddressCity' => $order->d_city,
-			'shippingAddressState' => $order->d_state,
-			'shippingAddressCountry' => 'BRA'
+				'email' => $email,
+				'token' => $token,
+				'senderName' => $vendor->shop_name,
+				'senderAreaCode' => 11, // Hacked to Sao Paulo, but shipping not calculated so doesn't matter
+				'senderEmail' => $order->email,
+				'currency' => $order->currency_code_iso,
+				'redirectURL' => $return,
+				'reference' => $order->order_id,
+				'itemId1' => $order->order_id,
+				'itemDescription1' => $item_name,
+				'itemAmount1' => $order->order_total,
+				'itemQuantity1' => 1,
+				'shippingCost' => number_format($order->order_shipping, 2, '.', ''),
+				'shippingType' => 3,
+				'shippingAddressStreet' => $order->d_street,
+				'shippingAddressPostalCode' => $order->d_zip,
+				'shippingAddressCity' => $order->d_city,
+				'shippingAddressState' => $order->d_state,
+				'shippingAddressCountry' => 'BRA'
 		);
 
 		// Post the order data to PagSeguro
@@ -154,9 +155,8 @@ class pm_pagseguro extends PaymentRoot{
 			CURLOPT_POSTFIELDS => http_build_query( $data )
 		);
 		$ch = curl_init();
-		curl_setopt_array( $ch, $data );
-		if( $result = curl_exec( $ch ) ) return $result;
-		else die( curl_error( $ch ) );
+		curl_setopt_array( $ch, $options );
+		if( !$result = curl_exec( $ch ) ) die( 'Error: ' . curl_error( $ch ) );
 		curl_close( $ch );
 
 		// If we received a code, redirect the client to PagSeguro tp complete the order
@@ -164,9 +164,7 @@ class pm_pagseguro extends PaymentRoot{
 		if( $code ) {
 			JFactory::getApplication()->enqueueMessage( "Code: $code" );
 			header( "Location: https://pagseguro.uol.com.br/v2/checkout/payment.html?code=$code" );
-		} else {
-			die( curl_error( $result ) );
-		}
+		} else die( "Error: $result" );
 	}
 
 	function getUrlParams($pmconfigs) {
