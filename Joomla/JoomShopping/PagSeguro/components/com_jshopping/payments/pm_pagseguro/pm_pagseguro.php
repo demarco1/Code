@@ -7,13 +7,12 @@ class pm_pagseguro extends PaymentRoot{
 		include( dirname( __FILE__ ) . "/paymentform.php" );
 	}
 
-	// function call in admin
 	function showAdminFormParams( $params ) {
 		$array_params = array('testmode', 'email_received', 'transaction_end_status', 'transaction_pending_status', 'transaction_failed_status');
 		foreach ($array_params as $key) {
 			if (!isset($params[$key])) $params[$key] = '';
 		} 
-		$orders = JSFactory::getModel('orders', 'JshoppingModel'); //admin model
+		$orders = JSFactory::getModel('orders', 'JshoppingModel'); // Admin model
 		include( dirname( __FILE__ ) . "/adminparamsform.php" );
 	}
 
@@ -100,18 +99,17 @@ class pm_pagseguro extends PaymentRoot{
 		$jshopConfig = JSFactory::getConfig();
 		$pm_method = $this->getPmMethod();
 		$item_name = sprintf(_JSHOP_PAYMENT_NUMBER, $order->order_number);
-
-		if ($pmconfigs['testmode']) {
-			$host = "www.sandbox.paypal.com";
-		} else {
-			$host = "www.paypal.com";
-		}
 		$email = $pmconfigs['email_received'];
+		$token = $pmconfigs['token'];
 		$address_override = (int)$pmconfigs['address_override'];
+		$_country = JSFactory::getTable('country', 'jshop');
+		$_country->load($order->d_country);
+		$country = $_country->country_code_2;
+		$order->order_total = $this->fixOrderTotal($order);
 
+		// Return links
 		$uri = JURI::getInstance();
-		$liveurlhost = $uri->toString(array("scheme",'host', 'port'));
-
+		$liveurlhost = $uri->toString( array( 'scheme', 'host', 'port' ) );
 		if ($pmconfigs['notifyurlsef']) {
 			$notify_url = $liveurlhost.SEFLink("index.php?option=com_jshopping&controller=checkout&task=step7&act=notify&js_paymentclass=".$pm_method->payment_class."&no_lang=1");
 		} else {
@@ -120,52 +118,39 @@ class pm_pagseguro extends PaymentRoot{
 		$return = $liveurlhost.SEFLink("index.php?option=com_jshopping&controller=checkout&task=step7&act=return&js_paymentclass=".$pm_method->payment_class);
 		$cancel_return = $liveurlhost.SEFLink("index.php?option=com_jshopping&controller=checkout&task=step7&act=cancel&js_paymentclass=".$pm_method->payment_class);
 
-		$_country = JSFactory::getTable('country', 'jshop');
-		$_country->load($order->d_country);
-		$country = $_country->country_code_2;
-		$order->order_total = $this->fixOrderTotal($order);
-		?>
-		<html>
-		<head>
-			<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		</head>
-		<body>
-		<form id="paymentform" action="https://<?php print $host?>/cgi-bin/webscr" name = "paymentform" method = "post">
-			<input type='hidden' name='cmd' value='_xclick'>
-			<input type='hidden' name='business' value='<?php print $email?>'>
-			<input type='hidden' name='notify_url' value='<?php print $notify_url?>'>
-			<input type='hidden' name='return' value='<?php print $return?>'>
-			<input type='hidden' name='cancel_return' value='<?php print $cancel_return?>'>
-			<input type='hidden' name='rm' value='2'>
-			<input type='hidden' name='handling' value='0.00'>
-			<input type='hidden' name='tax' value='0.00'>
-			<input type='hidden' name='charset' value='utf-8'>
-			<input type='hidden' name='no_shipping' value='1'>
-			<input type='hidden' name='no_note' value='1'>
-			<input type='hidden' name='item_name' value='<?php print $item_name;?>'>
-			<input type='hidden' name='custom' value='<?php print $order->order_id?>'>
-			<input type='hidden' name='invoice' value='<?php print $order->order_id?>'>
-			<input type='hidden' name='amount' value='<?php print $order->order_total?>'>
-			<input type='hidden' name='currency_code' value='<?php print $order->currency_code_iso?>'>
-			<input type='hidden' name='address_override' value='<?php print $address_override?>'>
-			<input type='hidden' name='country' value='<?php print $country?>'>
-			<input type='hidden' name='first_name' value='<?php print $order->d_f_name?>'>
-			<input type='hidden' name='last_name' value='<?php print $order->d_l_name?>'>  
-			<input type='hidden' name='address1' value='<?php print $order->d_street?>'>  
-			<input type='hidden' name='city' value='<?php print $order->d_city?>'>  
-			<input type='hidden' name='state' value='<?php print $order->d_state?>'>
-			<input type='hidden' name='zip' value='<?php print $order->d_zip?>'>
-			<input type='hidden' name='night_phone_b' value='<?php print $order->d_phone?>'>
-			<input type='hidden' name='email' value='<?php print $order->email?>'>
-		</form>
-		<?php
-		print _JSHOP_REDIRECT_TO_PAYMENT_PAGE?>
-		<br>
-		<script type="text/javascript">document.getElementById('paymentform').submit();</script>
-		</body>
-		</html>
-		<?php
-		die();
+		// Post the order data to PagSeguro
+		$vendor = JSFactory::getTable('vendor', 'jshop');
+		$data = array(
+			'email' => $email,
+			'token' => $token,
+			'senderName' => $vendor->shop_name,
+			'senderAreaCode' => $vendor->zip,
+			'senderEmail' => $vendor->email,
+			'currency' => $order->currency_code_iso,
+			'redirectURL' => $return,
+			'reference' => $order->order_id,
+			'itemId1' => $order->order_id,
+			'itemDescription1' => $item_name,
+			'itemAmount1' => $order->order_total,
+			'itemQuantity1' => 1,
+			'receiverEmail' => $order->email,
+			'shippingCost' => 0, // need to find shipping cost
+			'shippingAddressStreet' => $order->d_street,
+			'shippingAddressPostalCode' => $order->d_zip,
+			'shippingAddressCity' => $order->d_city,
+			'shippingAddressState' => $order->d_state,
+			'shippingAddressCountry' => 'BRA'
+		);
+		$result = $this->post( 'https://ws.pagseguro.uol.com.br/v2/checkout/', $data );
+		$code = preg_match( '|<code>(.+?)</code>|', $result, $m ) ? $m[1] : false;
+
+		// If we received a code, redirect the client to PagSeguro tp complete the order
+		if( $code ) {
+			JFactory::getApplication()->enqueueMessage( "Code: $code" );
+			header( "Location: https://pagseguro.uol.com.br/v2/checkout/payment.html?code=$code" );
+		} else {
+			die( curl_error( $result ) );
+		}
 	}
 
 	function getUrlParams($pmconfigs) {
@@ -174,7 +159,7 @@ class pm_pagseguro extends PaymentRoot{
 		$params['hash'] = "";
 		$params['checkHash'] = 0;
 		$params['checkReturnParams'] = $pmconfigs['checkdatareturn'];
-	return $params;
+		return $params;
 	}
 
 	function fixOrderTotal($order) {
@@ -184,7 +169,7 @@ class pm_pagseguro extends PaymentRoot{
 		} else {
 			$total = number_format($total, 2, '.', '');
 		}
-	return $total;
+		return $total;
 	}
 }
 ?>

@@ -3,23 +3,21 @@
 <fieldset class="adminform">
 <table class="admintable" width = "100%" >
  <tr>
-   <td style="width:250px;" class="key">
-     <?php echo _JSHOP_TESTMODE;?>
-   </td>
-   <td>
-     <?php              
-     print JHTML::_('select.booleanlist', 'pm_params[testmode]', 'class = "inputbox" size = "1"', $params['testmode']);
-     echo " ".JHTML::tooltip(_JSHOP_PAGSEGURO_TESTMODE_DESCRIPTION);
-     ?>
-   </td>
- </tr>
- <tr>
    <td  class="key">
      <?php echo _JSHOP_PAGSEGURO_EMAIL;?>
    </td>
    <td>
      <input type = "text" class = "inputbox" name = "pm_params[email_received]" size="45" value = "<?php echo $params['email_received']?>" />
      <?php echo JHTML::tooltip(_JSHOP_PAGSEGURO_EMAIL_DESCRIPTION);?>
+   </td>
+ </tr>
+ <tr>
+   <td  class="key">
+     <?php echo _JSHOP_PAGSEGURO_TOKEN;?>
+   </td>
+   <td>
+     <input type = "text" class = "inputbox" name = "pm_params[token]" size="45" value = "<?php echo $params['token']?>" />
+     <?php echo JHTML::tooltip(_JSHOP_PAGSEGURO_TOKEN_DESCRIPTION);?>
    </td>
  </tr>
  <tr>
