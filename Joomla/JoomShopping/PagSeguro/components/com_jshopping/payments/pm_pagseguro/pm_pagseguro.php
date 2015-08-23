@@ -147,7 +147,7 @@ class pm_pagseguro extends PaymentRoot{
 		$options = array(
 			CURLOPT_POST => 1,
 			CURLOPT_HEADER => 0,
-			CURLOPT_URL => 'https://ws.pagseguro.uol.com.br/v2/checkout/',
+			CURLOPT_URL => 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout/',
 			CURLOPT_FRESH_CONNECT => 1,
 			CURLOPT_RETURNTRANSFER => 1,
 			CURLOPT_FORBID_REUSE => 1,
@@ -163,12 +163,12 @@ class pm_pagseguro extends PaymentRoot{
 		$code = preg_match( '|<code>(.+?)</code>|', $result, $m ) ? $m[1] : false;
 		if( $code ) {
 			JFactory::getApplication()->enqueueMessage( "Code: $code" );
-			header( "Location: https://pagseguro.uol.com.br/v2/checkout/payment.html?code=$code" );
+			header( "Location: https://sandbox.pagseguro.uol.com.br/v2/checkout/payment.html?code=$code" );
 		} else die( "Error: $result" );
 	}
 
 	function getUrlParams($pmconfigs) {
-		$params = array(); 
+		$params = array();
 		$params['order_id'] = JRequest::getInt("custom");
 		$params['hash'] = "";
 		$params['checkHash'] = 0;
