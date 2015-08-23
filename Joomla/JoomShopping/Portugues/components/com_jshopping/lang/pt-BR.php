@@ -187,6 +187,13 @@ define('_JSHOP_RETURN_POLICY', 'Return policy');
 define('_JSHOP_SELECT_VALUE', 'Select value');
 
 // Payment
+define('_JSHOP_TESTMODE','Testmode');
+define('_JSHOP_TRANSACTION_END','Order Status for successful transactions');
+define('_JSHOP_TRANSACTION_PENDING','Order Status for Pending Payments');
+define('_JSHOP_TRANSACTION_FAILED','Order Status for failed transactions');
+define('_JSHOP_CHECK_DATA_RETURN', 'Verify data after PayPal RETURN');
+define('_JSHOP_OVERRIDING_ADDRESSES','Overriding Addresses');
+define('_JSHOP_NOTIFY_URL_SEF', 'Notify url SEF');
 define('_JSHOP_ACCOUNT_HOLDER', 'Account holder');
 define('_JSHOP_ACCOUNT_NUMBER', 'Account number');
 define('_JSHOP_BIC', 'Bank identifier code');
@@ -196,7 +203,6 @@ define('_JSHOP_IBAN', 'IBAN');
 define('_JSHOP_ERROR_PAYMENT', 'Payment method error');
 define('_JSHOP_ORDER_FINISH', 'Confirma compra');
 define('_JSHOP_ERROR_PAYMENT_DATA', 'Please enter correct payment information');
-
 define("_JSHOP_HI","Hi");
 define('_JSHOP_ORDER_STATUS_CHANGE_SUBJECT','Order No. %s status changed');
 define('_JSHOP_ORDER_STATUS_CHANGE_TITLE', 'Status change');
