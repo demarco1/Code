@@ -20,11 +20,11 @@ class pm_pagseguro extends PaymentRoot{
 	}
 
 	function checkTransaction( $pmconfigs, $order, $act ) {
-		$email = $pmconfigs['email_received'];
-		$token = $pmconfigs['token'];
-		$tx = $_GET['tx'];
 		$sandbox = $pmconfigs['testmode'] ? 'sandbox.' : '';
-		$url = "https://ws.{$sandbix}pagseguro.uol.com.br/v3/transactions/$tx?email=$email&token=$token";
+		$email = $pmconfigs['email_received'];
+		$token = $pmconfigs[ $sandbox ? 'test_token' : 'token'];
+		$tx = $_GET['tx'];
+		$url = "https://ws.{$sandbox}pagseguro.uol.com.br/v3/transactions/$tx?email=$email&token=$token";
 
 		print "$url\n\n";
 
@@ -65,14 +65,14 @@ class pm_pagseguro extends PaymentRoot{
 		$jshopConfig = JSFactory::getConfig();
 		$pm_method = $this->getPmMethod();
 		$item_name = sprintf(_JSHOP_PAYMENT_NUMBER, $order->order_number);
+		$sandbox = $pmconfigs['testmode'] ? 'sandbox.' : '';
 		$email = $pmconfigs['email_received'];
-		$token = $pmconfigs['token'];
+		$token = $pmconfigs[ $sandbox ? 'test_token' : 'token'];
 		$address_override = (int)$pmconfigs['address_override'];
 		$_country = JSFactory::getTable('country', 'jshop');
 		$_country->load($order->d_country);
 		$country = $_country->country_code_2;
 		$order->order_total = $this->fixOrderTotal($order);
-		$sandbox = $pmconfigs['testmode'] ? 'sandbox.' : '';
 
 		// Return links
 		$uri = JURI::getInstance();
