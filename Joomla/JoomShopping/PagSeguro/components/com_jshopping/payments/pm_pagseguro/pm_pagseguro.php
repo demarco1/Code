@@ -12,7 +12,7 @@ class pm_pagseguro extends PaymentRoot{
 
 	function showAdminFormParams( $params ) {
 		$lang = JFactory::getLanguage();
-		$lang->load( 'com_jshopping', JPATH_COMPONENT . '/payments/pm_pagseguro', $lang->getTag() );
+		require_once( dirname( dirname( __DIR__ ) ) . '/lang/' . __CLASS__ . '/' . $lang->getTag() . '.php' );
 
 		$array_params = array('email_received', 'token', 'test_token', 'transaction_end_status', 'transaction_pending_status', 'transaction_failed_status');
 		foreach ($array_params as $key) {
