@@ -226,7 +226,7 @@ define('_JSHOP_THANK_YOU_ORDER', 'Obrigado pela sua compra!<br />Um recibo foi e
 define('_JSHOP_ORDER_PLACED', 'Your order has been successfully placed!');
 
 // E-mail
-define('_JSHOP_EMAIL_THANK_YOU', 'Thank you for shopping with us.  Your order information follows.');
+define('_JSHOP_EMAIL_THANK_YOU', '<h1>Thank you for shopping with us.</h1><h3>Your order information follows.</h3>');
 define('_JSHOP_EMAIL_PURCHASE_ORDER', 'Purchase order');
 define('_JSHOP_DESCRIPTION', 'Description');
 define('_JSHOP_ORDER_NUMBER', 'Número de compra');
