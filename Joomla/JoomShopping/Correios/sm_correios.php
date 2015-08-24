@@ -69,8 +69,6 @@ class sm_correios extends shippingextRoot {
 	 * Return the cost for a given a weight and shipping type
 	 */
 	private function getFreightPrice( $weight, $type ) {
-		$vendor = JSFactory::getTable('vendor', 'jshop');
-		$vendor->loadMain();
 		$client = JSFactory::getUser();
 		$cep2 = preg_replace( '|[^\d]|', '', $client->d_zip ? $client->d_zip : $client->zip );
 
@@ -82,7 +80,9 @@ class sm_correios extends shippingextRoot {
 		if( $cost ) return $cost[$type];
 
 		// Not cached locally or in the database, get prices from the external API and store locally and in database
-		$cep1 = $vendor->zip;
+		$vendor = JSFactory::getTable('vendor', 'jshop');
+		$vendor->loadMain();
+		$cep1 = preg_replace( '|[^\d]|', '', $vendor->zip );
 
 		// Get prices for both types since they're cached together
 		if( is_numeric( $result = $this->correios( $cep1, $cep2, $weight, 1 ) ) ) $this->cost[1] = $result;
