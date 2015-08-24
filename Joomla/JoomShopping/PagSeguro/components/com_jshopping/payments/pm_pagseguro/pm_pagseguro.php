@@ -3,7 +3,8 @@
 
 class pm_pagseguro extends PaymentRoot{
 
-	$tx
+	private $payment_status = 0;
+	private $err = false;
 
 	function showPaymentForm( $params, $pmconfigs ) {
 		include( dirname( __FILE__ ) . "/paymentform.php" );
@@ -20,45 +21,18 @@ class pm_pagseguro extends PaymentRoot{
 	}
 
 	function checkTransaction( $pmconfigs, $order, $act ) {
-		$sandbox = $pmconfigs['testmode'] ? 'sandbox.' : '';
-		$email = $pmconfigs['email_received'];
-		$token = $pmconfigs[ $sandbox ? 'test_token' : 'token'];
-		$tx = $_GET['tx'];
-		$url = "https://ws.{$sandbox}pagseguro.uol.com.br/v3/transactions/$tx?email=$email&token=$token";
-
-		print "$url\n\n";
-
-		print file_get_contents( $url );
-		//<reference>REF1234</reference>
-		die;
-
 		$jshopConfig = JSFactory::getConfig();
-		if( !($res = curl_exec($ch)) ) {
-			saveToLog("payment.log", "PagSeguro failed: ".curl_error($ch).'('.curl_errno($ch).')');
-			curl_close($ch);
-			exit;
-		} else {
-			curl_close($ch);
-		}
-		saveToLog("paymentdata.log", "RES: $res");
-
-		if (strcmp ($res, "VERIFIED") == 0) {
-			if ($payment_status == 'Completed') {
-				if ($opending) {
-					saveToLog("payment.log", "Status pending. Order ID ".$order->order_id.". Error mc_gross or mc_currency.");
-					return array(2, "Status pending. Order ID ".$order->order_id, $transaction, $transactiondata);
-				} else {
-					return array(1, '', $transaction, $transactiondata);
-				}
-			} elseif ($payment_status == 'Pending') {
-				saveToLog("payment.log", "Status pending. Order ID ".$order->order_id.". Reason: ".$_POST['pending_reason']);
-				return array(2, trim(stripslashes($_POST['pending_reason'])), $transaction, $transactiondata);
+		if( $this->payment_status > 0 && $this->err === false ) {
+			if( $this->payment_status == 3 || $this->payment_status == 4 ) {
+				return array(1, '', $transaction, $transactiondata);
+			} elseif( $this->payment_status < 3 ) {
+				$reason = constant( '_JSHOP_PAGSEGURO_STATUS_' . $this->payment_status );
+				saveToLog( "payment.log", "Status pending. Order ID " . $order->order_id . ". Reason: $reason" );
+				return array( 2, $reason, $transaction, $transactiondata );
 			} else {
-				return array(3, "Status $payment_status. Order ID ".$order->order_id, $transaction, $transactiondata);
+				return array( 3, "Status $payment_status. Order ID ".$order->order_id, $transaction, $transactiondata);
 			}
-		} elseif (strcmp ($res, "INVALID") == 0) {
-			return array(0, 'Invalid response. Order ID '.$order->order_id, $transaction, $transactiondata);
-		}
+		} else return array( 0, "Error: $err", $transaction, $transactiondata );
 	}
 
 	function showEndForm( $pmconfigs, $order ) {
@@ -67,7 +41,7 @@ class pm_pagseguro extends PaymentRoot{
 		$item_name = sprintf(_JSHOP_PAYMENT_NUMBER, $order->order_number);
 		$sandbox = $pmconfigs['testmode'] ? 'sandbox.' : '';
 		$email = $pmconfigs['email_received'];
-		$token = $pmconfigs[ $sandbox ? 'test_token' : 'token'];
+		$token = $pmconfigs[$sandbox ? 'test_token' : 'token'];
 		$address_override = (int)$pmconfigs['address_override'];
 		$_country = JSFactory::getTable('country', 'jshop');
 		$_country->load($order->d_country);
@@ -134,20 +108,24 @@ class pm_pagseguro extends PaymentRoot{
 		} else die( "Error: $result" );
 	}
 
+	/**
+	 * Query PagSeguro for the local order ID and payment status from the returned PagSeguro transaction ID
+	 */
 	function getUrlParams($pmconfigs) {
 		$params = array();
-		$email = $pmconfigs['email_received'];
-		$token = $pmconfigs['token'];
-		$tx = $_GET['tx'];
 		$sandbox = $pmconfigs['testmode'] ? 'sandbox.' : '';
+		$email = $pmconfigs['email_received'];
+		$token = $pmconfigs[$sandbox ? 'test_token' : 'token'];
+		$tx = $_GET['tx'];
 		$url = "https://ws.{$sandbox}pagseguro.uol.com.br/v3/transactions/$tx?email=$email&token=$token";
 		$result = @file_get_contents( $url );
-		if( preg_match( '|<reference>(.+?)</reference>|', $result, $m ) ) {
+		if( preg_match( '|<reference>(.+?)</reference>.*?<status>(\d+?)</status>|s', $result, $m ) ) {
 			$params['order_id'] = $m[1];
 			$params['hash'] = "";
 			$params['checkHash'] = 0;
 			$params['checkReturnParams'] = $pmconfigs['checkdatareturn'];
-		}
+			$this->payment_status = $m[2];
+		} else $this->err = trim( stripslashes( $result ) );
 		return $params;
 	}
 
