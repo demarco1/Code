@@ -85,9 +85,9 @@ class sm_correios extends shippingextRoot {
 		$cep1 = $vendor->zip;
 
 		// Get prices for both types since they're cached together
-		if( $result = correios( $cep1, $cep2, $weight, 1 ) ) $this->cost[1] = $result;
+		if( is_numeric( $result = correios( $cep1, $cep2, $weight, 1 ) ) ) $this->cost[1] = $result;
 		else return JError::raiseWarning( '', "Error: $result" );
-		if( $result = correios( $cep1, $cep2, $weight, 2 ) ) $this->cost[2] = $result;
+		if( is_numeric( $result = correios( $cep1, $cep2, $weight, 2 ) ) ) $this->cost[2] = $result;
 		else return JError::raiseWarning( '', "Error: $result" );
 
 		// Store the price pair in the cache
@@ -112,7 +112,8 @@ class sm_correios extends shippingextRoot {
 			. '&sCdMaoPropria=n&nVlValorDeclarado=0&sCdAvisoRecebimento=n'
 			. '&StrRetorno=XML&nIndicaCalculo=1';
 		$result = file_get_contents( $url );
-		if( preg_match( '|<valor>([0-9.,]+)</valor>|i', $result, $m ) ) return str_replace( ',', '.', $m[1] );
+		if( preg_match( '|<valor>([0-9.,]+)</valor>|i', $result, $m ) ) $result = str_replace( ',', '.', $m[1] );
+		return $result;
 	}
 
 	/**
