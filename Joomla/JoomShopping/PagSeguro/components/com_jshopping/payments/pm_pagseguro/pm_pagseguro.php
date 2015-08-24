@@ -23,16 +23,19 @@ class pm_pagseguro extends PaymentRoot{
 	}
 
 	function checkTransaction( $pmconfigs, $order, $act ) {
+		$lang = JFactory::getLanguage();
+		require_once( dirname( dirname( __DIR__ ) ) . '/lang/' . __CLASS__ . '/' . $lang->getTag() . '.php' );
 		$jshopConfig = JSFactory::getConfig();
 		if( $this->payment_status > 0 && $this->err === false ) {
+			$status = constant( '_JSHOP_PAGSEGURO_STATUS_' . $this->payment_status );
+			$num = _JSHOP_ORDER_NUMBER . ': ' . $order->order_id;
 			if( $this->payment_status == 3 || $this->payment_status == 4 ) {
-				return array(1, '', $transaction, $transactiondata);
+				return array(1, $status, $transaction, $transactiondata);
 			} elseif( $this->payment_status < 3 ) {
-				$reason = constant( '_JSHOP_PAGSEGURO_STATUS_' . $this->payment_status );
-				saveToLog( "payment.log", "Status pending. Order ID " . $order->order_id . ". Reason: $reason" );
-				return array( 2, $reason, $transaction, $transactiondata );
+				saveToLog( "payment.log", "Status pending. ($num, Reason: $status)" );
+				return array( 2, "$status ($num)", $transaction, $transactiondata );
 			} else {
-				return array( 3, "Status $payment_status. Order ID ".$order->order_id, $transaction, $transactiondata);
+				return array( 3, "$status ($num)", $transaction, $transactiondata);
 			}
 		} else return array( 0, "Error: $err", $transaction, $transactiondata );
 	}
