@@ -6,7 +6,7 @@
 * @copyright    Copyright (C) 2015 Ligmincha Brasil
 * @license      GNU/GPL
 */
-define('_JSHOP_PAGSEGURO_TESTMODE_DESCRIPTION','For testing Paypal accounts');
+define('_JSHOP_PAGSEGURO_TESTMODE_DESCRIPTION','For testing PagSeguro accounts');
 define('_JSHOP_PAGSEGURO_EMAIL','E-mail:');
 define('_JSHOP_PAGSEGURO_EMAIL_DESCRIPTION','E-mail para sua conta PagSeguro.');
 define('_JSHOP_PAGSEGURO_TOKEN','Token:');

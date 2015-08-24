@@ -3,6 +3,8 @@
 
 class pm_pagseguro extends PaymentRoot{
 
+	$tx
+
 	function showPaymentForm( $params, $pmconfigs ) {
 		include( dirname( __FILE__ ) . "/paymentform.php" );
 	}
@@ -17,56 +19,19 @@ class pm_pagseguro extends PaymentRoot{
 	}
 
 	function checkTransaction( $pmconfigs, $order, $act ) {
+		$email = $pmconfigs['email_received'];
+		$token = $pmconfigs['token'];
+		$tx = $_GET['tx'];
+		$sandbox = $pmconfigs['testmode'] ? 'sandbox.' : '';
+		$url = "https://ws.{$sandbix}pagseguro.uol.com.br/v3/transactions/$tx?email=$email&token=$token";
+
+		print "$url\n\n";
+
+		print file_get_contents( $url );
+		//<reference>REF1234</reference>
+		die;
+
 		$jshopConfig = JSFactory::getConfig();
-
-		if ($pmconfigs['testmode']) {
-			$host = "www.sandbox.paypal.com";
-		} else {
-			$host = "www.paypal.com";
-		}
-
-		$post = JRequest::get('post');
-		$order->order_total = $this->fixOrderTotal($order);
-		$email_received = $_POST['business'];
-		if ($email_received=="") $email_received = $_POST['receiver_email'];
-
-		$opending = 0;
-		if ($order->order_total != $_POST['mc_gross'] || $order->currency_code_iso != $_POST['mc_currency']) {
-			$opending = 1;
-		}
-
-		$payment_status = trim($post['payment_status']);
-		$transaction = $post['txn_id'];
-		$transactiondata = array('txn_id'=>$post['txn_id'],'payer_email'=>$post['payer_email'], 'mc_gross'=>$post['mc_gross'], 'mc_currency'=>$post['mc_currency'], 'payment_status'=>$post['payment_status']);
-
-		if (strtolower($pmconfigs['email_received']) != strtolower($email_received)) {
-			return array(0, 'Error email received. Order ID '.$order->order_id, $transaction, $transactiondata);
-		}
-
-		$req = 'cmd=_notify-validate';
-		if  (function_exists('get_magic_quotes_gpc')) {
-			$get_magic_quotes_exists = true;
-		}
-		foreach($_POST as $key => $value) {
-			if($get_magic_quotes_exists == true && get_magic_quotes_gpc() == 1) {
-				$value = urlencode(stripslashes($value));
-			} else {
-				$value = urlencode($value);
-			}
-			$req .= "&$key=$value";
-		}
-
-		$ch = curl_init('https://'.$host.'/cgi-bin/webscr');
-		curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $req);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-		curl_setopt($ch, CURLOPT_FORBID_REUSE, 1);
-		curl_setopt($ch, CURLOPT_SSLVERSION, 4);
-		curl_setopt($ch, CURLOPT_USERAGENT, 'PayPal-PHP-SDK');
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Connection: Close'));
 		if( !($res = curl_exec($ch)) ) {
 			saveToLog("payment.log", "PagSeguro failed: ".curl_error($ch).'('.curl_errno($ch).')');
 			curl_close($ch);
@@ -106,6 +71,7 @@ class pm_pagseguro extends PaymentRoot{
 		$_country->load($order->d_country);
 		$country = $_country->country_code_2;
 		$order->order_total = $this->fixOrderTotal($order);
+		$sandbox = $pmconfigs['testmode'] ? 'sandbox.' : '';
 
 		// Return links
 		$uri = JURI::getInstance();
@@ -147,7 +113,7 @@ class pm_pagseguro extends PaymentRoot{
 		$options = array(
 			CURLOPT_POST => 1,
 			CURLOPT_HEADER => 0,
-			CURLOPT_URL => 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout/',
+			CURLOPT_URL => "https://ws.{$sandbox}pagseguro.uol.com.br/v2/checkout/",
 			CURLOPT_FRESH_CONNECT => 1,
 			CURLOPT_RETURNTRANSFER => 1,
 			CURLOPT_FORBID_REUSE => 1,
@@ -163,16 +129,24 @@ class pm_pagseguro extends PaymentRoot{
 		$code = preg_match( '|<code>(.+?)</code>|', $result, $m ) ? $m[1] : false;
 		if( $code ) {
 			JFactory::getApplication()->enqueueMessage( "Code: $code" );
-			header( "Location: https://sandbox.pagseguro.uol.com.br/v2/checkout/payment.html?code=$code" );
+			header( "Location: https://{$sandbox}pagseguro.uol.com.br/v2/checkout/payment.html?code=$code" );
 		} else die( "Error: $result" );
 	}
 
 	function getUrlParams($pmconfigs) {
 		$params = array();
-		$params['order_id'] = JRequest::getInt("custom");
-		$params['hash'] = "";
-		$params['checkHash'] = 0;
-		$params['checkReturnParams'] = $pmconfigs['checkdatareturn'];
+		$email = $pmconfigs['email_received'];
+		$token = $pmconfigs['token'];
+		$tx = $_GET['tx'];
+		$sandbox = $pmconfigs['testmode'] ? 'sandbox.' : '';
+		$url = "https://ws.{$sandbox}pagseguro.uol.com.br/v3/transactions/$tx?email=$email&token=$token";
+		$result = @file_get_contents( $url );
+		if( preg_match( '|<reference>(.+?)</reference>|', $result, $m ) ) {
+			$params['order_id'] = $m[1];
+			$params['hash'] = "";
+			$params['checkHash'] = 0;
+			$params['checkReturnParams'] = $pmconfigs['checkdatareturn'];
+		}
 		return $params;
 	}
 
