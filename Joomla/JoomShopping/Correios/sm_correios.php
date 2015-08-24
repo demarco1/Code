@@ -81,17 +81,38 @@ class sm_correios extends shippingextRoot {
 		$cost = $this->getCache( $weight, $cep2 );
 		if( $cost ) return $cost[$type];
 
-		// Not cached locally or in the database, get price from the external API and store locally and in database
+		// Not cached locally or in the database, get prices from the external API and store locally and in database
 		$cep1 = $vendor->zip;
-		$url = "http://developers.agenciaideias.com.br/correios/frete/json/$cep1/$cep2/$weight/1.00";
+
+		// Get prices for both types since they're cached together
+		if( $result = correios( $cep1, $cep2, $weight, 1 ) ) $this->cost[1] = $result;
+		else return JError::raiseWarning( '', "Error: $result" );
+		if( $result = correios( $cep1, $cep2, $weight, 2 ) ) $this->cost[2] = $result;
+		else return JError::raiseWarning( '', "Error: $result" );
+
+		// Store the price pair in the cache
+		$this->setCache( $weight, $cep2, $this->cost );
+
+		// Return just the requested price
+		return $this->cost[$type];
+	}
+
+	/**
+	 * Call the Correios API with passed params
+	 * - $type is 1 for PAC or 2 for SEDEX
+	 */
+	function correios( $cep1, $cep2, $weight, $type ) {
+		$service = $type == 1 ? 41106 : 40010;
+		$url = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?nCdEmpresa=&sDsSenha='
+			. "&sCepOrigem=$cep1"
+			. "&sCepDestino=$cep2"
+			. "&nVlPeso=$weight"
+			. "&nCdServico=$service"
+			. '&nCdFormato=1&nVlComprimento=20&nVlAltura=5&nVlLargura=20&nVlDiametro=0'
+			. '&sCdMaoPropria=n&nVlValorDeclarado=0&sCdAvisoRecebimento=n'
+			. '&StrRetorno=XML&nIndicaCalculo=1';
 		$result = file_get_contents( $url );
-		if( preg_match( '|"sedex":"([\d.]+)","pac":"([\d.]+)"|', $result, $m ) ) {
-			$this->cost[1] = $m[2];
-			$this->cost[2] = $m[1];
-			$cost = $this->cost[$type];
-			$this->setCache( $weight, $cep2, $this->cost );
-		} else JError::raiseWarning( '', "Error: $result" );
-		return $cost;
+		if( preg_match( '|<valor>([0-9.,]+)</valor>|i', $result, $m ) ) return str_replace( ',', '.', $m[1] );
 	}
 
 	/**
