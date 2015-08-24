@@ -187,7 +187,7 @@ define('_JSHOP_RETURN_POLICY', 'Return policy');
 define('_JSHOP_SELECT_VALUE', 'Select value');
 
 // Payment
-define('_JSHOP_TESTMODE','Testmode');
+define('_JSHOP_TESTMODE','Modo de teste');
 define('_JSHOP_TRANSACTION_END','Order Status for successful transactions');
 define('_JSHOP_TRANSACTION_PENDING','Order Status for Pending Payments');
 define('_JSHOP_TRANSACTION_FAILED','Order Status for failed transactions');

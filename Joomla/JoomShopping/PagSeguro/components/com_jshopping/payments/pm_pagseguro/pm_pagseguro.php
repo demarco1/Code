@@ -10,7 +10,8 @@ class pm_pagseguro extends PaymentRoot{
 	}
 
 	function showAdminFormParams( $params ) {
-		$array_params = array('email_received', 'token', 'transaction_end_status', 'transaction_pending_status', 'transaction_failed_status');
+		JSFactory::loadExtLanguageFile( __CLASS__ );
+		$array_params = array('email_received', 'token', 'test_token', 'transaction_end_status', 'transaction_pending_status', 'transaction_failed_status');
 		foreach ($array_params as $key) {
 			if (!isset($params[$key])) $params[$key] = '';
 		} 

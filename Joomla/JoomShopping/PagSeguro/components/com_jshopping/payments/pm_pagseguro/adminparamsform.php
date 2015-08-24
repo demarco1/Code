@@ -32,6 +32,15 @@
    </td>
  </tr>
  <tr>
+   <td  class="key">
+     <?php echo _JSHOP_PAGSEGURO_TESTTOKEN;?>
+   </td>
+   <td>
+     <input type = "text" class = "inputbox" name = "pm_params[test_token]" size="45" value = "<?php echo $params['test_token']?>" />
+     <?php echo JHTML::tooltip(_JSHOP_PAGSEGURO_TESTTOKEN_DESCRIPTION);?>
+   </td>
+ </tr>
+ <tr>
    <td class="key">
      <?php echo _JSHOP_TRANSACTION_END;?>
    </td>

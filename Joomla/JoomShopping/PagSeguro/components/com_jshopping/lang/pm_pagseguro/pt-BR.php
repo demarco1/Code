@@ -11,6 +11,8 @@ define('_JSHOP_PAGSEGURO_EMAIL','E-mail:');
 define('_JSHOP_PAGSEGURO_EMAIL_DESCRIPTION','E-mail para sua conta PagSeguro.');
 define('_JSHOP_PAGSEGURO_TOKEN','Token:');
 define('_JSHOP_PAGSEGURO_TOKEN_DESCRIPTION','Token para sua conta PagSeguro.');
+define('_JSHOP_PAGSEGURO_TESTTOKEN','Token de test:');
+define('_JSHOP_PAGSEGURO_TESTTOKEN_DESCRIPTION','Token para sua conta de teste PagSeguro.');
 define('_JSHOP_PAGSEGURO_TRANSACTION_END_DESCRIPTION','Select the order status to which the actual order is set, if the PayPal IPN was successful.');
 define('_JSHOP_PAGSEGURO_TRANSACTION_PENDING_DESCRIPTION','The order Status to which Orders are set, which have no completed Payment Transaction.');
 define('_JSHOP_PAGSEGURO_TRANSACTION_FAILED_DESCRIPTION','Select an order status for failed PayPal transactions.');
