@@ -149,6 +149,15 @@ JHTML::_('behavior.framework', true);
 			</div>
 		<?php } ?> 
 		<?php if($this->countModules('position-2')) { ?>
+<?php
+$app = JFactory::getApplication();
+$pathway = $app->getPathway();
+$pathwayarray = $pathway->getPathway();
+//$pathwayarray[0]->link = 'index.php?Itemid=999';
+print_r($pathwayarray);
+$pathway->setPathway($pathwayarray);
+?>
+			
 			<div id="pathway" class="gainlayout" style="float: left;">
 				<jdoc:include type="modules" name="position-2" />
 				<div class="clr"></div>
