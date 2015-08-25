@@ -161,7 +161,7 @@ body {
   z-index: 5;
 }
 #headerleft h1 {color: #fff; font-size:26px;	font-family:  Times New Roman, Times, sans-serif; letter-spacing: 1px; margin: 17px 0 0px 0; text-align: left;	font-weight:normal;	text-shadow: #333 1px 1px 2px; z-index: 100; text-transform: normal;line-height: 1; text-transform: none;}
-#headerleft h2 {color: #fff; font-family:  Times New Roman, Times, sans-serif; letter-spacing: 1px; text-shadow: #333 1px 1px 2px; z-index: 100;}
+#headerleft h2 {color: #fff; font-family:  Times New Roman, Times, sans-serif; letter-spacing: 1px; text-shadow: #333 1px 1px 2px; z-index: 100;clear:both;}
 #headerleft .headlogo {float: left;}
 #banner {
 	height: 90px;
