@@ -157,6 +157,7 @@ for( $i=0; $i<count($path); $i++ ) {
 	if( $path[$i]->name == 'Uncategorised' ) unset( $path[$i] );
 }
 $pathway->setPathway($path);
+$pathway->addItem('Foo');
 ?>
 			
 			<div id="pathway" class="gainlayout" style="float: left;">
