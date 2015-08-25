@@ -188,28 +188,28 @@ define('_JSHOP_SELECT_VALUE', 'Select value');
 
 // Payment
 define('_JSHOP_TESTMODE','Modo de teste');
-define('_JSHOP_TRANSACTION_END','Order Status for successful transactions');
-define('_JSHOP_TRANSACTION_PENDING','Order Status for Pending Payments');
-define('_JSHOP_TRANSACTION_FAILED','Order Status for failed transactions');
-define('_JSHOP_CHECK_DATA_RETURN', 'Verify data after PayPal RETURN');
-define('_JSHOP_OVERRIDING_ADDRESSES','Overriding Addresses');
-define('_JSHOP_NOTIFY_URL_SEF', 'Notify url SEF');
-define('_JSHOP_ACCOUNT_HOLDER', 'Account holder');
-define('_JSHOP_ACCOUNT_NUMBER', 'Account number');
-define('_JSHOP_BIC', 'Bank identifier code');
-define('_JSHOP_BANK', 'Bank');
+define('_JSHOP_TRANSACTION_END','Status da ordem para transações completas');
+define('_JSHOP_TRANSACTION_PENDING','Status da ordem para pagamentos pendentes');
+define('_JSHOP_TRANSACTION_FAILED','Status da ordem para transações com erros');
+define('_JSHOP_CHECK_DATA_RETURN', 'Verifique os dados após voltar do sistema de pagamento');
+define('_JSHOP_OVERRIDING_ADDRESSES','Endereços prioritários');
+define('_JSHOP_NOTIFY_URL_SEF', 'URL notifica SEF');
+define('_JSHOP_ACCOUNT_HOLDER', 'Nome do usuário da conta');
+define('_JSHOP_ACCOUNT_NUMBER', 'Número da conta');
+define('_JSHOP_BIC', 'Código identificador do banco');
+define('_JSHOP_BANK', 'Banco');
 define('_JSHOP_BIC_BIC', 'BIC');
 define('_JSHOP_IBAN', 'IBAN');
-define('_JSHOP_ERROR_PAYMENT', 'Payment method error');
+define('_JSHOP_ERROR_PAYMENT', 'Ero no método pagamento');
 define('_JSHOP_ORDER_FINISH', 'Confirma compra');
-define('_JSHOP_ERROR_PAYMENT_DATA', 'Please enter correct payment information');
-define("_JSHOP_HI","Hi");
-define('_JSHOP_ORDER_STATUS_CHANGE_SUBJECT','Order No. %s status changed');
-define('_JSHOP_ORDER_STATUS_CHANGE_TITLE', 'Status change');
-define('_JSHOP_YOUR_ORDER_STATUS_CHANGE', 'the Status of your Order No. %s has been changed');
-define('_JSHOP_NEW_STATUS_IS', 'New Status is');
-define('_JSHOP_ORDER_CANCELED', 'Order was canceled');
-define('_JSHOP_COMMENT_YOUR_ORDER', 'Comments on your Order');
+define('_JSHOP_ERROR_PAYMENT_DATA', 'Por favor corrija as informações de pagamento');
+define("_JSHOP_HI","Olá");
+define('_JSHOP_ORDER_STATUS_CHANGE_SUBJECT','Status da ordem número %s mudou');
+define('_JSHOP_ORDER_STATUS_CHANGE_TITLE', 'Mudança de status');
+define('_JSHOP_YOUR_ORDER_STATUS_CHANGE', 'O status da sua ordem número %s foi modificado');
+define('_JSHOP_NEW_STATUS_IS', 'O novo status é');
+define('_JSHOP_ORDER_CANCELED', 'Ordem foi cancelada');
+define('_JSHOP_COMMENT_YOUR_ORDER', 'Comentários sobre sua ordem');
 
 // Step order
 define('_JSHOP_STEP_ORDER_2', 'Endereço');
@@ -218,15 +218,15 @@ define('_JSHOP_STEP_ORDER_4', 'Método de frete');
 define('_JSHOP_STEP_ORDER_5', 'Confirma compra');
 
 // End order
-define('_JSHOP_ADD_INFO', 'Notes added below will be added to your order:');
+define('_JSHOP_ADD_INFO', 'As anotações abaixo vão ser adicionadas na sua compra:');
 define('_JSHOP_FINISH_DELIVERY_ADRESS', 'Endereço de envio');
 define('_JSHOP_FINISH_SHIPPING_METHOD', 'Método de frete');
 define('_JSHOP_FINISH_PAYMENT_METHOD', 'Método de pagamento');
-define('_JSHOP_THANK_YOU_ORDER', 'Obrigado pela sua compra!<br />Um recibo foi enviado para seu e-mail.');
-define('_JSHOP_ORDER_PLACED', 'Your order has been successfully placed!');
+define('_JSHOP_THANK_YOU_ORDER', '<h1>Obrigado pela sua compra!</h1><h3>Um recibo foi enviado para seu e-mail.</h3>');
+define('_JSHOP_ORDER_PLACED', 'Your order has been successfully placed!'); // not used
 
 // E-mail
-define('_JSHOP_EMAIL_THANK_YOU', '<h1>Thank you for shopping with us.</h1><h3>Your order information follows.</h3>');
+define('_JSHOP_EMAIL_THANK_YOU', 'Thank you for shopping with us. Your order information follows.'); // not used
 define('_JSHOP_EMAIL_PURCHASE_ORDER', 'Purchase order');
 define('_JSHOP_DESCRIPTION', 'Description');
 define('_JSHOP_ORDER_NUMBER', 'Número de compra');
