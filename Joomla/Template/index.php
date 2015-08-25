@@ -149,6 +149,7 @@ JHTML::_('behavior.framework', true);
 			</div>
 		<?php } ?> 
 		<?php if($this->countModules('position-2')) {
+			// Don't show "Uncategorised" in the breadcrumbs
 			$app = JFactory::getApplication();
 			$pathway = $app->getPathway();
 			$path = $pathway->getPathway();
