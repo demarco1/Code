@@ -152,10 +152,11 @@ JHTML::_('behavior.framework', true);
 <?php
 $app = JFactory::getApplication();
 $pathway = $app->getPathway();
-$pathwayarray = $pathway->getPathway();
-//$pathwayarray[0]->link = 'index.php?Itemid=999';
-print_r($pathwayarray);
-$pathway->setPathway($pathwayarray);
+$path = $pathway->getPathway();
+for( $i=0; $i<count($path); $i++ ) {
+	if( $path[$i]->name == 'Uncategorised' ) unset( $path[$i] );
+}
+$pathway->setPathway($path);
 ?>
 			
 			<div id="pathway" class="gainlayout" style="float: left;">
