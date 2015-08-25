@@ -148,18 +148,14 @@ JHTML::_('behavior.framework', true);
 				<div class="clr"></div>
 			</div>
 		<?php } ?> 
-		<?php if($this->countModules('position-2')) { ?>
-<?php
-$app = JFactory::getApplication();
-$pathway = $app->getPathway();
-$path = $pathway->getPathway();
-for( $i=0; $i<count($path); $i++ ) {
-	if( $path[$i]->name == 'Uncategorised' ) unset( $path[$i] );
-}
-$pathway->setPathway($path);
-$pathway->addItem('Foo');
-?>
-			
+		<?php if($this->countModules('position-2')) {
+			$app = JFactory::getApplication();
+			$pathway = $app->getPathway();
+			$path = $pathway->getPathway();
+			for( $i=0; $i<count($path); $i++ ) {
+				if( $path[$i]->name == 'Uncategorised' ) unset( $path[$i] );
+			}
+			$pathway->setPathway($path);?>
 			<div id="pathway" class="gainlayout" style="float: left;">
 				<jdoc:include type="modules" name="position-2" />
 				<div class="clr"></div>
