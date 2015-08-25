@@ -187,13 +187,11 @@ define('_JSHOP_RETURN_POLICY', 'Return policy');
 define('_JSHOP_SELECT_VALUE', 'Select value');
 
 // Payment
-define('_JSHOP_TESTMODE','Modo de teste');
 define('_JSHOP_TRANSACTION_END','Status da ordem para transações completas');
 define('_JSHOP_TRANSACTION_PENDING','Status da ordem para pagamentos pendentes');
 define('_JSHOP_TRANSACTION_FAILED','Status da ordem para transações com erros');
 define('_JSHOP_CHECK_DATA_RETURN', 'Verifique os dados após voltar do sistema de pagamento');
 define('_JSHOP_OVERRIDING_ADDRESSES','Endereços prioritários');
-define('_JSHOP_NOTIFY_URL_SEF', 'URL notifica SEF');
 define('_JSHOP_ACCOUNT_HOLDER', 'Nome do usuário da conta');
 define('_JSHOP_ACCOUNT_NUMBER', 'Número da conta');
 define('_JSHOP_BIC', 'Código identificador do banco');
