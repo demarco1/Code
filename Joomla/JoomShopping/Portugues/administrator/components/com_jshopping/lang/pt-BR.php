@@ -1,96 +1,96 @@
 <?php
 /**
-* @version      3.20.2 17.02.2015
-* @author       MAXXmarketing GmbH
+* @version      1.0.0 22.08.2015
+* @author       Aran Dunkley & Elisabeth Medeiros de Oliveira
 * @package      Jshopping
-* @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
+* @copyright    Copyright (C) 2015 Ligmincha Brasil
 * @license      GNU/GPL
 */
 
-define('_JSHOP_NO',"No");
-define('_JSHOP_YES',"Yes");
-define('_JSHOP_ALL',"All");
-define('_JSHOP_ADD','Add');
-define('_JSHOP_BACK','Back');
-define('_JSHOP_SEARCH','Search');
+define('_JSHOP_NO',"Não");
+define('_JSHOP_YES',"Sim");
+define('_JSHOP_ALL',"Todo");
+define('_JSHOP_ADD','Adicionar');
+define('_JSHOP_BACK','Anterior');
+define('_JSHOP_SEARCH','Pesquisar');
 define('_JSHOP_SHOW','Show');
 define('_JSHOP_HIDE','Hide');
-define('_JSHOP_ADD_ALL','Add all');
+define('_JSHOP_ADD_ALL','Adicionar todas');
 define('_JSHOP_HINT','Tips');
-define('_JSHOP_MAIN_PARAMETERS', 'Details');
-define('_JSHOP_DELETE','Delete');
+define('_JSHOP_MAIN_PARAMETERS', 'Detales');
+define('_JSHOP_DELETE','Excluir');
 define('_JSHOP_PUBLISH','Published');
 define('_JSHOP_UNPUBLISH','Unpublished');
 define('_JSHOP_SHORT_DESCRIPTION','Short description');
-define('_JSHOP_ALIAS','Alias');
-define('_JSHOP_IMAGE','Image');
-define('_JSHOP_DESCRIPTION','Description');
-define('_JSHOP_ORDERING_FIRST','First');
+define('_JSHOP_ALIAS','Apelido');
+define('_JSHOP_IMAGE','Imagem');
+define('_JSHOP_DESCRIPTION','Descrição');
+define('_JSHOP_ORDERING_FIRST','Primeiro');
 define('_JSHOP_ORDERING','Ordering');
-define('_JSHOP_UP','Up');
-define('_JSHOP_DOWN','Down');
-define('_JSHOP_NEW','New');
+define('_JSHOP_UP','Cima');
+define('_JSHOP_DOWN','Baixo');
+define('_JSHOP_NEW','Novo');
 define('_JSHOP_WRITEABLE','Writable');
 define('_JSHOP_NON_WRITEABLE','Non Writable');
 define('_JSHOP_IMAGE_SELECT','Select image file');
 define('_JSHOP_IMAGE_THUMB_SIZE','Thumbnail sizes');
 define('_JSHOP_IMAGE_SIZE','Sizes of the full image');
 define('_JSHOP_IMAGE_SIZE_1','By configuration');
-define('_JSHOP_IMAGE_SIZE_2','Other');
+define('_JSHOP_IMAGE_SIZE_2','Outra');
 define('_JSHOP_IMAGE_SIZE_3','Original');
 define('_JSHOP_ERROR_SAVING_IMAGE','Error saving image');
 define('_JSHOP_IMAGE_SIZE_INFO','If selected only one parameter (height or width), the other will set up automatically dependent on the image proportions');
-define('_JSHOP_IMAGE_WIDTH','Width');
-define('_JSHOP_IMAGE_HEIGHT','Height');
+define('_JSHOP_IMAGE_WIDTH','Lagura');
+define('_JSHOP_IMAGE_HEIGHT','Altura');
 define('_JSHOP_WRITE_WIDTH_BAD','Enter image width');
 define('_JSHOP_WRITE_HEIGHT_BAD','Enter image height');
 define('_JSHOP_WRITE_SIZE_BAD','Enter image size');
 define('_JSHOP_SORT', 'Sorting');
-define('_JSHOP_PRICE', 'Price');
+define('_JSHOP_PRICE', 'Preço');
 define('_JSHOP_KEY','Key');
 define('_JSHOP_UNLIMITED','Unlimited');
-define('_JSHOP_REQUIRED','Required');
+define('_JSHOP_REQUIRED','Requerido');
 
 define('_JSHOP_SELECT','Please select');
 define('_JSHOP_MULTISELECT_INFO','Multiselect: use CTRL-Key and Mouse');
 
-define('_JSHOP_SORT_ALPH', 'Name');
-define('_JSHOP_SORT_PRICE', 'Price');
-define('_JSHOP_SORT_DATE', 'Date');
+define('_JSHOP_SORT_ALPH', 'Noma');
+define('_JSHOP_SORT_PRICE', 'Preço');
+define('_JSHOP_SORT_DATE', 'Data');
 define('_JSHOP_SORT_MANUAL', 'Predefined');
 define('_JSHOP_SORT_RATING', 'Rating');
 define('_JSHOP_SORT_POPULAR', 'Popular');
 
-define('_JSHOP_STORE_INFO','Shop info');
-define('_JSHOP_STORE','Shop');
-define('_JSHOP_STORE_NAME','Shop name');
-define('_JSHOP_STORE_COMPANY','Company name');
+define('_JSHOP_STORE_INFO','Informação loja');
+define('_JSHOP_STORE','Loja');
+define('_JSHOP_STORE_NAME','Noma do loja');
+define('_JSHOP_STORE_COMPANY','Nome da empresa');
 define('_JSHOP_STORE_URL','URL');
-define('_JSHOP_STORE_ADRESS','Address');
-define('_JSHOP_STORE_CITY','City');
-define('_JSHOP_STORE_COUNTRY','Country');
-define('_JSHOP_STORE_STATE','State/Province/Region');
-define('_JSHOP_STORE_ZIP','Postal Code');
+define('_JSHOP_STORE_ADRESS','Endereço');
+define('_JSHOP_STORE_CITY','Cidade');
+define('_JSHOP_STORE_COUNTRY','País');
+define('_JSHOP_STORE_STATE','Estado');
+define('_JSHOP_STORE_ZIP','CEP');
 define('_JSHOP_STORE_ADRESS_FORMAT','Adress format');
 define('_JSHOP_STORE_DATE_FORMAT','Date format');
 define('_JSHOP_CONTACT_INFO','Contact info');
 define('_JSHOP_CONTACT_FIRSTNAME','First name');
 define('_JSHOP_CONTACT_LASTNAME','Last name');
 define('_JSHOP_CONTACT_MIDDLENAME','Middle name');
-define('_JSHOP_CONTACT_PHONE','Phone');
+define('_JSHOP_CONTACT_PHONE','Telefone');
 define('_JSHOP_CONTACT_FAX','Fax');
 define('_JSHOP_CONTACT_EMAIL','Email');
-define('_JSHOP_BANK','Bank');
+define('_JSHOP_BANK','Banco');
 define('_JSHOP_BENEF_BANK','Beneficiary bank');
 define('_JSHOP_BENEF_BANK_INFO','Beneficiary bank info');
-define('_JSHOP_BENEF_BIC','Bank identification code');
-define('_JSHOP_BENEF_CONTO','Account number');
+define('_JSHOP_BENEF_BIC','Código identificador do banco');
+define('_JSHOP_BENEF_CONTO','Número da conta');
 define('_JSHOP_BENEF_IBAN','IBAN');
 define('_JSHOP_BIC_BIC','BIC');
 define('_JSHOP_BENEF_SWIFT','SWIFT Code');
 define('_JSHOP_INTERM_BANK','Intermediary bank');
-define('_JSHOP_INTERM_NAME','Name');
-define('_JSHOP_BENEF_BANK_NAME','Name');
+define('_JSHOP_INTERM_NAME','Nome');
+define('_JSHOP_BENEF_BANK_NAME','Nome');
 define('_JSHOP_INTERM_SWIFT','SWIFT Code');
 define('_JSHOP_PDF_CONFIG','PDF Config');
 define('_JSHOP_PDF_FOOTER','Footer');
@@ -126,26 +126,26 @@ define('_JSHOP_PRODUCT_DELETED','Product ID %s was deleted');
 define('_JSHOP_CATEGORY_NO_DELETED','Category %s cannot not be deleted. It is not empty');
 
 // Manufacturers
-define('_JSHOP_MANUFACTURER','Manufacturer');
-define('_JSHOP_EDIT_MANUFACTURER','Edit manufacturer');
-define('_JSHOP_NEW_MANUFACTURER','New manufacturer');
-define('_JSHOP_ORDERING_MANUFACTURER','Sort manufacturers');
-define('_JSHOP_NAME_MANUFACTURER','Manufacturer name');
-define('_JSHOP_LOGO_MANUFACTURER','Manufacturer logo');
-define('_JSHOP_DESCRIPTION_MANUFACTURER','Manufacturer description');
-define('_JSHOP_LIST_MANUFACTURERS','Manufacturer list');
-define('_JSHOP_MANUFACTURER_DELETED','Manufacturer ID %s was deleted');
-define('_JSHOP_MANUFACTURERS','Manufacturers');
-define('_JSHOP_NONE','No');
+define('_JSHOP_MANUFACTURER','Fabricante');
+define('_JSHOP_EDIT_MANUFACTURER','Editar Fabricante');
+define('_JSHOP_NEW_MANUFACTURER','Novo Fabricante');
+define('_JSHOP_ORDERING_MANUFACTURER','Ordinar fabricantes');
+define('_JSHOP_NAME_MANUFACTURER','Nome do fabricante');
+define('_JSHOP_LOGO_MANUFACTURER','Logo do fabricante');
+define('_JSHOP_DESCRIPTION_MANUFACTURER','Descrição fabricante');
+define('_JSHOP_LIST_MANUFACTURERS','Lista de fabricantes');
+define('_JSHOP_MANUFACTURER_DELETED','Fabricante ID %s foi excluído');
+define('_JSHOP_MANUFACTURERS','Fabricantes');
+define('_JSHOP_NONE','Nenhum');
 
 // Currencies
-define('_JSHOP_EDIT_CURRENCY','Edit currency');
-define('_JSHOP_NEW_CURRENCY','New currency');
-define('_JSHOP_ORDERING_CURRENCY','Order currency');
+define('_JSHOP_EDIT_CURRENCY','Editar moeda');
+define('_JSHOP_NEW_CURRENCY','Nova moeda');
+define('_JSHOP_ORDERING_CURRENCY','Ordinar moedas');
 define('_JSHOP_VALUE_CURRENCY','Course of exchange');
-define('_JSHOP_LIST_CURRENCY','Currency list');
-define('_JSHOP_CURRENCY_DELETED','Currency was deleted');
-define('_JSHOP_CURRENCIES','Currencies');
+define('_JSHOP_LIST_CURRENCY','Lista moeda');
+define('_JSHOP_CURRENCY_DELETED','Currency foi excluído');
+define('_JSHOP_CURRENCIES','Moedas');
 
 // Taxes
 define('_JSHOP_EDIT_TAX','Edit tax');
@@ -330,8 +330,8 @@ define('_JSHOP_USE_PLUGIN_CONTENT', 'Use content plugins in descriptions?');
 define('_JSHOP_DISPLAY_PRICE_ADMIN', 'Displaying prices in the admin area');
 define('_JSHOP_DISPLAY_PRICE_FRONT', 'Displaying prices in the front end');
 define('_JSHOP_LIST_PRODUCTS', 'List products');
-define('_JSHOP_SHOW_MANUFACTURER', 'Show manufacturer');
-define('_JSHOP_DISPLAY_PRICE', 'Display prices'); 
+define('_JSHOP_SHOW_MANUFACTURER', 'Mostra fabricante');
+define('_JSHOP_DISPLAY_PRICE', 'Mostra preçcos'); 
 define('_JSHOP_DISPLAY_PRICE_FOR_FIRMA', 'Display prices for firms'); 
 define('_JSHOP_EXTENDED_CONFIG', 'Extended config');
 define('_JSHOP_CONFIG_DISPLAY_PRICE_LIST', 'Settings display prices');
@@ -570,11 +570,11 @@ define('_JSHOP_PANEL_ATTRIBUTES','Attributes');
 define('_JSHOP_PANEL_USERGROUPS','User groups');
 define('_JSHOP_INFO','Info');
 define('_JSHOP_REPORT','Wish list');
-define("_JSHOP_PANEL_LANGUAGES","Languages");
+define("_JSHOP_PANEL_LANGUAGES","Lingas");
 define("_JSHOP_PANEL_REVIEWS","Product comments");
-define("_JSHOP_PANEL_UPDATE","Install & Update");
+define("_JSHOP_PANEL_UPDATE","Instalar e Atualizar");
 define("_JSHOP_PANEL_DELIVERY_TIME","Delivery time");
-define("_JSHOP_PANEL_IMPORT_EXPORT","Import & Export");
+define("_JSHOP_PANEL_IMPORT_EXPORT","Importar e Exportar");
 define('_JSHOP_PANEL_UNITS_MEASURE', 'Units of measure');
 define('_JSHOP_PANEL_PRODUCT_LABELS', 'Product labels');
 define('_JSHOP_PANEL_PRODUCT_EXTRA_FIELDS', 'Product Characteristics');
@@ -592,18 +592,18 @@ define('_JSHOP_USERGROUP_IS_DEFAULT_DESCRIPTION', 'User belongs to this usergrou
 
 // Menu
 define('_JSHOP_MENU_MAIN','Joomshopping');
-define('_JSHOP_MENU_CATEGORIES','Categories');
-define('_JSHOP_MENU_PRODUCTS','Products');
+define('_JSHOP_MENU_CATEGORIES','Categorias');
+define('_JSHOP_MENU_PRODUCTS','Produtos');
 define('_JSHOP_MENU_COUPONS','Coupons');
-define('_JSHOP_MENU_ORDERS','Orders');
-define('_JSHOP_MENU_CONFIG','Configuration');
-define('_JSHOP_MENU_MANUFACTURERS','Manufacturers');
-define('_JSHOP_MENU_CLIENTS','Clients');
-define('_JSHOP_MENU_WISHLIST','Wishlist');
-define('_JSHOP_MENU_INFO','About us');
-define('_JSHOP_MENU_OTHER','Options');
+define('_JSHOP_MENU_ORDERS','Ordems');
+define('_JSHOP_MENU_CONFIG','Configurações');
+define('_JSHOP_MENU_MANUFACTURERS','Fabricantes');
+define('_JSHOP_MENU_CLIENTS','Clientes');
+define('_JSHOP_MENU_WISHLIST','Lista de desejos');
+define('_JSHOP_MENU_INFO','Sobre nós');
+define('_JSHOP_MENU_OTHER','Opções');
 
-define('_JSHOP_EDIT','Edit');
+define('_JSHOP_EDIT','Editar');
 define('_JSHOP_PRODUCT_SAVED','Product Saved');
 define('_JSHOP_ID','ID');
 define('_JSHOP_PRODUCT_COPY_TO','Copy product id %s to product id %s');
@@ -613,14 +613,14 @@ define('_JSHOP_ABOUT_AS','About us');
 define("_JSHOP_EDIT_SHIPPING_PRICES","Edit delivery methods prices");
 define("_JSHOP_NEW_SHIPPING_PRICES","New delivery methods prices");
 
-define('_JSHOP_OTHER_ELEMENTS','Options');
+define('_JSHOP_OTHER_ELEMENTS','Opções');
 
-define('_JSHOP_PANEL_SHIPPINGS_PRICES','Shipping prices');
+define('_JSHOP_PANEL_SHIPPINGS_PRICES','Preços de frete');
  
 define('_JSHOP_ORDER_DELETED_ID','Order id %s was deleted'); 
 define('_JSHOP_ERROR_PAYMENT_FILE_NOT_EXIST','Payment method error, file "%s" not exist'); 
 
-define('_JSHOP_FILES','Files');
+define('_JSHOP_FILES','Arquivos');
 define('_JSHOP_DEMO_FILE','Demo file');
 define('_JSHOP_DESCRIPTION_DEMO_FILE','Description (of the demo file)');
 define('_JSHOP_FILE_SALE','File for sale');
@@ -684,8 +684,8 @@ define('_JSHOP_ADD_ATTRIBUT', 'Add Attribut');
 define('_JSHOP_PLEASE_ADD_CATEGORY', 'Please add category');
 
 define('_JSHOP_PURCHASE_WITHOUT_REGISTERING','Purchase without registering');
-define("_JSHOP_INSTALL_AND_UPDATE","Install & Update");
-define('_JSHOP_COMPLETED', 'Completed');
+define("_JSHOP_INSTALL_AND_UPDATE","Instalar e Atualizar");
+define('_JSHOP_COMPLETED', 'Concluído');
 
 define('_JSHOP_DELIVERY_TIME', 'Delivery time');
 define('_JSHOP_LIST_DELIVERY_TIMES', 'Delivery times');
@@ -826,14 +826,14 @@ define('_JSHOP_FREE_ATTRIBUTES','Free attributes');
 define('_JSHOP_SEO','SEO');
 define('_JSHP_SEOPAGE_category',"Main page (main category)");
 define('_JSHP_SEOPAGE_manufacturers',"Manufacturers");
-define('_JSHP_SEOPAGE_cart',"Cart");
-define('_JSHP_SEOPAGE_wishlist',"Wishlist");
+define('_JSHP_SEOPAGE_cart',"Carrinho");
+define('_JSHP_SEOPAGE_wishlist',"Lista de desejos");
 define('_JSHP_SEOPAGE_login',"Login");
-define('_JSHP_SEOPAGE_register',"Register");
+define('_JSHP_SEOPAGE_register',"Cadastre-se");
 define('_JSHP_SEOPAGE_editaccount',"Edit account");
-define('_JSHP_SEOPAGE_myorders',"My orders");
-define('_JSHP_SEOPAGE_myaccount',"My account");
-define('_JSHP_SEOPAGE_search',"Search");
+define('_JSHP_SEOPAGE_myorders',"Minhas ordens");
+define('_JSHP_SEOPAGE_myaccount',"A minha conta");
+define('_JSHP_SEOPAGE_search',"Pesquisar");
 define('_JSHP_SEOPAGE_search-result',"Search result");
 define('_JSHP_SEOPAGE_myorder-detail',"My order Detail");
 define('_JSHP_SEOPAGE_vendors',"Vendors");
@@ -950,10 +950,10 @@ define('_JSHOP_OC_advert','Advertising');
 define('_JSHOP_OC_hide_from_basic_price','Hide from for basic price');
 
 define('_JSHOP_SHOW_EXTRA_FIELDS_CART','Show Characteristics in cart');
-define('_JSHOP_OVERRIDING_ADDRESSES','Overriding Addresses');
+define('_JSHOP_OVERRIDING_ADDRESSES','Endereços prioritários');
 define('_JSHOP_DELIVERY_ORDER_DEPENDS_DELIVERY_PRODUCT','Delivery of order depends on delivery of product');
-define('_JSHOP_DAYS','Days');
-define('_JSHOP_ORDER_FINISH', 'Confirm order');
+define('_JSHOP_DAYS','Dias');
+define('_JSHOP_ORDER_FINISH', 'Confirma compra');
 define('_JSHOP_INSERT_CODE', 'Insert code');
 define('_JSHOP_UPDATE_ARE_AVAILABLE', 'Update to %s are available!');
 define('_JSHOP_UPDATE_TO', 'Update to %s');
