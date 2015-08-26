@@ -307,7 +307,7 @@ text-align: left;
 	clear:both;
 }
 .items-leading .leading-0 h2 {
-	margin-top: 0;
+	margin-top: 8px;
 }
 #logo h2 {
   line-height: 1.1;
