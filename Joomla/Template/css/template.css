@@ -1099,7 +1099,7 @@ div.newsfeed ol li a{
 div.newsfeed ol li div a, div.newsfeed ol li div ol li a {
     font-weight: normal;
 }
-span.feed-link {
+span.feed-link, h5.feed-link {
 font-size:1em;
 font-weight: normal;
 font-family: Arial, Helvetica, sans-serif;
