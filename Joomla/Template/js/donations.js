@@ -2,11 +2,11 @@
  * Modify the donation form based on the payment type selection
  */
 $(document).ready(function(){
+	var e = 'ligminchapaulista' + '@' + 'gmail.com'; // avoid cloaking
+	var d = $('#donation');
+	var a = $('#amount', d);
 	$('#donation input[type=submit]').prop('disabled', true);
 	$('#donation .paytype').removeAttr('checked').change(function(){
-		var e = 'ligminchapaulista' + '@' + 'gmail.com'; // avoid cloaking
-		var d = $('#donation');
-		var a = $('#amount', d);
 		var p = $(this).val();
 
 		// Bank deposit
@@ -34,7 +34,6 @@ $(document).ready(function(){
 		$('#donation input[type=submit]').prop('disabled', false);
 	});
 	$('#donation').submit(function(){
-		var a = $('#donation #amount');
 		a.val(a.val().replace(',','.'));
 	});
 });
