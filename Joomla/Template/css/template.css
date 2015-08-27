@@ -1502,3 +1502,16 @@ div#content p.readmore	{text-align:right;margin-top:0;}
 .address_block .jshop_register .name {
     padding-right: 20px;
 }
+
+/*
+ * Donation form
+ */
+form#donation {
+	background-color: #ecf4ff;
+	padding: 10px 20px;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	-khtml-border-radius: 8px;
+}
