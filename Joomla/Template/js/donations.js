@@ -2,7 +2,8 @@
  * Modify the donation form based on the payment type selection
  */
 $(document).ready(function(){
-	$('#donation .paytype').change(function(){
+	$('#donation input[type=submit]').prop('disabled', true);
+	$('#donation .paytype').removeAttr('checked').change(function(){
 		var e = 'ligminchapaulista' + '@' + 'gmail.com'; // avoid cloaking
 		var d = $('#donation');
 		var a = $('#amount', d);
@@ -23,9 +24,12 @@ $(document).ready(function(){
 		if(p==3) {
 			d.attr('action','/components/com_jshopping/payments/pm_pagseguro/donations.php?q=' + a.val());
 		}
+
+		// Enable the submit button
+		$('#donation input[type=submit]').prop('disabled', false);
 	});
 	$('#donation').submit(function(){
 		var a = $('#donation #amount');
-		a.val(a.val.replace(',','.'));
+		a.val(a.val().replace(',','.'));
 	});
 });
