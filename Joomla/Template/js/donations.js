@@ -9,6 +9,11 @@ $(document).ready(function(){
 		var a = $('#amount', d);
 		var p = $(this).val();
 
+		// Bank deposit
+		if(p==1) {
+			d.attr('action','http://ligmincha.com.br/index.php?option=com_content&view=article&id=110');
+		}
+
 		// Paypal
 		if(p==2) {
 			d.attr('action','https://www.paypal.com/cgi-bin/webscr');
