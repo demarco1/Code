@@ -22,7 +22,7 @@ $(document).ready(function(){
 
 		// PagSeguro
 		if(p==3) {
-			d.attr('action','/components/com_jshopping/payments/pm_pagseguro/donations.php?q=' + a.val());
+			d.attr('action','/components/com_jshopping/payments/pm_pagseguro/donations.php?q=' + a.val().replace(',','.'));
 		}
 
 		// Enable the submit button
@@ -30,7 +30,6 @@ $(document).ready(function(){
 	});
 	$('#donation').submit(function(){
 		var a = $('#donation #amount');
-		alert(a.val().replace(',','.'));
 		a.val(a.val().replace(',','.'));
 	});
 });
