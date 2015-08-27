@@ -21,7 +21,7 @@ $_SERVER['REQUEST_URI'] = '/loja';
 // Load the Joomla framework
 define('_JEXEC', 1);
 define('DS', DIRECTORY_SEPARATOR);
-define('JPATH_BASE', dirname(__FILE__));
+define('JPATH_BASE', preg_replace( '|/components/.+$|', '', __DIR__ ));
 require_once JPATH_BASE.'/includes/defines.php';
 require_once JPATH_BASE.'/includes/framework.php';
 $app = JFactory::getApplication('site');
