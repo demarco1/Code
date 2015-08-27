@@ -80,7 +80,7 @@ class pm_pagseguro extends PaymentRoot{
 				'itemDescription1' => $item_name,
 				'itemAmount1' => $order->order_total,
 				'itemQuantity1' => 1,
-				'shippingCost' => number_format($order->order_shipping, 2, '.', ''),
+				'shippingCost' => number_format( $order->order_shipping, 2, '.', '' ),
 				'shippingType' => 3,
 				'shippingAddressStreet' => $order->d_street,
 				'shippingAddressPostalCode' => $order->d_zip,
@@ -107,7 +107,7 @@ class pm_pagseguro extends PaymentRoot{
 
 		// If we received a code (and it's not an error number), redirect the client to PagSeguro to complete the order
 		$code = preg_match( '|<code>(.+?)</code>|', $result, $m ) ? $m[1] : false;
-		if( $code && !is_numeric( $code )  ) {
+		if( $code && !is_numeric( $code ) ) {
 			header( "Location: https://{$sandbox}pagseguro.uol.com.br/v2/checkout/payment.html?code=$code" );
 		} else die( "Error: $result" );
 	}
