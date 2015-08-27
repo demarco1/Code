@@ -24,4 +24,8 @@ $(document).ready(function(){
 			d.attr('action','/components/com_jshopping/payments/pm_pagseguro/donations.php?q=' + a.val());
 		}
 	});
+	$('#donation .paytype').submit(function(){
+		var a = $('#donation #amount');
+		a.val(a.val.replace(',','.');
+	});
 });
