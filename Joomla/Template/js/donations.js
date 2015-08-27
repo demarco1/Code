@@ -11,7 +11,7 @@ $(document).ready(function(){
 
 		// Bank deposit
 		if(p==1) {
-			d.attr('action','http://ligmincha.com.br/index.php?option=com_content&view=article&id=110');
+			d.attr('action','/index.php?option=com_content&view=article&id=110');
 		}
 
 		// Paypal
