@@ -16,7 +16,7 @@ $amount = array_key_exists( 'q', $_REQUEST ) && is_numeric( $_REQUEST['q'] )
 	: die( 'Por favor fornecer o valor de doação' );
 
 // Set URI to the loja so that the jshopping component is loaded
-$_SERVER['REQUEST_URI'] = '/loja';
+$_SERVER['REQUEST_URI'] = '/carrinho-menu';
 
 // Load the Joomla framework
 define('_JEXEC', 1);
