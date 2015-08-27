@@ -26,6 +26,6 @@ $(document).ready(function(){
 	});
 	$('#donation .paytype').submit(function(){
 		var a = $('#donation #amount');
-		a.val(a.val.replace(',','.');
+		a.val(a.val.replace(',','.'));
 	});
 });
