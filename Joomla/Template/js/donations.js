@@ -30,6 +30,7 @@ $(document).ready(function(){
 	});
 	$('#donation').submit(function(){
 		var a = $('#donation #amount');
+		alert(a.val().replace(',','.'));
 		a.val(a.val().replace(',','.'));
 	});
 });
