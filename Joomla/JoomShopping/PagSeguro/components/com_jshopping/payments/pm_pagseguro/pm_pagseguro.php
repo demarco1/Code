@@ -105,10 +105,9 @@ class pm_pagseguro extends PaymentRoot{
 		if( !$result = curl_exec( $ch ) ) die( 'Error: ' . curl_error( $ch ) );
 		curl_close( $ch );
 
-		// If we received a code, redirect the client to PagSeguro tp complete the order
+		// If we received a code (and it's not an error number), redirect the client to PagSeguro to complete the order
 		$code = preg_match( '|<code>(.+?)</code>|', $result, $m ) ? $m[1] : false;
-		if( $code ) {
-			JFactory::getApplication()->enqueueMessage( "Code: $code" );
+		if( $code && !is_numeric( $code )  ) {
 			header( "Location: https://{$sandbox}pagseguro.uol.com.br/v2/checkout/payment.html?code=$code" );
 		} else die( "Error: $result" );
 	}
