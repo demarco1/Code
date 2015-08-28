@@ -11,8 +11,8 @@
  */
 
 // Get the donation amount and format or die if not supplied
-$amount = array_key_exists( 'q', $_REQUEST ) && is_numeric( $_REQUEST['q'] )
-	? number_format( $_REQUEST['q'], 2, '.', '' )
+$amount = array_key_exists( 'amount', $_REQUEST ) && is_numeric( $_REQUEST['amount'] )
+	? number_format( $_REQUEST['amount'], 2, '.', '' )
 	: die( 'Por favor fornecer o valor de doação' );
 
 // Set URI to the loja so that the jshopping component is loaded
