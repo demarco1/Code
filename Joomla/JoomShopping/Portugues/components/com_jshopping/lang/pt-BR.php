@@ -136,7 +136,7 @@ Thank you for registering at %s.
 You may now login to %s using the username and password you registered with.");
 
 // Registration
-define('_JSHOP_REG_TITLE', 'Title');
+define('_JSHOP_REG_TITLE', 'Título');
 define('_JSHOP_USERNAME', 'Usuário');
 define('_JSHOP_F_NAME', 'Primero nome');
 define('_JSHOP_L_NAME', 'Sobrenome');
@@ -212,7 +212,7 @@ define('_JSHOP_COMMENT_YOUR_ORDER', 'Comentários sobre sua ordem');
 define('_JSHOP_STEP_ORDER_2', 'Endereço');
 define('_JSHOP_STEP_ORDER_3', 'Método de pagamento');
 define('_JSHOP_STEP_ORDER_4', 'Método de frete');
-define('_JSHOP_STEP_ORDER_5', 'Confirma compra');
+define('_JSHOP_STEP_ORDER_5', 'Confirmar compra');
 
 // End order
 define('_JSHOP_ADD_INFO', 'As anotações abaixo vão ser adicionadas na sua compra:');
@@ -226,8 +226,7 @@ define('_JSHOP_THANK_YOU_ORDER', '<h1>Obrigado pela sua compra!</h1>
 <b>Código identificador do banco: </b>237<br />
 <b>Agência: </b>6613-3<br />
 <b>Conta corrente:</b> 8484-0<br />
-<b>Favorecido/Razão Social Pessoa Jurídica: </b><br />
-&nbsp;&nbsp;&nbsp;&nbsp;Christiane Meng de Azevedo 26255587843<br />
+<b>Favorecido: </b>Christiane Meng de Azevedo 26255587843<br />
 <b>CNPJ: </b>21.105.170/0001-00<br /><br />
 <b>Pedimos a gentileza de enviar o comprovante de pagamento por e-mail.</b>');
 define('_JSHOP_ORDER_PLACED', 'Your order has been successfully placed!'); // not used
@@ -235,7 +234,7 @@ define('_JSHOP_ORDER_PLACED', 'Your order has been successfully placed!'); // no
 // E-mail
 define('_JSHOP_EMAIL_THANK_YOU', 'Thank you for shopping with us. Your order information follows.'); // not used
 define('_JSHOP_EMAIL_PURCHASE_ORDER', 'Purchase order');
-define('_JSHOP_DESCRIPTION', 'Description');
+define('_JSHOP_DESCRIPTION', 'Descrição');
 define('_JSHOP_ORDER_NUMBER', 'Número de compra');
 define('_JSHOP_ORDER_DATE', 'Order date');
 define('_JSHOP_ORDER_FROM', 'Order from');
@@ -243,13 +242,13 @@ define('_JSHOP_ORDER_SHORT_NR', 'No');
 define('_JSHOP_ORDER_STATUS', 'Order status');
 define('_JSHOP_CUSTOMER_INFORMATION', 'Customer information');
 define('_JSHOP_ORDER_HISTORY', 'Order history');
-define('_JSHOP_ORDER_COMMENT', 'Comment');
+define('_JSHOP_ORDER_COMMENT', 'Comentário');
 define('_JSHOP_NEW_ORDER', 'New order N. %s (%s)');
 define('_JSHOP_NEW_ORDER_V', 'New order N. %s ');
 define('_JSHOP_EMAIL_BILL_TO', 'Bill to');
 define('_JSHOP_EMAIL_BILL', 'Bill');
 define('_JSHOP_EMAIL_SHIP_TO', 'Ship to');
-define('_JSHOP_ORDER_ITEMS', 'Order items');
+define('_JSHOP_ORDER_ITEMS', 'Items de ordem');
 define('_JSHOP_NAME_PRODUCT', 'Product name');
 define('_JSHOP_EAN_PRODUCT', 'Product code');
 define('_JSHOP_TOTAL', 'Total');
@@ -261,7 +260,7 @@ define('_JSHOP_ENDTOTAL_INKL_TAX', 'Total incl. TAX');
 define('_JSHOP_BENEF_BANK', 'Beneficiary Bank info');
 define('_JSHOP_BENEF_BIC', 'Código identificador do banco');
 define('_JSHOP_BENEF_CONTO', 'Agência');
-define('_JSHOP_BENEF_IBAN', 'Favorecido/Razão Social Pessoa Jurídica');
+define('_JSHOP_BENEF_IBAN', 'Favorecido');
 define('_JSHOP_BENEF_SWIFT', 'SWIFT Code');
 define('_JSHOP_INTERM_BANK', 'Intermediary Bank');
 define('_JSHOP_INTERM_NAME', 'Name');
@@ -281,21 +280,21 @@ define('_JSHOP_CONTACT_FAX','Fax');
 
 // Account
 define('_JSHOP_SAVE', 'Save');
-define('_JSHOP_MY_ACCOUNT', 'My account');
+define('_JSHOP_MY_ACCOUNT', 'Minha conta');
 define('_JSHOP_ACCOUNT_UPDATE', 'Account was updated');
-define('_JSHOP_NEW_PASSWORD', 'New password');
-define('_JSHOP_NEW_PASSWORD_2', 'Confirm new password');
+define('_JSHOP_NEW_PASSWORD', 'Nova senha');
+define('_JSHOP_NEW_PASSWORD_2', 'Confirmar nova senha');
 define('_JSHOP_ADVANCED_SEARCH', 'Advanced search');
 define('_JSHOP_NO_SEARCH_RESULTS', 'No search results found');
-define('_JSHOP_EDIT_DATA', 'Edit data');
-define('_JSHOP_SHOW_ORDERS', 'Show orders');
+define('_JSHOP_EDIT_DATA', 'Editar dado');
+define('_JSHOP_SHOW_ORDERS', 'Mostra ordens');
 define('_JSHOP_NO_ORDERS', 'You have no orders yet');
-define('_JSHOP_CANCEL_ORDER', 'Cancel order');
+define('_JSHOP_CANCEL_ORDER', 'Cancelar ordem');
 
 // Search
-define('_JSHOP_SEARCH', 'Search');
-define('_JSHOP_SEARCH_CATEGORIES', 'Categories');
-define('_JSHOP_SEARCH_ALL_CATEGORIES', 'All categories');
+define('_JSHOP_SEARCH', 'Buscar');
+define('_JSHOP_SEARCH_CATEGORIES', 'Categorias');
+define('_JSHOP_SEARCH_ALL_CATEGORIES', 'Todas categorias');
 define('_JSHOP_SEARCH_INCLUDE_SUBCAT', 'Include subcategories');
 define('_JSHOP_SEARCH_MANUFACTURERS', 'Manufacturers');
 define('_JSHOP_SEARCH_ALL_MANUFACTURERS', 'All manufacturers');
@@ -305,12 +304,12 @@ define('_JSHOP_SEARCH_DATE_FROM', 'Date from');
 define('_JSHOP_SEARCH_DATE_TO', 'Date to');
 
 // Reviews
-define('_JSHOP_COMMENT', 'Comment');
-define('_JSHOP_NEW_COMMENT', 'New comment');
-define('_JSHOP_REVIEWS', 'Comments');
+define('_JSHOP_COMMENT', 'Comentário');
+define('_JSHOP_NEW_COMMENT', 'Novo comentário');
+define('_JSHOP_REVIEWS', 'Comentários');
 define('_JSHOP_REVIEW_NOT_LOGGED', 'Please log in to write comments.');
 define('_JSHOP_ADD_REVIEW_PRODUCT', 'Write a comment for this product!');
-define('_JSHOP_REVIEW_USER_NAME', 'Name');
+define('_JSHOP_REVIEW_USER_NAME', 'Nome');
 define('_JSHOP_REVIEW_USER_EMAIL', 'E-mail');
 define('_JSHOP_REVIEW_REVIEW', 'Please write comment');
 define('_JSHOP_REVIEW_MARK_PRODUCT', 'Rating for product');
@@ -369,7 +368,7 @@ define('_JSHOP_OLD_PRICE','Old price');
 define('_JSHOP_DETAILS','Details');
 define('_JSHOP_RATING','Rating');
 define('_JSHOP_FOR_USE_COUPON_PLEASE_LOGIN','Please login to use coupons');
-define('_JSHOP_EAN', 'Code');
+define('_JSHOP_EAN', 'Código');
 define('_JSHOP_PAYMENT_NUMBER', 'Order number %s');
 define('_JSHOP_ORDER_WITHOUT_REGISTER_CLICK', 'To <b>Order without registration</b>, please click');
 define('_JSHOP_HERE', 'here');
@@ -437,14 +436,14 @@ define('_JSHOP_ANY_WORDS','Any words');
 define('_JSHOP_ALL_WORDS','All words');
 define('_JSHOP_EXACT_WORDS','Exact Phrase');
 
-define('_JSHOP_ORDER_DETAILS','Order details');
-define('_JSHOP_CART_EMPTY','Your Cart is currently empty.');
-define('_JSHOP_ORDER_DELIVERY_TIME', 'Delivery time');
-define('_JSHOP_GROUP', 'Group');
-define('_JSHOP_TITLE', 'Title');
+define('_JSHOP_ORDER_DETAILS','Detalhes da ordem');
+define('_JSHOP_CART_EMPTY','Seu carrinho está vazio.');
+define('_JSHOP_ORDER_DELIVERY_TIME', 'Prazo de entrega');
+define('_JSHOP_GROUP', 'Grupo');
+define('_JSHOP_TITLE', 'Título');
 define('_JSHOP_DISCOUNT', 'Discount');
-define('_JSHOP_USER_GROUPS_INFO', 'All groups');
-define('_JSHOP_BILL_ADDRESS', 'Billing address');
+define('_JSHOP_USER_GROUPS_INFO', 'Todos grupos');
+define('_JSHOP_BILL_ADDRESS', 'Endereço de cobrança');
 define('_JSHOP_ZOOM_IMAGE', 'Zoom image');
 define('_JSHOP_INVOICE_DATE','Invoice Date');
 define('_JSHOP_PRIVACY_STATEMENT','Privacy Statement');
@@ -459,7 +458,7 @@ define('_JSHOP_REGWARN_BIRTHDAY','Please enter your birthday.');
 define('_JSHOP_REGWARN_MNAME_DELIVERY','Please enter your delivery middle name.');
 define('_JSHOP_REGWARN_BIRTHDAY_DELIVERY','Please enter your delivery birthday.');
 
-define('_JSHOP_USER_NUMBER','Customer number');
+define('_JSHOP_USER_NUMBER','Número do cliente');
 define('_JSHOP_NO_RETURN_DESCRIPTION','I agree explicitly that you start before the end of the withdrawal period with the execution of the contract. I am aware that I have with the start of execution of the contract loses by this consent my withdrawal.');
 define('_JSHOP_NO_PRODUCTS_AFTER_FILTER','No related product');
 
