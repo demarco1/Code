@@ -16,7 +16,7 @@ $(document).ready(function(){
 		];
 
 		// Set the form action to the URL for the selected payment type and enable the submit button
-		d.attr('action', $(this).val());
+		d.attr('action', actions[$(this).val()]);
 		$('#donation input[type=submit]').prop('disabled', false);
 	});
 	$('#donation').submit(function(){
