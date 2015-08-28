@@ -2,7 +2,7 @@
 /**
  * Modifies Joomshopping shipping types (PAC, SEDEX and Carta registrada) to calculate correios cost during checkout
  * - see components/com_jshopping/controllers/checkout.php for relavent events
- * 
+ *
  * @copyright	Copyright (C) 2015 Aran Dunkley
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -101,11 +101,13 @@ class plgSystemCorreios extends JPlugin {
 	 */
 	public function onBeforeDisplayCheckoutStep4View( &$view ) {
 		if( !self::$allbooks ) {
+			$tmp = array();
 			for( $i = 0; $i < count( $view->shipping_methods ); $i++ ) {
-				if( preg_match( '|carta\s*registrada|i', $view->shipping_methods[$i]->name ) ) {
-					unset( $view->shipping_methods[$i] );
+				if( !preg_match( '|carta\s*registrada|i', $view->shipping_methods[$i]->name ) ) {
+					$tmp[] = $view->shipping_methods[$i];
 				}
 			}
+			$view->shipping_methods = $tmp;
 		}
 	}
 }
