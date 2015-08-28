@@ -92,10 +92,16 @@ class plgSystemCorreios extends JPlugin {
 	}
 
 	/**
-	 * If the order is not all books, remove the Carta registrada option
+	 * If the order is not all books, remove the Carta registrada options
 	 * (the $allbooks settings is updated in checkout by sm_correios class)
 	 */
 	public function onBeforeDisplayCheckoutStep4View( &$view ) {
-			if( !self::$allbooks ) unset( $view->shipping_methods[2] ); // TODO: we should remove this by name not assume that it's id is 2
+		if( !self::$allbooks ) {
+			for( $i = 0; $i < count( $view->shipping_methods ); $i++ ) {
+				if( preg_match( '|carta\s*registrada|i', $view->shipping_methods[$i]->name ) ) {
+					unset( $view->shipping_methods[$i] );
+				}
+			}
+		}
 	}
 }
