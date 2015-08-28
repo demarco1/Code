@@ -21,8 +21,8 @@
 					label="&lt;b&gt;Precos de Carta registrada&lt;/b&gt;:"
 					description="Precos de Carta Registrada"
 				/>
-				<field name="carta_track" type="text" default="1,80" description="Preço do tracking" label="Preço do tracking" size="10" />
-				<field name="carta_track_fast" type="text" default="3,60" description="Preço do registro (módico)" label="Preço do registro (módico)" size="10" />
+				<field name="carta_track" type="text" default="3,60" description="Preço do tracking" label="Preço do tracking" size="10" />
+				<field name="carta_track_mod" type="text" default="1,80" description="Preço do registro (módico)" label="Preço do registro (módico)" size="10" />
 				<field name="carta100" type="text" default="2,55" description="Preço de 100 até 150 gramas" label="100g-150g" size="10" />
 				<field name="carta150" type="text" default="3,10" description="Preço de 150 até 200 gramas" label="150g-200g" size="10" />
 				<field name="carta200" type="text" default="3,65" description="Preço de 200 até 250 gramas" label="200g-250g" size="10" />

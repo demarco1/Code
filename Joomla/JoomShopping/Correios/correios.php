@@ -18,18 +18,18 @@ defined('_JEXEC') or die;
 class plgSystemCorreios extends JPlugin {
 
 	public static $cartaPrices = array();  // the table of prices per weight for carta registrada
-	public static $cartaPrices2 = array(); // the table of prices per weight for carta registrada (módico)
+	public static $cartaPricesMod = array(); // the table of prices per weight for carta registrada (módico)
 	public static $allbooks;               // whether the order consists only of book or not (whether carta registrada is allowed or not)
 
 	public function onAfterInitialise() {
 
 		// And the Carta registrada prices (add the tracking price to each)
 		$t = str_replace( ',', '.', $this->params->get( 'carta_track' ) );
-		$t2 = str_replace( ',', '.', $this->params->get( 'carta_track_fast' ) );
+		$t2 = str_replace( ',', '.', $this->params->get( 'carta_track_mod' ) );
 		foreach( array( 100, 150, 200, 250, 300, 350, 400, 450 ) as $d ) {
 				$p = str_replace( ',', '.', $this->params->get( "carta$d" ) );
 				self::$cartaPrices[$d] = $p + $t;
-				self::$cartaPrices2[$d] = $p + $t2;
+				self::$cartaPricesMod[$d] = $p + $t2;
 		}
 
 		// Install our extended shipping type if not already there
