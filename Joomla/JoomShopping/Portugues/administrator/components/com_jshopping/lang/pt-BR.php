@@ -84,13 +84,13 @@ define('_JSHOP_BANK','Banco');
 define('_JSHOP_BENEF_BANK','Beneficiary bank');
 define('_JSHOP_BENEF_BANK_INFO','Beneficiary bank info');
 define('_JSHOP_BENEF_BIC','Código identificador do banco');
-define('_JSHOP_BENEF_CONTO','Número da conta');
-define('_JSHOP_BENEF_IBAN','IBAN');
-define('_JSHOP_BIC_BIC','BIC');
+define('_JSHOP_BENEF_CONTO','Agência');
+define('_JSHOP_BENEF_IBAN','Favorecido/Razão Social Pessoa Jurídica');
+define('_JSHOP_BIC_BIC','CNPJ');
 define('_JSHOP_BENEF_SWIFT','SWIFT Code');
 define('_JSHOP_INTERM_BANK','Intermediary bank');
 define('_JSHOP_INTERM_NAME','Nome');
-define('_JSHOP_BENEF_BANK_NAME','Nome');
+define('_JSHOP_BENEF_BANK_NAME','Nome do banco');
 define('_JSHOP_INTERM_SWIFT','SWIFT Code');
 define('_JSHOP_PDF_CONFIG','PDF Config');
 define('_JSHOP_PDF_FOOTER','Footer');
@@ -99,7 +99,7 @@ define('_JSHOP_PDF_ONLYJPG','Only jpg file');
 define('_JSHOP_PDF_PREVIEW','Preview pdf');
 define('_JSHOP_PDF_PREVIEW_INFO1','Preview the invoice as a PDF (Please save changed data before)');
 define('_JSHOP_PDF_INMM','In mm');
-define('_JSHOP_BENEF_PAYEE','Payee');
+define('_JSHOP_BENEF_PAYEE','Conta corrente');
 
 //Category
 define('_JSHOP_CATEGORY','Category');

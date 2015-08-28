@@ -192,11 +192,11 @@ define('_JSHOP_TRANSACTION_PENDING','Status da ordem para pagamentos pendentes')
 define('_JSHOP_TRANSACTION_FAILED','Status da ordem para transações com erros');
 define('_JSHOP_CHECK_DATA_RETURN', 'Verifique os dados após voltar do sistema de pagamento');
 define('_JSHOP_ACCOUNT_HOLDER', 'Nome do usuário da conta');
-define('_JSHOP_ACCOUNT_NUMBER', 'Número da conta');
+define('_JSHOP_ACCOUNT_NUMBER', 'Agência');
 define('_JSHOP_BIC', 'Código identificador do banco');
 define('_JSHOP_BANK', 'Banco');
-define('_JSHOP_BIC_BIC', 'BIC');
-define('_JSHOP_IBAN', 'IBAN');
+define('_JSHOP_BIC_BIC', 'CNPJ');
+define('_JSHOP_IBAN', 'Favorecido/Razão Social Pessoa Jurídica');
 define('_JSHOP_ERROR_PAYMENT', 'Ero no método pagamento');
 define('_JSHOP_ORDER_FINISH', 'Confirma compra');
 define('_JSHOP_ERROR_PAYMENT_DATA', 'Por favor corrija as informações de pagamento');
@@ -219,7 +219,7 @@ define('_JSHOP_ADD_INFO', 'As anotações abaixo vão ser adicionadas na sua com
 define('_JSHOP_FINISH_DELIVERY_ADRESS', 'Endereço de envio');
 define('_JSHOP_FINISH_SHIPPING_METHOD', 'Método de frete');
 define('_JSHOP_FINISH_PAYMENT_METHOD', 'Método de pagamento');
-define('_JSHOP_THANK_YOU_ORDER', '<h1>Obrigado pela sua compra!</h1><h3>Um recibo foi enviado para seu e-mail.</h3>');
+define('_JSHOP_THANK_YOU_ORDER', '<h1>Obrigado pela sua compra!</h1><h3>Um recibo com os detalhes para efetuar o depósito bancário foi enviado para seu e-mail.</h3>');
 define('_JSHOP_ORDER_PLACED', 'Your order has been successfully placed!'); // not used
 
 // E-mail
@@ -249,14 +249,14 @@ define('_JSHOP_VAT', 'TAX');
 define('_JSHOP_ENDTOTAL', 'Total');
 define('_JSHOP_ENDTOTAL_INKL_TAX', 'Total incl. TAX');
 define('_JSHOP_BENEF_BANK', 'Beneficiary Bank info');
-define('_JSHOP_BENEF_BIC', 'Bank identifier code');
-define('_JSHOP_BENEF_CONTO', 'Account number');
-define('_JSHOP_BENEF_IBAN', 'IBAN');
+define('_JSHOP_BENEF_BIC', 'Código identificador do banco');
+define('_JSHOP_BENEF_CONTO', 'Agência');
+define('_JSHOP_BENEF_IBAN', 'Favorecido/Razão Social Pessoa Jurídica');
 define('_JSHOP_BENEF_SWIFT', 'SWIFT Code');
 define('_JSHOP_INTERM_BANK', 'Intermediary Bank');
 define('_JSHOP_INTERM_NAME', 'Name');
-define('_JSHOP_BENEF_BANK_NAME','Name');
-define('_JSHOP_BENEF_PAYEE','Payee'); 
+define('_JSHOP_BENEF_BANK_NAME','Nome do banco');
+define('_JSHOP_BENEF_PAYEE','Conta corrente'); 
 define('_JSHOP_INTERM_SWIFT', 'SWIFT Code');
 define('_JSHOP_SHIPPING_PRICE', 'Shipping price');
 define('_JSHOP_WEIGHT_UNIT', 'Kg');

@@ -1502,6 +1502,9 @@ div#content p.readmore	{text-align:right;margin-top:0;}
 .address_block .jshop_register .name {
     padding-right: 20px;
 }
+#payment_form .jshop_payment_method {
+	display: none;
+}
 
 /*
  * Donation form
