@@ -854,30 +854,30 @@ define('_JSHP_SEOPAGE_all-products',"All products");
 define('_JSHP_SEOPAGE_content-privacy_statement',"Privacy statement");
 
 //static text
-define('_JSHP_STPAGE_home', "Main page (main category)");
-define('_JSHP_STPAGE_manufacturer', "Manufacturer");
+define('_JSHP_STPAGE_home', "Página principal (primeiro categoria)");
+define('_JSHP_STPAGE_manufacturer', "Fabricante");
 define('_JSHP_STPAGE_agb', "Terms of Service");
 define('_JSHP_STPAGE_return_policy', "Return policy");
 define('_JSHP_STPAGE_order_email_descr', "Description of the order for the customer (in email)");
 define('_JSHP_STPAGE_order_email_descr_end', "Description of the order for the customer (in email end)");
 define('_JSHP_STPAGE_INFO_order_email_descr', "allowed use vars {name}, {family}, {email}, {title}");
 define('_JSHP_STPAGE_INFO_order_email_descr_end', "allowed use vars {name}, {family}, {email}, {title}");
-define('_JSHP_STPAGE_order_finish_descr', 'Page "Order finish"');
-define('_JSHP_STPAGE_shipping', "Shipping description");
+define('_JSHP_STPAGE_order_finish_descr', '"Obrigado pelo seu ordem" página');
+define('_JSHP_STPAGE_shipping', "Descrição do frete");
 define('_JSHP_STPAGE_INFO_shipping', 'For the product option: Show "plus shipping"');
 define('_JSHP_STPAGE_privacy_statement',"Privacy statement");
-define('_JSHP_STPAGE_cart',"Cart");
+define('_JSHP_STPAGE_cart',"Carrinho");
 
 define('_JSHOP_ATTRIBUTE_EXTEND_PARAMS','Additional values');
 define('_JSHOP_SHOW_DEFAULT_PRICE','Show Price for Basic members');
 define('_JSHOP_QTY_IN_STOCK','Quantity in stock');
-define('_JSHOP_TYPE','Type');
-define('_JSHOP_LIST','List');
+define('_JSHOP_TYPE','Tipo');
+define('_JSHOP_LIST','Lista');
 define('_JSHOP_TEXT','Text');
 define('_JSHOP_ACCESS','Access');
 define('_JSHOP_PRODUCT_EXTRA_FIELD_GROUPS','Characteristics Groups');
 define('_JSHOP_GROUP','Group');
-define('_JSHOP_SHOW_PRICE','Show price');
+define('_JSHOP_SHOW_PRICE','Mostra price');
 define('_JSHOP_ONLY_REGISTER_USER','Show price only for registered users');
 define('_JSHOP_ADDITIONAL_INFORMATION','Additional information');
 define('_JSHOP_USE_DECIMAL_QTY','Used decimal quantity');

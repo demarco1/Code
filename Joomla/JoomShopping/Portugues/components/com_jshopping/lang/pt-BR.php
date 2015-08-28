@@ -198,7 +198,7 @@ define('_JSHOP_BANK', 'Banco');
 define('_JSHOP_BIC_BIC', 'CNPJ');
 define('_JSHOP_IBAN', 'Favorecido/Razão Social Pessoa Jurídica');
 define('_JSHOP_ERROR_PAYMENT', 'Ero no método pagamento');
-define('_JSHOP_ORDER_FINISH', 'Confirma compra');
+define('_JSHOP_ORDER_FINISH', 'Confirmar compra');
 define('_JSHOP_ERROR_PAYMENT_DATA', 'Por favor corrija as informações de pagamento');
 define("_JSHOP_HI","Olá");
 define('_JSHOP_ORDER_STATUS_CHANGE_SUBJECT','Status da ordem número %s mudou');
