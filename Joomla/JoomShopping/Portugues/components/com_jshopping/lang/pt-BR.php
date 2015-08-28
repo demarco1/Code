@@ -219,7 +219,17 @@ define('_JSHOP_ADD_INFO', 'As anotações abaixo vão ser adicionadas na sua com
 define('_JSHOP_FINISH_DELIVERY_ADRESS', 'Endereço de envio');
 define('_JSHOP_FINISH_SHIPPING_METHOD', 'Método de frete');
 define('_JSHOP_FINISH_PAYMENT_METHOD', 'Método de pagamento');
-define('_JSHOP_THANK_YOU_ORDER', '<h1>Obrigado pela sua compra!</h1><h3>Um recibo com os detalhes para efetuar o depósito bancário foi enviado para seu e-mail.</h3>');
+define('_JSHOP_THANK_YOU_ORDER', '<h1>Obrigado pela sua compra!</h1>
+<h2>Um recibo foi enviado para seu e-mail.</h2><br />
+<h3>Nossos dados bancários</h3>
+<b>Nome do banco: </b>Banco Bradesco S.A.<br />
+<b>Código identificador do banco: </b>237<br />
+<b>Agência: </b>6613-3<br />
+<b>Conta corrente:</b> 8484-0<br />
+<b>Favorecido/Razão Social Pessoa Jurídica: </b><br />
+&nbsp;&nbsp;&nbsp;&nbsp;Christiane Meng de Azevedo 26255587843<br />
+<b>CNPJ: </b>21.105.170/0001-00<br /><br />
+<b>Pedimos a gentileza de enviar o comprovante de pagamento por e-mail.</b>');
 define('_JSHOP_ORDER_PLACED', 'Your order has been successfully placed!'); // not used
 
 // E-mail
