@@ -38,30 +38,26 @@ class sm_correios extends shippingextRoot {
 		}
 
 		// If it's one of ours, calculate the price
-		switch( $type ) {
-
-			case 'PAC':
-				$prices['shipping'] = $this->getFreightPrice( $weight, 1 );
-				$prices['package'] = 0;
-			break;
-
-			case 'SEDEX':
-				$prices['shipping'] = $this->getFreightPrice( $weight, 2 );
-				$prices['package'] = 0;
-			break;
-
-			case 'Carta Registrada':
-				$price = 0;
-				foreach( $weights as $w ) {
-					$i = 50*(int)($w*20); // price divisions are in multiples of 50 grams
-					$price += plgSystemCorreios::$cartaPrices[$i];
-				}
-				$prices['shipping'] = $price;
-				$prices['package'] = 0;
-			break;
-
+		if( $type == 'PAC' ) {
+			$prices['shipping'] = $this->getFreightPrice( $weight, 1 );
+			$prices['package'] = 0;
 		}
 
+		elseif( $type == 'SEDEX' ) {
+			$prices['shipping'] = $this->getFreightPrice( $weight, 2 );
+			$prices['package'] = 0;
+		}
+
+		elseif( preg_match( '/carta\s*registrada/i', $type ) ) {
+			$prices = preg_match( '|módico|', $type ) ? plgSystemCorreios::$cartaPrices2 : plgSystemCorreios::$cartaPrices;
+			$price = 0;
+			foreach( $weights as $w ) {
+				$i = 50*(int)($w*20); // price divisions are in multiples of 50 grams
+				$price += $prices[$i];
+			}
+			$prices['shipping'] = $price;
+			$prices['package'] = 0;
+		}
 		return $prices;
 	}
 
