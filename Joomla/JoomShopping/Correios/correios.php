@@ -147,7 +147,7 @@ class plgSystemCorreios extends JPlugin {
 						$this->params->set( "carta$d", $n[2][$i] );
 					}
 
-					// Write the updates to the plugin' parameters field in the extensions table
+					// Write the updates to the plugin's parameters field in the extensions table
 					$params = (string)$this->params;
 					$db = JFactory::getDbo();
 					$db->setQuery( "UPDATE `#__extensions` SET `params`='$params' WHERE `name`='plg_system_correios'" );
