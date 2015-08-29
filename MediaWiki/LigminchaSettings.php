@@ -86,9 +86,8 @@ function wfPublicCat() {
 	if( is_object( $title ) ) {
 		$id = $title->getArticleID();
 		$dbr = wfGetDB( DB_SLAVE );
-		if( 1||$dbr->selectRow( 'categorylinks', '1', "cl_from = $id AND cl_to = 'Público'" ) ) {
+		if( $dbr->selectRow( 'categorylinks', '1', "cl_from = $id AND cl_to = 'Público'" ) ) {
 			$wgWhitelistRead[] = $title->getPrefixedText();
-			print_r($wgWhitelistRead);
 		}
 	}
 	return true;
