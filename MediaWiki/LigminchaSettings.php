@@ -58,6 +58,9 @@ $wgConfirmAccountRequestFormItems = array(
 );
 $wgConfirmAccountContact = 'aran@organicdesign.co.nz';
 
+// Make Category:Público public access
+$wgPageRestrictions['Category:Público']['read'] = '*';
+
 // Wiki editor extensions
 wfLoadExtension( 'WikiEditor' );
 $wgDefaultUserOptions['usebetatoolbar']            = 1;
