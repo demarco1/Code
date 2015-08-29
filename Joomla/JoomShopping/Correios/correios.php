@@ -23,6 +23,9 @@ class plgSystemCorreios extends JPlugin {
 
 	public function onAfterInitialise() {
 
+		// If this is a local request and carta=update get the weight/costs and cartaupdate set the config
+		if( $this->isLocal() && array_key_exists( 'cartaupdate', $_REQUEST ) ) $this->updateWeightCosts();
+
 		// And the Carta registrada prices
 		foreach( array( 100, 150, 200, 250, 300, 350, 400, 450 ) as $d ) {
 				$p = str_replace( ',', '.', $this->params->get( "carta$d" ) );
@@ -108,4 +111,48 @@ class plgSystemCorreios extends JPlugin {
 			$view->shipping_methods = $tmp;
 		}
 	}
+
+	/**
+	 * Return whether request not from a local IP address
+	 */
+	private function isLocal() {
+		if( preg_match_all( "|inet6? addr:\s*([0-9a-f.:]+)|", `/sbin/ifconfig`, $matches ) && !in_array( $_SERVER['REMOTE_ADDR'], $matches[1] ) ) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Get the weight costs from the Correios site and update the config data
+	 */
+	private function updateWeightCosts() {
+
+		// Get the tracking costs for Nacional and Módico
+		$tracking = file_get_contents( 'http://www.correios.com.br/para-voce/consultas-e-solicitacoes/precos-e-prazos/servicos-adicionais-nacionais' );
+		if( preg_match( '|<table class="conteudo-tabela">.+?<td>Registro Nacional.+?([1-9][0-9.,]+).+?<td>Registro Módico.+?([1-9][0-9.,]+)|is', $tracking, $m ) ) {
+			$tracking = str_replace( ',', '.', $m[2] );
+
+			// Get the weight/costs table
+			$weights = file_get_contents( 'http://www.correios.com.br/para-voce/consultas-e-solicitacoes/precos-e-prazos/servicos-nacionais_pasta/carta' );
+			if( preg_match( '|Carta não Comercial.+?Mais de 100 até 150</td>\s*(.+?)<tr class="rodape-tabela">|si', $weights, $m ) ) {
+				if( preg_match_all( '|<td>([0-9,]+)</td>\s*<td>([0-9,]+)</td>\s*<td>[0-9,]+</td>\s*<td>[0-9,]+</td>\s*<td>[0-9,]+</td>\s*|is', $m[1], $n ) ) {
+
+					// Update the plugin's parameters with the formatted results
+					foreach( $n[1] as $i => $v ) {
+						$n[1][$i] = number_format( (float)(str_replace( ',', '.', $n[1][$i] ) + $tracking), 2, ',', '' );
+						$d = 100 + 50 * $i;
+						$this->params->set( "cartam$d", $n[1][$i] );
+						$this->params->set( "carta$d", $n[2][$i] );
+					}
+
+					// Write the updates to the plugin' parameters field in the extensions table
+					$params = (string)$this->params;
+					$db = JFactory::getDbo();
+					$db->setQuery( "UPDATE `#__extensions` SET `params`='$params' WHERE `name`='plg_system_correios'" );
+					$db->query();
+				}
+			}
+		}
+	}
 }
+
