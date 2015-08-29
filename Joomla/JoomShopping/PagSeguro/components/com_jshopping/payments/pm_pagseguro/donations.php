@@ -39,8 +39,9 @@ if( $row = $db->loadRow() ) {
 	$pm_method = JSFactory::getTable( 'paymentMethod', 'jshop' );
 	$pm_method->load( $row[0] );
 	$pmconfigs = $pm_method->getConfigs();
+	$sandbox = $pmconfigs['testmode'] ? 'sandbox.' : '';
 	$email = $pmconfigs['email_received'];
-	$token = $pmconfigs['token'];
+	$token = $pmconfigs[$sandbox ? 'test_token' : 'token'];
 
 	// Build data to post to the PagSeguro server
 	$data = array(
@@ -60,7 +61,7 @@ if( $row = $db->loadRow() ) {
 	$options = array(
 		CURLOPT_POST => 1,
 		CURLOPT_HEADER => 0,
-		CURLOPT_URL => "https://ws.pagseguro.uol.com.br/v2/checkout/",
+		CURLOPT_URL => "https://ws.{$sandbox}pagseguro.uol.com.br/v2/checkout/",
 		CURLOPT_FRESH_CONNECT => 1,
 		CURLOPT_RETURNTRANSFER => 1,
 		CURLOPT_FORBID_REUSE => 1,
@@ -75,7 +76,7 @@ if( $row = $db->loadRow() ) {
 	// If we received a code, redirect the client to PagSeguro to complete the order
 	$code = preg_match( '|<code>(.+?)</code>|', $result, $m ) ? $m[1] : false;
 	if( $code && !is_numeric( $code ) ) {
-		header( "Location: https://pagseguro.uol.com.br/v2/checkout/payment.html?code=$code" );
+		header( "Location: https://{$sandbox}pagseguro.uol.com.br/v2/checkout/payment.html?code=$code" );
 	} else die( "Error: $result" );
 }
 ?>
