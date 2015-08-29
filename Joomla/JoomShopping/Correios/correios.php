@@ -23,9 +23,7 @@ class plgSystemCorreios extends JPlugin {
 
 	public function onAfterInitialise() {
 
-		// And the Carta registrada prices (add the tracking price to each)
-		$t = str_replace( ',', '.', $this->params->get( 'carta_track' ) );
-		$t2 = str_replace( ',', '.', $this->params->get( 'carta_track_mod' ) );
+		// And the Carta registrada prices
 		foreach( array( 100, 150, 200, 250, 300, 350, 400, 450 ) as $d ) {
 				$p = str_replace( ',', '.', $this->params->get( "carta$d" ) );
 				self::$cartaPrices[$d] = $p + $t;
