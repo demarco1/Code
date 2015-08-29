@@ -134,7 +134,7 @@ class plgSystemCorreios extends JPlugin {
 		if( preg_match( '|<table class="conteudo-tabela">.+?<td>Registro Nacional.+?([1-9][0-9.,]+).+?<td>Registro Módico.+?([1-9][0-9.,]+)|is', $tracking, $m ) ) {
 			$tracking = str_replace( ',', '.', $m[2] );
 
-			// Get the weight/costs table
+			// Get the weight/costs table (starting at the 100-150 gram entry)
 			$weights = file_get_contents( "$correios/servicos-nacionais_pasta/carta" );
 			if( preg_match( '|Carta não Comercial.+?Mais de 100 até 150</td>\s*(.+?)<tr class="rodape-tabela">|si', $weights, $m ) ) {
 				if( preg_match_all( '|<td>([0-9,]+)</td>\s*<td>([0-9,]+)</td>\s*<td>[0-9,]+</td>\s*<td>[0-9,]+</td>\s*<td>[0-9,]+</td>\s*|is', $m[1], $n ) ) {
