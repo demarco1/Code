@@ -17,9 +17,9 @@ defined('_JEXEC') or die;
  */
 class plgSystemCorreios extends JPlugin {
 
-	public static $cartaPrices = array();  // the table of prices per weight for carta registrada
+	public static $cartaPrices = array();    // the table of prices per weight for carta registrada
 	public static $cartaPricesMod = array(); // the table of prices per weight for carta registrada (módico)
-	public static $allbooks;               // whether the order consists only of book or not (whether carta registrada is allowed or not)
+	public static $allbooks;                 // whether the order consists only of book or not (whether carta registrada is allowed or not)
 
 	public function onAfterInitialise() {
 

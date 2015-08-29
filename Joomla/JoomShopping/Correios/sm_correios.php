@@ -49,7 +49,7 @@ class sm_correios extends shippingextRoot {
 		}
 
 		elseif( preg_match( '/carta\s*registrada/i', $type ) ) {
-			$costs = preg_match( '|módico|', $type ) ? plgSystemCorreios::$cartaPricesMod : plgSystemCorreios::$cartaPrices;
+			$costs = preg_match( '/módico/i', $type ) ? plgSystemCorreios::$cartaPricesMod : plgSystemCorreios::$cartaPrices;
 			$price = 0;
 			foreach( $weights as $w ) {
 				$i = 50*(int)($w*20); // price divisions are in multiples of 50 grams
