@@ -29,7 +29,7 @@
 				<field name="carta350" type="text" default="8,85" description="Preço de 350 até 400 gramas" label="350g-300g" size="10" />
 				<field name="carta400" type="text" default="9,40" description="Preço de 400 até 450 gramas" label="400g-450g" size="10" />
 				<field name="carta450" type="text" default="9,95" description="Preço de 450 até 500 gramas" label="450g-500g" size="10" />
-				<field name="carta" type="spacer"
+				<field name="cartam" type="spacer"
 					default="carta"
 					label="&lt;b&gt;Precos de Carta registrada (módico)&lt;/b&gt;:"
 					description="Precos de Carta Registrada (módico)"

@@ -28,9 +28,8 @@ class plgSystemCorreios extends JPlugin {
 
 		// And the Carta registrada prices
 		foreach( array( 100, 150, 200, 250, 300, 350, 400, 450 ) as $d ) {
-				$p = str_replace( ',', '.', $this->params->get( "carta$d" ) );
-				self::$cartaPrices[$d] = $p;
-				self::$cartaPricesMod[$d] = $p; // needs another table
+				self::$cartaPrices[$d] = str_replace( ',', '.', $this->params->get( "carta$d" ) );
+				self::$cartaPricesMod[$d] = str_replace( ',', '.', $this->params->get( "cartam$d" ) );
 		}
 
 		// Install our extended shipping type if not already there
