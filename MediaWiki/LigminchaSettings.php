@@ -58,9 +58,6 @@ $wgConfirmAccountRequestFormItems = array(
 );
 $wgConfirmAccountContact = 'aran@organicdesign.co.nz';
 
-// Make Category:Público public access
-$wgPageRestrictions['Category:Público']['read'] = '*';
-
 // Wiki editor extensions
 wfLoadExtension( 'WikiEditor' );
 $wgDefaultUserOptions['usebetatoolbar']            = 1;
@@ -80,6 +77,21 @@ wfLoadExtension( 'ExtraMagic' );
 wfLoadExtension( 'HighlightJS' );
 wfLoadExtension( 'AjaxComments' );
 $wgAjaxCommentsPollServer = 5;
+
+// Make Category:Público public access
+$wgHooks['UserGetRights'][] = 'wfPublicCat';
+function wfPublicCat() {
+	global $wgWhitelistRead;
+	$title = Title::newFromText( $_REQUEST['title'] );
+	if( is_object( $title ) ) {
+		$id = $title->getArticleID();
+		$dbr = wfGetDB( DB_SLAVE );
+		if( $dbr->selectRow( 'categorylinks', '1', "cl_from = $id AND cl_to = 'Público'" ) ) {
+			$wgWhitelistRead[] = $title->getPrefixedText();
+		}
+	}
+	return true;
+}
 
 // Force users to use old changes format
 $wgExtensionFunctions[] = 'wfOldChanges';
@@ -133,3 +145,4 @@ function wfRememberMe( &$template ) {
 	$template->data['remember'] = true;
 	return true;
 }
+
