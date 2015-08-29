@@ -126,13 +126,16 @@ class plgSystemCorreios extends JPlugin {
 	 */
 	private function updateWeightCosts() {
 
+		// The Correios prices URL
+		$correios = 'http://www.correios.com.br/para-voce/consultas-e-solicitacoes/precos-e-prazos';
+
 		// Get the tracking costs for Nacional and Módico
-		$tracking = file_get_contents( 'http://www.correios.com.br/para-voce/consultas-e-solicitacoes/precos-e-prazos/servicos-adicionais-nacionais' );
+		$tracking = file_get_contents( "$correios/servicos-adicionais-nacionais" );
 		if( preg_match( '|<table class="conteudo-tabela">.+?<td>Registro Nacional.+?([1-9][0-9.,]+).+?<td>Registro Módico.+?([1-9][0-9.,]+)|is', $tracking, $m ) ) {
 			$tracking = str_replace( ',', '.', $m[2] );
 
 			// Get the weight/costs table
-			$weights = file_get_contents( 'http://www.correios.com.br/para-voce/consultas-e-solicitacoes/precos-e-prazos/servicos-nacionais_pasta/carta' );
+			$weights = file_get_contents( "$correios/servicos-nacionais_pasta/carta" );
 			if( preg_match( '|Carta não Comercial.+?Mais de 100 até 150</td>\s*(.+?)<tr class="rodape-tabela">|si', $weights, $m ) ) {
 				if( preg_match_all( '|<td>([0-9,]+)</td>\s*<td>([0-9,]+)</td>\s*<td>[0-9,]+</td>\s*<td>[0-9,]+</td>\s*<td>[0-9,]+</td>\s*|is', $m[1], $n ) ) {
 
