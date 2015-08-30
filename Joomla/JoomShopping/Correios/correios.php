@@ -125,9 +125,8 @@ class plgSystemCorreios extends JPlugin {
 	 * Get the weight costs from the Correios site and update the config data
 	 */
 	private function updateWeightCosts() {
+		$info = $info2 = $err = '';
 		$correios = 'http://www.correios.com.br/para-voce/consultas-e-solicitacoes/precos-e-prazos';
-		$info = '';
-		$info2 = '';
 
 		// Get the tracking costs for Nacional and Módico
 		$tracking = file_get_contents( "$correios/servicos-adicionais-nacionais" );
@@ -172,16 +171,18 @@ class plgSystemCorreios extends JPlugin {
 						$db->setQuery( "UPDATE `#__extensions` SET `params`='$params' WHERE `name`='plg_system_correios'" );
 						$db->query();
 					}
-				} else $info .= "ERROR: Found weight/cost table but couldn't extract the data.\n";
-			} else $info .= "ERROR: Couldn't find weight/cost table.\n";
-		} else $info .= "ERROR: Couldn't retrieve tracking prices.\n";
+				} else $err .= "ERROR: Found weight/cost table but couldn't extract the data.\n";
+			} else $err .= "ERROR: Couldn't find weight/cost table.\n";
+		} else $err .= "ERROR: Couldn't retrieve tracking prices.\n";
 
 		// If any info, email it
-		$info .= $info2;
+		$info .= $info2 . $err;
 		$config = JFactory::getConfig();
-		if( !$to = $config->get( 'webmaster' ) ) $to = $config->get( 'mailfrom' );
+		$from = $config->get( 'mailfrom' );
+		if( !$to = $config->get( 'webmaster' ) ) $to = $from;
 		$mailer = JFactory::getMailer();
 		$mailer->addRecipient( $to );
+		if( !$err && $to != $from ) $mailer->addRecipient( $from );
 		$mailer->setSubject( 'Notification from Correios extension' );
 		$mailer->setBody( $info );
 		$mailer->isHTML( false );
