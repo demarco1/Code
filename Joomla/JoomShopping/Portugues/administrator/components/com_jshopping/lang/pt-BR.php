@@ -464,19 +464,19 @@ define('_JSHOP_ATTRIBUT_VALUE_DELETED','Attribute value was deleted');
 // Orders
 define('_JSHOP_ORDERS','Ordens');
 define('_JSHOP_ORDER_LIST','Lisa de ordens');
-define('_JSHOP_ORDER_PURCHASE','Purchase order');
-define('_JSHOP_STATUS_CHANGE','Change status');
-define('_JSHOP_ORDER_HISTORY','Order history');
-define('_JSHOP_ORDER_STATUS_CHANGE','Change order status');
-define('_JSHOP_NOT_FINISHED', 'Not finished');
+define('_JSHOP_ORDER_PURCHASE','Ordem de compra');
+define('_JSHOP_STATUS_CHANGE','Modificar estado');
+define('_JSHOP_ORDER_HISTORY','Historial de pedidos');
+define('_JSHOP_ORDER_STATUS_CHANGE','Modificar estado do ordem');
+define('_JSHOP_NOT_FINISHED', 'Não finalizado');
 
 // Order Status
-define('_JSHOP_LIST_ORDER_STATUSS','Order status list');
-define('_JSHOP_ORDER_STATUS','Order status');
-define('_JSHOP_NEW_ORDER_STATUS','New order status');
-define('_JSHOP_EDIT_ORDER_STATUS','Edit order status');
-define('_JSHOP_ORDER_STATUS_DELETED','Order status was deleted');
-define('_JSHOP_ORDER_STATUS_CHANGED',"Order status was successfull changed");
+define('_JSHOP_LIST_ORDER_STATUSS','Lista do estado do ordem');
+define('_JSHOP_ORDER_STATUS','Estado do ordem');
+define('_JSHOP_NEW_ORDER_STATUS','Novo estado do ordem');
+define('_JSHOP_EDIT_ORDER_STATUS','Editar estado do ordem');
+define('_JSHOP_ORDER_STATUS_DELETED','O estado do ordem foi excluido');
+define('_JSHOP_ORDER_STATUS_CHANGED',"Estado do ordem modificado com sucesso");
 
 define("_JSHOP_HI","Oi");
 define('_JSHOP_ORDER_PRINT_VIEW','Print view');
