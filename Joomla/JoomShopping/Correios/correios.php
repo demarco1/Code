@@ -112,6 +112,31 @@ class plgSystemCorreios extends JPlugin {
 	}
 
 	/**
+	 * Change the CSS of the email to inline as many webmail services like gmail ignore style tags
+	 * - this is done with François-Marie de Jouvencel's class from https://github.com/djfm/cssin
+	 */
+	private function inlineStyles( $mailer ) {
+		require_once( JPATH_ROOT . '/plugins/system/correios/cssin/src/CSSIN.php' );
+		$cssin = new FM\CSSIN();
+		$inline = $cssin->inlineCSS( 'http://' . $_SERVER['HTTP_HOST'], $mailer->Body );
+		$inline = preg_replace( '|line-height\s*:\s*100%;|', 'line-height:125%', $inline ); // a hack to increase line spacing a bit
+		$mailer->Body = $inline;
+	}
+
+	/**
+	 * Set the order mailout events to call our inline method
+	 */
+	public function onBeforeSendOrderEmailClient( $mailer, $order, &$manuallysend, &$pdfsend ) {
+		$this->inlineStyles( $mailer );
+	}
+	public function onBeforeSendOrderEmailAdmin( $mailer, $order, &$manuallysend, &$pdfsend ) {
+		$this->inlineStyles( $mailer );
+	}
+	public function onBeforeSendOrderEmailVendor( $mailer, $order, &$manuallysend, &$pdfsend, &$vendor, &$vendors_send_message, &$vendor_send_order ) {
+		$this->inlineStyles( $mailer );
+	}
+
+	/**
 	 * Return whether request not from a local IP address
 	 */
 	private function isLocal() {
