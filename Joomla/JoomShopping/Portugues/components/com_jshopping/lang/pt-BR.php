@@ -187,9 +187,9 @@ define('_JSHOP_RETURN_POLICY', 'Return policy');
 define('_JSHOP_SELECT_VALUE', 'Select value');
 
 // Payment
-define('_JSHOP_TRANSACTION_END','Status da ordem para transações completas');
-define('_JSHOP_TRANSACTION_PENDING','Status da ordem para pagamentos pendentes');
-define('_JSHOP_TRANSACTION_FAILED','Status da ordem para transações com erros');
+define('_JSHOP_TRANSACTION_END','Status do pedido para transações completas');
+define('_JSHOP_TRANSACTION_PENDING','Status do pedido para pagamentos pendentes');
+define('_JSHOP_TRANSACTION_FAILED','Status do pedido para transações com erros');
 define('_JSHOP_CHECK_DATA_RETURN', 'Verifique os dados após voltar do sistema de pagamento');
 define('_JSHOP_ACCOUNT_HOLDER', 'Nome do usuário da conta');
 define('_JSHOP_ACCOUNT_NUMBER', 'Agência');
@@ -201,12 +201,12 @@ define('_JSHOP_ERROR_PAYMENT', 'Ero no método pagamento');
 define('_JSHOP_ORDER_FINISH', 'Confirmar compra');
 define('_JSHOP_ERROR_PAYMENT_DATA', 'Por favor corrija as informações de pagamento');
 define("_JSHOP_HI","Olá");
-define('_JSHOP_ORDER_STATUS_CHANGE_SUBJECT','Status da ordem número %s mudou');
+define('_JSHOP_ORDER_STATUS_CHANGE_SUBJECT','Status do pedido número %s mudou');
 define('_JSHOP_ORDER_STATUS_CHANGE_TITLE', 'Mudança de status');
-define('_JSHOP_YOUR_ORDER_STATUS_CHANGE', 'O status da sua ordem número %s foi modificado');
+define('_JSHOP_YOUR_ORDER_STATUS_CHANGE', 'O status do seu pedido número %s foi modificado');
 define('_JSHOP_NEW_STATUS_IS', 'O novo status é');
 define('_JSHOP_ORDER_CANCELED', 'Ordem foi cancelada');
-define('_JSHOP_COMMENT_YOUR_ORDER', 'Comentários sobre sua ordem');
+define('_JSHOP_COMMENT_YOUR_ORDER', 'Comentários sobre seu pedido');
 
 // Step order
 define('_JSHOP_STEP_ORDER_2', 'Endereço');
@@ -233,22 +233,22 @@ define('_JSHOP_ORDER_PLACED', 'Your order has been successfully placed!'); // no
 
 // E-mail
 define('_JSHOP_EMAIL_THANK_YOU', 'Thank you for shopping with us. Your order information follows.'); // not used
-define('_JSHOP_EMAIL_PURCHASE_ORDER', 'Ordem de compra');
+define('_JSHOP_EMAIL_PURCHASE_ORDER', 'Pedido de compra');
 define('_JSHOP_DESCRIPTION', 'Descrição');
 define('_JSHOP_ORDER_NUMBER', 'Número de compra');
-define('_JSHOP_ORDER_DATE', 'Data da ordem');
-define('_JSHOP_ORDER_FROM', 'Ordem efetuada em');
+define('_JSHOP_ORDER_DATE', 'Data do pedido');
+define('_JSHOP_ORDER_FROM', 'Pedido efetuada em');
 define('_JSHOP_ORDER_SHORT_NR', 'Não');
-define('_JSHOP_ORDER_STATUS', 'Estado do ordem');
+define('_JSHOP_ORDER_STATUS', 'Status do pedido');
 define('_JSHOP_CUSTOMER_INFORMATION', 'Informação do cliente');
-define('_JSHOP_ORDER_HISTORY', 'Historial do ordem');
+define('_JSHOP_ORDER_HISTORY', 'Historial do pedido');
 define('_JSHOP_ORDER_COMMENT', 'Comentário');
 define('_JSHOP_NEW_ORDER', 'Novo ordem # %s (%s)');
 define('_JSHOP_NEW_ORDER_V', 'Novo order # %s ');
 define('_JSHOP_EMAIL_BILL_TO', 'Cobrança para');
 define('_JSHOP_EMAIL_BILL', 'Bill');
 define('_JSHOP_EMAIL_SHIP_TO', 'Enviar para');
-define('_JSHOP_ORDER_ITEMS', 'Items de ordem');
+define('_JSHOP_ORDER_ITEMS', 'Itens do pedido');
 define('_JSHOP_NAME_PRODUCT', 'Nome do prodto');
 define('_JSHOP_EAN_PRODUCT', 'Código do produto');
 define('_JSHOP_TOTAL', 'Total');
@@ -287,9 +287,9 @@ define('_JSHOP_NEW_PASSWORD_2', 'Confirmar nova senha');
 define('_JSHOP_ADVANCED_SEARCH', 'Advanced search');
 define('_JSHOP_NO_SEARCH_RESULTS', 'No search results found');
 define('_JSHOP_EDIT_DATA', 'Editar dado');
-define('_JSHOP_SHOW_ORDERS', 'Mostra ordens');
-define('_JSHOP_NO_ORDERS', 'You have no orders yet');
-define('_JSHOP_CANCEL_ORDER', 'Cancelar ordem');
+define('_JSHOP_SHOW_ORDERS', 'Mostrar pedidos');
+define('_JSHOP_NO_ORDERS', 'Não efectuou nenhum pedido');
+define('_JSHOP_CANCEL_ORDER', 'Cancelar pedido');
 
 // Search
 define('_JSHOP_SEARCH', 'Buscar');
@@ -341,7 +341,7 @@ define('_JSHOP_ERROR_ORDER_HASH',"Error hash");
 define("_JSHOP_CHECKOUT_ADDRESS","Address");
 define("_JSHOP_CHECKOUT_PAYMENT","Payment");
 define("_JSHOP_CHECKOUT_SHIPPING","Shipping");
-define("_JSHOP_CHECKOUT_PREVIEW","Confirm Order");
+define("_JSHOP_CHECKOUT_PREVIEW","Confirmar pedido");
 define("_JSHOP_CHECKOUT_FINISH","Order completed");
 define('_JSHOP_INC_TAX', 'incl. TAX');   
 define('_JSHOP_PLUS_TAX', 'plus TAX');   
@@ -371,8 +371,8 @@ define('_JSHOP_FOR_USE_COUPON_PLEASE_LOGIN','Please login to use coupons');
 define('_JSHOP_EAN', 'Código');
 define('_JSHOP_PAYMENT_NUMBER', 'Order number %s');
 define('_JSHOP_ORDER_WITHOUT_REGISTER_CLICK', 'To <b>Order without registration</b>, please click');
-define('_JSHOP_HERE', 'here');
-define('_JSHOP_PRICE_FOR_QTY', 'Prices');
+define('_JSHOP_HERE', 'aqui');
+define('_JSHOP_PRICE_FOR_QTY', 'Preços');
 define('_JSHOP_PER_PIECE', 'per piece');
 define('_JSHOP_SELECT_PRODUCT_OPTIONS', 'Please select the product options');
 define('_JSHOP_ERROR_EXIST_QTY_PRODUCT', 'Some products can not be delivered in the quantity ordered<br/>The maximum order quantity is %s.');
@@ -391,15 +391,15 @@ define('_JSHOP_IDENTIFICATION_NUMBER', 'Identification No.');
 define('_JSHOP_TAX_NUMBER', 'Tax No.');
 define('_JSHOP_READ_MORE', 'Read more');
 define('_JSHOP_MANUFACTURER_INFO', 'Info do fabricante');
-define('_JSHOP_MY_ORDERS', 'Os meus ordens');
+define('_JSHOP_MY_ORDERS', 'Os meus pedidos');
 define('_JSHOP_FROM', 'de');
 define('_JSHOP_TO', 'para');
 define('_JSHOP_AND', 'e');
 define('_JSHOP_CONFIRM', 'confirmar');
-define('_JSHOP_ERROR_MAX_COUNT_ORDER_ONE_PRODUCT', 'Número máximo de artigos para poder realizar o ordem - %s');
-define('_JSHOP_ERROR_MIN_COUNT_ORDER_ONE_PRODUCT', 'Número mínimo de artigos para poder realizar o ordem - %s');
-define('_JSHOP_ERROR_MIN_SUM_ORDER', 'Preço mínimo do ordem - %s');
-define('_JSHOP_ERROR_MAX_SUM_ORDER', 'Preço máximo do ordem - %s');
+define('_JSHOP_ERROR_MAX_COUNT_ORDER_ONE_PRODUCT', 'Número máximo de artigos para poder realizar o pedido - %s');
+define('_JSHOP_ERROR_MIN_COUNT_ORDER_ONE_PRODUCT', 'Número mínimo de artigos para poder realizar o pedido - %s');
+define('_JSHOP_ERROR_MIN_SUM_ORDER', 'Preço mínimo do pedido - %s');
+define('_JSHOP_ERROR_MAX_SUM_ORDER', 'Preço máximo do pedido - %s');
 
 define('_JSHOP_SELECT','Por favor selecione');
 define('_JSHOP_HITS','Vizualizações');
@@ -436,7 +436,7 @@ define('_JSHOP_ANY_WORDS','Any words');
 define('_JSHOP_ALL_WORDS','All words');
 define('_JSHOP_EXACT_WORDS','Exact Phrase');
 
-define('_JSHOP_ORDER_DETAILS','Detalhes da ordem');
+define('_JSHOP_ORDER_DETAILS','Detalhes do pedido');
 define('_JSHOP_CART_EMPTY','Seu carrinho está vazio.');
 define('_JSHOP_ORDER_DELIVERY_TIME', 'Prazo de entrega');
 define('_JSHOP_GROUP', 'Grupo');
