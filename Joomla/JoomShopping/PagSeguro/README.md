@@ -3,4 +3,4 @@ Esta extensão adiciona o tipo de pagamento PagSeguro à extensão JoomShopping.
 
 A pasta deve ser zipado para que a pasta "componentes" é encontrada na raiz do arquivo zip caso contrário ele não será instalado.
 
-Veu [Ligmincha Wiki](http://wiki.ligmincha.com.br/Pagseguro) para detalhes.
+Veu [Ligmincha Brasil Wiki](http://wiki.ligmincha.com.br/Pagseguro) para detalhes.

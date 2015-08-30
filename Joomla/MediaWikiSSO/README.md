@@ -2,4 +2,4 @@
 
 ## Single-signon for MediaWiki and Joomla
 
-See [Ligmincha Wiki](http://wiki.ligmincha.com.br/MediaWikiSSO) for details.
+See [Ligmincha Brasil Wiki](http://wiki.ligmincha.com.br/MediaWikiSSO) for details.
