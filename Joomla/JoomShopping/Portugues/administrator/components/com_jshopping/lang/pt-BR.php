@@ -560,18 +560,18 @@ define('_JSHOP_ALLOW_REVIEW_ONLY_REGISTERED','Allow comments from registered use
 define('_JSHOP_REVIEW_MAX_MARK','Comment maximal mark');
 
 // Panel
-define('_JSHOP_PANEL_CURRENCIES','Currencies');
+define('_JSHOP_PANEL_CURRENCIES','Moedas');
 define('_JSHOP_PANEL_TAXES','Taxes');
-define('_JSHOP_PANEL_PAYMENTS','Payments');
-define('_JSHOP_PANEL_SHIPPINGS','Shipping methods');
-define('_JSHOP_PANEL_ORDER_STATUS','Order status');
-define('_JSHOP_PANEL_COUNTRIES','Country list');
+define('_JSHOP_PANEL_PAYMENTS','Pagamentos');
+define('_JSHOP_PANEL_SHIPPINGS','Métodos de entrega');
+define('_JSHOP_PANEL_ORDER_STATUS','Estado do ordem');
+define('_JSHOP_PANEL_COUNTRIES','Lista país');
 define('_JSHOP_PANEL_ATTRIBUTES','Attributes');
 define('_JSHOP_PANEL_USERGROUPS','User groups');
 define('_JSHOP_INFO','Info');
 define('_JSHOP_REPORT','Wish list');
-define("_JSHOP_PANEL_LANGUAGES","Lingas");
-define("_JSHOP_PANEL_REVIEWS","Product comments");
+define("_JSHOP_PANEL_LANGUAGES","Idiomas");
+define("_JSHOP_PANEL_REVIEWS","Comentários do produtos");
 define("_JSHOP_PANEL_UPDATE","Instalar e Atualizar");
 define("_JSHOP_PANEL_DELIVERY_TIME","Delivery time");
 define("_JSHOP_PANEL_IMPORT_EXPORT","Importar e Exportar");
@@ -647,7 +647,7 @@ define("_JSHOP_DEFAULT","Default");
 define("_JSHOP_DATE","Date");
 define("_JSHOP_PRODUCT_REVIEW","Comentário");
 define("_JSHOP_REVIEW_MARK","Rating");
-define("_JSHOP_LIST_PRODUCT_REVIEWS","Products comments");
+define("_JSHOP_LIST_PRODUCT_REVIEWS","Comentários do produtos");
 define("_JSHOP_NEW_REVIEW","Novos Comentários");
 define("_JSHOP_EDIT_REVIEW","Editar Comentários");
 define("_JSHOP_PRODUCT_ID","Product ID");

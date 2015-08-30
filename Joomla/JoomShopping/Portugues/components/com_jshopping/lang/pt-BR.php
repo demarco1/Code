@@ -381,7 +381,7 @@ define('_JSHOP_ERROR_EXIST_QTY_PRODUCT_BASKET', 'The product "%s" maximum order 
 define('_JSHOP_BUY', 'Comprar');
 define('_JSHOP_PRODUCT_NOT_AVAILABLE', 'Not available');
 define('_JSHOP_PRODUCT_NOT_AVAILABLE_THIS_OPTION', 'Not available selected option');
-define('_JSHOP_X_COMENTAR', 'Comments (%s)');
+define('_JSHOP_X_COMENTAR', 'Comentários (%s)');
 define('_JSHOP_INC_PERCENT_TAX', 'Incl. %s %% TAX');
 define('_JSHOP_PLUS_PERCENT_TAX', 'plus %s %% TAX');
 define('_JSHOP_PLUS_SHIPPING', 'plus <a href="%s" target="_blank">shipping</a>');
@@ -390,7 +390,7 @@ define('_JSHOP_DELIVERY_TIME', 'Delivery time');
 define('_JSHOP_IDENTIFICATION_NUMBER', 'Identification No.');
 define('_JSHOP_TAX_NUMBER', 'Tax No.');
 define('_JSHOP_READ_MORE', 'Read more');
-define('_JSHOP_MANUFACTURER_INFO', 'Manufacturer Info');
+define('_JSHOP_MANUFACTURER_INFO', 'Info do fabricante');
 define('_JSHOP_MY_ORDERS', 'Os meus ordens');
 define('_JSHOP_FROM', 'de');
 define('_JSHOP_TO', 'para');
