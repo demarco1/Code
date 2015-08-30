@@ -862,7 +862,7 @@ define('_JSHP_STPAGE_order_email_descr', "Description of the order for the custo
 define('_JSHP_STPAGE_order_email_descr_end', "Description of the order for the customer (in email end)");
 define('_JSHP_STPAGE_INFO_order_email_descr', "allowed use vars {name}, {family}, {email}, {title}");
 define('_JSHP_STPAGE_INFO_order_email_descr_end', "allowed use vars {name}, {family}, {email}, {title}");
-define('_JSHP_STPAGE_order_finish_descr', '"Obrigado pelo seu ordem" página');
+define('_JSHP_STPAGE_order_finish_descr', '"Obrigado pela sua ordem" página');
 define('_JSHP_STPAGE_shipping', "Descrição do frete");
 define('_JSHP_STPAGE_INFO_shipping', 'For the product option: Show "plus shipping"');
 define('_JSHP_STPAGE_privacy_statement',"Privacy statement");
