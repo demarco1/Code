@@ -233,21 +233,21 @@ define('_JSHOP_ORDER_PLACED', 'Your order has been successfully placed!'); // no
 
 // E-mail
 define('_JSHOP_EMAIL_THANK_YOU', 'Thank you for shopping with us. Your order information follows.'); // not used
-define('_JSHOP_EMAIL_PURCHASE_ORDER', 'Purchase order');
+define('_JSHOP_EMAIL_PURCHASE_ORDER', 'Ordem de compra');
 define('_JSHOP_DESCRIPTION', 'Descrição');
 define('_JSHOP_ORDER_NUMBER', 'Número de compra');
-define('_JSHOP_ORDER_DATE', 'Order date');
-define('_JSHOP_ORDER_FROM', 'Order from');
-define('_JSHOP_ORDER_SHORT_NR', 'No');
-define('_JSHOP_ORDER_STATUS', 'Order status');
-define('_JSHOP_CUSTOMER_INFORMATION', 'Customer information');
-define('_JSHOP_ORDER_HISTORY', 'Order history');
+define('_JSHOP_ORDER_DATE', 'Data da ordem');
+define('_JSHOP_ORDER_FROM', 'Ordem efetuada em');
+define('_JSHOP_ORDER_SHORT_NR', 'Não');
+define('_JSHOP_ORDER_STATUS', 'Estado do ordem');
+define('_JSHOP_CUSTOMER_INFORMATION', 'Informação do cliente');
+define('_JSHOP_ORDER_HISTORY', 'Historial do ordem');
 define('_JSHOP_ORDER_COMMENT', 'Comentário');
-define('_JSHOP_NEW_ORDER', 'New order N. %s (%s)');
-define('_JSHOP_NEW_ORDER_V', 'New order N. %s ');
-define('_JSHOP_EMAIL_BILL_TO', 'Bill to');
+define('_JSHOP_NEW_ORDER', 'Novo ordem # %s (%s)');
+define('_JSHOP_NEW_ORDER_V', 'Novo order # %s ');
+define('_JSHOP_EMAIL_BILL_TO', 'Cobrança para');
 define('_JSHOP_EMAIL_BILL', 'Bill');
-define('_JSHOP_EMAIL_SHIP_TO', 'Ship to');
+define('_JSHOP_EMAIL_SHIP_TO', 'Enviar para');
 define('_JSHOP_ORDER_ITEMS', 'Items de ordem');
 define('_JSHOP_NAME_PRODUCT', 'Nome do prodto');
 define('_JSHOP_EAN_PRODUCT', 'Código do produto');
