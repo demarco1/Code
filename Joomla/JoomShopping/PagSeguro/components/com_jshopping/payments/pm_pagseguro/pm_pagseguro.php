@@ -78,7 +78,7 @@ class pm_pagseguro extends PaymentRoot{
 				'reference' => $order->order_id,
 				'itemId1' => $order->order_id,
 				'itemDescription1' => $item_name,
-				'itemAmount1' => $order->order_total,
+				'itemAmount1' => number_format($order->order_subtotal, 2, '.', ''),
 				'itemQuantity1' => 1,
 				'shippingCost' => number_format( $order->order_shipping, 2, '.', '' ),
 				'shippingType' => 3,
