@@ -125,9 +125,9 @@ class plgSystemCorreios extends JPlugin {
 	 * Get the weight costs from the Correios site and update the config data
 	 */
 	private function updateWeightCosts() {
-
-		// The Correios prices URL
 		$correios = 'http://www.correios.com.br/para-voce/consultas-e-solicitacoes/precos-e-prazos';
+		$info = '';
+		$info2 = '';
 
 		// Get the tracking costs for Nacional and Módico
 		$tracking = file_get_contents( "$correios/servicos-adicionais-nacionais" );
@@ -141,20 +141,50 @@ class plgSystemCorreios extends JPlugin {
 
 					// Update the plugin's parameters with the formatted results
 					foreach( $n[1] as $i => $v ) {
-						$n[1][$i] = number_format( (float)(str_replace( ',', '.', $n[1][$i] ) + $tracking), 2, ',', '' );
+
+						// Get the index into the price config in 50 gram divisions
 						$d = 100 + 50 * $i;
-						$this->params->set( "cartam$d", $n[1][$i] );
-						$this->params->set( "carta$d", $n[2][$i] );
+
+						// Set the Módico price checking for changes
+						$n[1][$i] = number_format( (float)(str_replace( ',', '.', $n[1][$i] ) + $tracking), 2, ',', '' );
+						$k = "cartam$d";
+						$v = $n[1][$i];
+						$o = $this->params->get( $k );
+						if( $v != $o ) {
+							$this->params->set( $k, $v );
+							$info .= "Registro Módico price for $d-" . ($d + 50) . "g changed from $o to $v\n";
+						}
+
+						// Set the Nacional price checking for changes
+						$k = "carta$d";
+						$v = $n[2][$i];
+						$o = $this->params->get( $k );
+						if( $v != $o ) {
+							$this->params->set( $k, $v );
+							$info2 .= "Registro Nacional price for $d-" . ($d + 50) . "g changed from $o to $v\n";
+						}
 					}
 
-					// Write the updates to the plugin's parameters field in the extensions table
-					$params = (string)$this->params;
-					$db = JFactory::getDbo();
-					$db->setQuery( "UPDATE `#__extensions` SET `params`='$params' WHERE `name`='plg_system_correios'" );
-					$db->query();
-				}
-			}
-		}
+					// If changes, write them to the plugin's parameters field in the extensions table
+					if( $info || $info2 ) {
+						$params = (string)$this->params;
+						$db = JFactory::getDbo();
+						$db->setQuery( "UPDATE `#__extensions` SET `params`='$params' WHERE `name`='plg_system_correios'" );
+						$db->query();
+					}
+				} else $info .= "ERROR: Found weight/cost table but couldn't extract the data.\n";
+			} else $info .= "ERROR: Couldn't find weight/cost table.\n";
+		} else $info .= "ERROR: Couldn't retrieve tracking prices.\n";
+
+		// If any info, email it
+		$info .= $info2;
+		$config = JFactory::getConfig();
+		if( !$to = $config->get( 'webmaster' ) ) $to = $config->get( 'mailfrom' );
+		$mailer = JFactory::getMailer();
+		$mailer->addRecipient( $to );
+		$mailer->setSubject( 'Notification from Correios extension' );
+		$mailer->setBody( $info );
+		$mailer->isHTML( false );
+		$send = $mailer->Send();
 	}
 }
-
