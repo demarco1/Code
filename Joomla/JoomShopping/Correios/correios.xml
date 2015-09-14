@@ -16,7 +16,7 @@
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
-				<field name="carta" type="spacer"
+				<field name="cartaCatSpacer" type="spacer"
 					default="carta"
 					label="&lt;b&gt;Categorias de Carta registrada&lt;/b&gt;:"
 					description="Categorias de Carta registrada"
