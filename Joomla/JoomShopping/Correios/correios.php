@@ -20,11 +20,15 @@ class plgSystemCorreios extends JPlugin {
 	public static $cartaPrices = array();    // the table of prices per weight for carta registrada
 	public static $cartaPricesMod = array(); // the table of prices per weight for carta registrada (módico)
 	public static $allbooks;                 // whether the order consists only of book or not (whether carta registrada is allowed or not)
+	public static $bookCats = array();       // which categories contain books
 
 	public function onAfterInitialise() {
 
 		// If this is a local request and carta=update get the weight/costs and cartaupdate set the config
 		if( $this->isLocal() && array_key_exists( 'cartaupdate', $_REQUEST ) ) $this->updateWeightCosts();
+
+		// Set which cats allow carta registrada from the config form
+		self::$bookCats = preg_split( '/\s*,\s*/', $this->params->get( "cartaCats" ) );
 
 		// And the Carta registrada prices
 		foreach( array( 100, 150, 200, 250, 300, 350, 400, 450 ) as $d ) {

@@ -28,11 +28,11 @@ class sm_correios extends shippingextRoot {
 		$type->load( $id );
 		$type = $type->getProperties()['name_pt-BR'];
 
-		// Check if all products are books and gather their weights
+		// Check if all products are in cats that allow carta registrada and gather their weights
 		$weights = array();
 		plgSystemCorreios::$allbooks = true;
 		foreach( $cart->products as $item ) {
-			if( $item['category_id'] == 1 ) {
+			if( in_array( $item['category_id'], plgSystemCorreios::$bookCats ) ) {
 				for( $i = 0; $i < $item['quantity']; $i++ ) $weights[] = $item['weight'];
 			} else plgSystemCorreios::$allbooks = false;
 		}

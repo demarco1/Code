@@ -18,6 +18,12 @@
 			<fieldset name="basic">
 				<field name="carta" type="spacer"
 					default="carta"
+					label="&lt;b&gt;Categorias de Carta registrada&lt;/b&gt;:"
+					description="Categorias de Carta registrada"
+				/>
+				<field name="cartaCats" type="text" default="1" description="Categorias de Carta registrada (separado com vírgulas)" label="Categorias" size="10" />
+				<field name="carta" type="spacer"
+					default="carta"
 					label="&lt;b&gt;Precos de Carta registrada&lt;/b&gt;:"
 					description="Precos de Carta Registrada"
 				/>
