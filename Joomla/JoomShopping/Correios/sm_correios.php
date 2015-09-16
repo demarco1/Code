@@ -37,6 +37,9 @@ class sm_correios extends shippingextRoot {
 			} else plgSystemCorreios::$allbooks = false;
 		}
 
+		// If all books, rearrange weights into minimum number of packages of 500g max
+		if( plgSystemCorreios::$allbooks ) $weights = optimisePackages( $weights );
+
 		// If it's one of ours, calculate the price
 		if( $type == 'PAC' ) {
 			$prices['shipping'] = $this->getFreightPrice( $weight, 1 );
@@ -59,6 +62,28 @@ class sm_correios extends shippingextRoot {
 			$prices['package'] = 0;
 		}
 		return $prices;
+	}
+
+	/**
+	 * Given a list of product weights for products that are all allowed Carta Registrada,
+	 * rearrange them into as few packages as possible that are all 500g max
+	 */
+	private function optimiseWeights( $weights ) {
+		$wtmp = array();                        // The optimiased packages weights
+		$pkg = array();                         // Descriptive list of weights for each package (not used yet)
+		rsort( $weights );
+		while( count( $weights ) > 0 ) {        // If any products left, start new package
+			$pkg[] = $weights[0];
+			$wtmp[] = array_shift( $weights );  // New package starts with heaviest remaining product
+			$ltmp = count( $wtmp ) - 1;         // Index of new package item
+			$cw = count( $weights );            // Number of products remaining
+			while( $cw > 0 && $weights[$cw - 1] + $wtmp[$ltmp] <= 500 ) { // Keep adding remaining products until none left or over 500g
+				$pkg[count( $pkg ) - 1] .= ', ' . $weights[$cw - 1];
+				$wtmp[$ltmp] += array_pop( $weights );
+				$cw = count( $weights );
+			}
+		}
+		return $wtmp;
 	}
 
 	/**
