@@ -23,10 +23,7 @@ class sm_correios extends shippingextRoot {
 		$weight = $cart->getWeightProducts();
 
 		// Get the shipping type
-		$id = $shipping_method_price->shipping_method_id;
-		$type = JSFactory::getTable( 'shippingMethod', 'jshop' );
-		$type->load( $id );
-		$type = $type->getProperties()['name_pt-BR'];
+		$type = plgSystemCorreios::getShippingMethodName( $shipping_method_price->shipping_method_id );
 
 		// Check if all products are in cats that allow carta registrada and gather their weights
 		$weights = array();
@@ -38,7 +35,7 @@ class sm_correios extends shippingextRoot {
 		}
 
 		// If all books, rearrange weights into minimum number of packages of 500g max
-		if( plgSystemCorreios::$allbooks ) $weights = optimisePackages( $weights );
+		if( plgSystemCorreios::$allbooks ) $weights = plgSystemCorreios::optimisePackages( $weights );
 
 		// If it's one of ours, calculate the price
 		if( $type == 'PAC' ) {
@@ -62,28 +59,6 @@ class sm_correios extends shippingextRoot {
 			$prices['package'] = 0;
 		}
 		return $prices;
-	}
-
-	/**
-	 * Given a list of product weights for products that are all allowed Carta Registrada,
-	 * rearrange them into as few packages as possible that are all 500g max
-	 */
-	private function optimiseWeights( $weights ) {
-		$wtmp = array();                        // The optimiased packages weights
-		$pkg = array();                         // Descriptive list of weights for each package (not used yet)
-		rsort( $weights );
-		while( count( $weights ) > 0 ) {        // If any products left, start new package
-			$pkg[] = $weights[0];
-			$wtmp[] = array_shift( $weights );  // New package starts with heaviest remaining product
-			$ltmp = count( $wtmp ) - 1;         // Index of new package item
-			$cw = count( $weights );            // Number of products remaining
-			while( $cw > 0 && $weights[$cw - 1] + $wtmp[$ltmp] <= 500 ) { // Keep adding remaining products until none left or over 500g
-				$pkg[count( $pkg ) - 1] .= ', ' . $weights[$cw - 1];
-				$wtmp[$ltmp] += array_pop( $weights );
-				$cw = count( $weights );
-			}
-		}
-		return $wtmp;
 	}
 
 	/**

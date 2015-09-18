@@ -128,15 +128,137 @@ class plgSystemCorreios extends JPlugin {
 	}
 
 	/**
+	 * Return the shipping method name given it's id
+	 */
+	public static function getShippingMethodName( $id ) {
+		$type = JSFactory::getTable( 'shippingMethod', 'jshop' );
+		$type->load( $id );
+		return $type->getProperties()['name_pt-BR'];
+	}
+
+	/**
+	 * Return weights if all books
+	 */
+	public static function getOrderWeights( $order ) {
+		$weights = array();
+		foreach( $order->products as $item ) {
+			for( $i = 0; $i < $item['product_quantity']; $i++ ) $weights[] = $item['weight'];
+		}
+		return $weights;
+	}
+
+	/**
+	 * Given a list of product weights for products that are all allowed Carta Registrada,
+	 * rearrange them into as few packages as possible that are all 500g max
+	 */
+	public static function optimiseWeights( $weights, $detailed = false ) {
+		$wtmp = array();                        // The optimiased packages weights
+		$pkg = array();                         // Descriptive list of weights for each package (not used yet)
+		rsort( $weights );
+		while( count( $weights ) > 0 ) {        // If any products left, start new package
+			$pkg[] = array( $weights[0] );
+			$wtmp[] = array_shift( $weights );  // New package starts with heaviest remaining product
+			$ltmp = count( $wtmp ) - 1;         // Index of new package item
+			$cw = count( $weights );            // Number of products remaining
+			while( $cw > 0 && $weights[$cw - 1] + $wtmp[$ltmp] <= 500 ) { // Keep adding remaining products until none left or over 500g
+				$pkg[count( $pkg ) - 1][] = $weights[$cw - 1];
+				$wtmp[$ltmp] += array_pop( $weights );
+				$cw = count( $weights );
+			}
+		}
+		return $detailed ? $pkg : $wtmp;
+	}
+
+	/**
+	 * Add a manifest for carta registrada orders that have more than one package
+	 */
+	private function addManifest( $order, $mailer ) {
+
+		// If we've already rendered the manifest (or determined that there isn't one) for this order just use that
+		static $html = false;
+		if( $html !== false ) {
+			$html = '';
+
+			// Only have manifest for Carta Registrada shipping types
+			$type = self::getShippingMethodName( $order->shipping_method_id );
+			if( !preg_match( '/carta\s*registrada/i', $type ) ) return;
+
+			// Optimise the order's weights into packages
+			$packages = self::optimiseWeights( getOrderWeights( $order ), true );
+
+			// Only have manifest if more than one package
+			if( count( $packages ) < 2 ) return;
+
+			// Create an array of products-to-process that we can tick off
+			$products = array()
+			foreach( $order->products as $item ) {
+				for( $i = 0; $i < $item['product_quantity']; $i++ ) {
+					$title = $item['product_name'];
+					if( array_key_exists( $title, $products ) ) $products[$title][0]++;
+					else $products[$title] = array( 1, $item['weight'] );
+				}
+			}
+
+			// Loop through all packages
+			$manifest = array();
+			foreach( $packages as $i => $weights ) {
+
+				// Loop through the weights,
+				foreach( $weights as $weight ) {
+
+					// Find a product of the same weight
+					foreach( $products as $title => $item ) {
+						if( $weight == $item[1] ) {
+
+							// Remove one of these from the products-to-process list
+							$products[$title][0]--;
+
+							// Add the product to the manifest
+							if( array_key_exists( $title, $manifest[$i] ) ) $manifest[$i][$title][0]++;
+							else $manifest[$i][$title] = array( 1, $weight );
+
+							// Found a matching product, so leave loop
+							break;
+						}
+					}
+				}
+			}
+
+			// Render the manifest
+			$html = "<br>This order contains more than one package.<br>";
+			foreach( $manifest as $i => $package ) {
+				$html .= "<table><tr><th colspan=\"4\">Package $i</th></tr>\n";
+				$html .= "<tr><th>Product</th><th>Unit weight</th><th>Qty</th><th>Total</th></tr>\n";
+				$grand = 0;
+				foreach( $package as $title => $item ) {
+					$qty = $item[0];
+					$weight = $item[1] * 1000;
+					$total = $weight * $qty;
+					$grand += $total;
+					$html .= "<tr><td>$title</td><td>{$weight}g</td><td>$qty</td><td>{$total}g</td></tr>\n";
+				}
+				$html .= "<tr><td colspan=\"4\">Total package weight: {$grand}g</td></tr>\n";
+				$html .= "</table><br>\n";
+			}
+		}
+
+		// Add the table to the end of the message
+		$mailer->Body .= $html;
+	}
+
+	/**
 	 * Set the order mailout events to call our inline method
 	 */
 	public function onBeforeSendOrderEmailClient( $mailer, $order, &$manuallysend, &$pdfsend ) {
+		$this->addManifest( $order, $mailer );
 		$this->inlineStyles( $mailer );
 	}
 	public function onBeforeSendOrderEmailAdmin( $mailer, $order, &$manuallysend, &$pdfsend ) {
+		$this->addManifest( $order, $mailer );
 		$this->inlineStyles( $mailer );
 	}
 	public function onBeforeSendOrderEmailVendor( $mailer, $order, &$manuallysend, &$pdfsend, &$vendor, &$vendors_send_message, &$vendor_send_order ) {
+		$this->addManifest( $order, $mailer );
 		$this->inlineStyles( $mailer );
 	}
 
