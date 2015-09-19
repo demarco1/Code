@@ -210,11 +210,9 @@ class plgSystemCorreios extends JPlugin {
 	 */
 	private function addManifest( $order, $mailer ) {
 
-		// TODO - simplify this to work with the new packages returned from makeCartaPackages
-
 		// If we've already rendered the manifest (or determined that there isn't one) for this order just use that
 		static $html = false;
-		if( $html !== false ) {
+		if( $html === false ) {
 			$html = '';
 
 			// Only have manifest if the order is using a Carta Registrada shipping type
@@ -228,31 +226,31 @@ class plgSystemCorreios extends JPlugin {
 			if( count( $packages ) < 2 ) return;
 
 			// Render the manifest
-			$html = "<br>This order contains more than one package.<br>";
+			$html = "<br>This order contains more than one package.<br><br>";
 			foreach( $packages as $i => $package ) {
-				$html .= "<table><tr><th colspan=\"4\">Package $i</th></tr>\n";
+				$p = $i + 1;
+				$html .= "<table border width=\"100%\"><tr><th colspan=\"4\">Package $p</th></tr>\n";
 				$html .= "<tr><th>Product</th><th>Unit weight</th><th>Qty</th><th>Total</th></tr>\n";
 				foreach( $package[1] as $title => $item ) {
 					$weight = $item[0] * 1000;
 					$qty = $item[1];
 					$total = $weight * $qty;
-					$html .= "<tr><td>$title</td><td>{$weight}g</td><td>$qty</td><td>{$total}g</td></tr>\n";
+					$html .= "<tr><td>$title</td><td align=\"right\">{$weight}g</td><td align=\"right\">$qty</td><td align=\"right\">{$total}g</td></tr>\n";
 				}
 				$weight = $package[0] * 1000;
-				$html .= "<tr><td colspan=\"4\">Total package weight: {$weight}g</td></tr>\n";
+				$html .= "<tr><th colspan=\"3\" align=\"right\">Total package weight:</th><td>{$weight}g</td></tr>\n";
 				$html .= "</table><br>\n";
 			}
 		}
 
 		// Add the table to the end of the message
-		$mailer->Body .= $html;
+		$mailer->Body = preg_replace( "|(.+)</table>|s", "$1$html</table>", $mailer->Body );
 	}
 
 	/**
 	 * Set the order mailout events to call our inline method
 	 */
 	public function onBeforeSendOrderEmailClient( $mailer, $order, &$manuallysend, &$pdfsend ) {
-		$this->addManifest( $order, $mailer );
 		$this->inlineStyles( $mailer );
 	}
 	public function onBeforeSendOrderEmailAdmin( $mailer, $order, &$manuallysend, &$pdfsend ) {
