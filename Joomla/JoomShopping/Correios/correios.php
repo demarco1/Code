@@ -214,60 +214,25 @@ class plgSystemCorreios extends JPlugin {
 		if( $html !== false ) {
 			$html = '';
 
-			// Only have manifest for Carta Registrada shipping types
+			// Only have manifest if the order is using a Carta Registrada shipping type
 			$type = self::getShippingMethodName( $order->shipping_method_id );
 			if( !preg_match( '/carta\s*registrada/i', $type ) ) return;
 
-			// Optimise the order's weights into packages
+			// Organise the order into packages of 500g or less
 			$packages = self::makeCartaPackages( $order->products );
 
 			// Only have manifest if more than one package
 			if( count( $packages ) < 2 ) return;
 
-			// Create an array of products-to-process that we can tick off
-			$products = array()
-			foreach( $order->products as $item ) {
-				for( $i = 0; $i < $item['product_quantity']; $i++ ) {
-					$title = $item['product_name'];
-					if( array_key_exists( $title, $products ) ) $products[$title][0]++;
-					else $products[$title] = array( 1, $item['weight'] );
-				}
-			}
-
-			// Loop through all packages
-			$manifest = array();
-			foreach( $packages as $i => $weights ) {
-
-				// Loop through the weights,
-				foreach( $weights as $weight ) {
-
-					// Find a product of the same weight
-					foreach( $products as $title => $item ) {
-						if( $weight == $item[1] ) {
-
-							// Remove one of these from the products-to-process list
-							$products[$title][0]--;
-
-							// Add the product to the manifest
-							if( array_key_exists( $title, $manifest[$i] ) ) $manifest[$i][$title][0]++;
-							else $manifest[$i][$title] = array( 1, $weight );
-
-							// Found a matching product, so leave loop
-							break;
-						}
-					}
-				}
-			}
-
 			// Render the manifest
 			$html = "<br>This order contains more than one package.<br>";
-			foreach( $manifest as $i => $package ) {
+			foreach( $packages as $i => $package ) {
 				$html .= "<table><tr><th colspan=\"4\">Package $i</th></tr>\n";
 				$html .= "<tr><th>Product</th><th>Unit weight</th><th>Qty</th><th>Total</th></tr>\n";
-				$grand = 0;
-				foreach( $package as $title => $item ) {
-					$qty = $item[0];
-					$weight = $item[1] * 1000;
+				$grand = $package[0];
+				foreach( $package[1] as $title => $item ) {
+					$weight = $item[0] * 1000;
+					$qty = $item[1];
 					$total = $weight * $qty;
 					$grand += $total;
 					$html .= "<tr><td>$title</td><td>{$weight}g</td><td>$qty</td><td>{$total}g</td></tr>\n";
