@@ -137,42 +137,77 @@ class plgSystemCorreios extends JPlugin {
 	}
 
 	/**
-	 * Return weights if all books
+	 * Given a product list from a cart or order, make a list of carta registrada packages
+	 * - each package is in the form of [ total_weight, { title: [ weight, qty ] } ]
 	 */
-	public static function getOrderWeights( $order ) {
-		$weights = array();
-		foreach( $order->products as $item ) {
-			for( $i = 0; $i < $item['product_quantity']; $i++ ) $weights[] = $item['weight'];
+	public static function makeCartaPackages( $items ) {
+		$packages = array();
+
+		// Ensure that all the items are stdClass objects (since orders are, but cart isn't)
+		foreach( $items as $i => $item ) {
+			if( is_array( $item ) ) $items[$i] = self::arrayToObject( $item );
 		}
-		return $weights;
+
+		// Keep creating packages until no items left to add
+		while( self::minWeight( $items ) !== false ) {
+
+			// Start a new package and get it's array index
+			$packages[] = array( 0, array() );
+			$i = count( $packages ) - 1;
+
+			// Keep adding items to the new package until none left or can't fit another
+			while( self::minWeight( $items ) !== false && self::minWeight( $items ) + $packages[$i][0] <= 0.5 ) {
+
+				// Find the heaviest item that fits
+				$max = 0;
+				$j = 0;
+				foreach( $items as $k => $item ) {
+					$weight = $item->weight;
+					if( $weight > $max && $item->product_quantity > 0 && $weight + $packages[$i][0] <= 0.5 ) {
+						$max = $weight;
+						$j = $k;
+					}
+				}
+
+				// Add the item to the package and remove from the items-to-process list
+				$name = $items[$j]->product_name;
+				$weight = $items[$j]->weight;
+				if( !array_key_exists( $name, $packages[$i][1] ) ) $packages[$i][1][$name] = array( $weight, 0 );
+				$packages[$i][0] += $weight;
+				$packages[$i][1][$name][1]++;
+				$items[$j]->product_quantity--;
+			}
+		}
+		return $packages;
 	}
 
 	/**
-	 * Given a list of product weights for products that are all allowed Carta Registrada,
-	 * rearrange them into as few packages as possible that are all 500g max
+	 * Return the minimum product weight from the passed list of products
+	 * - ignore products of zero quantity
+	 * - return false if no products with any quantity
 	 */
-	public static function optimiseWeights( $weights, $detailed = false ) {
-		$wtmp = array();                        // The optimiased packages weights
-		$pkg = array();                         // Descriptive list of weights for each package (not used yet)
-		rsort( $weights );
-		while( count( $weights ) > 0 ) {        // If any products left, start new package
-			$pkg[] = array( $weights[0] );
-			$wtmp[] = array_shift( $weights );  // New package starts with heaviest remaining product
-			$ltmp = count( $wtmp ) - 1;         // Index of new package item
-			$cw = count( $weights );            // Number of products remaining
-			while( $cw > 0 && $weights[$cw - 1] + $wtmp[$ltmp] <= 500 ) { // Keep adding remaining products until none left or over 500g
-				$pkg[count( $pkg ) - 1][] = $weights[$cw - 1];
-				$wtmp[$ltmp] += array_pop( $weights );
-				$cw = count( $weights );
-			}
+	private static function minWeight( $items ) {
+		$min = 10000;
+		foreach( $items as $item ) {
+			if( $item->weight < $min && $item->product_quantity > 0 ) $min = $item->weight;
 		}
-		return $detailed ? $pkg : $wtmp;
+		return $min == 10000 ? false : $min;
+	}
+
+	/**
+	 * Convert array into stdClass object
+	 */
+	private static function arrayToObject( $d ) {
+		if( is_array( $d ) ) return (object)array_map( __FUNCTION__, $d );
+		else return $d;
 	}
 
 	/**
 	 * Add a manifest for carta registrada orders that have more than one package
 	 */
 	private function addManifest( $order, $mailer ) {
+
+		// TODO - simplify this to work with the new packages returned from makeCartaPackages
 
 		// If we've already rendered the manifest (or determined that there isn't one) for this order just use that
 		static $html = false;
@@ -184,7 +219,7 @@ class plgSystemCorreios extends JPlugin {
 			if( !preg_match( '/carta\s*registrada/i', $type ) ) return;
 
 			// Optimise the order's weights into packages
-			$packages = self::optimiseWeights( getOrderWeights( $order ), true );
+			$packages = self::makeCartaPackages( $order->products );
 
 			// Only have manifest if more than one package
 			if( count( $packages ) < 2 ) return;

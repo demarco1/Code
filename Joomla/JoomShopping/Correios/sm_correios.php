@@ -25,17 +25,11 @@ class sm_correios extends shippingextRoot {
 		// Get the shipping type
 		$type = plgSystemCorreios::getShippingMethodName( $shipping_method_price->shipping_method_id );
 
-		// Check if all products are in cats that allow carta registrada and gather their weights
-		$weights = array();
+		// Check if all products are in cats that allow carta registrada
 		plgSystemCorreios::$allbooks = true;
 		foreach( $cart->products as $item ) {
-			if( in_array( $item['category_id'], plgSystemCorreios::$bookCats ) ) {
-				for( $i = 0; $i < $item['quantity']; $i++ ) $weights[] = $item['weight'];
-			} else plgSystemCorreios::$allbooks = false;
+			if( !in_array( $item['category_id'], plgSystemCorreios::$bookCats ) ) plgSystemCorreios::$allbooks = false;
 		}
-
-		// If all books, rearrange weights into minimum number of packages of 500g max
-		if( plgSystemCorreios::$allbooks ) $weights = plgSystemCorreios::optimisePackages( $weights );
 
 		// If it's one of ours, calculate the price
 		if( $type == 'PAC' ) {
@@ -49,10 +43,12 @@ class sm_correios extends shippingextRoot {
 		}
 
 		elseif( preg_match( '/carta\s*registrada/i', $type ) ) {
+			$packages = plgSystemCorreios::makeCartaPackages( $cart->products );
 			$costs = preg_match( '/módico/i', $type ) ? plgSystemCorreios::$cartaPricesMod : plgSystemCorreios::$cartaPrices;
 			$price = 0;
-			foreach( $weights as $w ) {
-				$i = 50*(int)($w*20); // price divisions are in multiples of 50 grams
+			foreach( $packages as $package ) {
+				$weight = $package[0];
+				$i = 50*(int)($weight*20); // price divisions are in multiples of 50 grams
 				$price += $costs[$i];
 			}
 			$prices['shipping'] = $price;
