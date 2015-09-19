@@ -145,7 +145,10 @@ class plgSystemCorreios extends JPlugin {
 
 		// Ensure that all the items are stdClass objects (since orders are, but cart isn't)
 		foreach( $items as $i => $item ) {
-			if( is_array( $item ) ) $items[$i] = self::arrayToObject( $item );
+			if( is_array( $item ) ) {
+				if( array_key_exists( 'quantity', $item ) ) $item['product_quantity'] = $item['quantity'];
+				$items[$i] = self::arrayToObject( $item );
+			}
 		}
 
 		// Keep creating packages until no items left to add
@@ -198,7 +201,7 @@ class plgSystemCorreios extends JPlugin {
 	 * Convert array into stdClass object
 	 */
 	private static function arrayToObject( $d ) {
-		if( is_array( $d ) ) return (object)array_map( __FUNCTION__, $d );
+		if( is_array( $d ) ) return (object)array_map( 'self::arrayToObject', $d );
 		else return $d;
 	}
 
@@ -229,15 +232,14 @@ class plgSystemCorreios extends JPlugin {
 			foreach( $packages as $i => $package ) {
 				$html .= "<table><tr><th colspan=\"4\">Package $i</th></tr>\n";
 				$html .= "<tr><th>Product</th><th>Unit weight</th><th>Qty</th><th>Total</th></tr>\n";
-				$grand = $package[0];
 				foreach( $package[1] as $title => $item ) {
 					$weight = $item[0] * 1000;
 					$qty = $item[1];
 					$total = $weight * $qty;
-					$grand += $total;
 					$html .= "<tr><td>$title</td><td>{$weight}g</td><td>$qty</td><td>{$total}g</td></tr>\n";
 				}
-				$html .= "<tr><td colspan=\"4\">Total package weight: {$grand}g</td></tr>\n";
+				$weight = $package[0] * 1000;
+				$html .= "<tr><td colspan=\"4\">Total package weight: {$weight}g</td></tr>\n";
 				$html .= "</table><br>\n";
 			}
 		}
