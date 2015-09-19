@@ -25,10 +25,12 @@ class sm_correios extends shippingextRoot {
 		// Get the shipping type
 		$type = plgSystemCorreios::getShippingMethodName( $shipping_method_price->shipping_method_id );
 
-		// Check if all products are in cats that allow carta registrada
+		// Check if all products are in cats that allow carta registrada and that all are 500g or less
 		plgSystemCorreios::$allbooks = true;
 		foreach( $cart->products as $item ) {
-			if( !in_array( $item['category_id'], plgSystemCorreios::$bookCats ) ) plgSystemCorreios::$allbooks = false;
+			if( !in_array( $item['category_id'], plgSystemCorreios::$bookCats ) || $item['weight'] > 0.5 ) {
+				plgSystemCorreios::$allbooks = false;
+			}
 		}
 
 		// If it's one of ours, calculate the price
