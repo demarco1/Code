@@ -226,11 +226,14 @@ class plgSystemCorreios extends JPlugin {
 			if( count( $packages ) < 2 ) return;
 
 			// Render the manifest
-			$html = "<tr><td><br>This order contains more than one package.<br><br>";
+			$html = '<tr><td colspan="2" class="bg_gray" style="font-size:12px;font-family:Tahoma;padding:0 3px;background-color:#CCC">';
+			$html .= '<h3 style="font-size:14px;margin:2px">Package details</h3></td></tr>';
+			$html = "<tr><td><i>These details are included because this order contains more than one package.</i></td></tr>";
+			$hr = "<tr><td colspan=\"4\"><div style=\"height:1px;border-top:1px solid #999;\"></td></tr>";
 			foreach( $packages as $i => $package ) {
 				$p = $i + 1;
-				$html .= "<table border width=\"100%\"><tr><th colspan=\"4\">Package $p</th></tr>\n";
-				$html .= "<tr><th>Product</th><th>Unit weight</th><th>Qty</th><th>Total</th></tr>\n";
+				$html .= "<table border width=\"100%\">$hr<tr><th colspan=\"4\">Package $p</th></tr>\n";
+				$html .= "$hr\n<tr><th>Product</th><th>Unit weight</th><th>Qty</th><th>Total</th></tr>\n$hr\n";
 				foreach( $package[1] as $title => $item ) {
 					$weight = $item[0] * 1000;
 					$qty = $item[1];
