@@ -226,28 +226,28 @@ class plgSystemCorreios extends JPlugin {
 			if( count( $packages ) < 2 ) return;
 
 			// Render the manifest
-			$html = '<tr><td colspan="2" class="bg_gray" style="font-size:12px;font-family:Tahoma;padding:0 3px;background-color:#CCC">';
-			$html .= '<h3 style="font-size:14px;margin:2px">Package details</h3></td></tr>';
-			$html = "<tr><td><i>These details are included because this order contains more than one package.</i></td></tr>";
 			$hr = "<tr><td colspan=\"4\"><div style=\"height:1px;border-top:1px solid #999;\"></td></tr>";
+			$space = "<tr><td colspan=\"4\"><div style=\"height:10px;\"></td></tr>";
+			$html = "<tr><td colspan=\"5\" class=\"bg_gray\"><h3 style=\"font-size:14px;margin:2px\">Package details</h3></td></tr>\n$space\n";
+			$html .= "<tr><td colspan=\"5\"><i>These details are included because this order contains more than one package.</i></td></tr>\n$space\n";
 			foreach( $packages as $i => $package ) {
 				$p = $i + 1;
-				$html .= "<table border width=\"100%\">$hr<tr><th colspan=\"4\">Package $p</th></tr>\n";
-				$html .= "$hr\n<tr><th>Product</th><th>Unit weight</th><th>Qty</th><th>Total</th></tr>\n$hr\n";
+				$html .= "<tr><td colspan=\"5\"><table width=\"100%\">\n$space\n<tr><th colspan=\"4\" align=\"left\">Package $p</th></tr>\n";
+				$html .= "$hr\n<tr><td align=\"left\"><b>Product</b></td><td align=\"right\"><b>Unit weight</b></td><td align=\"right\"><b>Qty</b></td><td align=\"right\"><b>Total</b></td></tr>\n$hr\n";
 				foreach( $package[1] as $title => $item ) {
 					$weight = $item[0] * 1000;
 					$qty = $item[1];
 					$total = $weight * $qty;
-					$html .= "<tr><td>$title</td><td align=\"right\">{$weight}g</td><td align=\"right\">$qty</td><td align=\"right\">{$total}g</td></tr>\n";
+					$html .= "$space\n<tr><td>$title</td><td align=\"right\">{$weight}g</td><td align=\"right\">$qty</td><td align=\"right\">{$total}g</td></tr>\n";
 				}
 				$weight = $package[0] * 1000;
-				$html .= "<tr><th colspan=\"3\" align=\"right\">Total package weight:</th><td align=\"right\">{$weight}g</td></tr>\n";
+				$html .= "$space\n<tr><td colspan=\"4\" align=\"right\"><b>Total package weight: &nbsp; {$weight}g</td></tr>\n$space\n";
 				$html .= "</table></td></tr>";
 			}
 		}
 
 		// Add the table to the end of the message
-		$mailer->Body = preg_replace( "|(.+)</table>|s", "$1$html</table>", $mailer->Body );
+		$mailer->Body = preg_replace( "|(.+)(</table>.+?</table>)|s", "$1$html$2", $mailer->Body );
 	}
 
 	/**
