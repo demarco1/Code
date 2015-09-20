@@ -238,7 +238,7 @@ class plgSystemCorreios extends JPlugin {
 					$weight = $item[0] * 1000;
 					$qty = $item[1];
 					$total = $weight * $qty;
-					$html .= "$space\n<tr><td>$title</td><td align=\"right\">{$weight}g</td><td align=\"right\">$qty</td><td align=\"right\">{$total}g</td></tr>\n";
+					$html .= "$space\n<tr><td width=\"75%\">$title</td><td align=\"right\">{$weight}g</td><td align=\"right\">$qty</td><td align=\"right\">{$total}g</td></tr>\n";
 				}
 				$weight = $package[0] * 1000;
 				$html .= "$space\n<tr><td colspan=\"4\" align=\"right\"><b>Total package weight: &nbsp; {$weight}g</td></tr>\n$space\n";
