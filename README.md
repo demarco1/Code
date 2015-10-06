@@ -1,3 +1,3 @@
-# Extensoes
+# Ligmincha code
 
-Extensões para nossa Joomla e MediaWiki
+This is all the code used in the Ligmincha International system.
