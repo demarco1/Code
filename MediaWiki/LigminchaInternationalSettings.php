@@ -1,7 +1,7 @@
 <?php
 $wgArticlePath   = '/$1';
 $wgCookieDomain  = '.ligmincha.org';
-$wgLogo          = '/images/d/d5/Ligmincha-international.png';
+$wgLogo          = '/files/d/d5/Ligmincha-international.png';
 $wgRawHtml       = true;
 $wgDefaultSkin   = 'monobook';
 $wgEnableUploads = true;
