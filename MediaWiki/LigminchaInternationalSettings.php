@@ -9,6 +9,13 @@ $wgEnableUploads = true;
 // Turn on outline numbering
 $wgDefaultUserOptions['numberheadings'] = 1;
 
+// Force users to use old changes format
+$wgExtensionFunctions[] = 'wfOldChanges';
+function wfOldChanges() {
+	global $wgUser;
+	$wgUser->setOption( 'usenewrc', false );
+}
+
 // Permissions
 $wgGroupPermissions['*']['edit']                   = false;
 $wgGroupPermissions['*']['read']                   = true;
