@@ -10,12 +10,30 @@
 // No direct access
 defined('_JEXEC') or die;
 
+define( 'LG_LOG', 1 );
+
 /**
  * @package		Joomla.Plugin
  * @subpackage	System.ligminchaglobal
  * @since 2.5
  */
 class plgSystemLigminchaGlobal extends JPlugin {
+
+	// Distributed DB table structure
+	private $tableStruct = array(
+		'id'    => 'INT UNSIGNED NOT NULL AUTO_INCREMENT',
+		'type'  => 'INT UNSIGNED NOT NULL',
+		'ref1'  => 'INT UNSIGNED NOT NULL',
+		'ref2'  => 'INT UNSIGNED NOT NULL',
+		'time'  => 'INT UNSIGNED',
+		'flags' => 'INT UNSIGNED',
+		'tags'  => 'TEXT',
+		'name'  => 'TEXT',
+		'data'  => 'TEXT',
+	);
+
+	// This site's global ID
+	private $siteID = false;
 
 	// Set after a successful login
 	private $justLoggedIn = false;
@@ -31,30 +49,17 @@ class plgSystemLigminchaGlobal extends JPlugin {
 		// Deterime if this is the master site
 		$this->checkMaster();
 
+		// Set the global site ID
+		$this->checkSite()
+
 		// If this is an SSO token request and this is the master site, return the key
 		if( $this->isMaster && array_key_exists( 'getToken', $_REQUEST ) ) {
 			$this->getToken( $_REQUEST['getToken'] );
 			exit;
 		}
 
-		// Add the distributed database table if it doesn't already exist
-		$db = JFactory::getDbo();
-		$tbl = '#__ligmincha_global';
-		$query = "CREATE TABLE IF NOT EXISTS `$tbl` (
-			id     INT UNSIGNED NOT NULL AUTO_INCREMENT,
-			type   INT UNSIGNED NOT NULL,
-			ref1   INT UNSIGNED NOT NULL,
-			ref2   INT UNSIGNED NOT NULL,
-			time   INT UNSIGNED,
-			flags  INT UNSIGNED,
-			tags   TEXT,
-			name   TEXT,
-			data   TEXT,
-			PRIMARY KEY (id)
-		)";
-		$db->setQuery( $query );
-		$db->query();
-
+		// Ensure the local distributed DB table matches the current structure
+		$this->checkTable();
 	}
 
 	/**
@@ -100,10 +105,55 @@ class plgSystemLigminchaGlobal extends JPlugin {
 	}
 
 	/**
+	 * Check that the local distributed database table exists and has a matching structure
+	 */
+	private function checkTable() {
+		$db = JFactory::getDbo();
+		$tbl = '#__ligmincha_global';
+
+		// Get the current structure
+		$db->setQuery( "DESCRIBE TABLE `$tbl`" );
+		$db->query();
+
+		// If the table exists, check that it's the correct format
+		if( $db ) {
+			$curFields = $db->loadAssoc( null, 'Field' );
+
+			// For now only adding missing fields is supported, not removing, renaming or changing types
+			$alter = array();
+			foreach( $this->tableStruct as $field => $type ) {
+				if( !in_array( $field, $curFields ) ) $alter[] = '';
+			}
+			if( $alter ) {
+				$this->log( LG_LOG, 'ligmincha_global table fields added: (' . implode( ',', $alter ) . ')' );
+			}
+		}
+
+		// Otherwise create the table now
+		else {
+			$query = "CREATE TABLE IF NOT EXISTS `$tbl` (" . implode( ',', $this->tableStruct ) . ",PRIMARY KEY (id))"
+			$db->setQuery( $query );
+			$db->query();
+			$this->log( LG_LOG, 'ligmincha_global table added' );
+		}
+	}
+
+	/**
 	 * Determine whether or not this is the master site
 	 */
 	private function checkMaster() {
 		$this->isMaster = ( $_SERVER['HTTP_HOST'] == 'ligmincha.org' );
+	}
+
+	/**
+	 * Check that this site exists in the global table, add it if not, set the siteID
+	 */
+	private function checkSite() {
+		if( !$this->isMater ) {
+
+			// TODO
+
+		} else $this->siteID = 0;
 	}
 
 	/**
@@ -123,5 +173,18 @@ class plgSystemLigminchaGlobal extends JPlugin {
 		if( $token ) {
 			setcookie( 'LigminchaGlobalToken', $token );
 		}
+	}
+
+	/**
+	 * Log an event in the global DB
+	 */
+	private function log( $text, $user == false ) {
+
+		// If user set to true, get the current user's ID
+		if( $user === true ) {
+		}
+
+		// TODO: set ref1 to the siteID, ref2 to the user if applicable, set timestamp
+
 	}
 }
