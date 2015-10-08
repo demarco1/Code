@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 /**
  * @package		Joomla.Plugin
- * @subpackage	System.mwsso
+ * @subpackage	System.ligminchaglobal
  * @since 2.5
  */
 class plgSystemLigminchaGlobal extends JPlugin {
@@ -29,10 +29,13 @@ class plgSystemLigminchaGlobal extends JPlugin {
 	public function onAfterInitialise() {
 
 		// Deterime if this is the master site
-		$this->isMaster = $this->isMaster();
+		$this->checkMaster();
 
 		// If this is an SSO token request and this is the master site, return the key
-		if( $this->isMaster && array_key_exists( 'getToken', $_REQUEST ) ) $this->getToken( $_REQUEST['getToken'] );
+		if( $this->isMaster && array_key_exists( 'getToken', $_REQUEST ) ) {
+			$this->getToken( $_REQUEST['getToken'] );
+			exit;
+		}
 
 		// Add the distributed database table if it doesn't already exist
 		$db = JFactory::getDbo();
@@ -53,28 +56,6 @@ class plgSystemLigminchaGlobal extends JPlugin {
 	}
 
 	/**
-	 * Determine whether or not this is the master site
-	 */
-	private function isMaster() {
-		return $_SERVER['HTTP_HOST'] == 'ligmincha.org';
-	}
-
-	/**
-	 * A client from another domain is requesting an SSO token, set it in a cookie
-	 */
-	private function getToken( $key ) {
-		// get the token from the db that corresponds with the key
-		$token = 'blabla';
-
-		// If we have a token, set it in a cookie
-		if( $token ) {
-			setcookie( 'LigminchaGlobalToken', $token );
-		}
-
-		exit;
-	}
-
-	/**
 	 * Called after a user has successfully completed the login process
 	 */
 	public function onUserAfterLogin( $options ) {
@@ -82,7 +63,7 @@ class plgSystemLigminchaGlobal extends JPlugin {
 	}
 
 	/**
-	 * Called after initialisation of the environment
+	 * Called after the page has rendered but before it's been sent to the client
 	 */
 	public function onAfterRender() {
 
@@ -91,11 +72,19 @@ class plgSystemLigminchaGlobal extends JPlugin {
 
 		// Get this user's SSO token key
 		$key = 'blabla';
+		$token = 'fasfsafa'; // May as well get the token in the same query
 
-		// Append the iFrame to the output (Don't think $this is set to the app, but should test)
-		$url = "http://ligmincha.org/index.php?getToken=$key";
-		$app = &JFactory::getApplication( 'site' );
-		$app->appendBody( "<iframe src=\"$url\" frameborder=\"0\" width=\"1\" height=\"1\"></iframe>" );
+		// If this is the main site, just set the cookie now,
+		if( $this->isMaster ) {
+			$this->getToken( $key, $token );
+		}
+
+		// Otherwise append the iFrame to the output (Don't think $this is set to the app, but should test)
+		else {
+			$url = "http://ligmincha.org/index.php?getToken=$key";
+			$app = &JFactory::getApplication( 'site' );
+			$app->appendBody( "<iframe src=\"$url\" frameborder=\"0\" width=\"1\" height=\"1\"></iframe>" );
+		}
 	}
 
 	/**
@@ -107,4 +96,29 @@ class plgSystemLigminchaGlobal extends JPlugin {
 
 	}
 
+	/**
+	 * Determine whether or not this is the master site
+	 */
+	private function checkMaster() {
+		$this->isMaster = ( $_SERVER['HTTP_HOST'] == 'ligmincha.org' );
+	}
+
+	/**
+	 * A client from another domain is requesting an SSO token, set it in a cookie
+	 */
+	private function getToken( $key, $token = false ) {
+
+		// Double-check that we're definitely the master site
+		if( !$this->isMaster ) return;
+
+		// get the token from the db that corresponds with the key
+		if( $token === false ) {
+			$token = 'blabla';
+		}
+
+		// If we have a token, set it in a cookie
+		if( $token ) {
+			setcookie( 'LigminchaGlobalToken', $token );
+		}
+	}
 }
