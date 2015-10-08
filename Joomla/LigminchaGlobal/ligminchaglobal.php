@@ -43,6 +43,8 @@ class plgSystemLigminchaGlobal extends JPlugin {
 		$query = "CREATE TABLE IF NOT EXISTS `$tbl` (
 			id     INT UNSIGNED NOT NULL AUTO_INCREMENT,
 			type   INT UNSIGNED NOT NULL,
+			ref1   INT UNSIGNED NOT NULL,
+			ref2   INT UNSIGNED NOT NULL,
 			time   INT UNSIGNED,
 			flags  INT UNSIGNED,
 			tags   TEXT,
@@ -79,7 +81,8 @@ class plgSystemLigminchaGlobal extends JPlugin {
 			$this->getToken( $key, $token );
 		}
 
-		// Otherwise append the iFrame to the output (Don't think $this is set to the app, but should test)
+		// Otherwise append a 1x1pixel iFrame to the output that will request a token cookie from the main server
+		// TODO: check if $this is already set to the app
 		else {
 			$server = $this->params->get( 'lgCookieServer' );
 			$app = &JFactory::getApplication( 'site' );
