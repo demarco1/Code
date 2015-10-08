@@ -13,5 +13,10 @@
 		<filename plugin="ligminchaglobal">ligminchaglobal.php</filename>
 	</files>
 	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="lgCookieServer" type="text" default="http://ligmincha.org/index.php" description="URL of the script that serves the SSO cookies" label="Cookie server" size="30" />
+			</fieldset>
+		</fields>
 	</config>
 </extension>

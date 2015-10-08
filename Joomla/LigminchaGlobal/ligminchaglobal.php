@@ -81,9 +81,9 @@ class plgSystemLigminchaGlobal extends JPlugin {
 
 		// Otherwise append the iFrame to the output (Don't think $this is set to the app, but should test)
 		else {
-			$url = "http://ligmincha.org/index.php?getToken=$key";
+			$server = $this->params->get( 'lgCookieServer' );
 			$app = &JFactory::getApplication( 'site' );
-			$app->appendBody( "<iframe src=\"$url\" frameborder=\"0\" width=\"1\" height=\"1\"></iframe>" );
+			$app->appendBody( "<iframe src=\"$server?getToken=$key\" frameborder=\"0\" width=\"1\" height=\"1\"></iframe>" );
 		}
 	}
 
