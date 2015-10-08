@@ -7,7 +7,7 @@ $wgDefaultSkin   = 'monobook';
 $wgEnableUploads = true;
 
 // Turn on outline numbering
-$wgDefaultUserOptions['numberheadings'] = 1;
+//$wgDefaultUserOptions['numberheadings'] = 1;
 
 // Force users to use old changes format
 $wgExtensionFunctions[] = 'wfOldChanges';
