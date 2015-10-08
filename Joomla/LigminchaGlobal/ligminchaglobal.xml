@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="system">
+	<name>plg_system_ligminchaglobal</name>
+	<author>Aran Dunkley</author>
+	<creationDate>October 2015</creationDate>
+	<copyright>Copyright (C) 2015 Ligmincha International</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>aran@organicdesign.co.nz</authorEmail>
+	<authorUrl>www.organicdesign.co.nz/aran</authorUrl>
+	<version>1.0.2</version>
+	<description>Unifies the Joomlas and other web-apps in the Ligmincha International system</description>
+	<files>
+		<filename plugin="mwsso">ligminchaglobal.php</filename>
+	</files>
+	<config>
+	</config>
+</extension>
