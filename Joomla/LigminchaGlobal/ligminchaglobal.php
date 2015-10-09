@@ -8,7 +8,7 @@
  */
 
 // No direct access
-defined('_JEXEC') or die;
+//defined('_JEXEC') or die;
 
 define( 'LG_LOG', 1 );
 
@@ -50,7 +50,7 @@ class plgSystemLigminchaGlobal extends JPlugin {
 		$this->checkMaster();
 
 		// Set the global site ID
-		$this->checkSite()
+		$this->checkSite();
 
 		// If this is an SSO token request and this is the master site, return the key
 		if( $this->isMaster && array_key_exists( 'getToken', $_REQUEST ) ) {
@@ -59,7 +59,7 @@ class plgSystemLigminchaGlobal extends JPlugin {
 		}
 
 		// Ensure the local distributed DB table matches the current structure
-		$this->checkTable();
+		//$this->checkTable();
 	}
 
 	/**
@@ -131,7 +131,7 @@ class plgSystemLigminchaGlobal extends JPlugin {
 
 		// Otherwise create the table now
 		else {
-			$query = "CREATE TABLE IF NOT EXISTS `$tbl` (" . implode( ',', $this->tableStruct ) . ",PRIMARY KEY (id))"
+			$query = "CREATE TABLE IF NOT EXISTS `$tbl` (" . implode( ',', $this->tableStruct ) . ",PRIMARY KEY (id))";
 			$db->setQuery( $query );
 			$db->query();
 			$this->log( LG_LOG, 'ligmincha_global table added' );
@@ -149,7 +149,7 @@ class plgSystemLigminchaGlobal extends JPlugin {
 	 * Check that this site exists in the global table, add it if not, set the siteID
 	 */
 	private function checkSite() {
-		if( !$this->isMater ) {
+		if( !$this->isMaster ) {
 
 			// TODO
 
@@ -178,10 +178,11 @@ class plgSystemLigminchaGlobal extends JPlugin {
 	/**
 	 * Log an event in the global DB
 	 */
-	private function log( $text, $user == false ) {
+	private function log( $text, $user = false ) {
 
 		// If user set to true, get the current user's ID
 		if( $user === true ) {
+			// TODO
 		}
 
 		// TODO: set ref1 to the siteID, ref2 to the user if applicable, set timestamp

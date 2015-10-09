@@ -52,6 +52,7 @@ $wgDefaultUserOptions['watchdefault']              = false;
 
 // Extensions
 wfLoadExtensions( array(
+	'ParserFunctions',
 	'ExtraMagic',
 	'HighlightJS',
 	'DynamicPageList',
