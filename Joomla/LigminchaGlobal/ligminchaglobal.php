@@ -12,6 +12,12 @@
 
 
 // Instantiate the main LigminchaGobal classes
+require_once( __DIR__ . '/base.php' );
+require_once( __DIR__ . '/distributed.php' );
+require_once( __DIR__ . '/object.php' );
+require_once( __DIR__ . '/server.php' );
+require_once( __DIR__ . '/session.php' );
+require_once( __DIR__ . '/user.php' );
 require_once( __DIR__ . '/distributed.php' );
 require_once( __DIR__ . '/sso.php' );
 
@@ -22,8 +28,8 @@ require_once( __DIR__ . '/sso.php' );
  */
 class plgSystemLigminchaGlobal extends JPlugin {
 
-	// This site's global ID
-	public $siteID = false;
+	// Have a local link to the current session
+	private $session;
 
 	// Is this the master site?
 	public $isMaster = false;
@@ -36,8 +42,7 @@ class plgSystemLigminchaGlobal extends JPlugin {
 		// Determine if this is the master site
 		$this->checkMaster();
 
-		// Set the global site ID
-		$this->checkSite();
+ini_set('error_reporting',E_ALL);
 
 		// Initialise the LG classes
 		new LigminchaGlobalDistributed( $this );
@@ -48,8 +53,7 @@ class plgSystemLigminchaGlobal extends JPlugin {
 	 * Called after a user has successfully completed the login process
 	 */
 	public function onUserAfterLogin( $options ) {
-		LigminchaGlobalSSO::$instance->justLoggedIn = true;
-		header('X-Foo: baz');
+		LigminchaGlobalSSO::$instance->startSession( $options );
 	}
 
 	/**
@@ -85,6 +89,4 @@ class plgSystemLigminchaGlobal extends JPlugin {
 
 		} else $this->siteID = 0;
 	}
-
-
 }

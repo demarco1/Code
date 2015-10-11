@@ -2,23 +2,13 @@
 /**
  * This class encapsulates all the Single-sign-on functionality for the LigminchaGlobal extension
  */
-class LigminchaGlobalSSO {
-
-	// Set after a successful login
-	public $justLoggedIn = false;
-
-	// Reference to the main plugin class
-	private static $plugin = false;
-
-	// Reference to this classes singleton instance
-	public static $instance = false;
+class LigminchaGlobalSSO extends LigminchaGlobalBase {
 
 	function __construct( $plugin ) {
-		self::$instance = $this;
-		self::$plugin = $plugin;
+		parent::__construct( $plugin );
 
 		// If this is an SSO token request and this is the master site, return the key
-		if( $plugin->isMaster && array_key_exists( 'getToken', $_REQUEST ) ) {
+		if( $this->plugin->isMaster && array_key_exists( 'getToken', $_REQUEST ) ) {
 			$this->getToken( $_REQUEST['getToken'] );
 			exit;
 		}
@@ -46,9 +36,7 @@ class LigminchaGlobalSSO {
 	public function appendTokenRequest() {
 		// If bail unless user has just logged in 
 //		if( !$this->justLoggedIn ) return;
-print "just logged in: " . ($this->justLoggedIn ? 'yes' : 'no');
-
-
+return;
 		// Get this user's SSO token key
 		$key = 'blabla';
 		$token = 'fasfsafa'; // May as well get the token in the same query

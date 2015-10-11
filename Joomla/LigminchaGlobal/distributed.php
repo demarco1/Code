@@ -4,41 +4,51 @@
  */
 
 // Entry types
-define( 'LG_LOG', 1 );
+define( 'LG_LOG',    1 );
+define( 'LG_SERVER', 2 );
+define( 'LG_SESSION', 3 );
+define( 'LG_USER',   4 );
+define( 'LG_GROUP',  5 );
+define( 'LG_SSO_COOKIE_REQUEST',  6 );
 
 // Flags
-define( 'LG_QUEUED', 1 << 0 );
+define( 'LG_QUEUED',  1 << 0 );
 define( 'LG_PRIVATE', 1 << 1 );
+define( 'LG_NEW',     1 << 2 );
 
-class LigminchaGlobalDistributed {
+class LigminchaGlobalDistributed extends LigminchaGlobalBase {
 
 	// Our distributed data table
 	private $table = '#__ligmincha_global';
 
-	// Table structure
-	private $tableStruct = array(
-		'id'    => 'BINARY(20) NOT NULL',
-		'type'  => 'INT UNSIGNED NOT NULL',
-		'ref1'  => 'BINARY(20)',
-		'ref2'  => 'BINARY(20)',
-		'time'  => 'INT UNSIGNED',
-		'flags' => 'INT UNSIGNED',
-		'owner' => 'BINARY(20) NOT NULL',
-		'group' => 'TEXT',
-		'name'  => 'TEXT',
-		'data'  => 'TEXT',
+	// Sub-classes to use for revision types (non-existent class means generic base class)
+	private $classes = array(
+		LG_LOG => 'LogEntry',
+		LG_SERVER => 'Server',
+		LG_SESSION => 'Session',
+		LG_USER => 'User',
+		LG_GROUP => 'Group',
+		LG_SSO_COOKIE_REQUEST => 'CookieRequest',
 	);
 
-	// Reference to the main plugin class
-	private static $plugin = false;
-
-	// Reference to this classes singleton instance
-	public static $instance = false;
+	// Table structure
+	private $tableStruct = array(
+		'rev_id' => 'BINARY(20) NOT NULL',
+		'obj_id' => 'BINARY(20) NOT NULL',
+		'ref1'   => 'BINARY(20)',
+		'ref2'   => 'BINARY(20)',
+		'type'   => 'INT UNSIGNED NOT NULL',
+		'time'   => 'INT UNSIGNED',
+		'flags'  => 'INT UNSIGNED',
+		'owner'  => 'BINARY(20) NOT NULL',
+		'group'  => 'TEXT',
+		'name'   => 'TEXT',
+		'data'   => 'TEXT',
+	);
 
 	function __construct( $plugin ) {
 ini_set('error_reporting',E_ALL);
-		self::$instance = $this;
-		self::$plugin = $plugin;
+		parent::__construct( $plugin );
 		$this->checkTable();
 	}
 
@@ -47,6 +57,14 @@ ini_set('error_reporting',E_ALL);
 	 */
 	private function checkTable() {
 		$db = JFactory::getDbo();
+
+		// Create the table if it doesn't exist
+		$def = array();
+		foreach( $this->tableStruct as $field => $type ) $def[] = "`$field` $type";
+		$query = "CREATE TABLE IF NOT EXISTS `{$this->table}` (" . implode( ',', $def ) . ",PRIMARY KEY (rev_id))";
+		$db->setQuery( $query );
+		$db->query();
+		$this->log( LG_LOG, 'ligmincha_global table added' );
 
 		// Get the current structure
 		$db->setQuery( "DESCRIBE `{$this->table}`" );
@@ -68,14 +86,6 @@ ini_set('error_reporting',E_ALL);
 				$db->query();
 				$this->log( LG_LOG, 'ligmincha_global table fields added: (' . implode( ',', array_keys( $alter ) ) . ')' );
 			}
-		}
-
-		// Otherwise create the table now
-		else {
-			$query = "CREATE TABLE IF NOT EXISTS `$tbl` (" . implode( ',', $this->tableStruct ) . ",PRIMARY KEY (id))";
-			$db->setQuery( $query );
-			$db->query();
-			$this->log( LG_LOG, 'ligmincha_global table added' );
 		}
 	}
 
@@ -107,9 +117,68 @@ ini_set('error_reporting',E_ALL);
 	 * Generate a new globally unique ID
 	 */
 	private function uuid() {
-		static $uuid = uniqid( $_SERVER['HTTP_HOST'], true );
+		static $uuid;
+		if( !$uuid ) $uuid = uniqid( $_SERVER['HTTP_HOST'], true );
 		$uuid = sha1( $uuid . microtime() . uniqid() );
 		return $uuid;
 	}
 
+	/**
+	 * Remove all expired items
+	 */
+	private function expire() {
+	}
+
 }
+
+/**
+ * Class representing a single generic object in the distributed database
+ */
+class LigminchaGlobalObject {
+
+	private $rev_id;
+	private $obj_id;
+	private $ref1;
+	private $ref2;
+	private $type;
+	private $time;
+	private $flags;
+	private $owner;
+	private $group;
+	private $name;
+	private $data;
+
+	function __construct( $uuid = false ) {
+
+		if( $uuid === false ) {
+			$this->uuid = $this->uuid();
+			$this->flags |= LG_NEW;
+		}
+
+		$this->uuid = $uuid;
+
+	}
+
+	/**
+	 * Update or create the object in the database and queue the changes if necessary
+	 */
+	public function update() {
+
+		if( $this->flags | LG_NEW ) {
+
+			// insert new revision/object
+
+		} else {
+
+			// make a new revision for the current object
+
+		}
+
+	}
+
+}
+
+
+
+
+
