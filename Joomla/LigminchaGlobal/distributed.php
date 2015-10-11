@@ -15,6 +15,8 @@ define( 'LG_QUEUED',  1 << 0 );
 define( 'LG_PRIVATE', 1 << 1 );
 define( 'LG_NEW',     1 << 2 );
 
+// TYPE-SPECIFIC FLAGS (top eight bits - only need to be unique within the scope of their type)
+
 class LigminchaGlobalDistributed extends LigminchaGlobalBase {
 
 	// Our distributed data table
