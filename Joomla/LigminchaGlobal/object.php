@@ -1,21 +1,52 @@
 <?php
 /**
- * Global User
+ * Class representing a single generic object in the distributed database
  */
-class LigminchaGlobalUser extends LigminchaGlobalObject {
+class LigminchaGlobalObject {
 
-	private $server;
+	private $rev_id;
+	private $obj_id;
+	private $ref1;
+	private $ref2;
+	private $type;
+	private $time;
+	private $flags;
+	private $owner;
+	private $group;
+	private $name;
+	private $data;
 
-	function __construct( $args ) {
-		parent::__construct( $args );
-		$this->type = LG_USER;
-	}
+	function __construct( $uuid = false ) {
 
-	public function getUser() {
-
-		// Create if non-existent
-		if( !$this->server ) {
+		if( $uuid === false ) {
+			$this->uuid = $this->uuid();
+			$this->flags |= LG_NEW;
 		}
 
-		return $this->server;
+		$this->uuid = $uuid;
+
+	}
+
+	/**
+	 * Update or create the object in the database and queue the changes if necessary
+	 */
+	public function update() {
+
+		if( $this->flags | LG_NEW ) {
+
+			// insert new revision/object
+
+		} else {
+
+			// make a new revision for the current object
+
+		}
+
+	}
+
 }
+
+
+
+
+
