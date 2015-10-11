@@ -44,6 +44,15 @@ class LigminchaGlobalObject {
 
 	}
 
+	/**
+	 * Generate a new globally unique ID
+	 */
+	private function uuid() {
+		static $uuid;
+		if( !$uuid ) $uuid = uniqid( $_SERVER['HTTP_HOST'], true );
+		$uuid = sha1( $uuid . microtime() . uniqid() );
+		return $uuid;
+	}
 }
 
 

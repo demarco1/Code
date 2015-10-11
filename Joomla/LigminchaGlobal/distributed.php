@@ -9,7 +9,6 @@ define( 'LG_SERVER', 2 );
 define( 'LG_SESSION', 3 );
 define( 'LG_USER',   4 );
 define( 'LG_GROUP',  5 );
-define( 'LG_SSO_COOKIE_REQUEST',  6 );
 
 // Flags
 define( 'LG_QUEUED',  1 << 0 );
@@ -111,16 +110,6 @@ ini_set('error_reporting',E_ALL);
 		// TODO: set ref1 to the siteID, ref2 to the user if applicable, set timestamp
 		// should use LG_PRIVATE and LG_QUEUED flags
 
-	}
-
-	/**
-	 * Generate a new globally unique ID
-	 */
-	private function uuid() {
-		static $uuid;
-		if( !$uuid ) $uuid = uniqid( $_SERVER['HTTP_HOST'], true );
-		$uuid = sha1( $uuid . microtime() . uniqid() );
-		return $uuid;
 	}
 
 	/**

@@ -18,7 +18,6 @@ require_once( __DIR__ . '/object.php' );
 require_once( __DIR__ . '/server.php' );
 require_once( __DIR__ . '/session.php' );
 require_once( __DIR__ . '/user.php' );
-require_once( __DIR__ . '/distributed.php' );
 require_once( __DIR__ . '/sso.php' );
 
 /**
@@ -44,7 +43,7 @@ class plgSystemLigminchaGlobal extends JPlugin {
 
 ini_set('error_reporting',E_ALL);
 
-		// Initialise the LG classes
+		// Instantiate the main functionality singletons
 		new LigminchaGlobalDistributed( $this );
 		new LigminchaGlobalSSO( $this );
 	}

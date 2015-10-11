@@ -1,4 +1,7 @@
 <?php
+/**
+ * A few properties common to all the main Ligmincha functionality classes
+ */
 class LigminchaGlobalBase {
 
 	// Reference to the main plugin class
