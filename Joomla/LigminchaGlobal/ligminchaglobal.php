@@ -40,6 +40,12 @@ class plgSystemLigminchaGlobal extends JPlugin {
 		// Instantiate the main functionality singletons
 		$this->distributed = new LigminchaGlobalDistributed();
 		$this->sso = new LigminchaGlobalSSO();
+
+		// Instantiate the main global objects
+		LigminchaGlobalServer::getCurrent();
+		LigminchaGlobalUser::getCurrent();
+		LigminchaGlobalSession::getCurrent();
+
 	}
 
 	/**
@@ -54,8 +60,8 @@ class plgSystemLigminchaGlobal extends JPlugin {
 	/**
 	 * Destroy this users global session after logout
 	 */
-	public function onUserAfterLogout() {
-		LigminchaGlobalSession::destroyCurrent();
+	public function onUserAfterLogout( $options ) {
+		LigminchaGlobalSession::delCurrent();
 	}
 
 	/**

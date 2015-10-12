@@ -31,10 +31,13 @@ class LigminchaGlobalSSO {
 
 				// If the session is newly created, get an SSO cookie under ligmincha.org for this session ID
 				// - this is done by appending a 1x1pixel iFrame to the output that will request a token cookie from ligmincha.org
-				if( $session->flags | LG_NEW ) {
+				if( $session->expire > 0 ) {
 					$url = plgSystemLigminchaGlobal::$instance->params->get( 'lgCookieServer' );
+					$iframe = "<iframe src=\"$url?{$this->cmd}={$session->obj_id}\" frameborder=\"0\" width=\"1\" height=\"1\"></iframe>";
 					$app = JFactory::getApplication( 'site' );
-					$app->appendBody( "<iframe src=\"$url?{$this->cmd}={$session->obj_id}\" frameborder=\"0\" width=\"1\" height=\"1\"></iframe>" );
+					$app->setBody( str_replace( '</body>', "$iframe\n</body>", $app->getBody() ) );
+					$session->expire = 0;
+					$session->update();
 				}
 			}
 		}

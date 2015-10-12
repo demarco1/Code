@@ -3,30 +3,9 @@
  * This class encapsulates all the distributed database functionality for the LigminchaGlobal extension
  */
 
-// Entry types
-define( 'LG_LOG',     1 );
-define( 'LG_SERVER',  2 );
-define( 'LG_SESSION', 3 );
-define( 'LG_USER',    4 );
-define( 'LG_GROUP',   5 );
-
-// Flags
-define( 'LG_QUEUED',  1 << 0 );
-define( 'LG_PRIVATE', 1 << 1 );
-define( 'LG_NEW',     1 << 2 );
-
 // TYPE-SPECIFIC FLAGS (top eight bits - only need to be unique within the scope of their type)
 
 class LigminchaGlobalDistributed {
-
-	// Sub-classes to use for revision types (non-existent class means generic base class)
-	private $classes = array(
-		LG_LOG     => 'LogEntry',
-		LG_SERVER  => 'Server',
-		LG_SESSION => 'Session',
-		LG_USER    => 'User',
-		LG_GROUP   => 'Group',
-	);
 
 	// Our distributed data table
 	public static $table = '#__ligmincha_global';
@@ -61,7 +40,7 @@ class LigminchaGlobalDistributed {
 		// Create the table if it doesn't exist
 		$def = array();
 		foreach( self::$tableStruct as $field => $type ) $def[] = "`$field` $type";
-		$query = "CREATE TABLE IF NOT EXISTS $table (" . implode( ',', $def ) . ",PRIMARY KEY (rev_id))";
+		$query = "CREATE TABLE IF NOT EXISTS $table (" . implode( ',', $def ) . ",PRIMARY KEY (obj_id))";
 		$db->setQuery( $query );
 		$db->query();
 		$this->log( LG_LOG, 'ligmincha_global table added' );
