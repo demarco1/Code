@@ -4,20 +4,12 @@
  */
 class LigminchaGlobalSession extends LigminchaGlobalObject {
 
-	private $user;
-
-	function __construct( $args ) {
-		parent::__construct( $args );
+	function __construct() {
 		$this->type = LG_SESSION;
+		parent::__construct();
+		$this->ref1 = LigminchaGlobalServer::getCurrent()->obj_id;
+
+		// Session only lives for five seconds in this initial form (with LG_NEW flag set)
+		$this->expire = 5;
 	}
-
-	public function getUser() {
-
-		// Create if non-existent
-		if( !$this->user ) {
-		}
-
-		return $this->user;
-	}
-
 }

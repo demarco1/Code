@@ -4,11 +4,11 @@
  */
 
 // Entry types
-define( 'LG_LOG',    1 );
-define( 'LG_SERVER', 2 );
+define( 'LG_LOG',     1 );
+define( 'LG_SERVER',  2 );
 define( 'LG_SESSION', 3 );
-define( 'LG_USER',   4 );
-define( 'LG_GROUP',  5 );
+define( 'LG_USER',    4 );
+define( 'LG_GROUP',   5 );
 
 // Flags
 define( 'LG_QUEUED',  1 << 0 );
@@ -17,39 +17,38 @@ define( 'LG_NEW',     1 << 2 );
 
 // TYPE-SPECIFIC FLAGS (top eight bits - only need to be unique within the scope of their type)
 
-class LigminchaGlobalDistributed extends LigminchaGlobalBase {
-
-	// Our distributed data table
-	private $table = '#__ligmincha_global';
+class LigminchaGlobalDistributed {
 
 	// Sub-classes to use for revision types (non-existent class means generic base class)
 	private $classes = array(
-		LG_LOG => 'LogEntry',
-		LG_SERVER => 'Server',
+		LG_LOG     => 'LogEntry',
+		LG_SERVER  => 'Server',
 		LG_SESSION => 'Session',
-		LG_USER => 'User',
-		LG_GROUP => 'Group',
-		LG_SSO_COOKIE_REQUEST => 'CookieRequest',
+		LG_USER    => 'User',
+		LG_GROUP   => 'Group',
 	);
 
+	// Our distributed data table
+	public static $table = '#__ligmincha_global';
+
 	// Table structure
-	private $tableStruct = array(
+	public static $tableStruct = array(
 		'rev_id' => 'BINARY(20) NOT NULL',
 		'obj_id' => 'BINARY(20) NOT NULL',
 		'ref1'   => 'BINARY(20)',
 		'ref2'   => 'BINARY(20)',
+		'tag'    => 'TEXT',
 		'type'   => 'INT UNSIGNED NOT NULL',
 		'time'   => 'INT UNSIGNED',
+		'expire' => 'INT UNSIGNED',
 		'flags'  => 'INT UNSIGNED',
-		'owner'  => 'BINARY(20) NOT NULL',
+		'owner'  => 'BINARY(20)',
 		'group'  => 'TEXT',
 		'name'   => 'TEXT',
 		'data'   => 'TEXT',
 	);
 
-	function __construct( $plugin ) {
-ini_set('error_reporting',E_ALL);
-		parent::__construct( $plugin );
+	function __construct() {
 		$this->checkTable();
 	}
 
@@ -58,17 +57,18 @@ ini_set('error_reporting',E_ALL);
 	 */
 	private function checkTable() {
 		$db = JFactory::getDbo();
+		$table = '`' . self::$table . '`';
 
 		// Create the table if it doesn't exist
 		$def = array();
-		foreach( $this->tableStruct as $field => $type ) $def[] = "`$field` $type";
-		$query = "CREATE TABLE IF NOT EXISTS `{$this->table}` (" . implode( ',', $def ) . ",PRIMARY KEY (rev_id))";
+		foreach( self::$tableStruct as $field => $type ) $def[] = "`$field` $type";
+		$query = "CREATE TABLE IF NOT EXISTS $table (" . implode( ',', $def ) . ",PRIMARY KEY (rev_id))";
 		$db->setQuery( $query );
 		$db->query();
 		$this->log( LG_LOG, 'ligmincha_global table added' );
 
 		// Get the current structure
-		$db->setQuery( "DESCRIBE `{$this->table}`" );
+		$db->setQuery( "DESCRIBE $table" );
 		$db->query();
 
 		// If the table exists, check that it's the correct format
@@ -77,13 +77,13 @@ ini_set('error_reporting',E_ALL);
 
 			// For now only adding missing fields is supported, not removing, renaming or changing types
 			$alter = array();
-			foreach( $this->tableStruct as $field => $type ) {
+			foreach( self::$tableStruct as $field => $type ) {
 				if( !in_array( $field, $curFields ) ) $alter[$field] = $type;
 			}
 			if( $alter ) {
 				$cols = array();
 				foreach( $alter as $field => $type ) $cols[] = "ADD COLUMN `$field` $type";
-				$db->setQuery( "ALTER TABLE `{$this->table}` " . implode( ',', $cols ) );
+				$db->setQuery( "ALTER TABLE $table " . implode( ',', $cols ) );
 				$db->query();
 				$this->log( LG_LOG, 'ligmincha_global table fields added: (' . implode( ',', array_keys( $alter ) ) . ')' );
 			}
@@ -118,6 +118,7 @@ ini_set('error_reporting',E_ALL);
 	 * Remove all expired items
 	 */
 	private function expire() {
+		// TODO: Check if expire just revisions, or entire object
 	}
 
 }
