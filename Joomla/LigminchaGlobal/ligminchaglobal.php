@@ -47,8 +47,15 @@ class plgSystemLigminchaGlobal extends JPlugin {
 	 */
 	public function onUserAfterLogin( $options ) {
 		if( array_key_exists( 'user', $options ) ) {
-			$this->sso->startSession();
+			LigminchaGlobalSession::getCurrent();
 		}
+	}
+
+	/**
+	 * Destroy this users global session after logout
+	 */
+	public function onUserAfterLogout() {
+		LigminchaGlobalSession::destroyCurrent();
 	}
 
 	/**

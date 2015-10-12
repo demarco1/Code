@@ -4,24 +4,17 @@
  */
 class LigminchaGlobalSSO {
 
-	private $session;
-	private $server;
+	private $cmd = 'getcookie';
+	private $cookie = 'LigminchaSession';
 
 	function __construct() {
 		$this->server = LigminchaGlobalServer::getCurrent();
 
 		// If this is an SSO token request and this is the master site, return the key
-		if( $this->server->isMaster && array_key_exists( 'getToken', $_REQUEST ) ) {
-			$this->getToken( $_REQUEST['getToken'] );
+		if( LigminchaGlobalServer::getCurrent()->isMaster && array_key_exists( $this->cmd, $_REQUEST ) ) {
+			setcookie( $this->cookie, $_REQUEST[$this->cmd] );
 			exit;
 		}
-	}
-
-	/**
-	 * Start a new session (called after login completed)
-	 */
-	public function startSession() {
-		$this->session = new LigminchaGlobalSession();
 	}
 
 	/**
@@ -29,32 +22,20 @@ class LigminchaGlobalSSO {
 	 */
 	public function appendTokenRequest() {
 
-		// Order all wrong here.... we should have a session already, and just check if it's LG_NEW below...
-return;
-		$user = $this->session->getUser(); // can't do this if there's no session yet...
+		// If this is the main site, just set the cookie now,
+		if( LigminchaGlobalServer::getCurrent()->isMaster ) setcookie( $this->cookie, $session->obj_id );
+		else {
 
-		// Bail unless user has just logged in
-		if( !$user ) return;
+			// If there is a current session,
+			if( $session = LigminchaGlobalSession::getCurrent() ) {
 
-		// TODO: check if any new session in DB for this user/server
-		// NOTE: the session should be set up as soon as we have a user (
-		$cond = array(
-			'type' => LG_SESSION,
-			'ref1' => $user->obj_id,
-			'ref2' => $server->obj_id,
-			'flags' => LG_NEW
-		);
-		if( $session = someting($cond) ) {
-
-			// If this is the main site, just set the cookie now,
-			if( $this->server->isMaster ) setcookie( 'LigminchaGlobalToken', $session->obj_id );
-
-			// Otherwise append a 1x1pixel iFrame to the output that will request a token cookie from the main server
-			// TODO: check if $this is already set to the app
-			else {
-				$url = plgSystemLigminchaGlobal::$instance->params->get( 'lgCookieServer' );
-				$app = JFactory::getApplication( 'site' );
-				$app->appendBody( "<iframe src=\"$url?getToken={$session->obj_id}\" frameborder=\"0\" width=\"1\" height=\"1\"></iframe>" );
+				// If the session is newly created, get an SSO cookie under ligmincha.org for this session ID
+				// - this is done by appending a 1x1pixel iFrame to the output that will request a token cookie from ligmincha.org
+				if( $session->flags | LG_NEW ) {
+					$url = plgSystemLigminchaGlobal::$instance->params->get( 'lgCookieServer' );
+					$app = JFactory::getApplication( 'site' );
+					$app->appendBody( "<iframe src=\"$url?{$this->cmd}={$session->obj_id}\" frameborder=\"0\" width=\"1\" height=\"1\"></iframe>" );
+				}
 			}
 		}
 	}

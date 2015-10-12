@@ -4,9 +4,10 @@
  */
 class LigminchaGlobalServer extends LigminchaGlobalObject {
 
-	public $isMaster = false;
-
+	// Current instance
 	private static $current;
+
+	public $isMaster = false;
 
 	function __construct( $id = false ) {
 
@@ -40,19 +41,19 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 	}
 
 	/**
-	 * Get/create current server instance
+	 * Determine whether or not this is the master site
+	 */
+	private function checkMaster() {
+		$this->isMaster = ( $_SERVER['HTTP_HOST'] == 'ligmincha.org' );
+	}
+
+	/**
+	 * Get/create current object instance
 	 */
 	public static function getCurrent() {
 		if( !self::$current ) {
 			self::$current = new self();
 		}
 		return self::$current;
-	}
-
-	/**
-	 * Determine whether or not this is the master site
-	 */
-	private function checkMaster() {
-		$this->isMaster = ( $_SERVER['HTTP_HOST'] == 'ligmincha.org' );
 	}
 }

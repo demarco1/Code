@@ -33,7 +33,6 @@ class LigminchaGlobalDistributed {
 
 	// Table structure
 	public static $tableStruct = array(
-		'rev_id' => 'BINARY(20) NOT NULL',
 		'obj_id' => 'BINARY(20) NOT NULL',
 		'ref1'   => 'BINARY(20)',
 		'ref2'   => 'BINARY(20)',
