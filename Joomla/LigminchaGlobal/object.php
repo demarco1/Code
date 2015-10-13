@@ -41,7 +41,6 @@ class LigminchaGlobalObject {
 	public $exists = false;
 
 	// Properties for the database row fields
-	var $rev_id;
 	var $id;
 	var $ref1;
 	var $ref2;
@@ -74,7 +73,7 @@ class LigminchaGlobalObject {
 	/**
 	 * Make a new object given an id
 	 */
-	public static newFromId( $id ) {
+	public static function newFromId( $id ) {
 		if( !$row = self::get( $this->obj_od ) ) return false;
 		$class = self::typeToClass( $row['type'] );
 		$obj = new $class( true );
@@ -88,7 +87,7 @@ class LigminchaGlobalObject {
 	protected function load() {
 
 		// Get the objects row from the database
-		if( !$row = self::get( $this->obj_od ) ) return false;
+		if( !$row = self::get( $this->id ) ) return false;
 
 		// TODO: Also check if it's a matching type of type already set
 		foreach( $row as $field => $val ) {
@@ -108,8 +107,8 @@ class LigminchaGlobalObject {
 	private static function get( $id ) {
 		$db = JFactory::getDbo();
 		$table = '`' . LigminchaGlobalDistributed::$table . '`';
-		$all = self::fields();
-		$db->setQuery( "SELECT $all FROM $table WHERE `id`=0x{$this->id}" );
+		$all = self::sqlFields();
+		$db->setQuery( "SELECT $all FROM $table WHERE `id`=0x$id" );
 		$db->query();
 		if( !$row = $db->loadAssoc() ) return false;
 		return $row;
@@ -154,7 +153,7 @@ class LigminchaGlobalObject {
 
 		// If this update item has queue flag set and originated here, queue update for routing
 		if( $this->flag( LG_LOCAL ) && !$session ) {
-			LigminchaGlobalDistributed::appendQueue( LG_UPDATE, self::objectToArray( $this ) );
+			new LigminchaGlobalRevision( LG_UPDATE, $this->fields() );
 		}
 
 		return $db->query();
@@ -183,7 +182,7 @@ class LigminchaGlobalObject {
 
 		// If the items deleted all had their queue flags set and the deletion originated here, queue for routing
 		if( $queue && !$session ) {
-			LigminchaGlobalDistributed::appendQueue( LG_DELETE, $cond );
+			new LigminchaGlobalRevision( LG_DELETE, $cond );
 		}
 	}
 
@@ -203,13 +202,13 @@ class LigminchaGlobalObject {
 	public static function find( $cond ) {
 		$db = JFactory::getDbo();
 		$table = '`' . LigminchaGlobalDistributed::$table . '`';
-		$all = self::fields();
+		$all = self::sqlFields();
 		$sqlcond = self::makeCond( $cond );
 		if( empty( $sqlcond ) ) return false;
 		$db->setQuery( "SELECT $all FROM $table WHERE $sqlcond" );
 		$db->query();
 		if( !$result = $db->loadAssocList() ) return false;
-		foreach( $result as $i => $assoc ) $result[$i] = arrayToObject( $assoc );
+		foreach( $result as $i => $assoc ) $result[$i] = self::newFromFields( $assoc );
 		return $result;
 	}
 
@@ -319,7 +318,7 @@ class LigminchaGlobalObject {
 	/**
 	 * Format the returned SQL fields accounting for hex cols
 	 */
-	public static function fields() {
+	public static function sqlFields() {
 		static $fields;
 		if( $fields ) return $fields;
 		$fields = array();
@@ -334,14 +333,14 @@ class LigminchaGlobalObject {
 	/**
 	 * Convert a DB row assoc array into a LigminchaGlobalObject or sub-class
 	 */
-	public static function arrayToObject( $row ) {
+	public static function newFromFields( $fields ) {
 		$class = 'LigminchaGlobalObject';
-		if( array_key_exists( $row['type'], self::$classes ) ) {
-			$c = 'LigminchaGlobal' . self::$classes[$row['type']];
+		if( array_key_exists( $fields['type'], self::$classes ) ) {
+			$c = 'LigminchaGlobal' . self::$classes[$fields['type']];
 			if( !class_exists( $c ) ) $class = $c;
 		}
 		$obj = new $class( true );
-		foreach( $row as $field => $val ) $obj->$field = $val;
+		foreach( $fields as $field => $val ) $obj->$field = $val;
 		return $obj;
 	}
 
@@ -360,12 +359,12 @@ class LigminchaGlobalObject {
 	/**
 	 * Convert an object into an assoc array
 	 */
-	public static function objectToArray( $obj ) {
-		$arr = array();
+	public function fields() {
+		$fields = array();
 		foreach( LigminchaGlobalDistributed::$tableStruct as $field => $type ) {
-			$arr[$field] = $obj->$field;
+			$fields[$field] = $this->$field;
 		}
-		return $arr;
+		return $fields;
 	}
 }
 

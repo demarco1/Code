@@ -21,7 +21,7 @@ class LigminchaGlobalDistributed {
 
 	// Table structure
 	public static $tableStruct = array(
-		'id'   => 'BINARY(20) NOT NULL',
+		'id'       => 'BINARY(20) NOT NULL',
 		'ref1'     => 'BINARY(20)',
 		'ref2'     => 'BINARY(20)',
 		'type'     => 'INT UNSIGNED NOT NULL',
@@ -88,19 +88,6 @@ class LigminchaGlobalDistributed {
 				$db->query();
 				$this->log( LG_LOG, 'ligmincha_global table fields added: (' . implode( ',', array_keys( $alter ) ) . ')' );
 			}
-		}
-	}
-
-	/**
-	 * Add a new changes item to the queue ( filter out non-queued changes and local-only objects)
-	 */
-	public static function appendQueue( $cmd, $fields ) {
-		
-		// TODO: change queue to local objects in DB, just encode the queue information into, maybe zip up too
-		// use LG_REVISION object typo
-		
-		if( $this->flag( LG_QUEUED ) && !$this->flag( LG_LOCAL ) ) {
-			new LigminchaGlobalRevision( $cmd, $fields );
 		}
 	}
 
