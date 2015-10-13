@@ -25,6 +25,7 @@ require_once( __DIR__ . '/sso.php' );
  */
 class plgSystemLigminchaGlobal extends JPlugin {
 
+	// Singleton instance
 	public static $instance;
 
 	/**
@@ -32,6 +33,7 @@ class plgSystemLigminchaGlobal extends JPlugin {
 	 */
 	public function onAfterInitialise() {
 
+		// Make this instance available for use by other classes
 		self::$instance = $this;
 
 		// Instantiate the main functionality singletons

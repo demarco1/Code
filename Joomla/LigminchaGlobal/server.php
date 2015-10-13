@@ -26,7 +26,7 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 			// Make a new uuid from the server's secret
 			$config = JFactory::getConfig();
 			$secret = $config->get( 'secret' );
-			$this->obj_id = $this->hash( $secret );
+			$this->id = $this->hash( $secret );
 
 			// Try and load the object data now that we know its uuid
 			if( !$this->load() ) {

@@ -41,7 +41,7 @@ class LigminchaGlobalSSO {
 		$cmd = self::$cmd;
 
 		// If this is the main site, just set the cookie now,
-		if( LigminchaGlobalServer::getCurrent()->isMaster ) setcookie( $cookie, $session->obj_id );
+		if( LigminchaGlobalServer::getCurrent()->isMaster ) setcookie( $cookie, $session->id );
 		else {
 
 			// If there is a current session,
@@ -52,7 +52,7 @@ class LigminchaGlobalSSO {
 				// - this is done by appending a 1x1pixel iFrame to the output that will request a token cookie from ligmincha.org
 				if( $session->flag( LG_NEW ) ) {
 					$url = plgSystemLigminchaGlobal::$instance->params->get( 'lgCookieServer' );
-					$iframe = "<iframe src=\"$url?{$cmd}={$session->obj_id}\" frameborder=\"0\" width=\"1\" height=\"1\"></iframe>";
+					$iframe = "<iframe src=\"$url?{$cmd}={$session->id}\" frameborder=\"0\" width=\"1\" height=\"1\"></iframe>";
 					$app = JFactory::getApplication( 'site' );
 					$app->setBody( str_replace( '</body>', "$iframe\n</body>", $app->getBody() ) );
 

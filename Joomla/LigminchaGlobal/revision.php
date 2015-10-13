@@ -16,6 +16,8 @@ class LigminchaGlobalRevision extends LigminchaGlobalObject {
 		// Set the cmd and data
 		$this->tag = $cmd;
 		$this->setData( $fields );
+
+		// Store the new revision in the database
 		$this->update();
 	}
 }

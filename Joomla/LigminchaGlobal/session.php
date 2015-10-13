@@ -19,15 +19,15 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 			// See if there is a current session for this user
 			if( $session = LigminchaGlobalObject::findOne( array(
 				'type' => LG_SESSION,
-				'ref1' => LigminchaGlobalServer::getCurrent()->obj_id,
-				'owner' => LigminchaGlobalUser::getCurrent()->obj_id
+				'ref1' => LigminchaGlobalServer::getCurrent()->id,
+				'owner' => LigminchaGlobalUser::getCurrent()->id
 			) ) ) {
-				$this->obj_id = $session->obj_id;
+				$this->id = $session->id;
 				$this->load();
 			} else {
 
 				// TODO: Doesn't exist, make the data structure for our new server object
-				$this->ref1 = LigminchaGlobalServer::getCurrent()->obj_id;
+				$this->ref1 = LigminchaGlobalServer::getCurrent()->id;
 
 				// Session only lives for five seconds in this initial form and doesn't route
 				$this->expire = time() + 2;
@@ -58,8 +58,8 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 	public static function delCurrent() {
 		LigminchaGlobalObject::del( array(
 			'type' => LG_SESSION,
-			'ref1' => LigminchaGlobalServer::getCurrent()->obj_id,
-			'owner' => LigminchaGlobalUser::getCurrent()->obj_id
+			'ref1' => LigminchaGlobalServer::getCurrent()->id,
+			'owner' => LigminchaGlobalUser::getCurrent()->id
 		) );
 	}
 }

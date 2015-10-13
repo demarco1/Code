@@ -21,13 +21,13 @@ class LigminchaGlobalUser extends LigminchaGlobalObject {
 			$server = LigminchaGlobalServer::getCurrent();
 			$jUser = JFactory::getUser();
 			if( $jUser->id ) {
-				$this->obj_id = $this->hash( $server->obj_id . ':' . $jUser->id );
+				$this->id = $this->hash( $server->id . ':' . $jUser->id );
 
 				// Try and load the object data now that we know its uuid
 				if( !$this->load() ) {
 
 					// TODO: Doesn't exist, make the data structure for our new user object from $jUser
-					$this->ref1 = $server->obj_id;
+					$this->ref1 = $server->id;
 					$this->tag = $jUser->id;
 
 					// Save our new instance to the DB

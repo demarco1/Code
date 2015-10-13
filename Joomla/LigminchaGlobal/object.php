@@ -42,7 +42,7 @@ class LigminchaGlobalObject {
 
 	// Properties for the database row fields
 	var $rev_id;
-	var $obj_id;
+	var $id;
 	var $ref1;
 	var $ref2;
 	var $tag;
@@ -60,12 +60,12 @@ class LigminchaGlobalObject {
 
 		// Create a new object with default properties
 		if( $id === false || $id === true ) {
-			$this->obj_id = $this->uuid();
+			$this->id = $this->uuid();
 		}
 
 		// Load the data from the db into this instance (if it exists)
 		else {
-			$this->obj_id = $id;
+			$this->id = $id;
 			$this->load();
 		}
 
@@ -109,7 +109,7 @@ class LigminchaGlobalObject {
 		$db = JFactory::getDbo();
 		$table = '`' . LigminchaGlobalDistributed::$table . '`';
 		$all = self::fields();
-		$db->setQuery( "SELECT $all FROM $table WHERE `obj_id`=0x{$this->obj_id}" );
+		$db->setQuery( "SELECT $all FROM $table WHERE `id`=0x{$this->id}" );
 		$db->query();
 		if( !$row = $db->loadAssoc() ) return false;
 		return $row;
@@ -136,7 +136,7 @@ class LigminchaGlobalObject {
 			$this->modified = time();
 
 			$sqlVals = $this->makeValues( false );
-			$db->setQuery( "UPDATE $table SET $sqlVals WHERE `obj_id`=0x{$this->obj_id}" );
+			$db->setQuery( "UPDATE $table SET $sqlVals WHERE `id`=0x{$this->id}" );
 		}
 
 		// Create a new object in the database
@@ -146,7 +146,7 @@ class LigminchaGlobalObject {
 			$this->creation = time();
 
 			// The entry is owned by the user unless it's a server object
-			$this->owner = ( $this->type == LG_SERVER || $this->type == LG_USER ) ? null : LigminchaGlobalUser::getCurrent()->obj_id;
+			$this->owner = ( $this->type == LG_SERVER || $this->type == LG_USER ) ? null : LigminchaGlobalUser::getCurrent()->id;
 
 			$sqlVals = $this->makeValues();
 			$db->setQuery( "REPLACE INTO $table SET $sqlVals" );
@@ -262,7 +262,7 @@ class LigminchaGlobalObject {
 	private function makeValues( $priKey = true ) {
 		$vals = array();
 		foreach( LigminchaGlobalDistributed::$tableStruct as $field => $type ) {
-			if( $priKey || $field != 'obj_id' ) {
+			if( $priKey || $field != 'id' ) {
 				$prop = "$field";
 				$val = self::safeField( $this->$prop, $type );
 				$vals[] = "`$field`=$val";

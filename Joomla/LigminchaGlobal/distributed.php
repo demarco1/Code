@@ -21,7 +21,7 @@ class LigminchaGlobalDistributed {
 
 	// Table structure
 	public static $tableStruct = array(
-		'obj_id'   => 'BINARY(20) NOT NULL',
+		'id'   => 'BINARY(20) NOT NULL',
 		'ref1'     => 'BINARY(20)',
 		'ref2'     => 'BINARY(20)',
 		'type'     => 'INT UNSIGNED NOT NULL',
@@ -63,7 +63,7 @@ class LigminchaGlobalDistributed {
 		// Create the table if it doesn't exist
 		$def = array();
 		foreach( self::$tableStruct as $field => $type ) $def[] = "`$field` $type";
-		$query = "CREATE TABLE IF NOT EXISTS $table (" . implode( ',', $def ) . ",PRIMARY KEY (obj_id))";
+		$query = "CREATE TABLE IF NOT EXISTS $table (" . implode( ',', $def ) . ",PRIMARY KEY (id))";
 		$db->setQuery( $query );
 		$db->query();
 		$this->log( LG_LOG, 'ligmincha_global table added' );
@@ -114,19 +114,21 @@ class LigminchaGlobalDistributed {
 		if( !$revs = LigminchaGlobalObject::find( $cond ) ) return false;
 
 		// If this is the master, then use zero for session ID
-		$sid = LigminchaGlobalServer::getCurrent()->isMaster ? 0 : LigminchaGlobalServer::getCurrent()->obj_id;
+		$sid = LigminchaGlobalServer::getCurrent()->isMaster ? 0 : LigminchaGlobalServer::getCurrent()->id;
 
 		// Session ID is the first element of the queue
 		$queue = array( $sid );
+
+		// Add all the revision data
 		foreach( $revs as $rev ) {
-			$queue[] = $rev->data;
+			$queue[] = array( $rev->tag, $rev->data );
 		}
 
 		// Zip up the data in JSON format
 		// TODO: encrypt using shared secret or public key
-		$data = gzcompress( json_encode( self::$queue ) );
+		$data = gzcompress( json_encode( $queue ) );
 
-		print_r(self::$queue);
+		print_r($queue);
 
 		// TODO: if result is success, remove all LG_REVISION items
 		if( $result == 200 ) {
