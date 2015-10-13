@@ -65,7 +65,7 @@ class LigminchaGlobalObject {
 		// Load the data from the db into this instance (if it exists)
 		else {
 			$this->obj_id = $id;
-			$this->exists = $this->load();
+			$this->load();
 		}
 
 	}
@@ -88,6 +88,9 @@ class LigminchaGlobalObject {
 			$prop = "$field";
 			$this->$prop = $val;
 		}
+
+		// Mark this object as existing in the database
+		$this->exists = true;
 
 		return true;
 	}
