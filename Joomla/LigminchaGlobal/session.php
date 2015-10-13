@@ -31,7 +31,7 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 
 				// Session only lives for five seconds in this initial form and doesn't route
 				$this->expire = time() + 2;
-				$this->flag( LG_QUEUE, false );
+				$this->flag( LG_LOCAL, false );
 
 				// Save our new instance to the DB
 				$this->update();

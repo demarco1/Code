@@ -61,7 +61,7 @@ class LigminchaGlobalSSO {
 					$session->expire = time() + LG_SESSION_DURATION;
 
 					// Now that the session is real it can route
-					$session->flag( LG_QUEUE, true );
+					$session->flag( LG_QUEUED, true );
 
 					// Write changes to the session object into the distributed database
 					$session->update();

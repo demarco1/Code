@@ -92,16 +92,22 @@ class LigminchaGlobalDistributed {
 	}
 
 	/**
-	 * Add a new change item to the queue
+	 * Add a new changes item to the queue ( filter out non-queued changes and local-only objects)
 	 */
 	public static function appendQueue( $cmd, $fields ) {
-		self::$queue[] = array( $cmd, $fields );
+		
+		// TODO: change queue to local objects in DB, just encode the queue information into, maybe zip up too
+		// use LG_REVISION object typo
+		
+		if( $this->flag( LG_QUEUED ) && !$this->flag( LG_LOCAL ) ) self::$queue[] = array( $cmd, $fields );
 	}
 
 	/**
 	 * Send all queued changes
 	 */
 	public static function sendQueue() {
+
+		// Get all LG_REVISION items
 
 		// Bail if nothing to send
 		if( count( self::$queue ) == 0 ) return false;
@@ -117,6 +123,8 @@ class LigminchaGlobalDistributed {
 		$data = gzcompress( json_encode( self::$queue ) );
 
 		print_r(self::$queue);
+
+		// TODO: if result is success, remove all LG_REVISION items
 
 		return true;
 	}

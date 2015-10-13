@@ -2,14 +2,16 @@
 // Entry types
 define( 'LG_LOG',     1 );
 define( 'LG_SERVER',  2 );
-define( 'LG_SESSION', 3 );
-define( 'LG_USER',    4 );
-define( 'LG_GROUP',   5 );
+define( 'LG_USER',    3 );
+define( 'LG_SESSION', 4 );
+define( 'LG_REVISION',5 );
+define( 'LG_GROUP',   6 );
 
 // Flags
-define( 'LG_QUEUE',   1 << 0 );
-define( 'LG_PRIVATE', 1 << 1 );
-define( 'LG_NEW',     1 << 2 );
+define( 'LG_NEW',     1 << 0 ); // This item was just created (has never been modified)
+define( 'LG_QUEUED',  1 << 1 ); // This item has changed but the changes haven't been sent (or have been sent but weren't acknowledged)
+define( 'LG_LOCAL',   1 << 2 ); // This item's changes never routes anywhere
+define( 'LG_PRIVATE', 1 << 3 ); // This item's changes only route to the main server
 
 // Database update methods
 define( 'LG_UPDATE', 1 );
@@ -59,7 +61,6 @@ class LigminchaGlobalObject {
 		// Create a new object with default properties
 		if( $id === false || $id === true ) {
 			$this->obj_id = $this->uuid();
-			if( !$this->flags ) $this->flags = LG_QUEUE;
 		}
 
 		// Load the data from the db into this instance (if it exists)
@@ -133,7 +134,7 @@ class LigminchaGlobalObject {
 		}
 
 		// If this update item has queue flag set and originated here, queue update for routing
-		if( $this->flag( LG_QUEUE ) && !$session ) {
+		if( $this->flag( LG_LOCAL ) && !$session ) {
 			LigminchaGlobalDistributed::appendQueue( LG_UPDATE, self::objectToArray( $this ) );
 		}
 
