@@ -17,7 +17,7 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 		if( $id === false ) {
 
 			// See if there is a current session for this user
-			if( $session = LigminchaGlobalObject::findObject( array(
+			if( $session = LigminchaGlobalObject::findOne( array(
 				'type' => LG_SESSION,
 				'ref1' => LigminchaGlobalServer::getCurrent()->obj_id,
 				'owner' => LigminchaGlobalUser::getCurrent()->obj_id

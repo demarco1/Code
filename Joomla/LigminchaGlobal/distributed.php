@@ -99,24 +99,28 @@ class LigminchaGlobalDistributed {
 		// TODO: change queue to local objects in DB, just encode the queue information into, maybe zip up too
 		// use LG_REVISION object typo
 		
-		if( $this->flag( LG_QUEUED ) && !$this->flag( LG_LOCAL ) ) self::$queue[] = array( $cmd, $fields );
+		if( $this->flag( LG_QUEUED ) && !$this->flag( LG_LOCAL ) ) {
+			new LigminchaGlobalRevision( $cmd, $fields );
+		}
 	}
 
 	/**
 	 * Send all queued changes
 	 */
 	public static function sendQueue() {
+		$cond = array( 'type' => LG_REVISION );
 
-		// Get all LG_REVISION items
-
-		// Bail if nothing to send
-		if( count( self::$queue ) == 0 ) return false;
+		// Get all LG_REVISION items, bail if none
+		if( !$revs = LigminchaGlobalObject::find( $cond ) ) return false;
 
 		// If this is the master, then use zero for session ID
 		$sid = LigminchaGlobalServer::getCurrent()->isMaster ? 0 : LigminchaGlobalServer::getCurrent()->obj_id;
 
 		// Session ID is the first element of the queue
-		array_unshift( self::$queue, $sid );
+		$queue = array( $sid );
+		foreach( $revs as $rev ) {
+			$queue[] = $rev->data;
+		}
 
 		// Zip up the data in JSON format
 		// TODO: encrypt using shared secret or public key
@@ -125,6 +129,12 @@ class LigminchaGlobalDistributed {
 		print_r(self::$queue);
 
 		// TODO: if result is success, remove all LG_REVISION items
+		if( $result == 200 ) {
+			$db = JFactory::getDbo();
+			$table = '`' . self::$table . '`';
+			$db->setQuery( "DELETE FROM $table WHERE $cond" );
+			$db->query();
+		}
 
 		return true;
 	}

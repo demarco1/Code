@@ -72,17 +72,23 @@ class LigminchaGlobalObject {
 	}
 
 	/**
+	 * Make a new object given an id
+	 */
+	public static newFromId( $id ) {
+		if( !$row = self::get( $this->obj_od ) ) return false;
+		$class = self::typeToClass( $row['type'] );
+		$obj = new $class( true );
+		$obj->load();
+		return $obj;
+	}
+
+	/**
 	 * Load the data into this object from the DB (return false if no data found)
 	 */
 	protected function load() {
-		$db = JFactory::getDbo();
-		$table = '`' . LigminchaGlobalDistributed::$table . '`';
-		$all = self::fields();
 
-		// Make sure all the binary refs are in hex format
-		$db->setQuery( "SELECT $all FROM $table WHERE `obj_id`=0x{$this->obj_id}" );
-		$db->query();
-		if( !$row = $db->loadAssoc() ) return false;
+		// Get the objects row from the database
+		if( !$row = self::get( $this->obj_od ) ) return false;
 
 		// TODO: Also check if it's a matching type of type already set
 		foreach( $row as $field => $val ) {
@@ -94,6 +100,19 @@ class LigminchaGlobalObject {
 		$this->exists = true;
 
 		return true;
+	}
+
+	/**
+	 * Load an object's row from the DB given its ID
+	 */
+	private static function get( $id ) {
+		$db = JFactory::getDbo();
+		$table = '`' . LigminchaGlobalDistributed::$table . '`';
+		$all = self::fields();
+		$db->setQuery( "SELECT $all FROM $table WHERE `obj_id`=0x{$this->obj_id}" );
+		$db->query();
+		if( !$row = $db->loadAssoc() ) return false;
+		return $row;
 	}
 
 	/**
@@ -190,15 +209,16 @@ class LigminchaGlobalObject {
 		$db->setQuery( "SELECT $all FROM $table WHERE $sqlcond" );
 		$db->query();
 		if( !$result = $db->loadAssocList() ) return false;
+		foreach( $result as $i => $assoc ) $result[$i] = arrayToObject( $assoc );
 		return $result;
 	}
 
 	/**
 	 * Return just a single row instead of a list of rows
 	 */
-	public static function findObject( $cond ) {
+	public static function findOne( $cond ) {
 		$result = self::find( $cond );
-		return $result ? self::arrayToObject( $result[0] ) : false;
+		return $result ? $result[0] : false;
 	}
 
 	/**
@@ -216,6 +236,24 @@ class LigminchaGlobalObject {
 		if( !$uuid ) $uuid = uniqid( $_SERVER['HTTP_HOST'], true );
 		$uuid .= microtime() . uniqid();
 		return $this->hash( $uuid );
+	}
+
+	/**
+	 * Set the object's data field
+	 */
+	public function setData( $data ) {
+		if( is_array( $data ) ) $data = json_encode( $data );
+		$this->data = $data;
+	}
+
+	/**
+	 * Get an object's data
+	 */
+	public function getData( $data ) {
+		$data = $this->data;
+		$c1 = substr( $data, 0, 1 );
+		if( $c1 == '[' || $c1 == '{' ) $data = json_decode( $data );
+		return $data;
 	}
 
 	/**
@@ -305,6 +343,18 @@ class LigminchaGlobalObject {
 		$obj = new $class( true );
 		foreach( $row as $field => $val ) $obj->$field = $val;
 		return $obj;
+	}
+
+	/**
+	 * Given an object type constant, get the glass name
+	 */
+	public static function typeToClass( $type ) {
+		$class = 'LigminchaGlobalObject';
+		if( array_key_exists( $row['type'], self::$classes ) ) {
+			$c = 'LigminchaGlobal' . self::$classes[$row['type']];
+			if( !class_exists( $c ) ) $class = $c;
+		}
+		return $class;
 	}
 
 	/**
