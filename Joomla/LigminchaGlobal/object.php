@@ -109,7 +109,7 @@ class LigminchaGlobalObject {
 			// TODO: Validate cond
 
 			// Update automatic properties
-			$this->flags &= ~LG_NEW;
+			$this->flag( LG_NEW, false );
 			$this->creation = time();
 			$this->modified = null;
 
@@ -119,7 +119,7 @@ class LigminchaGlobalObject {
 
 		// Create a new object in the database
 		else {
-			$this->flags |= LG_NEW;
+			$this->flag( LG_NEW, true );
 			$this->modified = time();
 
 			// The entry is owned by the user unless it's a server object
@@ -130,7 +130,7 @@ class LigminchaGlobalObject {
 		}
 
 		// If this update item has queue flag set and originated here, queue update for routing
-		if( ( $this->flags | LG_QUEUE ) && !$session ) {
+		if( $this->flag( LG_QUEUE ) && !$session ) {
 			LigminchaGlobalDistributed::appendQueue( LG_UPDATE, self::objectToArray( $this ) );
 		}
 
@@ -162,6 +162,15 @@ class LigminchaGlobalObject {
 		if( $queue && !$session ) {
 			LigminchaGlobalDistributed::appendQueue( LG_DELETE, $cond );
 		}
+	}
+
+	/**
+	 * Set, reset or return a flag bit
+	 */
+	public function flag( $flag, $set = null ) {
+		if( $set === true ) $this->flags |= $flag;
+		elseif( $set === false ) $this->flags &= ~$flag;
+		else return (bool)($this->flags & $flag)
 	}
 
 	/**

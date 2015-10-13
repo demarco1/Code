@@ -50,7 +50,7 @@ class LigminchaGlobalSSO {
 				// If the session is newly created, get an SSO cookie under ligmincha.org for this session ID
 				// - newly created sessions have no expiry
 				// - this is done by appending a 1x1pixel iFrame to the output that will request a token cookie from ligmincha.org
-				if( $session->flags | LG_NEW ) {
+				if( $session->flag( LG_NEW ) ) {
 					$url = plgSystemLigminchaGlobal::$instance->params->get( 'lgCookieServer' );
 					$iframe = "<iframe src=\"$url?{$cmd}={$session->obj_id}\" frameborder=\"0\" width=\"1\" height=\"1\"></iframe>";
 					$app = JFactory::getApplication( 'site' );
@@ -59,6 +59,9 @@ class LigminchaGlobalSSO {
 					// Set the expiry to a longer time that distributed sessions last
 					// - after it expires, user needs to come back to have another made (may not need to log in again)
 					$session->expire = time() + LG_SESSION_DURATION;
+
+					// Now that the session is real it can route
+					$session->flag( LG_QUEUE, true );
 
 					// Write changes to the session object into the distributed database
 					$session->update();

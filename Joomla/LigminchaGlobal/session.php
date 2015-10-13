@@ -29,8 +29,9 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 				// TODO: Doesn't exist, make the data structure for our new server object
 				$this->ref1 = LigminchaGlobalServer::getCurrent()->obj_id;
 
-				// Session only lives for five seconds in this initial form
+				// Session only lives for five seconds in this initial form and doesn't route
 				$this->expire = time() + 2;
+				$this->flag( LG_QUEUE, false );
 
 				// Save our new instance to the DB
 				$this->update();

@@ -107,7 +107,7 @@ class LigminchaGlobalDistributed {
 		if( count( self::$queue ) == 0 ) return false;
 
 		// If this is the master, then use zero for session ID
-		$sid = if( LigminchaGlobalServer::getCurrent()->isMaster ? 0 : LigminchaGlobalServer::getCurrent()->obj_id;
+		$sid = LigminchaGlobalServer::getCurrent()->isMaster ? 0 : LigminchaGlobalServer::getCurrent()->obj_id;
 
 		// Session ID is the first element of the queue
 		array_unshift( self::$queue, $sid );
@@ -115,6 +115,8 @@ class LigminchaGlobalDistributed {
 		// Zip up the data in JSON format
 		// TODO: encrypt using shared secret or public key
 		$data = gzcompress( json_encode( self::$queue ) );
+
+		print_r(self::$queue);
 
 		return true;
 	}
