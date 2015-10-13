@@ -106,7 +106,7 @@ class LigminchaGlobalObject {
 		// Update an existing object in the database
 		if( $this->exists ) {
 
-			// TODO: Bail if we're not the owner
+			// TODO: Validate cond
 
 			// Update automatic properties
 			$this->flags &= ~LG_NEW;
@@ -129,12 +129,39 @@ class LigminchaGlobalObject {
 			$db->setQuery( "REPLACE INTO $table SET $sqlVals" );
 		}
 
-		// If this update originated here and item has queue flag set, queue update for routing
+		// If this update item has queue flag set and originated here, queue update for routing
 		if( ( $this->flags | LG_QUEUE ) && !$session ) {
 			LigminchaGlobalDistributed::appendQueue( LG_UPDATE, self::objectToArray( $this ) );
 		}
 
 		return $db->query();
+	}
+
+	/**
+	 * Delete objects matching the condition array
+	 */
+	public static function del( $cond, $session = false ) {
+		$db = JFactory::getDbo();
+		$table = '`' . LigminchaGlobalDistributed::$table . '`';
+
+		// Make the condition SQL syntax, bail if nothing
+		$sqlcond = self::makeCond( $cond );
+		if( empty( $sqlcond ) ) return false;
+
+		// TODO: validate cond
+
+		// Check if any of the objects should not be queued (don't do queries that involve both types!)
+		// TODO
+		$queue = true;
+
+		// Do the deletion
+		$db->setQuery( "DELETE FROM $table WHERE $sqlcond" );
+		$db->query();
+
+		// If the items deleted all had their queue flags set and the deletion originated here, queue for routing
+		if( $queue && !$session ) {
+			LigminchaGlobalDistributed::appendQueue( LG_DELETE, $cond );
+		}
 	}
 
 	/**
@@ -159,18 +186,6 @@ class LigminchaGlobalObject {
 	public static function findObject( $cond ) {
 		$result = self::find( $cond );
 		return $result ? self::arrayToObject( $result[0] ) : false;
-	}
-
-	/**
-	 * Delete objects matching the condition array
-	 */
-	public static function del( $cond ) {
-		$db = JFactory::getDbo();
-		$table = '`' . LigminchaGlobalDistributed::$table . '`';
-		$sqlcond = self::makeCond( $cond );
-		if( empty( $sqlcond ) ) return false;
-		$db->setQuery( "DELETE FROM $table WHERE $sqlcond" );
-		return $db->query();
 	}
 
 	/**

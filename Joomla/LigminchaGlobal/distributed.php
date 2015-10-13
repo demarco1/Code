@@ -14,7 +14,7 @@ class LigminchaGlobalDistributed {
 	private static $cmd = 'changes';
 
 	// The queue of changes to route at the end of the request
-	private static $queue;
+	private static $queue = array();
 
 	// Our distributed data table
 	public static $table = '#__ligmincha_global';
@@ -94,7 +94,8 @@ class LigminchaGlobalDistributed {
 	/**
 	 * Add a new change item to the queue
 	 */
-	public static function appendQueue() {
+	public static function appendQueue( $cmd, $fields ) {
+		self::$queue[] = array( $cmd, $fields );
 	}
 
 	/**
@@ -102,14 +103,31 @@ class LigminchaGlobalDistributed {
 	 */
 	public static function sendQueue() {
 
-		// TODO: Select all entries with LG_QUEUED flag set and reset the flag
-		// make JSON of [session, {func, fields... }, {func, fields...}, ...]
+		// Bail if nothing to send
+		if( count( self::$queue ) == 0 ) return false;
+
+		// If this is the master, then use zero for session ID
+		$sid = if( LigminchaGlobalServer::getCurrent()->isMaster ? 0 : LigminchaGlobalServer::getCurrent()->obj_id;
+
+		// Session ID is the first element of the queue
+		array_unshift( self::$queue, $sid );
+
+		// Zip up the data in JSON format
+		// TODO: encrypt using shared secret or public key
+		$data = gzcompress( json_encode( self::$queue ) );
+
+		return true;
 	}
 
 	/**
 	 * Receive changes from remote queue
 	 */
-	private static function recvQueue() {
+	private static function recvQueue( $data ) {
+
+		// Unzip and decode the data
+		// TODO: decrypt using shared secret or public key
+		$queue =  json_decode( gzuncompress( $data ), true );
+
 		if( LigminchaGlobalServer::getCurrent()->isMaster ) {
 			// TODO: check group and re-route
 		} else {
