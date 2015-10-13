@@ -11,6 +11,10 @@ define( 'LG_QUEUED',  1 << 0 );
 define( 'LG_PRIVATE', 1 << 1 );
 define( 'LG_NEW',     1 << 2 );
 
+// Database update methods
+define( 'LG_UPDATE', 1 );
+define( 'LG_DELETE', 2 );
+
 /**
  * Class representing a single generic object in the distributed database
  */
@@ -25,6 +29,15 @@ class LigminchaGlobalObject {
 		LG_GROUP   => 'Group',
 	);
 
+	// Methods of this class used for updating data (these are the commands that are sent in the remote queue)
+	public static $methods = array(
+		LG_UPDATE => 'update',
+		LG_DELETE => 'del',
+	);
+
+	// Whether the object exists in the database
+	public $exists = false;
+
 	// Properties for the database row fields
 	var $rev_id;
 	var $obj_id;
@@ -32,7 +45,8 @@ class LigminchaGlobalObject {
 	var $ref2;
 	var $tag;
 	var $type;
-	var $time;
+	var $creation;
+	var $modified;
 	var $expire;
 	var $flags;
 	var $owner;
@@ -44,7 +58,6 @@ class LigminchaGlobalObject {
 
 		// Create a new object with default properties
 		if( $id === false || $id === true ) {
-			$this->rev_id = $this->uuid();
 			$this->obj_id = $this->uuid();
 			$this->flags |= LG_NEW;
 		}
@@ -52,7 +65,7 @@ class LigminchaGlobalObject {
 		// Load the data from the db into this instance (if it exists)
 		else {
 			$this->obj_id = $id;
-			$this->load();
+			$this->exists = $this->load();
 		}
 
 	}
@@ -66,7 +79,7 @@ class LigminchaGlobalObject {
 		$all = self::fields();
 
 		// Make sure all the binary refs are in hex format
-		$db->setQuery( "SELECT $all FROM $table WHERE `obj_id`=0x{$this->obj_id} ORDER BY `time` DESC LIMIT 1" );
+		$db->setQuery( "SELECT $all FROM $table WHERE `obj_id`=0x{$this->obj_id}" );
 		$db->query();
 		if( !$row = $db->loadAssoc() ) return false;
 
@@ -80,47 +93,42 @@ class LigminchaGlobalObject {
 	}
 
 	/**
-	 * Update or create the object in the database and queue the changes if necessary
+	 * Update or create an object in the database and queue the changes if necessary
 	 */
-	public function update() {
-
-		// Bail if no type
-		if( $this->type < 1 ) {
-			print_r($this);
-			die( 'Typeless distributed objects not allowed!' );
-		}
-
-		// Bail if we're not the owner
-
-		// Check if exists first, to set LG_NEW
-
+	public function update( $session = false ) {
 		$db = JFactory::getDbo();
 		$table = '`' . LigminchaGlobalDistributed::$table . '`';
 
-		if( $this->flags | LG_NEW ) {
+		// Bail if no type
+		if( $this->type < 1 ) die( 'Typeless distributed objects not allowed!' );
+
+		// Update an existing object in the database
+		if( $this->exists ) {
+
+			// TODO: Bail if we're not the owner
+
+			// Update automatic properties
+			$this->flags &= ~LG_NEW;
+			$this->creation = time();
+			$this->modified = null;
+
+			$sqlVals = $this->makeValues( false );
+			$db->setQuery( "UPDATE $table SET $sqlVals WHERE `obj_id`=0x{$this->obj_id}" );
+		}
+
+		// Create a new object in the database
+		else {
+			$this->flags |= LG_NEW;
+			$this->modified = time();
 
 			// The entry is owned by the user unless it's a server object
 			$this->owner = ( $this->type == LG_SERVER || $this->type == LG_USER ) ? null : LigminchaGlobalUser::getCurrent()->obj_id;
 
-			// Timestamp
-			$this->time = time();
-
-			$vals = array();
-			foreach( LigminchaGlobalDistributed::$tableStruct as $field => $type ) {
-				$prop = "$field";
-				$val = self::safeField( $this->$prop, $type );
-				$vals[] = "`$field`=$val";
-			}
-			$db->setQuery( "REPLACE INTO $table SET " . implode( ',', $vals ) );
-			$db->query();
-
-		} else {
-
-			// make a new revision for the current object
-			
-
+			$sqlVals = $this->makeValues();
+			$db->setQuery( "REPLACE INTO $table SET $sqlVals" );
 		}
 
+		return $db->query();
 	}
 
 	/**
@@ -155,7 +163,7 @@ class LigminchaGlobalObject {
 		$table = '`' . LigminchaGlobalDistributed::$table . '`';
 		$sqlcond = self::makeCond( $cond );
 		if( empty( $sqlcond ) ) return false;
-		$db->setQuery( $x="DELETE FROM $table WHERE $sqlcond" );
+		$db->setQuery( "DELETE FROM $table WHERE $sqlcond" );
 		return $db->query();
 	}
 
@@ -170,6 +178,21 @@ class LigminchaGlobalObject {
 	}
 
 	/**
+	 * Make object's properties into SQL set-values list
+	 */
+	private function makeValues( $priKey = true ) {
+		$vals = array();
+		foreach( LigminchaGlobalDistributed::$tableStruct as $field => $type ) {
+			if( $priKey || $field != 'obj_id' ) {
+				$prop = "$field";
+				$val = self::safeField( $this->$prop, $type );
+				$vals[] = "`$field`=$val";
+			}
+		}
+		return implode( ',', $vals );
+	}
+
+	/**
 	 * Make an SQL condition from the array
 	 */
 	private static function makeCond( $cond ) {
@@ -180,6 +203,12 @@ class LigminchaGlobalObject {
 		}
 		$sqlcond = implode( ' AND ', $sqlcond );
 		return $sqlcond;
+	}
+
+	/**
+	 * Check if the passed database-condition only access owned objects
+	 */
+	private static function validateCond( $cond ) {
 	}
 
 	/**

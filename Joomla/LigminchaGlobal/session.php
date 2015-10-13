@@ -30,7 +30,7 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 				$this->ref1 = LigminchaGlobalServer::getCurrent()->obj_id;
 
 				// Session only lives for five seconds in this initial form
-				$this->expire = 5;
+				$this->expire = time() + 2;
 
 				// Save our new instance to the DB
 				$this->update();

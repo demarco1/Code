@@ -12,22 +12,23 @@ class LigminchaGlobalDistributed {
 
 	// Table structure
 	public static $tableStruct = array(
-		'obj_id' => 'BINARY(20) NOT NULL',
-		'ref1'   => 'BINARY(20)',
-		'ref2'   => 'BINARY(20)',
-		'tag'    => 'TEXT',
-		'type'   => 'INT UNSIGNED NOT NULL',
-		'time'   => 'INT UNSIGNED',
-		'expire' => 'INT UNSIGNED',
-		'flags'  => 'INT UNSIGNED',
-		'owner'  => 'BINARY(20)',
-		'group'  => 'TEXT',
-		'name'   => 'TEXT',
-		'data'   => 'TEXT',
+		'obj_id'   => 'BINARY(20) NOT NULL',
+		'ref1'     => 'BINARY(20)',
+		'ref2'     => 'BINARY(20)',
+		'type'     => 'INT UNSIGNED NOT NULL',
+		'creation' => 'INT UNSIGNED',
+		'modified' => 'INT UNSIGNED',
+		'expire'   => 'INT UNSIGNED',
+		'flags'    => 'INT UNSIGNED',
+		'owner'    => 'BINARY(20)',
+		'group'    => 'TEXT',
+		'tag'      => 'TEXT',
+		'data'     => 'TEXT',
 	);
 
 	function __construct() {
 		$this->checkTable();
+		$this->expire();
 	}
 
 	/**
@@ -74,7 +75,15 @@ class LigminchaGlobalDistributed {
 	private function sendQueue() {
 
 		// Select all entries with LG_QUEUED flag set and reset the flag
+		// make JSON of [session, {func, fields... }, {func, fields...}, ...]
+	}
 
+	/**
+	 * Receive changes from remote queue
+	 */
+	private function recvQueue() {
+		// only the master can receive
+		// check group and re-route
 	}
 
 	/**
@@ -93,10 +102,13 @@ class LigminchaGlobalDistributed {
 	}
 
 	/**
-	 * Remove all expired items
+	 * Remove all expired items (these changes are not routed because all servers handle expiration themselves)
 	 */
 	private function expire() {
-		// TODO: Check if expire just revisions, or entire object
+		$db = JFactory::getDbo();
+		$table = '`' . self::$table . '`';
+		$db->setQuery( "DELETE FROM $table WHERE `expire`<" . time() );
+		$db->query();
 	}
 
 }
