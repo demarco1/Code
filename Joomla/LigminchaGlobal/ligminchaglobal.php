@@ -69,6 +69,7 @@ class plgSystemLigminchaGlobal extends JPlugin {
 	 */
 	public function onAfterRender() {
 		$this->sso->appendTokenRequest( $this );
+		$this->distributed->sendQueue();
 	}
 
 	/**

@@ -7,6 +7,9 @@
 
 class LigminchaGlobalDistributed {
 
+	// The query-string command for routing changes
+	private $cmd = 'changes';
+
 	// Our distributed data table
 	public static $table = '#__ligmincha_global';
 
@@ -27,8 +30,18 @@ class LigminchaGlobalDistributed {
 	);
 
 	function __construct() {
+
+		// Check that the local distributed database table exists and has a matching structure
 		$this->checkTable();
+
+		// Delete any objects that have reached their expiry time
 		$this->expire();
+
+		// If this is a changes request commit the data (and re-route if master)
+		if( array_key_exists( $this->cmd, $_POST ) ) {
+			$this->recvQueue( $_POST['changes'] );
+			exit;
+		}
 	}
 
 	/**
@@ -74,7 +87,7 @@ class LigminchaGlobalDistributed {
 	 */
 	private function sendQueue() {
 
-		// Select all entries with LG_QUEUED flag set and reset the flag
+		// TODO: Select all entries with LG_QUEUED flag set and reset the flag
 		// make JSON of [session, {func, fields... }, {func, fields...}, ...]
 	}
 
@@ -82,8 +95,11 @@ class LigminchaGlobalDistributed {
 	 * Receive changes from remote queue
 	 */
 	private function recvQueue() {
-		// only the master can receive
-		// check group and re-route
+		if( LigminchaGlobalServer::getCurrent()->isMaster ) {
+			// TODO: check group and re-route
+		} else {
+			// TODO: Check these changes are from the master
+		}
 	}
 
 	/**
