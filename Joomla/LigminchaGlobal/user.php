@@ -21,7 +21,7 @@ class LigminchaGlobalUser extends LigminchaGlobalObject {
 			$server = LigminchaGlobalServer::getCurrent();
 			$jUser = JFactory::getUser();
 			if( $jUser->id ) {
-				$this->obj_id = sha1( strtolower( $server->obj_id ) . ':' . $jUser->id );
+				$this->obj_id = $this->hash( $server->obj_id . ':' . $jUser->id );
 
 				// Try and load the object data now that we know its uuid
 				if( !$this->load() ) {

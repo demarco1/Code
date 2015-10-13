@@ -110,8 +110,7 @@ class LigminchaGlobalObject {
 
 			// Update automatic properties
 			$this->flag( LG_NEW, false );
-			$this->creation = time();
-			$this->modified = null;
+			$this->modified = time();
 
 			$sqlVals = $this->makeValues( false );
 			$db->setQuery( "UPDATE $table SET $sqlVals WHERE `obj_id`=0x{$this->obj_id}" );
@@ -120,7 +119,8 @@ class LigminchaGlobalObject {
 		// Create a new object in the database
 		else {
 			$this->flag( LG_NEW, true );
-			$this->modified = time();
+			$this->modified = null;
+			$this->creation = time();
 
 			// The entry is owned by the user unless it's a server object
 			$this->owner = ( $this->type == LG_SERVER || $this->type == LG_USER ) ? null : LigminchaGlobalUser::getCurrent()->obj_id;
@@ -170,7 +170,7 @@ class LigminchaGlobalObject {
 	public function flag( $flag, $set = null ) {
 		if( $set === true ) $this->flags |= $flag;
 		elseif( $set === false ) $this->flags &= ~$flag;
-		else return (bool)($this->flags & $flag)
+		else return (bool)($this->flags & $flag);
 	}
 
 	/**
@@ -198,13 +198,20 @@ class LigminchaGlobalObject {
 	}
 
 	/**
+	 * Make a hash of the passed content for an object ID
+	 */
+	public function hash( $content ) {
+		return strtoupper( sha1( $content ) );
+	}
+
+	/**
 	 * Generate a new globally unique ID
 	 */
 	protected function uuid() {
 		static $uuid;
 		if( !$uuid ) $uuid = uniqid( $_SERVER['HTTP_HOST'], true );
-		$uuid = sha1( $uuid . microtime() . uniqid() );
-		return $uuid;
+		$uuid .= microtime() . uniqid();
+		return $this->hash( $uuid );
 	}
 
 	/**
