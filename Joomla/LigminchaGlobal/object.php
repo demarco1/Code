@@ -7,7 +7,7 @@ define( 'LG_USER',    4 );
 define( 'LG_GROUP',   5 );
 
 // Flags
-define( 'LG_QUEUED',  1 << 0 );
+define( 'LG_QUEUE',   1 << 0 );
 define( 'LG_PRIVATE', 1 << 1 );
 define( 'LG_NEW',     1 << 2 );
 
@@ -59,7 +59,7 @@ class LigminchaGlobalObject {
 		// Create a new object with default properties
 		if( $id === false || $id === true ) {
 			$this->obj_id = $this->uuid();
-			$this->flags |= LG_NEW;
+			if( !$this->flags ) $this->flags = LG_QUEUE;
 		}
 
 		// Load the data from the db into this instance (if it exists)
@@ -94,6 +94,7 @@ class LigminchaGlobalObject {
 
 	/**
 	 * Update or create an object in the database and queue the changes if necessary
+	 * - $session is passed if this changed arrived from a remote queue, or zero if from server
 	 */
 	public function update( $session = false ) {
 		$db = JFactory::getDbo();
@@ -128,6 +129,11 @@ class LigminchaGlobalObject {
 			$db->setQuery( "REPLACE INTO $table SET $sqlVals" );
 		}
 
+		// If this update originated here and item has queue flag set, queue update for routing
+		if( ( $this->flags | LG_QUEUE ) && !$session ) {
+			LigminchaGlobalDistributed::appendQueue( LG_UPDATE, self::objectToArray( $this ) );
+		}
+
 		return $db->query();
 	}
 
@@ -152,7 +158,7 @@ class LigminchaGlobalObject {
 	 */
 	public static function findObject( $cond ) {
 		$result = self::find( $cond );
-		return $result ? self::rowToObject( $result[0] ) : false;
+		return $result ? self::arrayToObject( $result[0] ) : false;
 	}
 
 	/**
@@ -209,6 +215,7 @@ class LigminchaGlobalObject {
 	 * Check if the passed database-condition only access owned objects
 	 */
 	private static function validateCond( $cond ) {
+		// TODO
 	}
 
 	/**
@@ -254,7 +261,7 @@ class LigminchaGlobalObject {
 	/**
 	 * Convert a DB row assoc array into a LigminchaGlobalObject or sub-class
 	 */
-	public static function rowToObject( $row ) {
+	public static function arrayToObject( $row ) {
 		$class = 'LigminchaGlobalObject';
 		if( array_key_exists( $row['type'], self::$classes ) ) {
 			$c = 'LigminchaGlobal' . self::$classes[$row['type']];
@@ -263,6 +270,17 @@ class LigminchaGlobalObject {
 		$obj = new $class( true );
 		foreach( $row as $field => $val ) $obj->$field = $val;
 		return $obj;
+	}
+
+	/**
+	 * Convert an object into an assoc array
+	 */
+	public static function objectToArray( $obj ) {
+		$arr = array();
+		foreach( LigminchaGlobalDistributed::$tableStruct as $field => $type ) {
+			$arr[$field] = $obj->$field;
+		}
+		return $arr;
 	}
 }
 

@@ -27,9 +27,6 @@ class plgSystemLigminchaGlobal extends JPlugin {
 
 	public static $instance;
 
-	private $sso;
-	private $distributed;
-
 	/**
 	 * Called after initialisation of the environment
 	 */
@@ -38,8 +35,8 @@ class plgSystemLigminchaGlobal extends JPlugin {
 		self::$instance = $this;
 
 		// Instantiate the main functionality singletons
-		$this->distributed = new LigminchaGlobalDistributed();
-		$this->sso = new LigminchaGlobalSSO();
+		new LigminchaGlobalDistributed();
+		new LigminchaGlobalSSO();
 
 		// Instantiate the main global objects
 		LigminchaGlobalServer::getCurrent();
@@ -68,8 +65,8 @@ class plgSystemLigminchaGlobal extends JPlugin {
 	 * Called after the page has rendered but before it's been sent to the client
 	 */
 	public function onAfterRender() {
-		$this->sso->appendTokenRequest( $this );
-		$this->distributed->sendQueue();
+		LigminchaGlobalSSO::appendTokenRequest();
+		LigminchaGlobalDistributed::sendQueue();
 	}
 
 	/**

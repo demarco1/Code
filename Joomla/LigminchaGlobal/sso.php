@@ -4,15 +4,26 @@
  */
 
 // Global session duration (refreshed by visiting source site again)
-define( 'LG_SESSION_DURATION', 10 );
+define( 'LG_SESSION_DURATION', 3600 );
 
 
 class LigminchaGlobalSSO {
 
-	private $cmd = 'getcookie';
-	private $cookie = 'LigminchaSession';
+	// Make singleton available if we need it
+	public static $instance;
+
+	// The query-string command used to request a global SSO cookie
+	private static $cmd = 'getcookie';
+
+	// The global SSO cookie name
+	private static $cookie = 'LigminchaSession';
 
 	function __construct() {
+
+		// Make singleton available if we need it
+		self::$instance = $this;
+
+		// Get/create global object for this server
 		$this->server = LigminchaGlobalServer::getCurrent();
 
 		// If this is an SSO token request and this is the master site, return the key
@@ -25,10 +36,12 @@ class LigminchaGlobalSSO {
 	/**
 	 * If there is a new session for this user/server, append the token request to the page
 	 */
-	public function appendTokenRequest() {
+	public static function appendTokenRequest() {
+		$cookie = self::$cookie;
+		$cmd = self::$cmd;
 
 		// If this is the main site, just set the cookie now,
-		if( LigminchaGlobalServer::getCurrent()->isMaster ) setcookie( $this->cookie, $session->obj_id );
+		if( LigminchaGlobalServer::getCurrent()->isMaster ) setcookie( $cookie, $session->obj_id );
 		else {
 
 			// If there is a current session,
@@ -39,7 +52,7 @@ class LigminchaGlobalSSO {
 				// - this is done by appending a 1x1pixel iFrame to the output that will request a token cookie from ligmincha.org
 				if( $session->flags | LG_NEW ) {
 					$url = plgSystemLigminchaGlobal::$instance->params->get( 'lgCookieServer' );
-					$iframe = "<iframe src=\"$url?{$this->cmd}={$session->obj_id}\" frameborder=\"0\" width=\"1\" height=\"1\"></iframe>";
+					$iframe = "<iframe src=\"$url?{$cmd}={$session->obj_id}\" frameborder=\"0\" width=\"1\" height=\"1\"></iframe>";
 					$app = JFactory::getApplication( 'site' );
 					$app->setBody( str_replace( '</body>', "$iframe\n</body>", $app->getBody() ) );
 

@@ -7,8 +7,14 @@
 
 class LigminchaGlobalDistributed {
 
+	// Make singleton available if we need it
+	public static $instance;
+
 	// The query-string command for routing changes
-	private $cmd = 'changes';
+	private static $cmd = 'changes';
+
+	// The queue of changes to route at the end of the request
+	private static $queue;
 
 	// Our distributed data table
 	public static $table = '#__ligmincha_global';
@@ -31,6 +37,9 @@ class LigminchaGlobalDistributed {
 
 	function __construct() {
 
+		// Make singleton available if we need it
+		self::$instance = $this;
+
 		// Check that the local distributed database table exists and has a matching structure
 		$this->checkTable();
 
@@ -38,8 +47,8 @@ class LigminchaGlobalDistributed {
 		$this->expire();
 
 		// If this is a changes request commit the data (and re-route if master)
-		if( array_key_exists( $this->cmd, $_POST ) ) {
-			$this->recvQueue( $_POST['changes'] );
+		if( array_key_exists( self::$cmd, $_POST ) ) {
+			self::recvQueue( $_POST['changes'] );
 			exit;
 		}
 	}
@@ -83,9 +92,15 @@ class LigminchaGlobalDistributed {
 	}
 
 	/**
+	 * Add a new change item to the queue
+	 */
+	public static function appendQueue() {
+	}
+
+	/**
 	 * Send all queued changes
 	 */
-	private function sendQueue() {
+	public static function sendQueue() {
 
 		// TODO: Select all entries with LG_QUEUED flag set and reset the flag
 		// make JSON of [session, {func, fields... }, {func, fields...}, ...]
@@ -94,7 +109,7 @@ class LigminchaGlobalDistributed {
 	/**
 	 * Receive changes from remote queue
 	 */
-	private function recvQueue() {
+	private static function recvQueue() {
 		if( LigminchaGlobalServer::getCurrent()->isMaster ) {
 			// TODO: check group and re-route
 		} else {
@@ -123,7 +138,7 @@ class LigminchaGlobalDistributed {
 	private function expire() {
 		$db = JFactory::getDbo();
 		$table = '`' . self::$table . '`';
-		$db->setQuery( "DELETE FROM $table WHERE `expire`<" . time() );
+		$db->setQuery( "DELETE FROM $table WHERE `expire` > 0 AND `expire`<" . time() );
 		$db->query();
 	}
 
