@@ -23,7 +23,7 @@ class LigminchaGlobalObject {
 
 	// Sub-classes to use for revision types (non-existent class means generic base class)
 	public static $classes = array(
-		LG_LOG     => 'LogEntry',
+		LG_LOG     => 'Log',
 		LG_SERVER  => 'Server',
 		LG_SESSION => 'Session',
 		LG_USER    => 'User',
@@ -248,7 +248,7 @@ class LigminchaGlobalObject {
 	/**
 	 * Get an object's data
 	 */
-	public function getData( $data ) {
+	public function getData() {
 		$data = $this->data;
 		$c1 = substr( $data, 0, 1 );
 		if( $c1 == '[' || $c1 == '{' ) $data = json_decode( $data );
