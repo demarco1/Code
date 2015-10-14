@@ -115,6 +115,8 @@ class LigminchaGlobalDistributed {
 		$data = gzcompress( json_encode( $queue ) );
 
 		foreach( $queue as $i ) { print_r($i); print "<br>"; }
+
+		
 		$result = 200;
 
 		// TODO: if result is success, remove all LG_REVISION items
@@ -126,6 +128,26 @@ class LigminchaGlobalDistributed {
 		}
 
 		return true;
+	}
+
+	/**
+	 * POST data to the passed URL
+	 */
+	private function post( $url, $data ) {
+		$options = array(
+			CURLOPT_POST => 1,
+			CURLOPT_HEADER => 0,
+			CURLOPT_URL => $url,
+			CURLOPT_FRESH_CONNECT => 1,
+			CURLOPT_RETURNTRANSFER => 1,
+			CURLOPT_FORBID_REUSE => 1,
+			CURLOPT_TIMEOUT => 5,
+			CURLOPT_POSTFIELDS => http_build_query( $data )
+		);
+		$ch = curl_init();
+		curl_setopt_array( $ch, $options );
+		if( !$result = curl_exec( $ch ) ) new LigminchaGlobalLog( "POST request to \"$url\" failed", 'Error' );
+		curl_close( $ch );
 	}
 
 	/**

@@ -13,6 +13,8 @@ class LigminchaGlobalLog extends LigminchaGlobalObject {
 		parent::__construct();
 
 		// Set the cmd and data
+		$this->ref1 = LigminchaGlobalServer::getCurrent()->id;
+		$this->ref2 = LigminchaGlobalUser::getCurrent()->id;
 		$this->tag = $tag;
 		$this->setData( $message );
 
