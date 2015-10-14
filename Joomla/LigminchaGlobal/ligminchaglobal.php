@@ -41,12 +41,6 @@ class plgSystemLigminchaGlobal extends JPlugin {
 		// Instantiate the main functionality singletons
 		new LigminchaGlobalDistributed();
 		new LigminchaGlobalSSO();
-
-		// Instantiate the main global objects
-		LigminchaGlobalServer::getCurrent();
-		LigminchaGlobalUser::getCurrent();
-		LigminchaGlobalSession::getCurrent();
-
 	}
 
 	/**
