@@ -5,7 +5,7 @@ define( 'LG_SERVER',  2 );
 define( 'LG_USER',    3 );
 define( 'LG_SESSION', 4 );
 define( 'LG_REVISION',5 );
-define( 'LG_GROUP',   6 );
+define( 'LG_VERSION', 6 );
 
 // Flags
 define( 'LG_NEW',     1 << 0 ); // This item was just created (has never been modified)

@@ -100,33 +100,90 @@ class LigminchaGlobalDistributed {
 		if( !$revs = LigminchaGlobalObject::find( array( 'type' => LG_REVISION ) ) ) return false;
 
 		// If this is the master, then use zero for session ID
-		$sid = LigminchaGlobalServer::getCurrent()->isMaster ? 0 : LigminchaGlobalServer::getCurrent()->id;
+		$server = LigminchaGlobalServer::getCurrent();
+		$master = LigminchaGlobalServer::masterDomain();
+		$sid = $master ? 0 : $server->id;
+
+		// TODO: if we're the master then we must make a queue for each client filtered by owner/private
+		if( $server->isMaster ) {
+
+			// Loop through all clients (skip self) and make an empty stream for each
+			$streams = array();
+			$clients = LigminchaGlobalServer::find( array( 'type' => NS_SERVER ) );
+			foreach( $clients as $client ) {
+				if( $client->id != $server->id ) {
+					$streams[$client->tag] = array( $sid ); // session ID is first element of a queue
+				}
+			}
+		}
+
+		// Otherwise just one stream to the master domain
+		else $streams = array( $master => array( $sid ) );
 
 
-		// TODO: if we're the server then we must make a queue for each client filtered by owner/private
+/// DOH!!!!
+/// streams should be many revisions with target server, not stream arrays
+//// because they need to be deleted only after recipient acknowledges!
+//////////////////////////////////////////////////////////
 
-		// Session ID is the first element of the queue
-		$queue = array( $sid );
+		// Prepare streams array (one for each recipient, with target domain as key)
+		$streams = array();
 
 		// Add all the revision data
 		foreach( $revs as $rev ) {
-			$queue[] = array( $rev->tag, $rev->getData() );
+
+			// Determine the recipient domain of this revision (no tagrget server id in ref1 means use master server)
+			$target = $rev->ref1 ? LigminchaGlobalObject::newFromId( $rev->ref1 )->tag : $master;
+
+			// Add revision to this domains stream (create if no stream yet)
+			if( array_key_exists( $target, $streams ) ) $streams[$target] = array( $sid );
+			else $streams[$target][] = $rev;
+
+			// TODO: If we're the master, then we check this revision to see if it's for all streams, or just one
+			if( $master ) {
+
+				// TODO: If its a delete we have to select the cond and check if any are private
+				// if just upd, check local object private flag
+				if( private ) {
+
+					// This is private so it only goes to the owner's domain
+					$owner = $rev
+					$stream
+
+				} else {
+
+					foreach( $streams as $stream ) $stream[] = $rev;
+				}
+			}
+
+			// If we're not master, then this just 
+			else {
+			}
+
+			$streams[$master][] = array( $rev->tag, $rev->getData() );
 		}
 
-		// Zip up the data in JSON format
-		// TODO: encrypt using shared secret or public key
-		$data = self::encodeQueue( $queue )
+		foreach( $streams as $stream ) {
 
-foreach( $queue as $i ) { print_r($i); print "<br>"; }
+			// Zip up the data in JSON format
+			// TODO: encrypt using shared secret or public key
+			$data = self::encodeQueue( $queue )
 
-		$result = self::post( LigminchaGlobalServer::masterDomain(), $data );
+		foreach( $queue as $i ) { print_r($i); print "<br>"; }
 
-		// TODO: if result is success, remove all LG_REVISION items
-		if( $result == 200 ) {
-			$db = JFactory::getDbo();
-			$table = '`' . self::$table . '`';
-			$db->setQuery( "DELETE FROM $table WHERE `type`=" . LG_REVISION );
-			$db->query();
+			// Post the queue data to the server
+			if( LigminchaGlobalServer::getCurrent()->isMaster ) {
+			}else {
+			$result = self::post( LigminchaGlobalServer::masterDomain(), $data );
+			}
+
+			// TODO: if result is success, remove all LG_REVISION items
+			if( $result == 200 ) {
+				$db = JFactory::getDbo();
+				$table = '`' . self::$table . '`';
+				$db->setQuery( "DELETE FROM $table WHERE `type`=" . LG_REVISION );
+				$db->query();
+			}
 		}
 
 		return true;
@@ -162,6 +219,9 @@ foreach( $queue as $i ) { print_r($i); print "<br>"; }
 		// TODO: decrypt using shared secret or public key
 		$queue =  self::decodeQueue( $data );
 		$session = array_shift( $queue );
+
+		// TODO: We do actually have to process these revisions - i.e. update the db with the changes
+		// - after that the ackknowledgment is sent so the sender can remove the revisions
 
 		if( LigminchaGlobalServer::getCurrent()->isMaster ) {
 			// TODO: check group and re-route
