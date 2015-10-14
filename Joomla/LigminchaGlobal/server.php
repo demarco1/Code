@@ -31,7 +31,8 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 			// Try and load the object data now that we know its uuid
 			if( !$this->load() ) {
 
-				// TODO: Doesn't exist, make the data structure for our new server object
+				// Make it easy to find this server by domain
+				$this->tag( $_SERVER['HTTP_HOST'] );
 
 				// Save our new instance to the DB
 				$this->update();
