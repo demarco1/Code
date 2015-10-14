@@ -25,8 +25,7 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 
 			// Make a new uuid from the server's secret
 			$config = JFactory::getConfig();
-			$secret = $config->get( 'secret' );
-			$this->id = $this->hash( $secret );
+			$this->id = $this->hash( $config->get( 'secret' ) );
 
 			// Try and load the object data now that we know its uuid
 			if( !$this->load() ) {
@@ -45,7 +44,9 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 	 * Determine whether or not this is the master site
 	 */
 	private function checkMaster() {
-		$this->isMaster = ( $_SERVER['HTTP_HOST'] == 'ligmincha.org' );
+		$config = JFactory::getConfig();
+		if( !$master = $config->get( 'lgMaster' ) ) $master = 'ligmincha.org';
+		$this->isMaster = ( $_SERVER['HTTP_HOST'] == $master );
 	}
 
 	/**
