@@ -6,6 +6,8 @@
 // Later, check config.php for master domain (fallback to ligmincha.org), resolve that domain and check it's the same IP
 if( $_SERVER['REMOTE_ADDR'] != '' ) {
 
+	// Make a fake version of the Joomla plugin class to allow the distributed.php and object classes to work
+
 	// Later: check that the session ID is matching an admin in the database
 	// - log error and bail if not
 
