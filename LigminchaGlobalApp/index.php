@@ -26,7 +26,7 @@ LigminchaGlobalDistributed::sendQueue();
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<head>
 		<title>LigminchaGlobalApp</title>
-		<script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places" type="text/javascript"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
 		<script src="resources/jquery.js"></script>
 		<script src="main.js"></script>
 	</head>
