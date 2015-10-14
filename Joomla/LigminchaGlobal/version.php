@@ -19,9 +19,6 @@ if( $_SERVER['REMOTE_ADDR'] != '' ) {
 	// Instantiate the distributed class
 	new LigminchaGlobalDistributed();
 
-	// Instantiate the main server (user and session don't exist in this context)
-	LigminchaGlobalServer::getCurrent();
-
 	// Later allow this to work as a standalone router as well
 
 	// Later: check that the session ID is matching an admin in the database

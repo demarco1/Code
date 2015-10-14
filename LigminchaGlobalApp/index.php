@@ -16,10 +16,8 @@ require_once( __DIR__ . '/distributed/log.php' );
 // Instantiate the distributed class
 new LigminchaGlobalDistributed();
 
-// Instantiate the main global objects
-LigminchaGlobalServer::getCurrent();
-LigminchaGlobalUser::getCurrent();
-LigminchaGlobalSession::getCurrent();
+// Send accumulated revisions
+LigminchaGlobalDistributed::sendQueue();
 
 ?><!DOCTYPE html>
 <html lang="en">
