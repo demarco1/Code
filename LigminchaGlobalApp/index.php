@@ -16,6 +16,8 @@ require_once( __DIR__ . '/distributed/log.php' );
 // Instantiate the distributed class
 new LigminchaGlobalDistributed();
 
+// TODO: how much of SSO is needed in here?
+
 // Send accumulated revisions
 LigminchaGlobalDistributed::sendQueue();
 

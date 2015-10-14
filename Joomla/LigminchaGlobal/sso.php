@@ -23,9 +23,6 @@ class LigminchaGlobalSSO {
 		// Make singleton available if we need it
 		self::$instance = $this;
 
-		// Get/create global object for this server
-		$this->server = LigminchaGlobalServer::getCurrent();
-
 		// If this is an SSO token request and this is the master site, return the key
 		if( LigminchaGlobalServer::getCurrent()->isMaster && array_key_exists( $this->cmd, $_REQUEST ) ) {
 			setcookie( $this->cookie, $_REQUEST[$this->cmd] );
