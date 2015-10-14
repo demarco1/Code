@@ -44,9 +44,19 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 	 * Determine whether or not this is the master site
 	 */
 	private function checkMaster() {
-		$config = JFactory::getConfig();
-		if( !$master = $config->get( 'lgMaster' ) ) $master = 'ligmincha.org';
-		$this->isMaster = ( $_SERVER['HTTP_HOST'] == $master );
+		$this->isMaster = ( $_SERVER['HTTP_HOST'] == self::masterDomain() );
+	}
+
+	/**
+	 * What is the master domain?
+	 */
+	public static function masterDomain() {
+		static $master;
+		if( !$master ) {
+			$config = JFactory::getConfig();
+			if( !$master = $config->get( 'lgMaster' ) ) $master = 'ligmincha.org';
+		}
+		return $master;
 	}
 
 	/**

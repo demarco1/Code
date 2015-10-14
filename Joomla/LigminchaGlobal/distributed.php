@@ -102,22 +102,24 @@ class LigminchaGlobalDistributed {
 		// If this is the master, then use zero for session ID
 		$sid = LigminchaGlobalServer::getCurrent()->isMaster ? 0 : LigminchaGlobalServer::getCurrent()->id;
 
+
+		// TODO: if we're the server then we must make a queue for each client filtered by owner/private
+
 		// Session ID is the first element of the queue
 		$queue = array( $sid );
 
 		// Add all the revision data
 		foreach( $revs as $rev ) {
-			$queue[] = array( $rev->tag, $rev->data );
+			$queue[] = array( $rev->tag, $rev->getData() );
 		}
 
 		// Zip up the data in JSON format
 		// TODO: encrypt using shared secret or public key
-		$data = gzcompress( json_encode( $queue ) );
+		$data = self::encodeQueue( $queue )
 
-		foreach( $queue as $i ) { print_r($i); print "<br>"; }
+foreach( $queue as $i ) { print_r($i); print "<br>"; }
 
-		
-		$result = 200;
+		$result = self::post( LigminchaGlobalServer::masterDomain(), $data );
 
 		// TODO: if result is success, remove all LG_REVISION items
 		if( $result == 200 ) {
@@ -131,23 +133,24 @@ class LigminchaGlobalDistributed {
 	}
 
 	/**
-	 * POST data to the passed URL
+	 * Encode an object to put on the output queue array
 	 */
-	private function post( $url, $data ) {
-		$options = array(
-			CURLOPT_POST => 1,
-			CURLOPT_HEADER => 0,
-			CURLOPT_URL => $url,
-			CURLOPT_FRESH_CONNECT => 1,
-			CURLOPT_RETURNTRANSFER => 1,
-			CURLOPT_FORBID_REUSE => 1,
-			CURLOPT_TIMEOUT => 5,
-			CURLOPT_POSTFIELDS => http_build_query( $data )
-		);
-		$ch = curl_init();
-		curl_setopt_array( $ch, $options );
-		if( !$result = curl_exec( $ch ) ) new LigminchaGlobalLog( "POST request to \"$url\" failed", 'Error' );
-		curl_close( $ch );
+	private static function decodeQueueItem( $cmd, $fields ) {
+		return array( $cmd, $fields );
+	}
+
+	/**
+	 * Encode the entire queue array ready for sending as a stream
+	 */
+	private static function encodeQueue( $queue ) {
+		return gzcompress( json_encode( $queue ) );
+	}
+
+	/**
+	 * Decode received queue data
+	 */
+	private static function decodeQueue( $data ) {
+		return json_decode( gzuncompress( $data ), true );
 	}
 
 	/**
@@ -157,10 +160,17 @@ class LigminchaGlobalDistributed {
 
 		// Unzip and decode the data
 		// TODO: decrypt using shared secret or public key
-		$queue =  json_decode( gzuncompress( $data ), true );
+		$queue =  self::decodeQueue( $data );
+		$session = array_shift( $queue );
 
 		if( LigminchaGlobalServer::getCurrent()->isMaster ) {
 			// TODO: check group and re-route
+			// - loop through queue, and any that are not private are put back on the queue
+			foreach( $queue as $item ) {
+				if( !$this->flag( LG_PRIVATE ) ) {
+					new LigminchaGlobalRevision( $item[0], $item[1] );
+				}
+			}
 		} else {
 			// TODO: Check these changes are from the master
 		}
@@ -189,5 +199,25 @@ class LigminchaGlobalDistributed {
 		$db->query();
 	}
 
+	/**
+	 * POST data to the passed URL
+	 */
+	private static post( $url, $data ) {
+		$options = array(
+			CURLOPT_POST => 1,
+			CURLOPT_HEADER => 0,
+			CURLOPT_URL => $url,
+			CURLOPT_FRESH_CONNECT => 1,
+			CURLOPT_RETURNTRANSFER => 1,
+			CURLOPT_FORBID_REUSE => 1,
+			CURLOPT_TIMEOUT => 5,
+			CURLOPT_POSTFIELDS => http_build_query( $data )
+		);
+		$ch = curl_init();
+		curl_setopt_array( $ch, $options );
+		if( !$result = curl_exec( $ch ) ) new LigminchaGlobalLog( "POST request to \"$url\" failed", 'Error' );
+		curl_close( $ch );
+		return $result;
+	}
 }
 
