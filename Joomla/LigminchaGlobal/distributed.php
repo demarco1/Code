@@ -95,10 +95,9 @@ class LigminchaGlobalDistributed {
 	 * Send all queued changes
 	 */
 	public static function sendQueue() {
-		$cond = array( 'type' => LG_REVISION );
 
 		// Get all LG_REVISION items, bail if none
-		if( !$revs = LigminchaGlobalObject::find( $cond ) ) return false;
+		if( !$revs = LigminchaGlobalObject::find( array( 'type' => LG_REVISION ) ) ) return false;
 
 		// If this is the master, then use zero for session ID
 		$sid = LigminchaGlobalServer::getCurrent()->isMaster ? 0 : LigminchaGlobalServer::getCurrent()->id;
@@ -115,13 +114,14 @@ class LigminchaGlobalDistributed {
 		// TODO: encrypt using shared secret or public key
 		$data = gzcompress( json_encode( $queue ) );
 
-		print_r($queue);
+		foreach( $queue as $i ) { print_r($i); print "<br>"; }
+		$result = 200;
 
 		// TODO: if result is success, remove all LG_REVISION items
 		if( $result == 200 ) {
 			$db = JFactory::getDbo();
 			$table = '`' . self::$table . '`';
-			$db->setQuery( "DELETE FROM $table WHERE $cond" );
+			$db->setQuery( "DELETE FROM $table WHERE `type`=" . LG_REVISION );
 			$db->query();
 		}
 
@@ -154,8 +154,6 @@ class LigminchaGlobalDistributed {
 			// TODO
 		}
 
-		// TODO: set ref1 to the siteID, ref2 to the user if applicable, set timestamp
-		// should use LG_PRIVATE and LG_QUEUED flags
 
 	}
 

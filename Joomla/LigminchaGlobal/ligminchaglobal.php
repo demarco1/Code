@@ -13,6 +13,7 @@
 // Instantiate the main LigminchaGobal classes
 require_once( __DIR__ . '/distributed.php' );
 require_once( __DIR__ . '/object.php' );
+require_once( __DIR__ . '/revision.php' );
 require_once( __DIR__ . '/server.php' );
 require_once( __DIR__ . '/session.php' );
 require_once( __DIR__ . '/user.php' );

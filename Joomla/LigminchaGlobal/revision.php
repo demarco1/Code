@@ -11,7 +11,7 @@ class LigminchaGlobalRevision extends LigminchaGlobalObject {
 		$this->flag( LG_LOCAL, true );
 
 		// Give the new object an ID
-		parent::__construct( $id );
+		parent::__construct();
 
 		// Set the cmd and data
 		$this->tag = $cmd;

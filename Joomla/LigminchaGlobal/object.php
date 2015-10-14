@@ -9,9 +9,8 @@ define( 'LG_GROUP',   6 );
 
 // Flags
 define( 'LG_NEW',     1 << 0 ); // This item was just created (has never been modified)
-define( 'LG_QUEUED',  1 << 1 ); // This item has changed but the changes haven't been sent (or have been sent but weren't acknowledged)
-define( 'LG_LOCAL',   1 << 2 ); // This item's changes never routes anywhere
-define( 'LG_PRIVATE', 1 << 3 ); // This item's changes only route to the main server
+define( 'LG_LOCAL',   1 << 1 ); // This item's changes never routes anywhere
+define( 'LG_PRIVATE', 1 << 2 ); // This item's changes only route to the main server
 
 // Database update methods
 define( 'LG_UPDATE', 1 );
@@ -136,6 +135,7 @@ class LigminchaGlobalObject {
 
 			$sqlVals = $this->makeValues( false );
 			$db->setQuery( "UPDATE $table SET $sqlVals WHERE `id`=0x{$this->id}" );
+			$db->query();
 		}
 
 		// Create a new object in the database
@@ -144,19 +144,19 @@ class LigminchaGlobalObject {
 			$this->modified = null;
 			$this->creation = time();
 
-			// The entry is owned by the user unless it's a server object
-			$this->owner = ( $this->type == LG_SERVER || $this->type == LG_USER ) ? null : LigminchaGlobalUser::getCurrent()->id;
+			// The entry is owned by the user unless it's a server/revision/user object
+			$this->owner = ( $this->type == LG_SERVER || $this->type == LG_USER || $this->type == LG_REVISION )
+				? null : LigminchaGlobalUser::getCurrent()->id;
 
 			$sqlVals = $this->makeValues();
 			$db->setQuery( "REPLACE INTO $table SET $sqlVals" );
+			$db->query();
 		}
 
 		// If this update item has queue flag set and originated here, queue update for routing
-		if( $this->flag( LG_LOCAL ) && !$session ) {
+		if( !$this->flag( LG_LOCAL ) && !$session ) {
 			new LigminchaGlobalRevision( LG_UPDATE, $this->fields() );
 		}
-
-		return $db->query();
 	}
 
 	/**
