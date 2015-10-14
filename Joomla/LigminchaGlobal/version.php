@@ -7,6 +7,20 @@
 if( $_SERVER['REMOTE_ADDR'] != '' ) {
 
 	// Make a fake version of the Joomla plugin class to allow the distributed.php and object classes to work
+	require_once( __DIR__ . '/distributed/standalone.php' );
+
+	// Then load all the distributed classes
+	require_once( __DIR__ . '/distributed/distributed.php' );
+	require_once( __DIR__ . '/distributed/object.php' );
+	require_once( __DIR__ . '/distributed/revision.php' );
+	require_once( __DIR__ . '/distributed/server.php' );
+	require_once( __DIR__ . '/distributed/log.php' );
+
+	// Instantiate the distributed class
+	new LigminchaGlobalDistributed();
+
+	// Instantiate the main server (user and session don't exist in this context)
+	LigminchaGlobalServer::getCurrent();
 
 	// Later: check that the session ID is matching an admin in the database
 	// - log error and bail if not
