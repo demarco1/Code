@@ -190,13 +190,6 @@ class LigminchaGlobalDistributed {
 	}
 
 	/**
-	 * Encode an object to put on the output queue array
-	 */
-	private static function decodeQueueItem( $cmd, $fields ) {
-		return array( $cmd, $fields );
-	}
-
-	/**
 	 * Encode the entire queue array ready for sending as a stream
 	 */
 	private static function encodeQueue( $queue ) {
