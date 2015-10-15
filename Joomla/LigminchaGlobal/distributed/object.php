@@ -78,7 +78,6 @@ class LigminchaGlobalObject {
 			print $type;
 			$class = self::typeToClass( $type );
 			$obj = new $class();
-print_r($class);
 		}
 		return $obj;
 	}

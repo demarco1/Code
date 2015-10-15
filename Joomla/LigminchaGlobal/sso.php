@@ -67,4 +67,18 @@ class LigminchaGlobalSSO {
 			}
 		}
 	}
+
+	/**
+	 * Make a current session and current user from an SSO session ID cookie (called when running on a master site)
+	 */
+	public static function makeSessionFromCookie() {
+		if( array_key_exists( LigminchaGlobalSSO::$cookie, $_COOKIE ) ) {
+			if( $session = LigminchaGlobalSession::findOne( array( 'id' => $_COOKIE[LigminchaGlobalSSO::$cookie] ) ) ) {
+				if( $user = LigminchaGlobalUser::newFromId( $session->owner ) ) {
+					LigminchaGlobalSession::setCurrent( $session );
+					LigminchaGlobalUser::setCurrent( $user );
+				}
+			}
+		}
+	}
 }

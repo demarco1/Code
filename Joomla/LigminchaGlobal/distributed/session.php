@@ -48,6 +48,13 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 	}
 
 	/**
+	 * This is used from standalone context to set the session from the SSO cookie
+	 */
+	public static setCurrent( $session ) {
+		self::$current = $session;
+	}
+
+	/**
 	 * Destroy current session
 	 * - destroy all sessions associated with this user/server in case there are more than one somehow
 	 */

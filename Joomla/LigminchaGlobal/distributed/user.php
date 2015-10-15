@@ -42,6 +42,13 @@ class LigminchaGlobalUser extends LigminchaGlobalObject {
 	}
 
 	/**
+	 * This is used from standalone context to set the session from the SSO cookie
+	 */
+	public static setCurrent( $user ) {
+		self::$current = $user;
+	}
+
+	/**
 	 * Make a new object given an id
 	 */
 	public static function newFromId( $id, $type = false ) {

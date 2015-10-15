@@ -5,6 +5,9 @@
 require_once( __DIR__ . '/distributed/standalone.php' );
 
 // Then load all the distributed classes
+// - stanadlone.php replaces Joomla environment
+require_once( __DIR__ . '/distributed/sso.php' );
+require_once( __DIR__ . '/distributed/standalone.php' );
 require_once( __DIR__ . '/distributed/distributed.php' );
 require_once( __DIR__ . '/distributed/object.php' );
 require_once( __DIR__ . '/distributed/revision.php' );
@@ -13,10 +16,11 @@ require_once( __DIR__ . '/distributed/user.php' );
 require_once( __DIR__ . '/distributed/session.php' );
 require_once( __DIR__ . '/distributed/log.php' );
 
+// SSO: Check if this session has an SSO cookie and make the current session and user from it if so
+LigminchaGlobalSSO::makeSessionFromCookie();
+
 // Instantiate the distributed class
 new LigminchaGlobalDistributed();
-
-// TODO: how much of SSO is needed in here?
 
 // Send accumulated revisions
 LigminchaGlobalDistributed::sendQueue();

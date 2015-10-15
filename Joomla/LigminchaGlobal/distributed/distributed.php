@@ -48,8 +48,10 @@ class LigminchaGlobalDistributed {
 
 		// Instantiate the main global objects
 		LigminchaGlobalServer::getCurrent();
-		LigminchaGlobalUser::getCurrent();
-		LigminchaGlobalSession::getCurrent();
+		if( !LG_STANDALONE ) {
+			LigminchaGlobalUser::getCurrent();
+			LigminchaGlobalSession::getCurrent();
+		}
 
 		// If this is a changes request commit the data (and re-route if master)
 		if( array_key_exists( self::$cmd, $_POST ) ) {

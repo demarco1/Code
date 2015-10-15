@@ -10,6 +10,9 @@
 // No direct access
 //defined('_JEXEC') or die;
 
+// Notify the LigminchaGobal code that this request is no standalone
+define( 'LG_STANDALONE', false );
+
 // Instantiate the main LigminchaGobal classes
 require_once( __DIR__ . '/distributed/distributed.php' );
 require_once( __DIR__ . '/distributed/object.php' );
