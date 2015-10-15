@@ -112,29 +112,13 @@ class LigminchaGlobalDistributed {
 		// TODO: if we're the master then we must make a queue for each client filtered by owner/private
 		if( $server->isMaster ) {
 
-			// Loop through all clients (skip self) and make an empty stream for each
-			$streams = array();
-			$clients = LigminchaGlobalServer::find( array( 'type' => NS_SERVER ) );
-			foreach( $clients as $client ) {
-				if( $client->id != $server->id ) {
-					$streams[$client->tag] = array( $sid ); // session ID is first element of a queue
-				}
-			}
+
 		}
 
 		// Otherwise just one stream to the master domain
 		else $streams = array( $master => array( $sid ) );
 
-
-/// DOH!!!!
-/// streams should be many revisions with target server, not stream arrays
-//// because they need to be deleted only after recipient acknowledges!
-//////////////////////////////////////////////////////////
-
-		// Prepare streams array (one for each recipient, with target domain as key)
-		$streams = array();
-
-		// Add all the revision data
+		// Add all the revision data to the streams
 		foreach( $revs as $rev ) {
 
 			// Determine the recipient domain of this revision (no tagrget server id in ref1 means use master server)
@@ -149,7 +133,7 @@ class LigminchaGlobalDistributed {
 
 				// TODO: If its a delete we have to select the cond and check if any are private
 				// if just upd, check local object private flag
-				if( private ) {
+				if( 1 ) {
 
 					// This is private so it only goes to the owner's domain
 					$owner = $rev
@@ -195,20 +179,6 @@ class LigminchaGlobalDistributed {
 	}
 
 	/**
-	 * Encode the entire queue array ready for sending as a stream
-	 */
-	private static function encodeQueue( $queue ) {
-		return gzcompress( json_encode( $queue ) );
-	}
-
-	/**
-	 * Decode received queue data
-	 */
-	private static function decodeQueue( $data ) {
-		return json_decode( gzuncompress( $data ), true );
-	}
-
-	/**
 	 * Receive changes from remote queue
 	 */
 	private static function recvQueue( $data ) {
@@ -222,8 +192,20 @@ class LigminchaGlobalDistributed {
 		// - after that the ackknowledgment is sent so the sender can remove the revisions
 
 		if( LigminchaGlobalServer::getCurrent()->isMaster ) {
+
+
+			// Loop through all clients (skip self) and make an empty stream for each, with the server's domain as key
+			$streams = array();
+			$clients = LigminchaGlobalServer::find( array( 'type' => NS_SERVER ) );
+			foreach( $clients as $client ) {
+				if( $client->id != $server->id ) {
+					$streams[$client->tag] = array( $sid ); // session ID is first element of a stream
+				}
+			}
+
+
 			// TODO: check group and re-route
-			// - loop through queue, and any that are not private are put back on the queue
+			// - loop through queue, and any that are not private are put back on the queue, one revision for each target
 			foreach( $queue as $item ) {
 				if( !$this->flag( LG_PRIVATE ) ) {
 					new LigminchaGlobalRevision( $item[0], $item[1] );
@@ -235,16 +217,17 @@ class LigminchaGlobalDistributed {
 	}
 
 	/**
-	 * Log an event in the global DB
+	 * Encode the entire queue array ready for sending as a stream
 	 */
-	private function log( $text, $user = false ) {
+	private static function encodeQueue( $queue ) {
+		return gzcompress( json_encode( $queue ) );
+	}
 
-		// If user set to true, get the current user's ID
-		if( $user === true ) {
-			// TODO
-		}
-
-
+	/**
+	 * Decode received queue data
+	 */
+	private static function decodeQueue( $data ) {
+		return json_decode( gzuncompress( $data ), true );
 	}
 
 	/**

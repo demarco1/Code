@@ -115,9 +115,9 @@ class LigminchaGlobalObject {
 
 	/**
 	 * Update or create an object in the database and queue the changes if necessary
-	 * - $session is passed if this changed arrived from a remote queue, or zero if from server
+	 * - $origin is passed if this changed arrived from a remote queue
 	 */
-	public function update( $session = false ) {
+	public function update( $origin = false ) {
 		$db = JFactory::getDbo();
 		$table = '`' . LigminchaGlobalDistributed::$table . '`';
 
@@ -153,16 +153,14 @@ class LigminchaGlobalObject {
 			$db->query();
 		}
 
-		// If this update item has queue flag set and originated here, queue update for routing
-		if( !$this->flag( LG_LOCAL ) && !$session ) {
-			new LigminchaGlobalRevision( LG_UPDATE, $this->fields() );
-		}
+		// Add revision(s) depending on the context of this change
+		if( !$this->flag( LG_LOCAL ) self::makeRevision( LG_DELETE, $cond, $origin );
 	}
 
 	/**
 	 * Delete objects matching the condition array
 	 */
-	public static function del( $cond, $session = false ) {
+	public static function del( $cond, $origin = false ) {
 		$db = JFactory::getDbo();
 		$table = '`' . LigminchaGlobalDistributed::$table . '`';
 
@@ -171,19 +169,21 @@ class LigminchaGlobalObject {
 		if( empty( $sqlcond ) ) return false;
 
 		// TODO: validate cond
-
-		// Check if any of the objects should not be queued (don't do queries that involve both types!)
-		// TODO
-		$queue = true;
+		// TODO: check no LG_LOCAL in results
 
 		// Do the deletion
 		$db->setQuery( "DELETE FROM $table WHERE $sqlcond" );
 		$db->query();
 
-		// If the items deleted all had their queue flags set and the deletion originated here, queue for routing
-		if( $queue && !$session ) {
-			new LigminchaGlobalRevision( LG_DELETE, $cond );
-		}
+		// Add revision(s) depending on the context of this change
+		self::makeRevision( LG_DELETE, $cond, $origin );
+	}
+
+	/**
+	 * Make one or more revisions depending on the context of this change
+	 */
+	private static function makeRevision( $cmd, $fields, $origin ) {
+		new LigminchaGlobalRevision( $cmd, $fields, false, $origin );
 	}
 
 	/**
