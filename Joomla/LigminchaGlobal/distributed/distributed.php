@@ -183,12 +183,8 @@ class LigminchaGlobalDistributed {
 		$origin = array_shift( $queue );
 		$session = array_shift( $queue );
 
-		// Process each of the revisions
-		foreach( $queue as $rev ) {
-			list( $cmd, $fields ) = $rev;
-			$method = LigminchaGlobalObject::$methods[$cmd];
-			call_user_func( "LigminchaGlobalObject::$method", $fields, $origin );
-		}
+		// Process each of the revisions (this may lead to further re-routing revisions being made)
+		foreach( $queue as $rev ) LigminchaGlobalRevision::process( $rev[0], $rev[1], $origin );
 	}
 
 	/**
