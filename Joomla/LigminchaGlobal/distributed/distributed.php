@@ -104,67 +104,33 @@ class LigminchaGlobalDistributed {
 		// Get all LG_REVISION items, bail if none
 		if( !$revs = LigminchaGlobalObject::find( array( 'type' => LG_REVISION ) ) ) return false;
 
-		// If this is the master, then use zero for session ID
+		// Make data streams for each target from the revisions
+		$streams = array();
 		$server = LigminchaGlobalServer::getCurrent();
-		$master = LigminchaGlobalServer::masterDomain();
-		$sid = $master ? 0 : $server->id;
-
-		// Otherwise just one stream to the master domain
-		else $streams = array( $master => array( $server, $sid ) );
-
-		// Add all the revision data to the streams
 		foreach( $revs as $rev ) {
-
-			// Determine the recipient domain of this revision (no tagrget server id in ref1 means use master server)
-			$target = $rev->ref1 ? LigminchaGlobalObject::newFromId( $rev->ref1 )->tag : $master;
-
-			// Add revision to this domains stream (create if no stream yet)
-			if( array_key_exists( $target, $streams ) ) $streams[$target] = array( $sid );
+			$target = $rev->ref1;
+			if( array_key_exists( $target, $streams ) ) $streams[$target] = array( $server, $sid );
 			else $streams[$target][] = $rev;
-
-			// TODO: If we're the master, then we check this revision to see if it's for all streams, or just one
-			if( $master ) {
-
-				// TODO: If its a delete we have to select the cond and check if any are private
-				// if just upd, check local object private flag
-				if( 1 ) {
-
-					// This is private so it only goes to the owner's domain
-					$owner = $rev
-					$stream
-
-				} else {
-
-					foreach( $streams as $stream ) $stream[] = $rev;
-				}
-			}
-
-			// If we're not master, then this just 
-			else {
-			}
-
-			$streams[$master][] = array( $rev->tag, $rev->getData() );
 		}
 
-		foreach( $streams as $stream ) {
+		// encode and send each stream
+		foreach( $streams as $target => $stream ) {
 
 			// Zip up the data in JSON format
 			// TODO: encrypt using shared secret or public key
-			$data = gzcompress( json_encode( $queue ) );
+			$data = gzcompress( json_encode( $stream ) );
 
-		foreach( $queue as $i ) { print_r($i); print "<br>"; }
+			foreach( $stream as $i ) { print_r($i); print "<br>"; }
 
 			// Post the queue data to the server
-			if( LigminchaGlobalServer::getCurrent()->isMaster ) {
-			}else {
-			$result = self::post( LigminchaGlobalServer::masterDomain(), $data );
-			}
+			$result = self::post( $target, array( self::$cmd => $data ) );
 
-			// TODO: if result is success, remove all LG_REVISION items
+			// If result is success, remove all LG_REVISION items for this target server
+			// (can't use obj::del yet because it doesn't check LOCAL to not make further revisions)
 			if( $result == 200 ) {
 				$db = JFactory::getDbo();
 				$table = '`' . self::$table . '`';
-				$db->setQuery( "DELETE FROM $table WHERE `type`=" . LG_REVISION );
+				$db->setQuery( "DELETE FROM $table WHERE `type`=" . LG_REVISION . " AND `ref1`=0x$target" );
 				$db->query();
 			}
 		}
