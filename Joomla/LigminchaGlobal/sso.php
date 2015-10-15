@@ -24,7 +24,7 @@ class LigminchaGlobalSSO {
 		self::$instance = $this;
 
 		// If this is an SSO token request and this is the master site, return the key
-		if( LigminchaGlobalServer::getCurrent()->isMaster && array_key_exists( $this->cmd, $_REQUEST ) ) {
+		if( LigminchaGlobalServer::getCurrent()->isMaster && array_key_exists( self::$cmd, $_REQUEST ) ) {
 			setcookie( $this->cookie, $_REQUEST[$this->cmd] );
 			exit;
 		}
@@ -36,13 +36,14 @@ class LigminchaGlobalSSO {
 	public static function appendTokenRequest() {
 		$cookie = self::$cookie;
 		$cmd = self::$cmd;
+		$session = LigminchaGlobalSession::getCurrent();
 
 		// If this is the main site, just set the cookie now,
 		if( LigminchaGlobalServer::getCurrent()->isMaster ) setcookie( $cookie, $session->id );
 		else {
 
 			// If there is a current session,
-			if( $session = LigminchaGlobalSession::getCurrent() ) {
+			if( $session ) {
 
 				// If the session is newly created, get an SSO cookie under ligmincha.org for this session ID
 				// - newly created sessions have no expiry

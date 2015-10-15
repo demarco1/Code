@@ -7,6 +7,9 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 	// Current instance
 	private static $current = null;
 
+	// Master server
+	private static $master = null;
+
 	public $isMaster = false;
 
 	function __construct() {
@@ -38,7 +41,10 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 	 * Get the master server object
 	 */
 	public static function getMaster() {
-		if( !self::$master ) self::$master = findOne( array( 'tag' => self::masterDomain() ) );
+		if( is_null( self::$master ) ) {
+			self::$master = self::getCurrent()->isMaster ? self::getCurrent() : self::findOne( array( 'tag' => self::masterDomain() ) );
+			if( !self::$master ) die( 'Unable to determine master server' );
+		}
 		return self::$master;
 	}
 
@@ -50,14 +56,14 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 
 			// Make a new uuid from the server's secret
 			$config = JFactory::getConfig();
-			$id = $this->hash( $config->get( 'secret' ) );
+			$id = self::hash( $config->get( 'secret' ) );
 			self::$current = self::newFromId( $id );
 
 			// Try and load the object data now that we know its uuid
 			if( !self::$current->load() ) {
 
 				// Make it easy to find this server by domain
-				self::$current->tag( $_SERVER['HTTP_HOST'] );
+				self::$current->tag = $_SERVER['HTTP_HOST'];
 
 				// Save our new instance to the DB
 				self::$current->update();
@@ -65,4 +71,14 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 		}
 		return self::$current;
 	}
+
+	/**
+	 * Make a new object given an id
+	 */
+	public static function newFromId( $id, $type = false ) {
+		$obj = parent::newFromId( $id, LG_SERVER );
+		$obj->checkMaster();
+		return $obj;
+	}
+
 }

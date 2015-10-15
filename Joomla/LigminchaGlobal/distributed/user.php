@@ -24,7 +24,7 @@ class LigminchaGlobalUser extends LigminchaGlobalObject {
 
 			// Make a new uuid from the server ID and the user's Joomla ID
 			$server = LigminchaGlobalServer::getCurrent();
-			$id = $this->hash( $server->id . ':' . $jUser->id );
+			$id = self::hash( $server->id . ':' . $jUser->id );
 			self::$current = self::newFromId( $id );
 
 			// Try and load the object data now that we know its uuid
@@ -39,5 +39,12 @@ class LigminchaGlobalUser extends LigminchaGlobalObject {
 			}
 		}
 		return self::$current;
+	}
+
+	/**
+	 * Make a new object given an id
+	 */
+	public static function newFromId( $id, $type = false ) {
+		return parent::newFromId( $id, LG_USER );
 	}
 }

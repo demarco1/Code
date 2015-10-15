@@ -71,7 +71,7 @@ class LigminchaGlobalDistributed {
 		$query = "CREATE TABLE IF NOT EXISTS $table (" . implode( ',', $def ) . ",PRIMARY KEY (id))";
 		$db->setQuery( $query );
 		$db->query();
-		$this->log( LG_LOG, 'ligmincha_global table added' );
+		new LigminchaGlobalLog( '"ligmincha_global" database table added', 'Info' );
 
 		// Get the current structure
 		$db->setQuery( "DESCRIBE $table" );
@@ -106,10 +106,11 @@ class LigminchaGlobalDistributed {
 
 		// Make data streams for each target from the revisions
 		$streams = array();
-		$server = LigminchaGlobalServer::getCurrent();
+		$server = LigminchaGlobalServer::getCurrent()->id;
+		$session = LigminchaGlobalServer::getCurrent() ? LigminchaGlobalServer::getCurrent()->id : 0;
 		foreach( $revs as $rev ) {
 			$target = $rev->ref1;
-			if( array_key_exists( $target, $streams ) ) $streams[$target] = array( $server, $sid );
+			if( array_key_exists( $target, $streams ) ) $streams[$target] = array( $server, $session );
 			else $streams[$target][] = $rev;
 		}
 
@@ -166,7 +167,7 @@ class LigminchaGlobalDistributed {
 	/**
 	 * POST data to the passed URL
 	 */
-	private static post( $url, $data ) {
+	private static function post( $url, $data ) {
 		$options = array(
 			CURLOPT_POST => 1,
 			CURLOPT_HEADER => 0,

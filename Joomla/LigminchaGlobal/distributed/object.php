@@ -23,11 +23,12 @@ class LigminchaGlobalObject {
 
 	// Sub-classes to use for revision types (non-existent class means generic base class)
 	public static $classes = array(
-		LG_LOG     => 'Log',
-		LG_SERVER  => 'Server',
-		LG_SESSION => 'Session',
-		LG_USER    => 'User',
-		LG_GROUP   => 'Group',
+		LG_LOG      => 'Log',
+		LG_SERVER   => 'Server',
+		LG_SESSION  => 'Session',
+		LG_USER     => 'User',
+		LG_REVISION => 'Revision',
+		LG_VERSION  => 'Version',
 	);
 
 	// Methods of this class used for updating data (these are the commands that are sent in the remote queue)
@@ -64,11 +65,21 @@ class LigminchaGlobalObject {
 	/**
 	 * Make a new object given an id
 	 */
-	public static function newFromId( $id ) {
-		if( !$row = self::get( $this->id ) ) return die( __METHOD__ . 'called without an ID.' );
-		$class = self::typeToClass( $row['type'] );
-		$obj = new $class();
-		$obj->load();
+	public static function newFromId( $id, $type = false ) {
+		if( !$id ) die( __METHOD__ . ' called without an ID.' );
+		if( $row = self::get( $id ) ) {
+			$class = self::typeToClass( $row['type'] );
+			$obj = new $class();
+			foreach( $row as $field => $val ) {
+				$prop = "$field";
+				$obj->$prop = $val;
+			}
+		} elseif( $type ) {
+			print $type;
+			$class = self::typeToClass( $type );
+			$obj = new $class();
+print_r($class);
+		}
 		return $obj;
 	}
 
@@ -96,6 +107,7 @@ class LigminchaGlobalObject {
 	 * Load an object's row from the DB given its ID
 	 */
 	private static function get( $id ) {
+		if( !$id ) die( __METHOD__ . ' called without an ID' );
 		$db = JFactory::getDbo();
 		$table = '`' . LigminchaGlobalDistributed::$table . '`';
 		$all = self::sqlFields();
@@ -114,7 +126,7 @@ class LigminchaGlobalObject {
 		$table = '`' . LigminchaGlobalDistributed::$table . '`';
 
 		// Bail if no type
-		if( $this->type < 1 ) die( 'Typeless distributed objects not allowed!' );
+		if( $this->type < 1 ) {print_r($this);die( 'Typeless distributed objects not allowed!' );}
 
 		// Update an existing object in the database
 		if( $this->exists ) {
@@ -146,7 +158,8 @@ class LigminchaGlobalObject {
 		}
 
 		// Add revision(s) depending on the context of this change
-		if( !$this->flag( LG_LOCAL ) LigminchaGlobalRevision::create( LG_DELETE, $cond, $origin );
+		// TODO: $private = $this->flag( LG_PRIVATE ) ? $this->owner->server : false
+		if( !$this->flag( LG_LOCAL ) ) LigminchaGlobalRevision::create( LG_UPDATE, $this->fields(), $origin, $private = false );
 	}
 
 	/**
@@ -219,7 +232,7 @@ class LigminchaGlobalObject {
 	/**
 	 * Make a hash of the passed content for an object ID
 	 */
-	public function hash( $content ) {
+	public static function hash( $content ) {
 		return strtoupper( sha1( $content ) );
 	}
 
@@ -259,7 +272,7 @@ class LigminchaGlobalObject {
 		foreach( LigminchaGlobalDistributed::$tableStruct as $field => $type ) {
 			if( $priKey || $field != 'id' ) {
 				$prop = "$field";
-				$val = self::safeField( $this->$prop, $type );
+				$val = self::sqlField( $this->$prop, $type );
 				$vals[] = "`$field`=$val";
 			}
 		}
@@ -272,7 +285,7 @@ class LigminchaGlobalObject {
 	private static function makeCond( $cond ) {
 		$sqlcond = array();
 		foreach( $cond as $field => $val ) {
-			$val = self::safeField( $val, LigminchaGlobalDistributed::$tableStruct[$field] );
+			$val = self::sqlField( $val, LigminchaGlobalDistributed::$tableStruct[$field] );
 			$sqlcond[] = "`$field`=$val";
 		}
 		$sqlcond = implode( ' AND ', $sqlcond );
@@ -290,7 +303,7 @@ class LigminchaGlobalObject {
 	 * Make sure a hash is really a hash and use NULL if not
 	 * TODO: check better here
 	 */
-	private static function safeHash( $hash ) {
+	private static function sqlHash( $hash ) {
 		$hash = preg_replace( '/[^a-z0-9]/i', '', $hash );
 		$hash = $hash ? "0x$hash" : 'NULL';
 		return $hash;
@@ -299,12 +312,12 @@ class LigminchaGlobalObject {
 	/**
 	 * Format a field value ready for an SQL query
 	 */
-	private static function safeField( $val, $type ) {
+	private static function sqlField( $val, $type ) {
 		$db = JFactory::getDbo();
 		switch( substr( $type, 0, 1 ) ) {
 			case 'I': $val = intval( $val );
 					  break;
-			case 'B': $val = self::safeHash( $val );
+			case 'B': $val = self::sqlHash( $val );
 					  break;
 			default: $val = $db->quote( $val );
 		}
@@ -345,9 +358,9 @@ class LigminchaGlobalObject {
 	 */
 	public static function typeToClass( $type ) {
 		$class = 'LigminchaGlobalObject';
-		if( array_key_exists( $row['type'], self::$classes ) ) {
-			$c = 'LigminchaGlobal' . self::$classes[$row['type']];
-			if( !class_exists( $c ) ) $class = $c;
+		if( array_key_exists( $type, self::$classes ) ) {
+			$c = 'LigminchaGlobal' . self::$classes[$type];
+			if( class_exists( $c ) ) $class = $c;
 		}
 		return $class;
 	}
@@ -363,8 +376,3 @@ class LigminchaGlobalObject {
 		return $fields;
 	}
 }
-
-
-
-
-

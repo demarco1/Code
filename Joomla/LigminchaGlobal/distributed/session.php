@@ -58,4 +58,12 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 			'owner' => LigminchaGlobalUser::getCurrent()->id
 		) );
 	}
+
+	/**
+	 * Make a new object given an id
+	 */
+	public static function newFromId( $id, $type = false ) {
+		return parent::newFromId( $id, LG_SESSION );
+	}
 }
+
