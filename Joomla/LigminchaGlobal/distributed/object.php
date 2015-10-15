@@ -154,7 +154,7 @@ class LigminchaGlobalObject {
 		}
 
 		// Add revision(s) depending on the context of this change
-		if( !$this->flag( LG_LOCAL ) self::makeRevision( LG_DELETE, $cond, $origin );
+		if( !$this->flag( LG_LOCAL ) self::routeChanges( LG_DELETE, $cond, $origin );
 	}
 
 	/**
@@ -176,7 +176,7 @@ class LigminchaGlobalObject {
 		$db->query();
 
 		// Add revision(s) depending on the context of this change
-		self::makeRevision( LG_DELETE, $cond, $origin );
+		self::routeChanges( LG_DELETE, $cond, $origin );
 	}
 
 	/**
@@ -185,7 +185,7 @@ class LigminchaGlobalObject {
 	 * - $origin is the server the change came from if set
 	 * - $private is the owner's server if set
 	 */
-	private static function makeRevision( $cmd, $fields, $origin, $private ) {
+	private static function routeChanges( $cmd, $fields, $origin, $private ) {
 		$server = LigminchaGlobalServer::getCurrent();
 
 		// Origin is set if this change is the result of a received foreign revision
