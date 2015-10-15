@@ -150,7 +150,7 @@ class LigminchaGlobalDistributed {
 
 			// Zip up the data in JSON format
 			// TODO: encrypt using shared secret or public key
-			$data = self::encodeQueue( $queue )
+			$data = gzcompress( json_encode( $queue ) );
 
 		foreach( $queue as $i ) { print_r($i); print "<br>"; }
 
@@ -179,26 +179,12 @@ class LigminchaGlobalDistributed {
 
 		// Unzip and decode the data
 		// TODO: decrypt using shared secret or public key
-		$queue =  self::decodeQueue( $data );
+		$queue =  json_decode( gzuncompress( $data ), true );
 		$origin = array_shift( $queue );
 		$session = array_shift( $queue );
 
 		// Process each of the revisions (this may lead to further re-routing revisions being made)
 		foreach( $queue as $rev ) LigminchaGlobalRevision::process( $rev[0], $rev[1], $origin );
-	}
-
-	/**
-	 * Encode the entire queue array ready for sending as a stream
-	 */
-	private static function encodeQueue( $queue ) {
-		return gzcompress( json_encode( $queue ) );
-	}
-
-	/**
-	 * Decode received queue data
-	 */
-	private static function decodeQueue( $data ) {
-		return json_decode( gzuncompress( $data ), true );
 	}
 
 	/**
