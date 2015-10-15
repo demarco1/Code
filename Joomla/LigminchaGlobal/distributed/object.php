@@ -181,9 +181,47 @@ class LigminchaGlobalObject {
 
 	/**
 	 * Make one or more revisions depending on the context of this change
+	 * - The revision re-routing logic is in here
+	 * - $origin is the server the change came from if set
+	 * - $private is the owner's server if set
 	 */
-	private static function makeRevision( $cmd, $fields, $origin ) {
-		new LigminchaGlobalRevision( $cmd, $fields, false, $origin );
+	private static function makeRevision( $cmd, $fields, $origin, $private ) {
+		$server = LigminchaGlobalServer::getCurrent();
+
+		// Origin is set if this change is the result of a received foreign revision
+		if( $origin ) {
+
+			// This is the only condition for which re-routing ever occurs
+			if( $server->isMaster && $private === false ) {
+
+				// Create targetted revisions for all except self and origin
+				foreach( LigminchaGlobalServer::find( array( 'type' => NS_SERVER ) ) as $s ) {
+					if( $s->id != $server->id && $s->id != $origin ) new LigminchaGlobalRevision( $cmd, $fields, $s );
+				}
+
+			}
+		}
+
+		// This change originated locally
+		else {
+
+			// If this is the master, then targets depend whether its private or not
+			if( $server->isMaster ) {
+
+				// If private then we just have a single targetted revision to the owner
+				if( $private ) new LigminchaGlobalRevision( $cmd, $fields, $private );
+
+				// If public, make targetted revisions for all except self
+				else {
+					foreach( LigminchaGlobalServer::find( array( 'type' => NS_SERVER ) ) as $s ) {
+						if( $s->id != $server->id ) new LigminchaGlobalRevision( $cmd, $fields, $s );
+					}
+				}
+			}
+
+			// If not the master then changes go unconditionally to the master
+			else new LigminchaGlobalRevision( $cmd, $fields, LigminchaGlobalServer::getMaster() );
+		}
 	}
 
 	/**

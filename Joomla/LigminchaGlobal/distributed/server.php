@@ -60,12 +60,18 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 	}
 
 	/**
+	 * Get the master server object
+	 */
+	public static function getMaster() {
+		if( !self::$master ) self::$master = findOne( array( 'tag' => self::masterDomain() ) );
+		return self::$master;
+	}
+
+	/**
 	 * Get/create current object instance
 	 */
 	public static function getCurrent() {
-		if( !self::$current ) {
-			self::$current = new self();
-		}
+		if( !self::$current ) self::$current = new self();
 		return self::$current;
 	}
 }
