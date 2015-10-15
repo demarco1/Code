@@ -32,7 +32,7 @@ class LigminchaGlobalObject {
 
 	// Methods of this class used for updating data (these are the commands that are sent in the remote queue)
 	public static $methods = array(
-		LG_UPDATE => 'update',
+		LG_UPDATE => 'upd',
 		LG_DELETE => 'del',
 	);
 
@@ -158,7 +158,18 @@ class LigminchaGlobalObject {
 	}
 
 	/**
+	 * This is the update interface used by incoming revisions being processed
+	 * - Create a local object from the revision so we can call the regular update method on it
+	 */
+	public static function upd( $fields, $origin ) {
+		$obj = LigminchaGlobalObject::newFromFields( $fields );
+		$obj->exists = (bool)self::get( $obj->id );
+		$obj->update( $origin );
+	}
+
+	/**
 	 * Delete objects matching the condition array
+	 * - this is used for processing revisions and normal delete calls
 	 */
 	public static function del( $cond, $origin = false ) {
 		$db = JFactory::getDbo();
