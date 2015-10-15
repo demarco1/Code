@@ -5,48 +5,44 @@
 class LigminchaGlobalSession extends LigminchaGlobalObject {
 
 	// Current instance
-	private static $current;
+	private static $current = null;
 
-	function __construct( $id = false ) {
+	function __construct() {
 		$this->type = LG_SESSION;
-
-		// This will load the whole object if the UUID exists
-		parent::__construct( $id );
-
-		// Make a server uuid from the current server if none supplied (this replaces the random one made by the parent constructor)
-		if( $id === false ) {
-
-			// See if there is a current session for this user
-			if( $session = LigminchaGlobalObject::findOne( array(
-				'type' => LG_SESSION,
-				'ref1' => LigminchaGlobalServer::getCurrent()->id,
-				'owner' => LigminchaGlobalUser::getCurrent()->id
-			) ) ) {
-				$this->id = $session->id;
-				$this->load();
-			} else {
-
-				// TODO: Doesn't exist, make the data structure for our new server object
-				$this->ref1 = LigminchaGlobalServer::getCurrent()->id;
-
-				// Session only lives for five seconds in this initial form and doesn't route
-				$this->expire = time() + 2;
-				$this->flag( LG_LOCAL, true );
-
-				// Save our new instance to the DB
-				$this->update();
-			}
-		}
+		parent::__construct();
 	}
 
 	/**
 	 * Get/create current object instance
 	 */
 	public static function getCurrent() {
-		if( !self::$current ) {
+		if( is_null( self::$current ) ) {
+
+			// If there's a current user, get/make a current session
 			if( LigminchaGlobalUser::getCurrent() ) {
-				self::$current = new self();
-			} else return false;
+
+				// Load the existing session for this user if one exists, else create a new one
+				if( !self::$current = LigminchaGlobalObject::findOne( array(
+					'type'  => LG_SESSION,
+					'ref1'  => LigminchaGlobalServer::getCurrent()->id,
+					'owner' => LigminchaGlobalUser::getCurrent()->id
+				) ) ) {
+
+					// None found, create new
+					self::$current = new LigminchaGlobalSession();
+
+					// TODO: Doesn't exist, make the data structure for our new server object
+					self::$current->ref1 = LigminchaGlobalServer::getCurrent()->id;
+
+					// Session only lives for five seconds in this initial form and doesn't route
+					self::$current->expire = time() + 2;
+					self::$current->flag( LG_LOCAL, true );
+					self::$current->flag( LG_PRIVATE, true );
+
+					// Save our new instance to the DB
+					self::$current->update();
+				}
+			} else self::$current = false;
 		}
 		return self::$current;
 	}

@@ -5,46 +5,38 @@
 class LigminchaGlobalUser extends LigminchaGlobalObject {
 
 	// Current instance
-	private static $current;
+	private static $current = null;
 
-	function __construct( $id = false ) {
+	function __construct() {
 		$this->type = LG_USER;
-		parent::__construct( $id );
-
-		// If id was true return the empty new object
-		if( $id === true ) return;
-
-		// Make a user uuid from the current server and jUser ID (this replaces the random one made by the parent constructor)
-		if( $id === false ) {
-
-			// Make a new uuid from the server's secret
-			$server = LigminchaGlobalServer::getCurrent();
-			$jUser = JFactory::getUser();
-			if( $jUser->id ) {
-				$this->id = $this->hash( $server->id . ':' . $jUser->id );
-
-				// Try and load the object data now that we know its uuid
-				if( !$this->load() ) {
-
-					// TODO: Doesn't exist, make the data structure for our new user object from $jUser
-					$this->ref1 = $server->id;
-					$this->tag = $jUser->id;
-
-					// Save our new instance to the DB
-					$this->update();
-				}
-			}
-		}
+		parent::__construct();
 	}
 
 	/**
 	 * Get/create current object instance
 	 */
 	public static function getCurrent() {
-		if( !self::$current ) {
+		if( is_null( self::$current ) ) {
+
+			// Get the Joomla user, bail if none
 			$jUser = JFactory::getUser();
-			if( $jUser->id == 0 ) return false;
-			self::$current = new self();
+			if( $jUser->id == 0 ) self::$current = false;
+
+			// Make a new uuid from the server ID and the user's Joomla ID
+			$server = LigminchaGlobalServer::getCurrent();
+			$id = $this->hash( $server->id . ':' . $jUser->id );
+			self::$current = self::newFromId( $id );
+
+			// Try and load the object data now that we know its uuid
+			if( !self::$current->load() ) {
+
+				// TODO: Doesn't exist, make the data structure for our new user object from $jUser
+				self::$current->ref1 = $server->id;
+				self::$current->tag = $jUser->id;
+
+				// Save our new instance to the DB
+				self::$current->update();
+			}
 		}
 		return self::$current;
 	}

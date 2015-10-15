@@ -54,28 +54,20 @@ class LigminchaGlobalObject {
 	var $name;
 	var $data;
 
-	function __construct( $id = false ) {
-
-		// Create a new object with default properties
-		if( $id === false || $id === true ) {
-			$this->id = $this->uuid();
-		}
-
-		// Load the data from the db into this instance (if it exists)
-		else {
-			$this->id = $id;
-			$this->load();
-		}
-
+	/**
+	 * There's nothing much in here because the automatic properties are added at update time
+	 */
+	function __construct() {
+		$this->id = $this->uuid();
 	}
 
 	/**
 	 * Make a new object given an id
 	 */
 	public static function newFromId( $id ) {
-		if( !$row = self::get( $this->id ) ) return false;
+		if( !$row = self::get( $this->id ) ) return die( __METHOD__ . 'called without an ID.' );
 		$class = self::typeToClass( $row['type'] );
-		$obj = new $class( true );
+		$obj = new $class();
 		$obj->load();
 		return $obj;
 	}
@@ -343,7 +335,7 @@ class LigminchaGlobalObject {
 			$c = 'LigminchaGlobal' . self::$classes[$fields['type']];
 			if( !class_exists( $c ) ) $class = $c;
 		}
-		$obj = new $class( true );
+		$obj = new $class();
 		foreach( $fields as $field => $val ) $obj->$field = $val;
 		return $obj;
 	}
