@@ -3,6 +3,8 @@
  * This class encapsulates all the distributed database functionality for the LigminchaGlobal extension
  */
 
+define( 'LG_SUCCESS', 'ok' );
+define( 'LG_ERROR', 'error' );
 
 // If we're in stand-alone mode, make a fake version of the Joomla plugin class to allow the distributed.php and object classes to work
 if( LG_STANDALONE ) {
@@ -62,7 +64,7 @@ class LigminchaGlobalDistributed {
 		// - if the changes data is empty, then it's a request for initial table data
 		if( array_key_exists( self::$cmd, $_POST ) ) {
 			$data = $_POST['changes'];
-			if( $data ) self::recvQueue( $_POST['changes'] );
+			if( $data ) print self::recvQueue( $_POST['changes'] );
 			elseif( $server->isMaster ) print self::encodeData( $this->initialTableData() );
 			exit;
 		}
@@ -103,8 +105,7 @@ class LigminchaGlobalDistributed {
 
 		// Collect initial data to populate table from master server
 		$master = LigminchaGlobalServer::masterDomain();
-		$data = self::post( $master, array( self::$cmd => '' ) );
-		if( $data ) self::recvQueue( $data );
+		if( $data = self::post( $master, array( self::$cmd => '' ) ) ) self::recvQueue( $data );
 		else die( 'Failed to get initial table content from master' );
 
 		new LigminchaGlobalLog( 'ligmincha_global table created', 'Database' );
@@ -193,16 +194,16 @@ class LigminchaGlobalDistributed {
 			$data = self::encodeData( $stream );
 
 			// Post the queue data to the server
-			$result = self::post( $target, array( self::$cmd => $data ) );
+			$result = self::post( $target, array( self::$cmd => $data ) )
 
 			// If result is success, remove all LG_REVISION items for this target server
 			// (can't use obj::del yet because it doesn't check LOCAL to not make further revisions)
-			if( $result == 200 ) {
+			if( $result == LG_SUCCESS ) {
 				$db = JFactory::getDbo();
 				$table = self::sqlTable();
 				$db->setQuery( "DELETE FROM $table WHERE `type`=" . LG_REVISION . " AND `ref1`=0x$target" );
 				$db->query();
-			}
+			} else die( "Failed to post revisions ($result)" );
 		}
 
 		return true;
@@ -223,6 +224,9 @@ class LigminchaGlobalDistributed {
 		foreach( $queue as $rev ) {
 			LigminchaGlobalRevision::process( $rev['tag'], $rev['data'], $origin );
 		}
+
+		// Let client know that we've processed their revisions
+		return 'ok';
 	}
 
 	/**
@@ -265,7 +269,7 @@ class LigminchaGlobalDistributed {
 		);
 		$ch = curl_init();
 		curl_setopt_array( $ch, $options );
-		if( !$result = curl_exec( $ch ) ) new LigminchaGlobalLog( "POST request to \"$url\" failed", 'Error' );
+		$result = curl_exec( $ch );
 		curl_close( $ch );
 		return $result;
 	}
