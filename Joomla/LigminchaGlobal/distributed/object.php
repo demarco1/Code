@@ -112,7 +112,7 @@ class LigminchaGlobalObject {
 	private static function get( $id ) {
 		if( !$id ) die( __METHOD__ . ' called without an ID' );
 		$db = JFactory::getDbo();
-		$table = '`' . LigminchaGlobalDistributed::$table . '`';
+		$table = LigminchaGlobalDistributed::sqlTable();
 		$all = self::sqlFields();
 		$db->setQuery( "SELECT $all FROM $table WHERE `id`=0x$id" );
 		$db->query();
@@ -126,7 +126,7 @@ class LigminchaGlobalObject {
 	 */
 	public function update( $origin = false ) {
 		$db = JFactory::getDbo();
-		$table = '`' . LigminchaGlobalDistributed::$table . '`';
+		$table = LigminchaGlobalDistributed::sqlTable();
 
 		// Bail if no type
 		if( $this->type < 1 ) die( 'Typeless distributed objects not allowed!' );
@@ -181,7 +181,7 @@ class LigminchaGlobalObject {
 	 */
 	public static function del( $cond, $origin = false ) {
 		$db = JFactory::getDbo();
-		$table = '`' . LigminchaGlobalDistributed::$table . '`';
+		$table = LigminchaGlobalDistributed::sqlTable();
 
 		// Make the condition SQL syntax, bail if nothing
 		$sqlcond = self::makeCond( $cond );
@@ -213,7 +213,7 @@ class LigminchaGlobalObject {
 	 */
 	public static function find( $cond ) {
 		$db = JFactory::getDbo();
-		$table = '`' . LigminchaGlobalDistributed::$table . '`';
+		$table = LigminchaGlobalDistributed::sqlTable();
 		$all = self::sqlFields();
 		$sqlcond = self::makeCond( $cond );
 		if( empty( $sqlcond ) ) return false;

@@ -22,7 +22,7 @@ class LigminchaGlobalDistributed {
 	private static $queue = array();
 
 	// Our distributed data table
-	public static $table = '#__ligmincha_global';
+	public static $table = 'ligmincha_global';
 
 	// Table structure
 	public static $tableStruct = array(
@@ -52,17 +52,50 @@ class LigminchaGlobalDistributed {
 		$this->expire();
 
 		// Instantiate the main global objects
-		LigminchaGlobalServer::getCurrent();
+		$server = LigminchaGlobalServer::getCurrent();
 		if( !LG_STANDALONE ) {
 			LigminchaGlobalUser::getCurrent();
 			LigminchaGlobalSession::getCurrent();
 		}
 
 		// If this is a changes request commit the data (and re-route if master)
-		if( array_key_exists( self::$cmd, $_POST ) ) {
-			self::recvQueue( $_POST['changes'] );
+		// - if the changes data is empty, then it's a request for initial table data
+		if( array_key_exists( self::$cmd, $_REQUEST ) ) {
+			$data = $_POST['changes'];
+			if( $data ) self::recvQueue( $_REQUEST['changes'] );
+			elseif( $server->isMaster ) print self::encodeData( $this->initialTableData() );
 			exit;
 		}
+	}
+
+	/**
+	 * Return table name formatted for use in a query
+	 */
+	public static function sqlTable() {
+		return '`#__' . self::$table . '`';
+	}
+
+	/**
+	 * Check if the passed table exists (accounting for current table-prefix)
+	 */
+	private function tableExists( $table ) {
+		$config = JFactory::getConfig();
+		$prefix = $config->get( 'dbprefix' );
+		$db = JFactory::getDbo();
+		$db->setQuery( "SHOW TABLES" );
+		$db->query();
+		return array_key_exists( $prefix . $table, $db->loadRowList( 0 ) );
+	}
+
+	/**
+	 * Return the list of revisions that will populate a newly created distributed database table
+	 */
+	private function initialTableData() {
+		
+		// TODO: select initial data
+
+		// make revisions from them
+		
 	}
 
 	/**
@@ -70,23 +103,35 @@ class LigminchaGlobalDistributed {
 	 */
 	private function checkTable() {
 		$db = JFactory::getDbo();
-		$table = '`' . self::$table . '`';
+		$table = self::sqlTable();
 
-		// TODO: check if table exists, if not add log entry re creation and an LG_DATABASE entry
+		// If the table doesn't exist,
+		if( !$this->tableExists( self::$table ) ) {
 
-		// Create the table if it doesn't exist
-		$def = array();
-		foreach( self::$tableStruct as $field => $type ) $def[] = "`$field` $type";
-		$query = "CREATE TABLE IF NOT EXISTS $table (" . implode( ',', $def ) . ",PRIMARY KEY (id))";
-		$db->setQuery( $query );
-		$db->query();
+			// Create the table
+			$def = array();
+			foreach( self::$tableStruct as $field => $type ) $def[] = "`$field` $type";
+			$query = "CREATE TABLE $table (" . implode( ',', $def ) . ",PRIMARY KEY (id))";
+			$db->setQuery( $query );
+			$db->query();
+			new LigminchaGlobalLog( 'ligmincha_global table created', 'Database' );
 
-		// Get the current structure
-		$db->setQuery( "DESCRIBE $table" );
-		$db->query();
+			// TODO: Create an LG_DATABASE object to represent this new node in the distributed database
 
-		// If the table exists, check that it's the correct format
-		if( $db ) {
+			// Collect initial data to populate table from master server
+			$master = LigminchaGlobalServer::masterDomain();
+			$data = file_get_contents( $master . '?' . self::$cmd );
+			if( $data ) self::recvQueue( $data );
+			else die( 'Failed to get initial table content from master' );
+		}
+
+		// Otherwise check that it's the right structure
+		else {
+
+			// Get the current structure
+			$db->setQuery( "DESCRIBE $table" );
+			$db->query();
+
 			$curFields = $db->loadAssocList( null, 'Field' );
 
 			// For now only adding missing fields is supported, not removing, renaming or changing types
@@ -99,7 +144,7 @@ class LigminchaGlobalDistributed {
 				foreach( $alter as $field => $type ) $cols[] = "ADD COLUMN `$field` $type";
 				$db->setQuery( "ALTER TABLE $table " . implode( ',', $cols ) );
 				$db->query();
-				$this->log( LG_LOG, 'ligmincha_global table fields added: (' . implode( ',', array_keys( $alter ) ) . ')' );
+				new LigminchaGlobalLog( 'ligmincha_global table fields added: (' . implode( ',', array_keys( $alter ) ) . ')', 'Database' );
 			}
 		}
 	}
@@ -129,7 +174,7 @@ class LigminchaGlobalDistributed {
 
 			// Zip up the data in JSON format
 			// TODO: encrypt using shared secret or public key
-			$data = gzcompress( json_encode( $stream ) );
+			$data = self::encodeData( $stream );
 
 			// Post the queue data to the server
 			$result = self::post( $target, array( self::$cmd => $data ) );
@@ -138,7 +183,7 @@ class LigminchaGlobalDistributed {
 			// (can't use obj::del yet because it doesn't check LOCAL to not make further revisions)
 			if( $result == 200 ) {
 				$db = JFactory::getDbo();
-				$table = '`' . self::$table . '`';
+				$table = self::sqlTable();
 				$db->setQuery( "DELETE FROM $table WHERE `type`=" . LG_REVISION . " AND `ref1`=0x$target" );
 				$db->query();
 			}
@@ -154,7 +199,7 @@ class LigminchaGlobalDistributed {
 
 		// Unzip and decode the data
 		// TODO: decrypt using shared secret or public key
-		$queue =  json_decode( gzuncompress( $data ), true );
+		$queue =  self::decodeData( $data );
 		$origin = array_shift( $queue );
 		$session = array_shift( $queue );
 
@@ -167,9 +212,23 @@ class LigminchaGlobalDistributed {
 	 */
 	private function expire() {
 		$db = JFactory::getDbo();
-		$table = '`' . self::$table . '`';
+		$table = self::sqlTable();
 		$db->setQuery( "DELETE FROM $table WHERE `expire` > 0 AND `expire`<" . time() );
 		$db->query();
+	}
+
+	/**
+	 * Encode data for sending
+	 */
+	private static encodeData( $data ) {
+		return gzcompress( json_encode( $data ) )
+	}
+
+	/**
+	 * Decode incoming data
+	 */
+	private static decodeData( $data ) {
+		return json_decode( gzuncompress( $data ), true );
 	}
 
 	/**

@@ -68,7 +68,7 @@ class Database {
 	public function setQuery( $sql ) {
 
 		// Make the table references into refs to ligmincha_global with the proper prefix
-		$sql = preg_replace( '/`#__.+?`/', "`{$this->prefix}ligmincha_global", $sql );
+		$sql = preg_replace( '/`#__.+?`/', '`' . $this->prefix . LigminchaGlobalDistributed::$table, $sql );
 	}
 
 	public function query() {
@@ -78,6 +78,9 @@ class Database {
 	}
 
 	public function loadAssocList( $a, $b ) {
+	}
+
+	public function loadRowList( $a ) {
 	}
 
 	public function quote( $s ) {
