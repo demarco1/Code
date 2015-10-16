@@ -351,11 +351,12 @@ class LigminchaGlobalObject {
 	 */
 	public static function newFromFields( $fields ) {
 		$class = 'LigminchaGlobalObject';
-		if( array_key_exists( $fields['type'], self::$classes ) ) {
+		if( array_key_exists( 'type', self::$classes ) ) {
 			$c = 'LigminchaGlobal' . self::$classes[$fields['type']];
 			if( !class_exists( $c ) ) $class = $c;
 		}
 		$obj = new $class();
+		print_r($fields);
 		foreach( $fields as $field => $val ) $obj->$field = $val;
 		return $obj;
 	}

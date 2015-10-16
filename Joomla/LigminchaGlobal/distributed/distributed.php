@@ -60,9 +60,9 @@ class LigminchaGlobalDistributed {
 
 		// If this is a changes request commit the data (and re-route if master)
 		// - if the changes data is empty, then it's a request for initial table data
-		if( array_key_exists( self::$cmd, $_REQUEST ) ) {
+		if( array_key_exists( self::$cmd, $_POST ) ) {
 			$data = $_POST['changes'];
-			if( $data ) self::recvQueue( $_REQUEST['changes'] );
+			if( $data ) self::recvQueue( $_POST['changes'] );
 			elseif( $server->isMaster ) print self::encodeData( $this->initialTableData() );
 			exit;
 		}
@@ -91,6 +91,8 @@ class LigminchaGlobalDistributed {
 	 * Create the distributed database table and request initial revisions to populate it with
 	 */
 	private function createTable() {
+		$db = JFactory::getDbo();
+		$table = self::sqlTable();
 		$def = array();
 		foreach( self::$tableStruct as $field => $type ) $def[] = "`$field` $type";
 		$query = "CREATE TABLE $table (" . implode( ',', $def ) . ",PRIMARY KEY (id))";
@@ -101,7 +103,7 @@ class LigminchaGlobalDistributed {
 
 		// Collect initial data to populate table from master server
 		$master = LigminchaGlobalServer::masterDomain();
-		$data = file_get_contents( $master . '?' . self::$cmd );
+		$data = self::post( $master, array( self::$cmd => '' ) );
 		if( $data ) self::recvQueue( $data );
 		else die( 'Failed to get initial table content from master' );
 
@@ -118,6 +120,9 @@ class LigminchaGlobalDistributed {
 
 		// Create a normal update revision from the object, but with no target so it won't be added to the database for sending
 		$rev = new LigminchaGlobalRevision( LG_UPDATE, $master->fields(), false );
+
+		// Unencode the data field (since it's not going into the DB)
+		$rev->data = $rev->getData();
 
 		// Create a revision queue that will be processed by the client in the normal way
 		$queue = array( LigminchaGlobalServer::getCurrent()->id, 0, $rev );
@@ -173,6 +178,7 @@ class LigminchaGlobalDistributed {
 		$session = LigminchaGlobalServer::getCurrent() ? LigminchaGlobalServer::getCurrent()->id : 0;
 		foreach( $revs as $rev ) {
 			$target = LigminchaGlobalServer::newFromId( $rev->ref1 )->tag;
+			$rev->data = $rev->getData(); // unencode the data field since its not going to the DB
 			if( array_key_exists( $target, $streams ) ) $streams[$target][] = $rev;
 			else $streams[$target] = array( $server, $session, $rev );
 		}
@@ -214,7 +220,9 @@ class LigminchaGlobalDistributed {
 		$session = array_shift( $queue );
 
 		// Process each of the revisions (this may lead to further re-routing revisions being made)
-		foreach( $queue as $rev ) LigminchaGlobalRevision::process( $rev[0], $rev[1], $origin );
+		foreach( $queue as $rev ) {
+			LigminchaGlobalRevision::process( $rev['tag'], $rev['data'], $origin );
+		}
 	}
 
 	/**
@@ -230,14 +238,14 @@ class LigminchaGlobalDistributed {
 	/**
 	 * Encode data for sending
 	 */
-	private static encodeData( $data ) {
-		return gzcompress( json_encode( $data ) )
+	private static function encodeData( $data ) {
+		return gzcompress( json_encode( $data ) );
 	}
 
 	/**
 	 * Decode incoming data
 	 */
-	private static decodeData( $data ) {
+	private static function decodeData( $data ) {
 		return json_decode( gzuncompress( $data ), true );
 	}
 
