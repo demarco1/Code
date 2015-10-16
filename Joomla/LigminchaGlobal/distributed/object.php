@@ -156,8 +156,8 @@ class LigminchaGlobalObject {
 				$this->creation = self::timestamp();
 
 				// The entry is owned by the user unless it's a server/revision/user object
-				$this->owner = ( $this->type == LG_SERVER || $this->type == LG_USER || $this->type == LG_REVISION )
-					? null : LigminchaGlobalUser::getCurrent()->id;
+				if( $this->type == LG_SERVER || $this->type == LG_USER || $this->type == LG_REVISION ) $this->owner = null;
+				else $this->owner =  LigminchaGlobalUser::getCurrent() ? LigminchaGlobalUser::getCurrent()->id : null;
 			}
 
 			$sqlVals = $this->makeValues();

@@ -16,6 +16,7 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 	 * Get/create current object instance
 	 */
 	public static function getCurrent() {
+		$update = false;
 		if( is_null( self::$current ) ) {
 
 			// If there's a current user, get/make a current session
@@ -40,7 +41,7 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 					self::$current->flag( LG_PRIVATE, true );
 
 					// Save our new instance to the DB
-					self::$current->update();
+					$update = true;
 				}
 			} else self::$current = false;
 		}
@@ -50,8 +51,13 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 			$expiry = self::timestamp() + LG_SESSION_DURATION;
 			if( $expiry - self::$current->expire > 60 ) {
 				self::$current->expire = $expiry;
-				self::$current->update();
+				$update = true;
 			}
+		}
+
+		// Avoid multiple calls to update above
+		if( $update ) {
+			self::$current->update();
 		}
 
 		return self::$current;

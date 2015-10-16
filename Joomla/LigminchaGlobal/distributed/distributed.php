@@ -184,7 +184,7 @@ class LigminchaGlobalDistributed {
 			else $streams[$target] = array( $server, $session, $rev );
 		}
 
-		print '<pre>'; print_r($streams); print '</pre>';
+		//print '<pre>'; print_r($streams); print '</pre>';
 
 		// Encode and send each stream
 		foreach( $streams as $target => $stream ) {
