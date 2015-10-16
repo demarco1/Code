@@ -88,45 +88,55 @@ class LigminchaGlobalDistributed {
 	}
 
 	/**
+	 * Create the distributed database table and request initial revisions to populate it with
+	 */
+	private function createTable() {
+		$def = array();
+		foreach( self::$tableStruct as $field => $type ) $def[] = "`$field` $type";
+		$query = "CREATE TABLE $table (" . implode( ',', $def ) . ",PRIMARY KEY (id))";
+		$db->setQuery( $query );
+		$db->query();
+
+		// TODO: Create an LG_DATABASE object to represent this new node in the distributed database
+
+		// Collect initial data to populate table from master server
+		$master = LigminchaGlobalServer::masterDomain();
+		$data = file_get_contents( $master . '?' . self::$cmd );
+		if( $data ) self::recvQueue( $data );
+		else die( 'Failed to get initial table content from master' );
+
+		new LigminchaGlobalLog( 'ligmincha_global table created', 'Database' );
+	}
+
+	/**
 	 * Return the list of revisions that will populate a newly created distributed database table
 	 */
 	private function initialTableData() {
-		
-		// TODO: select initial data
 
-		// make revisions from them
-		
+		// Just populate new tables with the master (should be current server) server for now
+		$master = LigminchaGlobalServer::getMaster();
+
+		// Create a normal update revision from the object, but with no target so it won't be added to the database for sending
+		$rev = new LigminchaGlobalRevision( LG_UPDATE, $master->fields(), false );
+
+		// Create a revision queue that will be processed by the client in the normal way
+		$queue = array( LigminchaGlobalServer::getCurrent()->id, 0, $rev );
+
+		return $queue;
 	}
 
 	/**
 	 * Check that the local distributed database table exists and has a matching structure
 	 */
 	private function checkTable() {
-		$db = JFactory::getDbo();
-		$table = self::sqlTable();
 
 		// If the table doesn't exist,
-		if( !$this->tableExists( self::$table ) ) {
-
-			// Create the table
-			$def = array();
-			foreach( self::$tableStruct as $field => $type ) $def[] = "`$field` $type";
-			$query = "CREATE TABLE $table (" . implode( ',', $def ) . ",PRIMARY KEY (id))";
-			$db->setQuery( $query );
-			$db->query();
-			new LigminchaGlobalLog( 'ligmincha_global table created', 'Database' );
-
-			// TODO: Create an LG_DATABASE object to represent this new node in the distributed database
-
-			// Collect initial data to populate table from master server
-			$master = LigminchaGlobalServer::masterDomain();
-			$data = file_get_contents( $master . '?' . self::$cmd );
-			if( $data ) self::recvQueue( $data );
-			else die( 'Failed to get initial table content from master' );
-		}
+		if( !$this->tableExists( self::$table ) ) $this->createTable();
 
 		// Otherwise check that it's the right structure
 		else {
+			$db = JFactory::getDbo();
+			$table = self::sqlTable();
 
 			// Get the current structure
 			$db->setQuery( "DESCRIBE $table" );
@@ -163,8 +173,8 @@ class LigminchaGlobalDistributed {
 		$session = LigminchaGlobalServer::getCurrent() ? LigminchaGlobalServer::getCurrent()->id : 0;
 		foreach( $revs as $rev ) {
 			$target = LigminchaGlobalServer::newFromId( $rev->ref1 )->tag;
-			if( array_key_exists( $target, $streams ) ) $streams[$target] = array( $server, $session );
-			else $streams[$target][] = $rev;
+			if( array_key_exists( $target, $streams ) ) $streams[$target][] = $rev;
+			else $streams[$target] = array( $server, $session, $rev );
 		}
 
 		print '<pre>'; print_r($streams); print '</pre>';
