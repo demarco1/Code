@@ -178,7 +178,7 @@ class LigminchaGlobalDistributed {
 		$server = LigminchaGlobalServer::getCurrent()->id;
 		$session = LigminchaGlobalServer::getCurrent() ? LigminchaGlobalServer::getCurrent()->id : 0;
 		foreach( $revs as $rev ) {
-			$target = LigminchaGlobalServer::newFromId( $rev->ref1 )->tag;
+			$target = LigminchaGlobalServer::newFromId( $rev->ref1 )->id;
 			$rev->data = $rev->getData(); // unencode the data field since its not going to the DB
 			if( array_key_exists( $target, $streams ) ) $streams[$target][] = $rev;
 			else $streams[$target] = array( $server, $session, $rev );
@@ -189,12 +189,15 @@ class LigminchaGlobalDistributed {
 		// Encode and send each stream
 		foreach( $streams as $target => $stream ) {
 
+			// Get the target domain from it's tag
+			$url = LigminchaGlobalServer::newFromId( $target )->tag;
+
 			// Zip up the data in JSON format
 			// TODO: encrypt using shared secret or public key
 			$data = self::encodeData( $stream );
 
 			// Post the queue data to the server
-			$result = self::post( $target, array( self::$cmd => $data ) )
+			$result = self::post( $url, array( self::$cmd => $data ) );
 
 			// If result is success, remove all LG_REVISION items for this target server
 			// (can't use obj::del yet because it doesn't check LOCAL to not make further revisions)

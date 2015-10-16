@@ -154,11 +154,11 @@ class LigminchaGlobalObject {
 				$this->flag( LG_NEW, true );
 				$this->modified = null;
 				$this->creation = self::timestamp();
-			}
 
-			// The entry is owned by the user unless it's a server/revision/user object
-			$this->owner = ( $this->type == LG_SERVER || $this->type == LG_USER || $this->type == LG_REVISION )
-				? null : LigminchaGlobalUser::getCurrent()->id;
+				// The entry is owned by the user unless it's a server/revision/user object
+				$this->owner = ( $this->type == LG_SERVER || $this->type == LG_USER || $this->type == LG_REVISION )
+					? null : LigminchaGlobalUser::getCurrent()->id;
+			}
 
 			$sqlVals = $this->makeValues();
 			$db->setQuery( "REPLACE INTO $table SET $sqlVals" );
