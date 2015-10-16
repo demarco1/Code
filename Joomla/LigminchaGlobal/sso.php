@@ -65,7 +65,7 @@ class LigminchaGlobalSSO {
 
 				// Set the expiry to a longer time that distributed sessions last
 				// - after it expires, user needs to come back to have another made (may not need to log in again)
-				$session->expire = time() + LG_SESSION_DURATION;
+				$session->expire = LigminchaGlobalObject::timestamp() + LG_SESSION_DURATION;
 
 				// Now that the session is real it can route
 				$session->flag( LG_LOCAL, false );

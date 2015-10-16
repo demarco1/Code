@@ -139,7 +139,7 @@ class LigminchaGlobalObject {
 
 			// Update automatic properties
 			$this->flag( LG_NEW, false );
-			$this->modified = time();
+			$this->modified = self::timestamp();
 
 			$sqlVals = $this->makeValues( false );
 			$db->setQuery( "UPDATE $table SET $sqlVals WHERE `id`=0x{$this->id}" );
@@ -148,9 +148,13 @@ class LigminchaGlobalObject {
 
 		// Create a new object in the database
 		else {
-			$this->flag( LG_NEW, true );
-			$this->modified = null;
-			$this->creation = time();
+
+			// Only set the automatic properties for locally created non-existent objects
+			if( !$origin ) {
+				$this->flag( LG_NEW, true );
+				$this->modified = null;
+				$this->creation = self::timestamp();
+			}
 
 			// The entry is owned by the user unless it's a server/revision/user object
 			$this->owner = ( $this->type == LG_SERVER || $this->type == LG_USER || $this->type == LG_REVISION )
@@ -254,6 +258,13 @@ class LigminchaGlobalObject {
 	}
 
 	/**
+	 * Return a timestamp in the format used by the database entries
+	 */
+	public static function timestamp() {
+		return microtime( true );
+	}
+
+	/**
 	 * Set the object's data field
 	 */
 	public function setData( $data ) {
@@ -267,7 +278,7 @@ class LigminchaGlobalObject {
 	public function getData() {
 		$data = $this->data;
 		$c1 = substr( $data, 0, 1 );
-		if( $c1 == '[' || $c1 == '{' ) $data = json_decode( $data );
+		if( $c1 == '[' || $c1 == '{' ) $data = json_decode( $data, true );
 		return $data;
 	}
 
@@ -309,10 +320,9 @@ class LigminchaGlobalObject {
 
 	/**
 	 * Make sure a hash is really a hash and use NULL if not
-	 * TODO: check better here
 	 */
 	private static function sqlHash( $hash ) {
-		$hash = preg_replace( '/[^a-z0-9]/i', '', $hash );
+		if( preg_match( '/[^a-z0-9]/i', $hash ) ) die( "Bad hash \"$hash\"" );
 		$hash = $hash ? "0x$hash" : 'NULL';
 		return $hash;
 	}
@@ -321,9 +331,12 @@ class LigminchaGlobalObject {
 	 * Format a field value ready for an SQL query
 	 */
 	private static function sqlField( $val, $type ) {
+		if( is_null( $val ) ) return 'NULL';
 		$db = JFactory::getDbo();
 		switch( substr( $type, 0, 1 ) ) {
-			case 'I': $val = intval( $val );
+			case 'I': $val = is_numeric( $val ) ? intval( $val ) : die( "Bad integer: \"$val\"" );;
+					  break;
+			case 'D': $val = is_numeric( $val ) ? $val : die( "Bad number: \"$val\"" );
 					  break;
 			case 'B': $val = self::sqlHash( $val );
 					  break;

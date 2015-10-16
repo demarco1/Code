@@ -30,9 +30,9 @@ class LigminchaGlobalDistributed {
 		'ref1'     => 'BINARY(20)',
 		'ref2'     => 'BINARY(20)',
 		'type'     => 'INT UNSIGNED NOT NULL',
-		'creation' => 'INT UNSIGNED',
-		'modified' => 'INT UNSIGNED',
-		'expire'   => 'INT UNSIGNED',
+		'creation' => 'DOUBLE',
+		'modified' => 'DOUBLE',
+		'expire'   => 'DOUBLE',
 		'flags'    => 'INT UNSIGNED',
 		'owner'    => 'BINARY(20)',
 		'group'    => 'TEXT',
@@ -231,7 +231,7 @@ class LigminchaGlobalDistributed {
 	private function expire() {
 		$db = JFactory::getDbo();
 		$table = self::sqlTable();
-		$db->setQuery( "DELETE FROM $table WHERE `expire` > 0 AND `expire`<" . time() );
+		$db->setQuery( "DELETE FROM $table WHERE `expire` > 0 AND `expire`<" . LigminchaGlobalObject::timestamp() );
 		$db->query();
 	}
 

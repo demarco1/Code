@@ -35,7 +35,7 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 					self::$current->ref1 = LigminchaGlobalServer::getCurrent()->id;
 
 					// Session only lives for five seconds in this initial form and doesn't route
-					self::$current->expire = time() + 2;
+					self::$current->expire = self::timestamp() + 2;
 					self::$current->flag( LG_LOCAL, true );
 					self::$current->flag( LG_PRIVATE, true );
 
@@ -47,7 +47,7 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 
 		// Update the expiry if the session existed (but only if it's increasing by more than a minute to avoid revision traffic)
 		if( self::$current && !self::$current->flag( LG_NEW ) ) {
-			$expiry = time() + LG_SESSION_DURATION;
+			$expiry = self::timestamp() + LG_SESSION_DURATION;
 			if( $expiry - self::$current->expire > 60 ) {
 				self::$current->expire = $expiry;
 				self::$current->update();
