@@ -44,13 +44,20 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 				}
 			} else self::$current = false;
 		}
+
+		// Update the expiry if the session existed
+		if( self::$current && !self::$current->flag( LG_NEW ) ) {
+			self::$current->expire = time() + LG_SESSION_DURATION;
+			self::$current->update();
+		}
+
 		return self::$current;
 	}
 
 	/**
 	 * This is used from standalone context to set the session from the SSO cookie
 	 */
-	public static setCurrent( $session ) {
+	public static function setCurrent( $session ) {
 		self::$current = $session;
 	}
 

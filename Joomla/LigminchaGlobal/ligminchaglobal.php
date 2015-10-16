@@ -10,7 +10,7 @@
 // No direct access
 //defined('_JEXEC') or die;
 
-// Notify the LigminchaGobal code that this request is no standalone
+// Notify the LigminchaGobal code that this request is not standalone (i.e. the Joomla framework is present)
 define( 'LG_STANDALONE', false );
 
 // Instantiate the main LigminchaGobal classes

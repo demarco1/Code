@@ -1,11 +1,12 @@
 <?php
 // Entry types
-define( 'LG_LOG',     1 );
-define( 'LG_SERVER',  2 );
-define( 'LG_USER',    3 );
-define( 'LG_SESSION', 4 );
-define( 'LG_REVISION',5 );
-define( 'LG_VERSION', 6 );
+define( 'LG_LOG',      1 );
+define( 'LG_SERVER',   2 );
+define( 'LG_USER',     3 );
+define( 'LG_SESSION',  4 );
+define( 'LG_REVISION', 5 );
+define( 'LG_VERSION',  6 );
+define( 'LG_DATABASE', 7 );
 
 // Flags
 define( 'LG_NEW',     1 << 0 ); // This item was just created (has never been modified)
@@ -60,6 +61,7 @@ class LigminchaGlobalObject {
 	 */
 	function __construct() {
 		$this->id = $this->uuid();
+		$this->exists = false;
 	}
 
 	/**
@@ -70,14 +72,16 @@ class LigminchaGlobalObject {
 		if( $row = self::get( $id ) ) {
 			$class = self::typeToClass( $row['type'] );
 			$obj = new $class();
+			$obj->exists = true;
 			foreach( $row as $field => $val ) {
 				$prop = "$field";
 				$obj->$prop = $val;
 			}
 		} elseif( $type ) {
-			print $type;
 			$class = self::typeToClass( $type );
 			$obj = new $class();
+			$obj->id = $id;
+			$obj->exists = false;
 		}
 		return $obj;
 	}
@@ -125,7 +129,7 @@ class LigminchaGlobalObject {
 		$table = '`' . LigminchaGlobalDistributed::$table . '`';
 
 		// Bail if no type
-		if( $this->type < 1 ) {print_r($this);die( 'Typeless distributed objects not allowed!' );}
+		if( $this->type < 1 ) die( 'Typeless distributed objects not allowed!' );
 
 		// Update an existing object in the database
 		if( $this->exists ) {
@@ -216,7 +220,10 @@ class LigminchaGlobalObject {
 		$db->setQuery( "SELECT $all FROM $table WHERE $sqlcond" );
 		$db->query();
 		if( !$result = $db->loadAssocList() ) return false;
-		foreach( $result as $i => $assoc ) $result[$i] = self::newFromFields( $assoc );
+		foreach( $result as $i => $assoc ) {
+			$result[$i] = self::newFromFields( $assoc );
+			$result[$i]->exists = true;
+		}
 		return $result;
 	}
 

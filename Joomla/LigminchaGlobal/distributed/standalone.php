@@ -2,10 +2,6 @@
 /**
  * This is a fake Joomla environment so that the distributed object classes can function stand-alone
  */
-
-// Notify the LigminchaGobal code that this request is standalone
-define( 'LG_STANDALONE', true );
-
 class JFactory {
 
 	private static $config;

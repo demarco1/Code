@@ -3,7 +3,12 @@
  * This class encapsulates all the distributed database functionality for the LigminchaGlobal extension
  */
 
-// TYPE-SPECIFIC FLAGS (top eight bits - only need to be unique within the scope of their type)
+
+// If we're in stand-alone mode, make a fake version of the Joomla plugin class to allow the distributed.php and object classes to work
+if( LG_STANDALONE ) {
+	require_once( __DIR__ . '/distributed/standalone.php' );
+}
+
 
 class LigminchaGlobalDistributed {
 
@@ -67,13 +72,14 @@ class LigminchaGlobalDistributed {
 		$db = JFactory::getDbo();
 		$table = '`' . self::$table . '`';
 
+		// TODO: check if table exists, if not add log entry re creation and an LG_DATABASE entry
+
 		// Create the table if it doesn't exist
 		$def = array();
 		foreach( self::$tableStruct as $field => $type ) $def[] = "`$field` $type";
 		$query = "CREATE TABLE IF NOT EXISTS $table (" . implode( ',', $def ) . ",PRIMARY KEY (id))";
 		$db->setQuery( $query );
 		$db->query();
-		new LigminchaGlobalLog( '"ligmincha_global" database table added', 'Info' );
 
 		// Get the current structure
 		$db->setQuery( "DESCRIBE $table" );
@@ -111,19 +117,19 @@ class LigminchaGlobalDistributed {
 		$server = LigminchaGlobalServer::getCurrent()->id;
 		$session = LigminchaGlobalServer::getCurrent() ? LigminchaGlobalServer::getCurrent()->id : 0;
 		foreach( $revs as $rev ) {
-			$target = $rev->ref1;
+			$target = LigminchaGlobalServer::newFromId( $rev->ref1 )->tag;
 			if( array_key_exists( $target, $streams ) ) $streams[$target] = array( $server, $session );
 			else $streams[$target][] = $rev;
 		}
 
-		// encode and send each stream
+		print '<pre>'; print_r($streams); print '</pre>';
+
+		// Encode and send each stream
 		foreach( $streams as $target => $stream ) {
 
 			// Zip up the data in JSON format
 			// TODO: encrypt using shared secret or public key
 			$data = gzcompress( json_encode( $stream ) );
-
-			foreach( $stream as $i ) { print_r($i); print "<br>"; }
 
 			// Post the queue data to the server
 			$result = self::post( $target, array( self::$cmd => $data ) );

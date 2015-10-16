@@ -59,8 +59,8 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 			$id = self::hash( $config->get( 'secret' ) );
 			self::$current = self::newFromId( $id );
 
-			// Try and load the object data now that we know its uuid
-			if( !self::$current->load() ) {
+			// If the object was newly created, populate with default initial data and save
+			if( !self::$current->tag ) {
 
 				// Make it easy to find this server by domain
 				self::$current->tag = $_SERVER['HTTP_HOST'];

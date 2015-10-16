@@ -20,23 +20,24 @@ class LigminchaGlobalUser extends LigminchaGlobalObject {
 
 			// Get the Joomla user, bail if none
 			$jUser = JFactory::getUser();
-			if( $jUser->id == 0 ) self::$current = false;
+			if( $jUser->id ) {
 
-			// Make a new uuid from the server ID and the user's Joomla ID
-			$server = LigminchaGlobalServer::getCurrent();
-			$id = self::hash( $server->id . ':' . $jUser->id );
-			self::$current = self::newFromId( $id );
+				// Make a new uuid from the server ID and the user's Joomla ID
+				$server = LigminchaGlobalServer::getCurrent();
+				$id = self::hash( $server->id . ':' . $jUser->id );
+				self::$current = self::newFromId( $id );
 
-			// Try and load the object data now that we know its uuid
-			if( !self::$current->load() ) {
+				// Try and load the object data now that we know its uuid
+				if( !self::$current->load() ) {
 
-				// TODO: Doesn't exist, make the data structure for our new user object from $jUser
-				self::$current->ref1 = $server->id;
-				self::$current->tag = $jUser->id;
+					// TODO: Doesn't exist, make the data structure for our new user object from $jUser
+					self::$current->ref1 = $server->id;
+					self::$current->tag = $jUser->id;
 
-				// Save our new instance to the DB
-				self::$current->update();
-			}
+					// Save our new instance to the DB
+					self::$current->update();
+				}
+			} else self::$current = false;
 		}
 		return self::$current;
 	}
@@ -44,7 +45,7 @@ class LigminchaGlobalUser extends LigminchaGlobalObject {
 	/**
 	 * This is used from standalone context to set the session from the SSO cookie
 	 */
-	public static setCurrent( $user ) {
+	public static function setCurrent( $user ) {
 		self::$current = $user;
 	}
 
