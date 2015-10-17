@@ -1,6 +1,8 @@
 <?php
 /**
  * This is a fake Joomla environment so that the distributed object classes can function stand-alone
+ * - it creates basic versions of the Joomla classes required by the dsitributed and SSO classes
+ * - it also creates some basic MediaWiki globals so that the native WebSocket.class.php can be setup too
  */
 class JFactory {
 
@@ -86,3 +88,27 @@ class Database {
 	public function quote( $s ) {
 	}
 }
+
+
+/**
+ * MediaWiki environment
+ */
+define( 'MEDIAWIKI', true );
+class MediaWikiOut {
+
+	function addModules( $ext ) {
+	}
+
+	function addJsConfigVars( $name, $value ) {
+		// TODO: set vars that will be retrieved by our fake mw.config.get()
+	}
+
+}
+$wgExtensionCredits = array( 'other' => array() );
+$wgExtensionMessagesFiles = array();
+$wgOut = new MediaWikiOut();
+$wgResourceModules = array();
+$wgExtensionAssetsPath = '';
+$config = JFactory::getConfig();
+$wgDBname = $config->get( 'db' );
+$wgDBprefix = $config->get( 'dbprefix' );

@@ -7,8 +7,8 @@ define( 'LG_STANDALONE', true );
 
 // Then load all the distributed classes
 $common = dirname( __DIR__ ) . '/Joomla/LigminchaGlobal/common';
-require_once( "$common/sso.php" );
 require_once( "$common/standalone.php" );
+require_once( "$common/sso.php" );
 require_once( "$common/distributed.php" );
 require_once( "$common/object.php" );
 require_once( "$common/sync.php" );
@@ -16,6 +16,11 @@ require_once( "$common/server.php" );
 require_once( "$common/user.php" );
 require_once( "$common/session.php" );
 require_once( "$common/log.php" );
+
+// Include the OD Websocket class from the MediaWiki extension
+// - standalone.php creates the necessary environment for it to instantiate ok without MediaWiki
+require_once( __DIR__ . "/resources/WebSocket/WebSocket.php" );
+WebSocket::setup();
 
 // SSO: Check if this session has an SSO cookie and make the current session and user from it if so
 //LigminchaGlobalSSO::makeSessionFromCookie();
@@ -62,7 +67,7 @@ require_once( "$common/log.php" );
 		<script type="text/javascript" src="resources/jquery.js"></script>
 		<script type="text/javascript" src="resources/underscore.js"></script>
 		<script type="text/javascript" src="resources/backbone.js"></script>
-		<script type="text/javascript" src="resources/websocket.js"><!-- WebSocket object from the MW:WebSockets extension --></script>
+		<script type="text/javascript" src="resources/WebSocket/websocket.js"><!-- WebSocket object from the MW:WebSockets extension --></script>
 		<script type="text/javascript" src="main.js"><!-- Main app code --></script>
 	</body>
 </html>
