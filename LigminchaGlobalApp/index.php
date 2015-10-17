@@ -63,8 +63,8 @@ else {
 				<h1>Servers</h1>
 				<input id="new-object" placeholder="Servers in the LichminchaGlobal network" autofocus>
 			</header>
-		<section id="main">
-			<ul id="server-list"></ul>
+			<section id="main">
+				<ul id="server-list"></ul>
 			</section>
 		</section>
 
