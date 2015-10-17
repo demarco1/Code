@@ -26,6 +26,8 @@ require_once( "$common/log.php" );
 // Send accumulated revisions
 //LigminchaGlobalDistributed::sendQueue();
 
+// Todo: only return this page if there are no parameters
+
 ?><!DOCTYPE html>
 <html lang="en">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -60,7 +62,7 @@ require_once( "$common/log.php" );
 		<script type="text/javascript" src="resources/jquery.js"></script>
 		<script type="text/javascript" src="resources/underscore.js"></script>
 		<script type="text/javascript" src="resources/backbone.js"></script>
-		<script type="text/javascript" src="resources/backbone.localStorage.js"></script> 
+		<script type="text/javascript" src="resources/websocket.js"><!-- WebSocket object from the MW:WebSockets extension --></script>
 		<script type="text/javascript" src="main.js"><!-- Main app code --></script>
 	</body>
 </html>
