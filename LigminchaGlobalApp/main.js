@@ -5,7 +5,7 @@ var lg = {};
 /**
  * Models
  */
-lg.Todo = Backbone.Model.extend({
+lg.Object = Backbone.Model.extend({
 	defaults: {
 		title: '',
 		completed: false
@@ -19,21 +19,21 @@ lg.Todo = Backbone.Model.extend({
 /**
  * Collections
  */
-lg.TodoList = Backbone.Collection.extend({
-	model: lg.Todo,
-	localStorage: new Store("backbone-todo")
+lg.ObjectList = Backbone.Collection.extend({
+	model: lg.Object,
+	localStorage: new Store("ligminchaGlobal")
 });
 
 // instance of the Collection
-lg.todoList = new lg.TodoList();
+lg.objectList = new lg.ObjectList();
 
 
 /**
  * Views
  */
 
-// renders individual todo items list (li)
-lg.TodoView = Backbone.View.extend({
+// renders individual object list (li)
+lg.ObjectView = Backbone.View.extend({
 	tagName: 'li',
 	template: _.template($('#item-template').html()),
 	render: function(){
@@ -76,32 +76,32 @@ lg.TodoView = Backbone.View.extend({
 	}
 });
 
-// renders the full list of todo items calling TodoView for each one.
+// renders the full list of objects calling ObjectView for each one.
 lg.AppView = Backbone.View.extend({
-	el: '#todoapp',
+	el: '#objectapp',
 	initialize: function () {
-		this.input = this.$('#new-todo');
-		lg.todoList.on('add', this.addAll, this);
-		lg.todoList.on('reset', this.addAll, this);
-		lg.todoList.fetch(); // Loads list from local storage
+		this.input = this.$('#new-object');
+		lg.objectList.on('add', this.addAll, this);
+		lg.objectList.on('reset', this.addAll, this);
+		lg.objectList.fetch(); // Loads list from local storage
 	},
 	events: {
-		'keypress #new-todo': 'createTodoOnEnter'
+		'keypress #new-object': 'createObjectOnEnter'
 	},
-	createTodoOnEnter: function(e){
+	createObjectOnEnter: function(e){
 		if ( e.which !== 13 || !this.input.val().trim() ) { // ENTER_KEY = 13
 			return;
 		}
-		lg.todoList.create(this.newAttributes());
+		lg.objectList.create(this.newAttributes());
 		this.input.val(''); // clean input box
 	},
-	addOne: function(todo){
-		var view = new lg.TodoView({model: todo});
-		$('#todo-list').append(view.render().el);
+	addOne: function(obj){
+		var view = new lg.ObjectView({model: obj});
+		$('#object-list').append(view.render().el);
 	},
 	addAll: function(){
-		this.$('#todo-list').html(''); // clean the todo list
-		lg.todoList.each(this.addOne, this);
+		this.$('#object-list').html(''); // clean the object list
+		lg.objectList.each(this.addOne, this);
 	},
 	newAttributes: function(){
 		return {

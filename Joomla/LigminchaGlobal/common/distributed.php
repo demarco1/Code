@@ -18,7 +18,7 @@ class LigminchaGlobalDistributed {
 	public static $instance;
 
 	// The query-string command for routing changes
-	private static $cmd = 'changes';
+	private static $cmd = 'sync';
 
 	// The queue of changes to route at the end of the request
 	private static $queue = array();
@@ -63,8 +63,8 @@ class LigminchaGlobalDistributed {
 		// If this is a changes request commit the data (and re-route if master)
 		// - if the changes data is empty, then it's a request for initial table data
 		if( array_key_exists( self::$cmd, $_POST ) ) {
-			$data = $_POST['changes'];
-			if( $data ) print self::recvQueue( $_POST['changes'] );
+			$data = $_POST[self::$cmd];
+			if( $data ) print self::recvQueue( $_POST[self::$cmd] );
 			elseif( $server->isMaster ) print self::encodeData( $this->initialTableData() );
 			exit;
 		}
