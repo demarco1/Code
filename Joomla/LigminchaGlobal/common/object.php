@@ -289,12 +289,17 @@ class LigminchaGlobalObject {
 
 	/**
 	 * Make an SQL condition from the array
+	 * ( a => x, b => y ) gives a=x AND b=y
+	 * ( (a => x ), ( a => y ) ) gives a=x OR a=y
 	 */
 	private static function makeCond( $cond ) {
-		$op = preg_replace( '|[^a-z]|i', '', strtoupper( $op ) );
+		$op = 'AND';
 		$sqlcond = array();
 		foreach( $cond as $field => $val ) {
-			if( is_array( $val ) ) list( $field, $val ) = $val;
+			if( is_array( $val ) ) {
+				list( $field, $val ) = $val;
+				$op = 'OR';
+			}
 			$val = self::sqlField( $val, LigminchaGlobalDistributed::$tableStruct[$field] );
 			$sqlcond[] = "`$field`=$val";
 		}
