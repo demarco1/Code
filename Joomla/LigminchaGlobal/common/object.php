@@ -206,11 +206,11 @@ class LigminchaGlobalObject {
 	 * Find an object in the DB given the passed conditions
 	 * TODO: really inefficient at the moment
 	 */
-	public static function find( $cond, $op = 'AND' ) {
+	public static function find( $cond ) {
 		$db = JFactory::getDbo();
 		$table = LigminchaGlobalDistributed::sqlTable();
 		$all = self::sqlFields();
-		$sqlcond = self::makeCond( $cond, $op );
+		$sqlcond = self::makeCond( $cond );
 		if( empty( $sqlcond ) ) return false;
 		$db->setQuery( "SELECT $all FROM $table WHERE $sqlcond" );
 		$db->query();
@@ -290,10 +290,11 @@ class LigminchaGlobalObject {
 	/**
 	 * Make an SQL condition from the array
 	 */
-	private static function makeCond( $cond, $op = 'AND' ) {
+	private static function makeCond( $cond ) {
 		$op = preg_replace( '|[^a-z]|i', '', strtoupper( $op ) );
 		$sqlcond = array();
 		foreach( $cond as $field => $val ) {
+			if( is_array( $val ) ) list( $field, $val ) = $val;
 			$val = self::sqlField( $val, LigminchaGlobalDistributed::$tableStruct[$field] );
 			$sqlcond[] = "`$field`=$val";
 		}
