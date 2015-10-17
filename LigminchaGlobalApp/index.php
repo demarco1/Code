@@ -9,6 +9,10 @@ define( 'LG_STANDALONE', true );
 $script = '';
 
 // Load the Fake Joomla environment and all the common classes from the Joomla extension
+// All these classes are only used for SSO
+// - changes coming in from the app are just bounced cross-domain to the Joomla
+// - changes destined to the app are sent from the Joomla via the WebSocket daemon not from here
+// - although we can send the initial servers, users and sessions from here
 $common = dirname( __DIR__ ) . '/Joomla/LigminchaGlobal/common';
 require_once( "$common/distributed.php" );
 require_once( "$common/object.php" );
@@ -28,16 +32,23 @@ require_once( "$common/sso.php" );
 // Send accumulated revisions
 //LigminchaGlobalDistributed::sendQueue();
 
-// Receive changes
-if( 0 ) {
-}
-
-// Something else
-elseif( 0 ) {
+// Receive changes from the app
+if( array_key_exists( 'sync' ) ) {
+	
 }
 
 // If there is no query-string or the method is unknown, render the HTML for the single-page application
 else {
+
+	// These are the global objects made initially available to the app
+	$objects = LigminchaGlobalObject::find( array(
+		array( 'type' => LG_SERVER ),
+		array( 'type' => LG_USER ),
+		array( 'type' => LG_SESSION ),
+		array( 'type' => LG_VERSION ),
+	) );
+	$wgOut->addJsConfigVars( 'GlobalObjects', $objects );
+
 ?><!DOCTYPE html>
 <html lang="en">
 	<head>
