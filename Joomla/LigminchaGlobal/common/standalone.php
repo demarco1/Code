@@ -96,7 +96,7 @@ class MediaWiki {
 
 	var $msgKey;
 
-	function __construct( $msgkey = false ) {
+	function __construct( $msgKey = false ) {
 		$this->msgKey = $msgKey;
 	}
 

@@ -67,7 +67,8 @@ WebSocket::setup();
 		<script type="text/javascript" src="resources/jquery.js"></script>
 		<script type="text/javascript" src="resources/underscore.js"></script>
 		<script type="text/javascript" src="resources/backbone.js"></script>
-		<script type="text/javascript" src="resources/WebSocket/websocket.js"><!-- WebSocket object from the MW:WebSockets extension --></script>
+		<script type="text/javascript" src="standalone.js"><!-- Make MediaWiki environment look present for websocket.js --></script>
+		<script type="text/javascript" src="resources/WebSocket/websocket.js"><!-- WebSocket object from the MediaWiki WebSockets extension --></script>
 		<script type="text/javascript" src="main.js"><!-- Main app code --></script>
 	</body>
 </html>

@@ -3,18 +3,6 @@ var lg = {};
 
 
 /**
- * Set up mw.config.get for websocket.js
- */
-var window.mw = {
-	config: {
-		get: function(k) {
-			// TODO: return var set by our fake addJsConfigVars()
-		}
-	}
-};
-
-
-/**
  * Models
  */
 lg.Object = Backbone.Model.extend({
