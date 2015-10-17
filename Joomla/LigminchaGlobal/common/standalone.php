@@ -57,10 +57,10 @@ class Database {
 	function __construct() {
 		$config   = JFactory::getConfig();
 		$database = $config->get( 'db' );
-		$host     = $config->get( 'host' ),
-		$user     = $config->get( 'user' ),
-		$password = $config->get( 'password' ),
-		$prefix   = $this->prefix = $config->get( 'dbprefix' ),
+		$host     = $config->get( 'host' );
+		$user     = $config->get( 'user' );
+		$password = $config->get( 'password' );
+		$prefix   = $this->prefix = $config->get( 'dbprefix' );
 
 		// Mysqlconnect
 	}

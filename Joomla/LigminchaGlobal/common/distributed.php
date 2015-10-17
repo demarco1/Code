@@ -8,7 +8,7 @@ define( 'LG_ERROR', 'error' );
 
 // If we're in stand-alone mode, make a fake version of the Joomla plugin class to allow the distributed.php and object classes to work
 if( LG_STANDALONE ) {
-	require_once( __DIR__ . '/distributed/standalone.php' );
+	require_once( __DIR__ . '/standalone.php' );
 }
 
 

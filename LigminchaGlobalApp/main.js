@@ -1,5 +1,5 @@
 'use strict';
-var app = {};
+var lg = {};
 
 
 /**
