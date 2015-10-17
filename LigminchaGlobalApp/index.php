@@ -10,8 +10,6 @@ $script = '';
 
 // Load the Fake Joomla environment and all the common classes from the Joomla extension
 $common = dirname( __DIR__ ) . '/Joomla/LigminchaGlobal/common';
-require_once( "$common/FakeJoomla.php" );
-require_once( "$common/sso.php" );
 require_once( "$common/distributed.php" );
 require_once( "$common/object.php" );
 require_once( "$common/sync.php" );
@@ -19,13 +17,7 @@ require_once( "$common/server.php" );
 require_once( "$common/user.php" );
 require_once( "$common/session.php" );
 require_once( "$common/log.php" );
-
-// Load the Fake MediaWiki environment and the OD Websocket class from the MediaWiki extension
-require_once( "$common/FakeMediaWiki.php" );
-require_once( "$common/WebSocket/WebSocket.php" );
-WebSocket::$log = '/var/www/extensions/MediaWiki/WebSocket/ws.log'; // tmp to match my current daemon
-WebSocket::$rewrite = true;
-WebSocket::setup();
+require_once( "$common/sso.php" );
 
 // SSO: Check if this session has an SSO cookie and make the current session and user from it if so
 //LigminchaGlobalSSO::makeSessionFromCookie();

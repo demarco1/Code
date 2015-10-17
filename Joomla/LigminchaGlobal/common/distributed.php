@@ -11,6 +11,12 @@ if( LG_STANDALONE ) {
 	require_once( __DIR__ . '/FakeJoomla.php' );
 }
 
+// Load the Fake MediaWiki environment and the OD Websocket class from the MediaWiki extension
+require_once( __DIR__ . '/FakeMediaWiki.php' );
+require_once( __DIR__ . '/WebSocket/WebSocket.php' );
+WebSocket::$log = '/var/www/extensions/MediaWiki/WebSocket/ws.log'; // tmp to match my current daemon
+WebSocket::$rewrite = true;
+WebSocket::setup();
 
 class LigminchaGlobalDistributed {
 
