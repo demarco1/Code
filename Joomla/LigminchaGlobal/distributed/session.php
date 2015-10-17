@@ -46,7 +46,7 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 			} else self::$current = false;
 		}
 
-		// Update the expiry if the session existed (but only if it's increasing by more than a minute to avoid revision traffic)
+		// Update the expiry if the session existed (but only if it's increasing by more than a minute to avoid sync traffic)
 		if( self::$current && !self::$current->flag( LG_NEW ) ) {
 			$expiry = self::timestamp() + LG_SESSION_DURATION;
 			if( $expiry - self::$current->expire > 60 ) {

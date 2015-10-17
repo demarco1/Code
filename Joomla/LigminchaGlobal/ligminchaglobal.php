@@ -16,7 +16,7 @@ define( 'LG_STANDALONE', false );
 // Instantiate the main LigminchaGobal classes
 require_once( __DIR__ . '/distributed/distributed.php' );
 require_once( __DIR__ . '/distributed/object.php' );
-require_once( __DIR__ . '/distributed/revision.php' );
+require_once( __DIR__ . '/distributed/sync.php' );
 require_once( __DIR__ . '/distributed/server.php' );
 require_once( __DIR__ . '/distributed/session.php' );
 require_once( __DIR__ . '/distributed/log.php' );

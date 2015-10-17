@@ -90,7 +90,7 @@ class LigminchaGlobalDistributed {
 	}
 
 	/**
-	 * Create the distributed database table and request initial revisions to populate it with
+	 * Create the distributed database table and request initial sync data to populate it with
 	 */
 	private function createTable() {
 		$db = JFactory::getDbo();
@@ -112,20 +112,20 @@ class LigminchaGlobalDistributed {
 	}
 
 	/**
-	 * Return the list of revisions that will populate a newly created distributed database table
+	 * Return the list of sync objects that will populate a newly created distributed database table
 	 */
 	private function initialTableData() {
 
 		// Just populate new tables with the master (should be current server) server for now
 		$master = LigminchaGlobalServer::getMaster();
 
-		// Create a normal update revision from the object, but with no target so it won't be added to the database for sending
-		$rev = new LigminchaGlobalRevision( LG_UPDATE, $master->fields(), false );
+		// Create a normal update sync object from this object, but with no target so it won't be added to the database for sending
+		$rev = new LigminchaGlobalSync( 'U', $master->fields(), false );
 
 		// Unencode the data field (since it's not going into the DB)
 		$rev->data = $rev->getData();
 
-		// Create a revision queue that will be processed by the client in the normal way
+		// Create a sync queue that will be processed by the client in the normal way
 		$queue = array( LigminchaGlobalServer::getCurrent()->id, 0, $rev );
 
 		return $queue;
@@ -170,10 +170,10 @@ class LigminchaGlobalDistributed {
 	 */
 	public static function sendQueue() {
 
-		// Get all LG_REVISION items, bail if none
-		if( !$revs = LigminchaGlobalObject::find( array( 'type' => LG_REVISION ) ) ) return false;
+		// Get all LG_SYNC items, bail if none
+		if( !$revs = LigminchaGlobalObject::find( array( 'type' => LG_SYNC ) ) ) return false;
 
-		// Make data streams for each target from the revisions
+		// Make data streams for each target from the sync objects
 		$streams = array();
 		$server = LigminchaGlobalServer::getCurrent()->id;
 		$session = LigminchaGlobalServer::getCurrent() ? LigminchaGlobalServer::getCurrent()->id : 0;
@@ -199,14 +199,9 @@ class LigminchaGlobalDistributed {
 			// Post the queue data to the server
 			$result = self::post( $url, array( self::$cmd => $data ) );
 
-			// If result is success, remove all LG_REVISION items for this target server
-			// (can't use obj::del yet because it doesn't check LOCAL to not make further revisions)
-			if( $result == LG_SUCCESS ) {
-				$db = JFactory::getDbo();
-				$table = self::sqlTable();
-				$db->setQuery( "DELETE FROM $table WHERE `type`=" . LG_REVISION . " AND `ref1`=0x$target" );
-				$db->query();
-			} else die( "Failed to post revisions ($result)" );
+			// If result is success, remove all sync objects destined for this target server
+			if( $result == LG_SUCCESS ) LigminchaGlobalObject::del( array( 'type' => LG_SYNC, 'ref1' => $target ), false, true );
+			else die( "Failed to post outgoing sync data ($result)" );
 		}
 
 		return true;
@@ -223,12 +218,12 @@ class LigminchaGlobalDistributed {
 		$origin = array_shift( $queue );
 		$session = array_shift( $queue );
 
-		// Process each of the revisions (this may lead to further re-routing revisions being made)
+		// Process each of the sync objects (this may lead to further re-routing sync objects being made)
 		foreach( $queue as $rev ) {
-			LigminchaGlobalRevision::process( $rev['tag'], $rev['data'], $origin );
+			LigminchaGlobalSync::process( $rev['tag'], $rev['data'], $origin );
 		}
 
-		// Let client know that we've processed their revisions
+		// Let client know that we've processed their sync data
 		return 'ok';
 	}
 
