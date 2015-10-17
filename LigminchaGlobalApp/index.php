@@ -37,11 +37,11 @@ WebSocket::setup();
 //LigminchaGlobalDistributed::sendQueue();
 
 // Receive changes
-if( $_REQUEST['blablabla'] ) {
+if( 0 ) {
 }
 
 // Something else
-elseif( $_REQUEST['blablabla'] ) {
+elseif( 0 ) {
 }
 
 // If there is no query-string or the method is unknown, render the HTML for the single-page application
@@ -76,7 +76,7 @@ else {
 		</script>  
 
 		<!-- Scripts -->
-		<script type="text/javascript" src="standalone.js"><!-- Make MediaWiki environment look present for websocket.js --></script>
+		<script type="text/javascript" src="resources/fakemediawiki.js"><!-- Make MediaWiki environment look present for websocket.js --></script>
 		<script type="text/javascript"><?php echo $script;?></script>
 		<!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
 		<script type="text/javascript" src="resources/jquery.js"></script>
@@ -86,4 +86,5 @@ else {
 		<script type="text/javascript" src="resources/WebSocket/websocket.js"><!-- WebSocket object from the MediaWiki WebSockets extension --></script>
 		<script type="text/javascript" src="main.js"><!-- Main app code --></script>
 	</body>
-</html><?php}
+</html><?php
+}
