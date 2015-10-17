@@ -92,7 +92,13 @@ class Database {
  * MediaWiki environment
  */
 define( 'MEDIAWIKI', true );
-class MediaWikiOut {
+class MediaWiki {
+
+	var $msgKey;
+
+	function __construct( $msgkey = false ) {
+		$this->msgKey = $msgKey;
+	}
 
 	function addModules( $ext ) {
 	}
@@ -101,10 +107,18 @@ class MediaWikiOut {
 		// TODO: set vars that will be retrieved by our fake mw.config.get()
 	}
 
+	// For wfMessage()
+	function text() {
+		return $this->msgKey;
+	}
+
+}
+function wfMessage( $msgkey ) {
+	return new MediaWiki( $msgKey );
 }
 $wgExtensionCredits = array( 'other' => array() );
 $wgExtensionMessagesFiles = array();
-$wgOut = new MediaWikiOut();
+$wgOut = new MediaWiki();
 $wgResourceModules = array();
 $wgExtensionAssetsPath = '';
 $config = JFactory::getConfig();
