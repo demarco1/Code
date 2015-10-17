@@ -1,8 +1,6 @@
 <?php
 /**
- * This is a fake Joomla environment so that the distributed object classes can function stand-alone
- * - it creates basic versions of the Joomla classes required by the dsitributed and SSO classes
- * - it also creates some basic MediaWiki globals so that the native WebSocket.class.php can be setup too
+ * This is a fake Joomla & MediaWiki environment so that the distributed object, sso and WebSocket classes can function stand-alone
  */
 class JFactory {
 
