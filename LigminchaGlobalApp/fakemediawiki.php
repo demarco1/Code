@@ -1,10 +1,11 @@
 /**
  * Make MediaWiki environment look present for the websocket.js code
  */
-var window.mw = {
+window.mw = {
+	data: {},
 	config: {
 		get: function(k) {
-			// TODO: return var set by our fake addJsConfigVars()
+			return window.mw.data[k];
 		}
 	}
 };

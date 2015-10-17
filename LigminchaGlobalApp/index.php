@@ -5,9 +5,12 @@ ini_set( 'display_errors', true );
 // This is a standalone script to give the JS app a database-connection in the back end
 define( 'LG_STANDALONE', true );
 
-// Then load all the distributed classes
+// Give an classes the chance to add script that runs before the dependencies are loaded
+$script = '';
+
+// Load the Fake Joomla environment and all the common classes from the Joomla extension
 $common = dirname( __DIR__ ) . '/Joomla/LigminchaGlobal/common';
-require_once( "$common/standalone.php" );
+require_once( "$common/FakeJoomla.php" );
 require_once( "$common/sso.php" );
 require_once( "$common/distributed.php" );
 require_once( "$common/object.php" );
@@ -17,9 +20,11 @@ require_once( "$common/user.php" );
 require_once( "$common/session.php" );
 require_once( "$common/log.php" );
 
-// Include the OD Websocket class from the MediaWiki extension
-// - standalone.php creates the necessary environment for it to instantiate ok without MediaWiki
-require_once( __DIR__ . "/resources/WebSocket/WebSocket.php" );
+// Load the Fake MediaWiki environment and the OD Websocket class from the MediaWiki extension
+require_once( "$common/FakeMediaWiki.php" );
+require_once( "$common/WebSocket/WebSocket.php" );
+WebSocket::$log = '/var/www/extensions/MediaWiki/WebSocket/ws.log'; // tmp to match my current daemon
+WebSocket::$rewrite = true;
 WebSocket::setup();
 
 // SSO: Check if this session has an SSO cookie and make the current session and user from it if so
@@ -31,24 +36,32 @@ WebSocket::setup();
 // Send accumulated revisions
 //LigminchaGlobalDistributed::sendQueue();
 
-// Todo: only return this page if there are no parameters
+// Receive changes
+if( $_REQUEST['blablabla'] ) {
+}
 
+// Something else
+elseif( $_REQUEST['blablabla'] ) {
+}
+
+// If there is no query-string or the method is unknown, render the HTML for the single-page application
+else {
 ?><!DOCTYPE html>
 <html lang="en">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>LigminchaGlobalApp</title>
 		<link rel="stylesheet" href="styles/main.css" />
 	</head>
 	<body>
 		<!-- App HTML structure -->
-		<section id="todoapp">
+		<section id=todoapp">
 			<header id="header">
-				<h1>Todos</h1>
-				<input id="new-todo" placeholder="What needs to be done?" autofocus>
+				<h1>Servers</h1>
+				<input id="new-object" placeholder="Servers in the LichminchaGlobal network" autofocus>
 			</header>
 		<section id="main">
-			<ul id="todo-list"></ul>
+			<ul id="server-list"></ul>
 			</section>
 		</section>
 
@@ -63,12 +76,14 @@ WebSocket::setup();
 		</script>  
 
 		<!-- Scripts -->
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+		<script type="text/javascript" src="standalone.js"><!-- Make MediaWiki environment look present for websocket.js --></script>
+		<script type="text/javascript"><?php echo $script;?></script>
+		<!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
 		<script type="text/javascript" src="resources/jquery.js"></script>
 		<script type="text/javascript" src="resources/underscore.js"></script>
 		<script type="text/javascript" src="resources/backbone.js"></script>
-		<script type="text/javascript" src="standalone.js"><!-- Make MediaWiki environment look present for websocket.js --></script>
+		<script type="text/javascript" src="resources/backbone.localStorage.js"></script>
 		<script type="text/javascript" src="resources/WebSocket/websocket.js"><!-- WebSocket object from the MediaWiki WebSockets extension --></script>
 		<script type="text/javascript" src="main.js"><!-- Main app code --></script>
 	</body>
-</html>
+</html><?php}

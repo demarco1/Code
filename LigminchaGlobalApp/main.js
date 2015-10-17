@@ -1,11 +1,10 @@
 'use strict';
 var lg = {};
 
-
 /**
  * Models
  */
-lg.Object = Backbone.Model.extend({
+lg.Server = Backbone.Model.extend({
 	defaults: {
 		title: '',
 		completed: false
@@ -15,25 +14,24 @@ lg.Object = Backbone.Model.extend({
 	}
 });
 
-
 /**
  * Collections
  */
-lg.ObjectList = Backbone.Collection.extend({
-	model: lg.Object,
+lg.ServerList = Backbone.Collection.extend({
+	model: lg.Server,
 	localStorage: new Store("ligminchaGlobal")
 });
 
 // instance of the Collection
-lg.objectList = new lg.ObjectList();
+lg.serverList = new lg.ServerList();
 
 
 /**
  * Views
  */
 
-// renders individual object list (li)
-lg.ObjectView = Backbone.View.extend({
+// renders individual server item
+lg.ServerView = Backbone.View.extend({
 	tagName: 'li',
 	template: _.template($('#item-template').html()),
 	render: function(){
@@ -48,9 +46,9 @@ lg.ObjectView = Backbone.View.extend({
 	events: {
 		'dblclick label' : 'edit',
 		'keypress .edit' : 'updateOnEnter',
-		'blur .edit' : 'close',
-		'click .toggle': 'toggleCompleted',
-		'click .destroy': 'destroy'
+		'blur .edit'     : 'close',
+		'click .toggle'  : 'toggleCompleted',
+		'click .destroy' : 'destroy'
 	},
 	edit: function(){
 		this.$el.addClass('editing');
@@ -76,14 +74,14 @@ lg.ObjectView = Backbone.View.extend({
 	}
 });
 
-// renders the full list of objects calling ObjectView for each one.
+// renders the full list of servers calling ServerView for each one.
 lg.AppView = Backbone.View.extend({
 	el: '#objectapp',
 	initialize: function () {
 		this.input = this.$('#new-object');
-		lg.objectList.on('add', this.addAll, this);
-		lg.objectList.on('reset', this.addAll, this);
-		lg.objectList.fetch(); // Loads list from local storage
+		lg.serverList.on('add', this.addAll, this);
+		lg.serverList.on('reset', this.addAll, this);
+		lg.serverList.fetch(); // Loads list from local storage
 	},
 	events: {
 		'keypress #new-object': 'createObjectOnEnter'
@@ -92,16 +90,16 @@ lg.AppView = Backbone.View.extend({
 		if ( e.which !== 13 || !this.input.val().trim() ) { // ENTER_KEY = 13
 			return;
 		}
-		lg.objectList.create(this.newAttributes());
+		lg.serverList.create(this.newAttributes());
 		this.input.val(''); // clean input box
 	},
 	addOne: function(obj){
-		var view = new lg.ObjectView({model: obj});
-		$('#object-list').append(view.render().el);
+		var view = new lg.ServerView({model: obj}); // <======================================================================================================
+		$('#server-list').append(view.render().el);
 	},
 	addAll: function(){
-		this.$('#object-list').html(''); // clean the object list
-		lg.objectList.each(this.addOne, this);
+		this.$('#server-list').html(''); // clean the server list
+		lg.serverList.each(this.addOne, this);
 	},
 	newAttributes: function(){
 		return {
@@ -114,3 +112,9 @@ lg.AppView = Backbone.View.extend({
 // Initialise our app
 lg.appView = new lg.AppView(); 
 
+// Connect the WebSocket
+if(typeof webSocket === 'object') {
+	window.ws = webSocket.connect();
+	//webSocket.disconnected( fn );
+	webSocket.subscribe( 'LigminchaGlobal', function(data) { console.log(data.msg) } );
+}

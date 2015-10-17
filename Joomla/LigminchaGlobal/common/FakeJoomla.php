@@ -1,6 +1,6 @@
 <?php
 /**
- * This is a fake Joomla & MediaWiki environment so that the distributed object, sso and WebSocket classes can function stand-alone
+ * This is a fake Joomla environment so that the distributed object and sso classes can function stand-alone
  */
 class JFactory {
 
@@ -86,41 +86,3 @@ class Database {
 	public function quote( $s ) {
 	}
 }
-
-
-/**
- * MediaWiki environment
- */
-define( 'MEDIAWIKI', true );
-class MediaWiki {
-
-	var $msgKey;
-
-	function __construct( $msgKey = false ) {
-		$this->msgKey = $msgKey;
-	}
-
-	function addModules( $ext ) {
-	}
-
-	function addJsConfigVars( $name, $value ) {
-		// TODO: set vars that will be retrieved by our fake mw.config.get()
-	}
-
-	// For wfMessage()
-	function text() {
-		return $this->msgKey;
-	}
-
-}
-function wfMessage( $msgkey ) {
-	return new MediaWiki( $msgKey );
-}
-$wgExtensionCredits = array( 'other' => array() );
-$wgExtensionMessagesFiles = array();
-$wgOut = new MediaWiki();
-$wgResourceModules = array();
-$wgExtensionAssetsPath = '';
-$config = JFactory::getConfig();
-$wgDBname = $config->get( 'db' );
-$wgDBprefix = $config->get( 'dbprefix' );
