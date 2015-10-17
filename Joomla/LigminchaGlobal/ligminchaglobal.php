@@ -13,15 +13,16 @@
 // Notify the LigminchaGobal code that this request is not standalone (i.e. the Joomla framework is present)
 define( 'LG_STANDALONE', false );
 
-// Instantiate the main LigminchaGobal classes
-require_once( __DIR__ . '/distributed/distributed.php' );
-require_once( __DIR__ . '/distributed/object.php' );
-require_once( __DIR__ . '/distributed/sync.php' );
-require_once( __DIR__ . '/distributed/server.php' );
-require_once( __DIR__ . '/distributed/session.php' );
-require_once( __DIR__ . '/distributed/log.php' );
-require_once( __DIR__ . '/distributed/user.php' );
-require_once( __DIR__ . '/sso.php' );
+// Instantiate the common LigminchaGobal classes
+$common = __DIR__ . '/common';
+require_once( "$common/distributed.php" );
+require_once( "$common/object.php" );
+require_once( "$common/sync.php" );
+require_once( "$common/server.php" );
+require_once( "$common/user.php" );
+require_once( "$common/session.php" );
+require_once( "$common/log.php" );
+require_once( "$common/sso.php" );
 
 /**
  * @package		Joomla.Plugin
