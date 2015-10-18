@@ -329,7 +329,6 @@ class LigminchaGlobalObject {
 	 */
 	private static function sqlField( $val, $type ) {
 		if( is_null( $val ) ) return 'NULL';
-		if( empty( (string)$val ) ) return '""';
 		$db = JFactory::getDbo();
 		switch( substr( $type, 0, 1 ) ) {
 			case 'I': $val = is_numeric( $val ) ? intval( $val ) : die( "Bad integer: \"$val\"" );;
@@ -340,6 +339,7 @@ class LigminchaGlobalObject {
 					  break;
 			default: $val = $db->quote( $val );
 		}
+		if( empty( (string)$val ) ) return '""';
 		return $val;
 	}
 
