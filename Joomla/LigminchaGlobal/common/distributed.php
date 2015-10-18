@@ -172,7 +172,7 @@ class LigminchaGlobalDistributed {
 	}
 
 	/**
-	 * Send all queued changes
+	 * Send all queued sync-objects
 	 */
 	public static function sendQueue() {
 
@@ -182,7 +182,7 @@ class LigminchaGlobalDistributed {
 		// Make data streams for each target from the sync objects
 		$streams = array();
 		$server = LigminchaGlobalServer::getCurrent()->id;
-		$session = LigminchaGlobalServer::getCurrent() ? LigminchaGlobalServer::getCurrent()->id : 0;
+		$session = LigminchaGlobalSession::getCurrent() ? LigminchaGlobalSession::getCurrent()->id : 0;
 		foreach( $revs as $rev ) {
 			$target = LigminchaGlobalServer::newFromId( $rev->ref1 )->id;
 			$rev->data = $rev->getData(); // unencode the data field since its not going to the DB
@@ -214,7 +214,7 @@ class LigminchaGlobalDistributed {
 	}
 
 	/**
-	 * Receive changes from remote queue
+	 * Receive sync-object queue from a remote server
 	 */
 	private static function recvQueue( $data ) {
 
