@@ -134,7 +134,7 @@ lg.recvQueue = function(queue) {
 };
 
 // Send the list of sync-objects (The JS version of the PHP LigminchaGlobalDistributed::sendQueue)
-lg.sendQueue = function( queue ) {
+lg.sendQueue = function(queue) {
 };
 
 // Encodes data into the format requred by distributed.php
@@ -148,7 +148,7 @@ lg.decodeData = function(data) {
 };
 
 // Process an inbound sync object (JS version of LigminchaGlobalSync::process)
-lg.process = function( crud, fields, origin ) {
+lg.process = function(crud, fields, origin) {
 	if(crud == 'U') {
 		// update/create
 		console.log('update received for ' + fields.id);
