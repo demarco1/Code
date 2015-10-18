@@ -89,8 +89,6 @@ else {
 		<script type="text/javascript"><!-- Information added dynamically by the PHP --><?php echo $script;?></script>
 		<!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
 		<script type="text/javascript" src="resources/sha1.js"></script>
-		<script type="text/javascript" src="resources/inflate.js"></script>
-		<script type="text/javascript" src="resources/deflate.js"></script>
 		<script type="text/javascript" src="resources/jquery.js"></script>
 		<script type="text/javascript" src="resources/underscore.js"></script>
 		<script type="text/javascript" src="resources/backbone.js"></script>

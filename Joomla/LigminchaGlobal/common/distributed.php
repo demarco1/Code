@@ -264,14 +264,14 @@ class LigminchaGlobalDistributed {
 	 * Encode data for sending
 	 */
 	private static function encodeData( $data ) {
-		return gzcompress( json_encode( $data ) );
+		return json_encode( $data );
 	}
 
 	/**
 	 * Decode incoming data
 	 */
 	private static function decodeData( $data ) {
-		return json_decode( gzuncompress( $data ), true );
+		return json_decode( $data, true );
 	}
 
 	/**

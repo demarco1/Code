@@ -122,28 +122,37 @@ lg.hash = function(s) {
 	return h.toUpperCase();
 };
 
+// Receive sync-object queue from a remote server (The JS version of the PHP LigminchaGlobalDistributed method ofthe same name)
+lg.recvQueue = function( data ) {
+};
+
+// Send the list of sync-objects (The JS version of the PHP LigminchaGlobalDistributed method ofthe same name)
+lg.sendQueue = function( queue ) {
+};
+
 // Encodes data into the format requred by distributed.php
-lg.encodeData = function(data) {
+lg.encodeData = function(json) {
+	return JSON.stringify(json);
 };
 
 // Decodes distributed queue data
 lg.decodeData = function(data) {
+	return JSON.parse(data);
 };
 
 
+/**
+ * App initialisation
+ */
 
 // Initialise our app
 lg.appView = new lg.AppView(); 
 
 // Connect the WebSocket
+// The wsClientID is the SSO session id + a unique ID for this socket
+// TODO: we won't need the second socket ID later because there will be only one socket per session
 if(typeof webSocket === 'object') {
-
-	// Make the ID the SSO session id + a unique ID for this socket
-	// NOTE - we won't need the second socket ID later because there will be only one socket per session
 	mw.data.wsClientID = mw.data.session + ':' + lg.hash().substr(0,5);
-	console.log(mw.data.wsClientID);
-
-	window.ws = webSocket.connect();
-	//webSocket.disconnected( fn );
+	lg.ws = webSocket.connect();
 	webSocket.subscribe( 'LigminchaGlobal', function(data) { console.log(data.msg) } );
 }
