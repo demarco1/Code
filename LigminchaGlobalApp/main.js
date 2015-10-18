@@ -117,9 +117,13 @@ lg.AppView = Backbone.View.extend({
 
 // Hash that is compatible with the server-side
 lg.hash = function(s) {
-	if(s === undefined) s = Math.random() + "";
 	var h = CryptoJS.SHA1(s) + "";
 	return h.toUpperCase();
+};
+
+// Generate a new globally unique ID
+lg.uuid = function() {
+	return this.hash(Math.random() + "");
 };
 
 // Receive sync-object queue from a remote server (The JS version of the PHP LigminchaGlobalDistributed::recvQueue)
@@ -170,7 +174,7 @@ if(typeof webSocket === 'object') {
 
 	// The wsClientID is the SSO session id + a unique ID for this socket
 	// TODO: we won't need the second socket ID later because there will be only one socket per session
-	mw.data.wsClientID = mw.data.session + ':' + lg.hash().substr(0,5);
+	mw.data.wsClientID = mw.data.session + ':' + lg.hash(lg.uuid()).substr(0,5);
 
 	// Creation the connection
 	lg.ws = webSocket.connect();
