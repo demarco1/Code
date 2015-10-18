@@ -77,7 +77,7 @@ class Database {
 	public function loadAssoc() {
 	}
 
-	public function loadAssocList( $a, $b ) {
+	public function loadAssocList( $a = false, $b = false ) {
 	}
 
 	public function loadRowList( $a ) {

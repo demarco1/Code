@@ -33,8 +33,10 @@ require_once( "$common/sso.php" );
 //LigminchaGlobalDistributed::sendQueue();
 
 // Receive changes from the app
-if( array_key_exists( 'sync' ) ) {
-	
+if( array_key_exists( 'sync', $_POST ) ) {
+
+	// TODO: We just bounce these to the Joomla
+
 }
 
 // If there is no query-string or the method is unknown, render the HTML for the single-page application
@@ -80,12 +82,12 @@ else {
 
 		<!-- Scripts -->
 		<script type="text/javascript" src="resources/fakemediawiki.js"><!-- Make MediaWiki environment look present for websocket.js --></script>
-		<script type="text/javascript"><?php echo $script;?></script>
+		<script type="text/javascript"><!-- Information added dynamically by the PHP --><?php echo $script;?></script>
 		<!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
 		<script type="text/javascript" src="resources/jquery.js"></script>
 		<script type="text/javascript" src="resources/underscore.js"></script>
 		<script type="text/javascript" src="resources/backbone.js"></script>
-		<script type="text/javascript" src="resources/backbone.localStorage.js"></script>
+		<script type="text/javascript" src="resources/backbone.localStorage.js"><!-- Uses local storage so only one client needs to use the WebSocket--></script>
 		<script type="text/javascript" src="resources/WebSocket/websocket.js"><!-- WebSocket object from the MediaWiki WebSockets extension --></script>
 		<script type="text/javascript" src="main.js"><!-- Main app code --></script>
 	</body>

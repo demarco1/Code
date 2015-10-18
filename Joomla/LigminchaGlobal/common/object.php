@@ -297,7 +297,8 @@ class LigminchaGlobalObject {
 		$sqlcond = array();
 		foreach( $cond as $field => $val ) {
 			if( is_array( $val ) ) {
-				list( $field, $val ) = $val;
+				$field = array_keys( $val )[0];
+				$val = $val[$field];
 				$op = 'OR';
 			}
 			$val = self::sqlField( $val, LigminchaGlobalDistributed::$tableStruct[$field] );
