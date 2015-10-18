@@ -128,9 +128,6 @@ class LigminchaGlobalDistributed {
 		// Create a normal update sync object from this object, but with no target so it won't be added to the database for sending
 		$rev = new LigminchaGlobalSync( 'U', $master->fields(), false );
 
-		// Unencode the data field (since it's not going into the DB)
-		$rev->data = $rev->getData();
-
 		// Create a sync queue that will be processed by the client in the normal way
 		$queue = array( LigminchaGlobalServer::getCurrent()->id, 0, $rev );
 
@@ -185,7 +182,6 @@ class LigminchaGlobalDistributed {
 		$session = LigminchaGlobalSession::getCurrent() ? LigminchaGlobalSession::getCurrent()->id : 0;
 		foreach( $revs as $rev ) {
 			$target = LigminchaGlobalServer::newFromId( $rev->ref1 )->id;
-			$rev->data = $rev->getData(); // unencode the data field since its not going to the DB
 			if( array_key_exists( $target, $streams ) ) $streams[$target][] = $rev;
 			else $streams[$target] = array( $server, $session, $rev );
 		}
@@ -292,6 +288,94 @@ class LigminchaGlobalDistributed {
 		$result = curl_exec( $ch );
 		curl_close( $ch );
 		return $result;
+	}
+
+	/**
+	 * Make an SQL condition from the array
+	 * ( a => x, b => y ) gives a=x AND b=y
+	 * ( (a => x ), ( a => y ) ) gives a=x OR a=y
+	 */
+	public static function makeCond( $cond ) {
+		$op = 'AND';
+		$sqlcond = array();
+		foreach( $cond as $field => $val ) {
+			if( is_array( $val ) ) {
+				$field = array_keys( $val )[0];
+				$val = $val[$field];
+				$op = 'OR';
+			}
+			$val = self::sqlField( $val, self::$tableStruct[$field] );
+			$sqlcond[] = "`$field`=$val";
+		}
+		$sqlcond = implode( " $op ", $sqlcond );
+		return $sqlcond;
+	}
+
+	/**
+	 * Check if the passed database-condition only access owned objects
+	 */
+	private static function validateCond( $cond ) {
+		// TODO
+	}
+
+	/**
+	 * Make sure a hash is really a hash and use NULL if not
+	 */
+	public static function sqlHash( $hash ) {
+		if( preg_match( '/[^a-z0-9]/i', $hash ) ) die( "Bad hash \"$hash\"" );
+		$hash = $hash ? "0x$hash" : 'NULL';
+		return $hash;
+	}
+
+	/**
+	 * Format a field value ready for an SQL query
+	 */
+	public static function sqlField( $val, $type ) {
+		if( is_null( $val ) ) return 'NULL';
+		if( is_array( $val ) ) $val = json_encode( $val );
+		$db = JFactory::getDbo();
+		switch( substr( $type, 0, 1 ) ) {
+			case 'I': $val = is_numeric( $val ) ? intval( $val ) : die( "Bad integer: \"$val\"" );;
+					  break;
+			case 'D': $val = is_numeric( $val ) ? $val : die( "Bad number: \"$val\"" );
+					  break;
+			case 'B': $val = self::sqlHash( $val );
+					  break;
+			default: $val = $db->quote( $val );
+		}
+		if( empty( (string)$val ) ) return '""';
+		return $val;
+	}
+
+	/**
+	 * Format the returned SQL fields accounting for hex cols
+	 */
+	public static function sqlFields() {
+		static $fields;
+		if( $fields ) return $fields;
+		$fields = array();
+		foreach( self::$tableStruct as $field => $type ) {
+			if( substr( $type, 0, 1 ) == 'B' ) $fields[] = "hex(`$field`) as `$field`";
+			else $fields[] = "`$field`";
+		}
+		$fields = implode( ',', $fields );
+		return $fields;
+	}
+
+	/**
+	 * Load an object's row from the DB given its ID
+	 */
+	public static function getObject( $id ) {
+		if( !$id ) die( __METHOD__ . ' called without an ID' );
+		$db = JFactory::getDbo();
+		$table = self::sqlTable();
+		$all = self::sqlFields();
+		$db->setQuery( "SELECT $all FROM $table WHERE `id`=0x$id" );
+		$db->query();
+		if( !$row = $db->loadAssoc() ) return false;
+		$data = $row['data'];
+		if( substr( $data, 0, 1 ) == '{' || substr( $data, 0, 1 ) == '[' ) $row['data'] = json_decode( $data, true );
+		return $row;
 	}
 }
 

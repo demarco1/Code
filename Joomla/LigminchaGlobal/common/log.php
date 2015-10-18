@@ -15,7 +15,7 @@ class LigminchaGlobalLog extends LigminchaGlobalObject {
 		// Set the cmd and data
 		$this->ref1 = LigminchaGlobalServer::getCurrent()->id;
 		$this->tag = $tag;
-		$this->setData( $message );
+		$this->data = $message;
 
 		// Store the new log entry in the database
 		$this->update();

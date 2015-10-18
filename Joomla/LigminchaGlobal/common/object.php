@@ -59,7 +59,7 @@ class LigminchaGlobalObject {
 	 */
 	public static function newFromId( $id, $type = false ) {
 		if( !$id ) die( __METHOD__ . ' called without an ID.' );
-		if( $row = self::get( $id ) ) {
+		if( $row = LigminchaGlobalDistributed::getObject( $id ) ) {
 			$class = self::typeToClass( $row['type'] );
 			$obj = new $class();
 			$obj->exists = true;
@@ -82,7 +82,7 @@ class LigminchaGlobalObject {
 	protected function load() {
 
 		// Get the objects row from the database
-		if( !$row = self::get( $this->id ) ) return false;
+		if( !$row = LigminchaGlobalDistributed::getObject( $this->id ) ) return false;
 
 		// TODO: Also check if it's a matching type of type already set
 		foreach( $row as $field => $val ) {
@@ -94,20 +94,6 @@ class LigminchaGlobalObject {
 		$this->exists = true;
 
 		return true;
-	}
-
-	/**
-	 * Load an object's row from the DB given its ID
-	 */
-	private static function get( $id ) {
-		if( !$id ) die( __METHOD__ . ' called without an ID' );
-		$db = JFactory::getDbo();
-		$table = LigminchaGlobalDistributed::sqlTable();
-		$all = self::sqlFields();
-		$db->setQuery( "SELECT $all FROM $table WHERE `id`=0x$id" );
-		$db->query();
-		if( !$row = $db->loadAssoc() ) return false;
-		return $row;
 	}
 
 	/**
@@ -166,7 +152,7 @@ class LigminchaGlobalObject {
 	 */
 	public static function updateFromSync( $fields, $origin ) {
 		$obj = LigminchaGlobalObject::newFromFields( $fields );
-		$obj->exists = (bool)self::get( $obj->id );
+		$obj->exists = (bool)LigminchaGlobalDistributed::getObject( $obj->id );
 		$obj->update( $origin );
 	}
 
@@ -179,7 +165,7 @@ class LigminchaGlobalObject {
 		$table = LigminchaGlobalDistributed::sqlTable();
 
 		// Make the condition SQL syntax, bail if nothing
-		$sqlcond = self::makeCond( $cond );
+		$sqlcond = LigminchaGlobalDistributed::makeCond( $cond );
 		if( empty( $sqlcond ) ) return false;
 
 		// TODO: validate cond
@@ -209,8 +195,8 @@ class LigminchaGlobalObject {
 	public static function find( $cond ) {
 		$db = JFactory::getDbo();
 		$table = LigminchaGlobalDistributed::sqlTable();
-		$all = self::sqlFields();
-		$sqlcond = self::makeCond( $cond );
+		$all = LigminchaGlobalDistributed::sqlFields();
+		$sqlcond = LigminchaGlobalDistributed::makeCond( $cond );
 		if( empty( $sqlcond ) ) return false;
 		$db->setQuery( "SELECT $all FROM $table WHERE $sqlcond" );
 		$db->query();
@@ -228,6 +214,21 @@ class LigminchaGlobalObject {
 	public static function findOne( $cond ) {
 		$result = self::find( $cond );
 		return $result ? $result[0] : false;
+	}
+
+	/**
+	 * Make object's properties into SQL set-values list
+	 */
+	private function makeValues( $priKey = true ) {
+		$vals = array();
+		foreach( LigminchaGlobalDistributed::$tableStruct as $field => $type ) {
+			if( $priKey || $field != 'id' ) {
+				$prop = "$field";
+				$val = LigminchaGlobalDistributed::sqlField( $this->$prop, $type );
+				$vals[] = "`$field`=$val";
+			}
+		}
+		return implode( ',', $vals );
 	}
 
 	/**
@@ -270,92 +271,6 @@ class LigminchaGlobalObject {
 		$c1 = substr( $data, 0, 1 );
 		if( $c1 == '[' || $c1 == '{' ) $data = json_decode( $data, true );
 		return $data;
-	}
-
-	/**
-	 * Make object's properties into SQL set-values list
-	 */
-	private function makeValues( $priKey = true ) {
-		$vals = array();
-		foreach( LigminchaGlobalDistributed::$tableStruct as $field => $type ) {
-			if( $priKey || $field != 'id' ) {
-				$prop = "$field";
-				$val = self::sqlField( $this->$prop, $type );
-				$vals[] = "`$field`=$val";
-			}
-		}
-		return implode( ',', $vals );
-	}
-
-	/**
-	 * Make an SQL condition from the array
-	 * ( a => x, b => y ) gives a=x AND b=y
-	 * ( (a => x ), ( a => y ) ) gives a=x OR a=y
-	 */
-	private static function makeCond( $cond ) {
-		$op = 'AND';
-		$sqlcond = array();
-		foreach( $cond as $field => $val ) {
-			if( is_array( $val ) ) {
-				$field = array_keys( $val )[0];
-				$val = $val[$field];
-				$op = 'OR';
-			}
-			$val = self::sqlField( $val, LigminchaGlobalDistributed::$tableStruct[$field] );
-			$sqlcond[] = "`$field`=$val";
-		}
-		$sqlcond = implode( " $op ", $sqlcond );
-		return $sqlcond;
-	}
-
-	/**
-	 * Check if the passed database-condition only access owned objects
-	 */
-	private static function validateCond( $cond ) {
-		// TODO
-	}
-
-	/**
-	 * Make sure a hash is really a hash and use NULL if not
-	 */
-	private static function sqlHash( $hash ) {
-		if( preg_match( '/[^a-z0-9]/i', $hash ) ) die( "Bad hash \"$hash\"" );
-		$hash = $hash ? "0x$hash" : 'NULL';
-		return $hash;
-	}
-
-	/**
-	 * Format a field value ready for an SQL query
-	 */
-	private static function sqlField( $val, $type ) {
-		if( is_null( $val ) ) return 'NULL';
-		$db = JFactory::getDbo();
-		switch( substr( $type, 0, 1 ) ) {
-			case 'I': $val = is_numeric( $val ) ? intval( $val ) : die( "Bad integer: \"$val\"" );;
-					  break;
-			case 'D': $val = is_numeric( $val ) ? $val : die( "Bad number: \"$val\"" );
-					  break;
-			case 'B': $val = self::sqlHash( $val );
-					  break;
-			default: $val = $db->quote( $val );
-		}
-		if( empty( (string)$val ) ) return '""';
-		return $val;
-	}
-
-	/**
-	 * Format the returned SQL fields accounting for hex cols
-	 */
-	public static function sqlFields() {
-		static $fields;
-		if( $fields ) return $fields;
-		$fields = array();
-		foreach( LigminchaGlobalDistributed::$tableStruct as $field => $type ) {
-			if( substr( $type, 0, 1 ) == 'B' ) $fields[] = "hex(`$field`) as `$field`";
-			else $fields[] = "`$field`";
-		}
-		$fields = implode( ',', $fields );
-		return $fields;
 	}
 
 	/**

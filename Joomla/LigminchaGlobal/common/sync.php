@@ -19,7 +19,7 @@ class LigminchaGlobalSync extends LigminchaGlobalObject {
 		if( $target ) $this->ref1 = $target->id;
 		if( $crud == 'U' ) $this->ref2 = $fields['id'];
 		$this->tag = $crud;
-		$this->setData( $fields );
+		$this->data = $fields;
 
 		// Sync objects are always unconditionally local
 		$this->flag( LG_LOCAL, true );
