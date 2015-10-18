@@ -109,11 +109,32 @@ lg.AppView = Backbone.View.extend({
 	}
 });
 
+
+/**
+ * Utility functions
+ */
+ 
+// Encodes data into the format requred by distributed.php
+lg.encodeData = function( data ) {
+}
+
+// Decodes distributed queue data
+lg.decodeData = function( data ) {
+}
+
+
+
 // Initialise our app
 lg.appView = new lg.AppView(); 
 
 // Connect the WebSocket
 if(typeof webSocket === 'object') {
+
+	// Make the ID the SSO session id + a unique ID for this socket
+	// NOTE - we won't need the second socket ID later because there will be only one socket per session
+	window.data.wsClientID = window.data.session . ':' . CryptoJS.SHA1(Math.floor(Math.random())).substr(5);
+	console.log(window.data.wsClientID);
+
 	window.ws = webSocket.connect();
 	//webSocket.disconnected( fn );
 	webSocket.subscribe( 'LigminchaGlobal', function(data) { console.log(data.msg) } );

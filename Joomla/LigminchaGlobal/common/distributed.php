@@ -224,6 +224,9 @@ class LigminchaGlobalDistributed {
 		$origin = array_shift( $queue );
 		$session = array_shift( $queue );
 
+		// Forward this queue to the WebSocket if it's active
+		self::sendToWebSocket( $queue, $session );
+
 		// Process each of the sync objects (this may lead to further re-routing sync objects being made)
 		foreach( $queue as $rev ) {
 			LigminchaGlobalSync::process( $rev['tag'], $rev['data'], $origin );
@@ -231,6 +234,20 @@ class LigminchaGlobalDistributed {
 
 		// Let client know that we've processed their sync data
 		return 'ok';
+	}
+
+	/**
+	 * Send data to the local WebSocket daemon if active
+	 */
+	private static function sendToWebSocket( $queue, $session ) {
+		if( WebSocket::isActive() ) {
+
+			// Set the ID of this WebSocket message to the session ID of the sender
+			WebSocket::$clientID = $session;
+
+			// Send queue to all clients
+			WebSocket::send( 'LigminchaGlobal', $queue );
+		}
 	}
 
 	/**

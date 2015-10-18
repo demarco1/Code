@@ -24,10 +24,13 @@ require_once( "$common/log.php" );
 require_once( "$common/sso.php" );
 
 // SSO: Check if this session has an SSO cookie and make the current session and user from it if so
-//LigminchaGlobalSSO::makeSessionFromCookie();
+LigminchaGlobalSSO::makeSessionFromCookie();
 
 // Instantiate the distributed class
-//new LigminchaGlobalDistributed();
+new LigminchaGlobalDistributed();
+
+// Make SSO session ID available to client-side
+$wgOut->addJsConfigVars( 'session', LigminchaGlobalSession::getCurrent()->id );
 
 // Send accumulated revisions
 //LigminchaGlobalDistributed::sendQueue();
@@ -84,6 +87,9 @@ else {
 		<script type="text/javascript" src="resources/fakemediawiki.js"><!-- Make MediaWiki environment look present for websocket.js --></script>
 		<script type="text/javascript"><!-- Information added dynamically by the PHP --><?php echo $script;?></script>
 		<!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
+		<script type="text/javascript" src="resources/sha1.js"></script>
+		<script type="text/javascript" src="resources/inflate.js"></script>
+		<script type="text/javascript" src="resources/deflate.js"></script>
 		<script type="text/javascript" src="resources/jquery.js"></script>
 		<script type="text/javascript" src="resources/underscore.js"></script>
 		<script type="text/javascript" src="resources/backbone.js"></script>
