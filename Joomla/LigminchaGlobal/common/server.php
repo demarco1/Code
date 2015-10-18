@@ -59,7 +59,6 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 			$config = JFactory::getConfig();
 			$id = self::hash( $config->get( 'secret' ) );
 			self::$current = self::newFromId( $id );
-
 			// If the object was newly created, populate with default initial data and save
 			if( !self::$current->tag ) {
 

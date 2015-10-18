@@ -30,7 +30,8 @@ LigminchaGlobalSSO::makeSessionFromCookie();
 new LigminchaGlobalDistributed();
 
 // Make SSO session ID available to client-side
-$wgOut->addJsConfigVars( 'session', LigminchaGlobalSession::getCurrent()->id );
+global $wgOut;
+$wgOut->addJsConfigVars( 'session', LigminchaGlobalSession::getCurrent() ? LigminchaGlobalSession::getCurrent()->id : 0 );
 
 // Send accumulated revisions
 //LigminchaGlobalDistributed::sendQueue();

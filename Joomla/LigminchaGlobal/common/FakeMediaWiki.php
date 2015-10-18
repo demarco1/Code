@@ -17,7 +17,8 @@ class MediaWiki {
 
 	function addJsConfigVars( $name, $value ) {
 		global $script;
-		$script .= "mw.data['$name']='$value';";
+		if( is_array( $value ) ) $value = json_encode( $value );
+		$script .= "\nmw.data.$name='$value';";
 	}
 
 	// For wfMessage()
@@ -29,6 +30,7 @@ class MediaWiki {
 function wfMessage( $msgkey ) {
 	return new MediaWiki( $msgKey );
 }
+global $wgExtensionCredits, $wgExtensionMessagesFiles, $wgOut, $wgResourceModules, $wgExtensionAssetsPath;
 $wgExtensionCredits = array( 'other' => array() );
 $wgExtensionMessagesFiles = array();
 $wgOut = new MediaWiki();
