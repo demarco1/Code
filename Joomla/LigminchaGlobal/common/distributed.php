@@ -218,18 +218,17 @@ class LigminchaGlobalDistributed {
 	 */
 	private static function recvQueue( $data ) {
 
-		// Unzip and decode the data
-		// TODO: decrypt using shared secret or public key
-		$queue =  self::decodeData( $data );
+		// Decode the data
+		$queue = $data = self::decodeData( $data );
 		$origin = array_shift( $queue );
 		$session = array_shift( $queue );
 
 		// Forward this queue to the WebSocket if it's active
-		self::sendToWebSocket( $queue, $session );
+		self::sendToWebSocket( $data, $session );
 
 		// Process each of the sync objects (this may lead to further re-routing sync objects being made)
-		foreach( $queue as $rev ) {
-			LigminchaGlobalSync::process( $rev['tag'], $rev['data'], $origin );
+		foreach( $queue as $sync ) {
+			LigminchaGlobalSync::process( $sync['tag'], $sync['data'], $origin );
 		}
 
 		// Let client know that we've processed their sync data
@@ -242,7 +241,7 @@ class LigminchaGlobalDistributed {
 	private static function sendToWebSocket( $queue, $session ) {
 		if( WebSocket::isActive() ) {
 
-			// Set the ID of this WebSocket message to the session ID of the sender
+			// Set the ID of this WebSocket message to the session ID of the sender so the WS server doesn't bounce it back to them
 			WebSocket::$clientID = $session;
 
 			// Send queue to all clients

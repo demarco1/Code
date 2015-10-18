@@ -122,11 +122,18 @@ lg.hash = function(s) {
 	return h.toUpperCase();
 };
 
-// Receive sync-object queue from a remote server (The JS version of the PHP LigminchaGlobalDistributed method ofthe same name)
-lg.recvQueue = function( data ) {
+// Receive sync-object queue from a remote server (The JS version of the PHP LigminchaGlobalDistributed::recvQueue)
+lg.recvQueue = function(queue) {
+	var origin = queue.shift();
+	var session = queue.shift();
+
+	// Process each of the sync objects (this may lead to further re-routing sync objects being made)
+	for( var i in queue ) {
+		this.process( queue[i].tag, queue[i].data, origin );
+	}
 };
 
-// Send the list of sync-objects (The JS version of the PHP LigminchaGlobalDistributed method ofthe same name)
+// Send the list of sync-objects (The JS version of the PHP LigminchaGlobalDistributed::sendQueue)
 lg.sendQueue = function( queue ) {
 };
 
@@ -140,6 +147,16 @@ lg.decodeData = function(data) {
 	return JSON.parse(data);
 };
 
+// Process an inbound sync object (JS version of LigminchaGlobalSync::process)
+lg.process = function( crud, fields, origin ) {
+	if(crud == 'U') {
+		// update/create
+		console.log('update received for ' + fields.id);
+	} else if(crud == 'D') {
+		// delete
+		console.log('delete received');
+	} else console.log('Unknown CRUD method "' + crud + '"');
+};
 
 /**
  * App initialisation
@@ -149,10 +166,15 @@ lg.decodeData = function(data) {
 lg.appView = new lg.AppView(); 
 
 // Connect the WebSocket
-// The wsClientID is the SSO session id + a unique ID for this socket
-// TODO: we won't need the second socket ID later because there will be only one socket per session
 if(typeof webSocket === 'object') {
+
+	// The wsClientID is the SSO session id + a unique ID for this socket
+	// TODO: we won't need the second socket ID later because there will be only one socket per session
 	mw.data.wsClientID = mw.data.session + ':' + lg.hash().substr(0,5);
+
+	// Creation the connection
 	lg.ws = webSocket.connect();
-	webSocket.subscribe( 'LigminchaGlobal', function(data) { console.log(data.msg) } );
+
+	// Subscribe to the LigminchaGlobal messages and send them to the recvQueue function
+	webSocket.subscribe( 'LigminchaGlobal', function(data) { lg.recvQueue(data.msg) });
 }

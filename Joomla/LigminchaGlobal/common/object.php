@@ -339,7 +339,7 @@ class LigminchaGlobalObject {
 					  break;
 			default: $val = $db->quote( $val );
 		}
-		return $val;
+		return (string)$val;
 	}
 
 	/**
