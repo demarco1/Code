@@ -300,7 +300,7 @@ class LigminchaGlobalDistributed {
 				$or = array();
 				foreach( $val as $v ) {
 					$v = self::sqlField( $v, self::$tableStruct[$field] );
-					$or[] = "`$field`=$val";
+					$or[] = "`$field`=$v";
 				}
 				$sqlcond[] = '(' . implode( ' OR ', $or ) . ')';
 			} else {
