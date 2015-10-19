@@ -27,4 +27,12 @@ class LigminchaGlobalLog extends LigminchaGlobalObject {
 	public static function newFromId( $id, $type = false ) {
 		return parent::newFromId( $id, LG_LOG );
 	}
+
+	/**
+	 * Add this type to $cond
+	 */
+	public static function select( $cond = array() ) {
+		$cond['type'] = LG_LOG;
+		return parent::select( $cond );
+	}
 }

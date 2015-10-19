@@ -87,5 +87,13 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 	public static function newFromId( $id, $type = false ) {
 		return parent::newFromId( $id, LG_SESSION );
 	}
+
+	/**
+	 * Add this type to $cond
+	 */
+	public static function select( $cond = array() ) {
+		$cond['type'] = LG_SESSION;
+		return parent::select( $cond );
+	}
 }
 
