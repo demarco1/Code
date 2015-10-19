@@ -117,7 +117,7 @@ class LigminchaGlobalObject {
 			$this->flag( LG_NEW, false );
 			$this->modified = self::timestamp();
 
-			$sqlVals = $this->makeValues( false );
+			$sqlVals = $this-sqlValues( false );
 			$db->setQuery( "UPDATE $table SET $sqlVals WHERE `id`=0x{$this->id}" );
 			$db->query();
 		}
@@ -136,7 +136,7 @@ class LigminchaGlobalObject {
 				else $this->owner =  LigminchaGlobalUser::getCurrent() ? LigminchaGlobalUser::getCurrent()->id : null;
 			}
 
-			$sqlVals = $this->makeValues();
+			$sqlVals = $this->sqlValues();
 			$db->setQuery( "REPLACE INTO $table SET $sqlVals" );
 			$db->query();
 		}
@@ -165,7 +165,7 @@ class LigminchaGlobalObject {
 		$table = LigminchaGlobalDistributed::sqlTable();
 
 		// Make the condition SQL syntax, bail if nothing
-		$sqlcond = LigminchaGlobalDistributed::makeCond( $cond );
+		$sqlcond = LigminchaGlobalDistributed::sqlCond( $cond );
 		if( empty( $sqlcond ) ) return false;
 
 		// TODO: validate cond
@@ -192,11 +192,11 @@ class LigminchaGlobalObject {
 	 * Find an object in the DB given the passed conditions
 	 * TODO: really inefficient at the moment
 	 */
-	public static function find( $cond ) {
+	public static function select( $cond ) {
 		$db = JFactory::getDbo();
 		$table = LigminchaGlobalDistributed::sqlTable();
 		$all = LigminchaGlobalDistributed::sqlFields();
-		$sqlcond = LigminchaGlobalDistributed::makeCond( $cond );
+		$sqlcond = LigminchaGlobalDistributed::sqlCond( $cond );
 		if( empty( $sqlcond ) ) return false;
 		$db->setQuery( "SELECT $all FROM $table WHERE $sqlcond" );
 		$db->query();
@@ -211,15 +211,15 @@ class LigminchaGlobalObject {
 	/**
 	 * Return just a single row instead of a list of rows
 	 */
-	public static function findOne( $cond ) {
-		$result = self::find( $cond );
+	public static function selectOne( $cond ) {
+		$result = self::select( $cond );
 		return $result ? $result[0] : false;
 	}
 
 	/**
 	 * Make object's properties into SQL set-values list
 	 */
-	private function makeValues( $priKey = true ) {
+	private function sqlValues( $priKey = true ) {
 		$vals = array();
 		foreach( LigminchaGlobalDistributed::$tableStruct as $field => $type ) {
 			if( $priKey || $field != 'id' ) {

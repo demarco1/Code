@@ -47,12 +47,7 @@ if( array_key_exists( 'sync', $_POST ) ) {
 else {
 
 	// These are the global objects made initially available to the app
-	$objects = LigminchaGlobalObject::find( array(
-		array( 'type' => LG_SERVER ),
-		array( 'type' => LG_USER ),
-		array( 'type' => LG_SESSION ),
-		array( 'type' => LG_VERSION ),
-	) );
+	$objects = LigminchaGlobalObject::select( array( 'type' => array( LG_SERVER, LG_USER, LG_SESSION ) ) );
 	$wgOut->addJsConfigVars( 'GlobalObjects', $objects );
 
 ?><!DOCTYPE html>

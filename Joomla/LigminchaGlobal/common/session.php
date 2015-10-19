@@ -23,8 +23,7 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 			if( LigminchaGlobalUser::getCurrent() ) {
 
 				// Load the existing session for this user if one exists, else create a new one
-				if( !self::$current = LigminchaGlobalObject::findOne( array(
-					'type'  => LG_SESSION,
+				if( !self::$current = LigminchaGlobalSession::selectOne( array(
 					'ref1'  => LigminchaGlobalServer::getCurrent()->id,
 					'owner' => LigminchaGlobalUser::getCurrent()->id
 				) ) ) {

@@ -58,7 +58,7 @@ class LigminchaGlobalSync extends LigminchaGlobalObject {
 			if( $server->isMaster && $private === false ) {
 
 				// Create targetted sync objects for all except self and origin
-				foreach( LigminchaGlobalServer::find( array( 'type' => LG_SERVER ) ) as $s ) {
+				foreach( LigminchaGlobalServer::select() as $s ) {
 					if( $s->id != $server->id && $s->id != $origin ) new LigminchaGlobalSync( $crud, $fields, $s );
 				}
 
@@ -76,7 +76,7 @@ class LigminchaGlobalSync extends LigminchaGlobalObject {
 
 				// If public, make targetted sync objects for all except self
 				else {
-					foreach( LigminchaGlobalServer::find( array( 'type' => LG_SERVER ) ) as $s ) {
+					foreach( LigminchaGlobalServer::select() as $s ) {
 						if( $s->id != $server->id ) new LigminchaGlobalSync( $crud, $fields, $s );
 					}
 				}

@@ -174,16 +174,16 @@ class LigminchaGlobalDistributed {
 	public static function sendQueue() {
 
 		// Get all LG_SYNC items, bail if none
-		if( !$revs = LigminchaGlobalObject::find( array( 'type' => LG_SYNC ) ) ) return false;
+		if( !$queue = LigminchaGlobalSync::select() ) return false;
 
 		// Make data streams for each target from the sync objects
 		$streams = array();
 		$server = LigminchaGlobalServer::getCurrent()->id;
 		$session = LigminchaGlobalSession::getCurrent() ? LigminchaGlobalSession::getCurrent()->id : 0;
-		foreach( $revs as $rev ) {
-			$target = LigminchaGlobalServer::newFromId( $rev->ref1 )->id;
-			if( array_key_exists( $target, $streams ) ) $streams[$target][] = $rev;
-			else $streams[$target] = array( $server, $session, $rev );
+		foreach( $queue as $sync ) {
+			$target = LigminchaGlobalServer::newFromId( $sync->ref1 )->id;
+			if( array_key_exists( $target, $streams ) ) $streams[$target][] = $sync;
+			else $streams[$target] = array( $server, $session, $sync );
 		}
 
 		//print '<pre>'; print_r($streams); print '</pre>';
@@ -292,22 +292,23 @@ class LigminchaGlobalDistributed {
 
 	/**
 	 * Make an SQL condition from the array
-	 * ( a => x, b => y ) gives a=x AND b=y
-	 * ( (a => x ), ( a => y ) ) gives a=x OR a=y
 	 */
-	public static function makeCond( $cond ) {
-		$op = 'AND';
+	public static function sqlCond( $cond ) {
 		$sqlcond = array();
 		foreach( $cond as $field => $val ) {
 			if( is_array( $val ) ) {
-				$field = array_keys( $val )[0];
-				$val = $val[$field];
-				$op = 'OR';
+				$or = array();
+				foreach( $val as $v ) {
+					$v = self::sqlField( $v, self::$tableStruct[$field] );
+					$or[] = "`$field`=$val";
+				}
+				$sqlcond[] = '(' . implode( ' OR ', $or ) . ')';
+			} else {
+				$val = self::sqlField( $val, self::$tableStruct[$field] );
+				$sqlcond[] = "`$field`=$val";
 			}
-			$val = self::sqlField( $val, self::$tableStruct[$field] );
-			$sqlcond[] = "`$field`=$val";
 		}
-		$sqlcond = implode( " $op ", $sqlcond );
+		$sqlcond = implode( ' AND ', $sqlcond );
 		return $sqlcond;
 	}
 
