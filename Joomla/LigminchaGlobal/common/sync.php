@@ -103,4 +103,9 @@ class LigminchaGlobalSync extends LigminchaGlobalObject {
 		$cond['type'] = LG_SYNC;
 		return parent::select( $cond );
 	}
+
+	public static function selectOne( $cond = array() ) {
+		$cond['type'] = LG_SYNC;
+		return parent::selectOne( $cond );
+	}
 }

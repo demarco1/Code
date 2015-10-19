@@ -89,4 +89,9 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 		$cond['type'] = LG_SERVER;
 		return parent::select( $cond );
 	}
+
+	public static function selectOne( $cond = array() ) {
+		$cond['type'] = LG_SERVER;
+		return parent::selectOne( $cond );
+	}
 }

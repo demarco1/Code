@@ -95,5 +95,10 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 		$cond['type'] = LG_SESSION;
 		return parent::select( $cond );
 	}
+
+	public static function selectOne( $cond = array() ) {
+		$cond['type'] = LG_SESSION;
+		return parent::selectOne( $cond );
+	}
 }
 
