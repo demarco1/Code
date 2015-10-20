@@ -54,7 +54,16 @@ lg.recvQueue = function(queue) {
 };
 
 // Send a list of sync-objects (The JS version of the PHP LigminchaGlobalDistributed::sendQueue)
+// TODO: needs testing
 lg.sendQueue = function(queue) {
+	var master = lg.Server.getMaster();
+	$.ajax({
+		type: 'POST',
+		url: master.attributes.id,
+		data: queue,
+		dataType: 'text',
+		success = function(text) { console.log( 'Sync post to master returned: ' + text ); }
+	});
 };
 
 // Encodes data into the format requred by distributed.php
