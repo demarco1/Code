@@ -20,6 +20,7 @@ lg.GlobalObject = Backbone.Model.extend({
 		else return (this.flags & flag) ? true : false;
 	},
 	update: function(fields) {
+		this.attributes = fields;
 		//this.save({ completed: !this.get('completed')});
 	},
 });

@@ -18,7 +18,7 @@ lg.select = function(cond) {
 	var objects = lg.ligminchaGlobal.toArray();
 	var list = [];
 	for(var i in objects) {
-		if(this.matches(objects[i], cond)) list.push(objects[i]);
+		if(this.match(objects[i], cond)) list.push(objects[i]);
 	}
 	return list;
 };
@@ -27,7 +27,7 @@ lg.select = function(cond) {
 lg.selectOne = function(cond) {
 	var list = this.select(cond);
 	if(list.length == 0) return false;
-	if(list.length > 0) console.log('selectOne produced more than one result, first picked');
+	if(list.length > 1) console.log('selectOne produced more than one result, first picked');
 	return list[0];
 };
 
@@ -35,11 +35,11 @@ lg.selectOne = function(cond) {
 // TODO: this wouldn't be needed if we were maintaining parameter indexes for the object collection
 // TODO: this should allow OR like the PHP equivalents do
 lg.match = function(obj, cond) {
-	var matches = true;
+	var match = true;
 	for( var i in cond ) {
-		if(obj[i] != cond[i]) match = false;
+		if(obj.attributes[i] != cond[i]) match = false;
 	}
-	return matches;
+	return match;
 };
 
 // Receive sync-object queue from a remote server (The JS version of the PHP LigminchaGlobalDistributed::recvQueue)
@@ -68,10 +68,20 @@ lg.decodeData = function(data) {
 };
 
 // Process an inbound sync object (JS version of LigminchaGlobalSync::process)
-lg.process = function(crud, fields, origin) {
+lg.process = function(crud, json, origin) {
+	var fields = this.decodeData(json);
 	if(crud == 'U') {
 		console.log('Update received for ' + fields.id);
-		lg.getObject(fields.id).update(fields);
+
+		var obj = lg.getObject(fields.id);
+		if(obj) {
+			console.log('Updating ' + fields.id);
+			obj.update(fields);
+		} else {
+			console.log('Creating ' + fields.id);
+			lg.ligminchaGlobal.create(fields);
+		}
+
 	} else if(crud == 'D') {
 		console.log('Delete received');
 		lg.del(fields);
@@ -80,6 +90,12 @@ lg.process = function(crud, fields, origin) {
 
 // Delete the objects that match the passed criteria
 lg.del = function(cond) {
+	var list = this.select(cond);
+	for( var i in list ) {
+		console.log('Deleting: ' + list[i].id);
+		console.log(lg.ligminchaGlobal);
+		lg.ligminchaGlobal.remove(list[i]);
+	}
 };
 
 // Hash that is compatible with the server-side

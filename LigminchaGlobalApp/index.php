@@ -59,10 +59,9 @@ else {
 	</head>
 	<body>
 		<!-- App HTML structure -->
-		<section id=todoapp">
+		<section id=objectapp">
 			<header id="header">
 				<h1>Servers</h1>
-				<input id="new-object" placeholder="Servers in the LichminchaGlobal network" autofocus>
 			</header>
 			<section id="main">
 				<ul id="server-list"></ul>
@@ -71,12 +70,7 @@ else {
 
 		<!-- Templates -->
 		<script type="text/template" id="item-template">
-			<div class="view">
-				<input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>>
-				<label><%- title %></label>
-				<input class="edit" value="<%- title %>">
-				<button class="destroy">remove</button>
-			</div>
+			<div class="view"><%- id %></div>
 		</script>  
 
 		<!-- Scripts -->
