@@ -3,16 +3,7 @@
  */
 
 'use strict';
-
-// LigminchaGlobal is a Backbone Collection class for all the distributed objects locally available
-lg.LigminchaGlobal = Backbone.Collection.extend({
-	model: lg.GlobalObject,
-	url: 'localhost',
-	//localStorage: new Store("ligminchaGlobal")
-});
-
-// Instance of the Collection
-lg.ligminchaGlobal = new lg.LigminchaGlobal();
+var lg = {};
 
 // Return the reference to an objects model given its GUID
 // TODO: we should maintain indexes for the main parameters for this method and select/selectOne

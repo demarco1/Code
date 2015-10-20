@@ -82,8 +82,6 @@ else {
 		<!-- Scripts -->
 		<script type="text/javascript" src="resources/fakemediawiki.js"><!-- Make MediaWiki environment look present for websocket.js --></script>
 		<script type="text/javascript">
-			var lg = {};
-			var mw = window.mw;
 			<!-- Information added dynamically by the PHP -->
 			<?php echo $script;?>
 		</script>
