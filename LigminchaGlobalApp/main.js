@@ -13,7 +13,7 @@ lg.GlobalObject = Backbone.Model.extend({
 		completed: false
 	},
 	toggle: function(){
-		this.save({ completed: !this.get('completed')});
+		//this.save({ completed: !this.get('completed')});
 	}
 });
 
@@ -34,7 +34,8 @@ lg.Session = lg.GlobalObject.extend({
  */
 lg.LigminchaGlobal = Backbone.Collection.extend({
 	model: lg.GlobalObject,
-	localStorage: new Store("ligminchaGlobal")
+	url: 'localhost',
+	//localStorage: new Store("ligminchaGlobal")
 });
 
 // instance of the Collection
@@ -94,9 +95,9 @@ lg.AppView = Backbone.View.extend({
 	el: '#objectapp',
 	initialize: function () {
 		this.input = this.$('#new-object');
-		lg.serverList.on('add', this.addAll, this);
-		lg.serverList.on('reset', this.addAll, this);
-		lg.serverList.fetch(); // Loads list from local storage
+		lg.ligminchaGlobal.on('add', this.addAll, this);
+		lg.ligminchaGlobal.on('reset', this.addAll, this);
+		lg.ligminchaGlobal.fetch(); // Loads list from local storage
 	},
 	events: {
 		'keypress #new-object': 'createObjectOnEnter'
@@ -105,7 +106,7 @@ lg.AppView = Backbone.View.extend({
 		if ( e.which !== 13 || !this.input.val().trim() ) { // ENTER_KEY = 13
 			return;
 		}
-		lg.serverList.create(this.newAttributes());
+		lg.ligminchaGlobal.create(this.newAttributes());
 		this.input.val(''); // clean input box
 	},
 	addOne: function(obj){
@@ -114,7 +115,8 @@ lg.AppView = Backbone.View.extend({
 	},
 	addAll: function(){
 		this.$('#server-list').html(''); // clean the server list
-		lg.serverList.each(this.addOne, this);
+		console.log(lg.ligminchaGlobal.toArray());
+		lg.ligminchaGlobal.each(this.addOne, this);
 	},
 	newAttributes: function(){
 		return {
@@ -128,6 +130,15 @@ lg.AppView = Backbone.View.extend({
 /**
  * Utility functions
  */
+
+// Return the reference to an objects model given its GUID
+// TODO: we should maintain indexes for the main parameters for this method and select/selectOne
+lg.getObject = function(id) {
+	var found = false;
+	lg.LigminchaGlobal.each(function(obj) {
+//		if(obj.id == id)
+	}, this);
+};
 
 // Hash that is compatible with the server-side
 lg.hash = function(s) {
@@ -181,7 +192,11 @@ lg.process = function(crud, fields, origin) {
  */
 
 // Initialise our app
-lg.appView = new lg.AppView(); 
+lg.appView = new lg.AppView();
+
+// Populate the ligminchaGlobal collection with the initial objects sent from the backend
+var objects = mw.config.get('GlobalObjects');
+for( var i in objects) lg.ligminchaGlobal.create(objects[i]);
 
 // Connect the WebSocket
 if(typeof webSocket === 'object') {
