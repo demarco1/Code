@@ -1,46 +1,4 @@
 'use strict';
-var lg = {};
-var mw = window.mw;
-
-/**
- * Backbone Models
- */
-
-// This is the model common to all global objects
-lg.GlobalObject = Backbone.Model.extend({
-	defaults: {
-		title: '',
-		completed: false
-	},
-	toggle: function(){
-		//this.save({ completed: !this.get('completed')});
-	}
-});
-
-// Server sub-class
-lg.Server = lg.GlobalObject.extend({
-});
-
-// User sub-class
-lg.User = lg.GlobalObject.extend({
-});
-
-// Session sub-class
-lg.Session = lg.GlobalObject.extend({
-});
-
-/**
- * LigminchaGlobal - Backbone Collection for all the distributed objects locally available
- */
-lg.LigminchaGlobal = Backbone.Collection.extend({
-	model: lg.GlobalObject,
-	url: 'localhost',
-	//localStorage: new Store("ligminchaGlobal")
-});
-
-// instance of the Collection
-lg.ligminchaGlobal = new lg.LigminchaGlobal();
-
 
 /**
  * Backbone Views
@@ -115,7 +73,6 @@ lg.AppView = Backbone.View.extend({
 	},
 	addAll: function(){
 		this.$('#server-list').html(''); // clean the server list
-		console.log(lg.ligminchaGlobal.toArray());
 		lg.ligminchaGlobal.each(this.addOne, this);
 	},
 	newAttributes: function(){
@@ -127,65 +84,6 @@ lg.AppView = Backbone.View.extend({
 });
 
 
-/**
- * Utility functions
- */
-
-// Return the reference to an objects model given its GUID
-// TODO: we should maintain indexes for the main parameters for this method and select/selectOne
-lg.getObject = function(id) {
-	var found = false;
-	lg.LigminchaGlobal.each(function(obj) {
-//		if(obj.id == id)
-	}, this);
-};
-
-// Hash that is compatible with the server-side
-lg.hash = function(s) {
-	var h = CryptoJS.SHA1(s) + "";
-	return h.toUpperCase();
-};
-
-// Generate a new globally unique ID
-lg.uuid = function() {
-	return this.hash(Math.random() + "");
-};
-
-// Receive sync-object queue from a remote server (The JS version of the PHP LigminchaGlobalDistributed::recvQueue)
-lg.recvQueue = function(queue) {
-	var origin = queue.shift();
-	var session = queue.shift();
-
-	// Process each of the sync objects (this may lead to further re-routing sync objects being made)
-	for( var i in queue ) {
-		this.process( queue[i].tag, queue[i].data, origin );
-	}
-};
-
-// Send the list of sync-objects (The JS version of the PHP LigminchaGlobalDistributed::sendQueue)
-lg.sendQueue = function(queue) {
-};
-
-// Encodes data into the format requred by distributed.php
-lg.encodeData = function(json) {
-	return JSON.stringify(json);
-};
-
-// Decodes distributed queue data
-lg.decodeData = function(data) {
-	return JSON.parse(data);
-};
-
-// Process an inbound sync object (JS version of LigminchaGlobalSync::process)
-lg.process = function(crud, fields, origin) {
-	if(crud == 'U') {
-		// update/create
-		console.log('update received for ' + fields.id);
-	} else if(crud == 'D') {
-		// delete
-		console.log('delete received');
-	} else console.log('Unknown CRUD method "' + crud + '"');
-};
 
 /**
  * App initialisation

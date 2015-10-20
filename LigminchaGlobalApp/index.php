@@ -81,7 +81,12 @@ else {
 
 		<!-- Scripts -->
 		<script type="text/javascript" src="resources/fakemediawiki.js"><!-- Make MediaWiki environment look present for websocket.js --></script>
-		<script type="text/javascript"><!-- Information added dynamically by the PHP --><?php echo $script;?></script>
+		<script type="text/javascript">
+			var lg = {};
+			var mw = window.mw;
+			<!-- Information added dynamically by the PHP -->
+			<?php echo $script;?>
+		</script>
 		<!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
 		<script type="text/javascript" src="resources/sha1.js"></script>
 		<script type="text/javascript" src="resources/jquery.js"></script>
@@ -89,6 +94,11 @@ else {
 		<script type="text/javascript" src="resources/backbone.js"></script>
 		<script type="text/javascript" src="resources/backbone.localStorage.js"><!-- Uses local storage so only one client needs to use the WebSocket--></script>
 		<script type="text/javascript" src="resources/WebSocket/websocket.js"><!-- WebSocket object from the MediaWiki WebSockets extension --></script>
+		<script type="text/javascript" src="distributed.js"><!-- Main distributed database functionality --></script>
+		<script type="text/javascript" src="object.js"><!-- Distributed object base class --></script>
+		<script type="text/javascript" src="server.js"></script>
+		<script type="text/javascript" src="user.js"></script>
+		<script type="text/javascript" src="session.js"></script>
 		<script type="text/javascript" src="main.js"><!-- Main app code --></script>
 	</body>
 </html><?php
