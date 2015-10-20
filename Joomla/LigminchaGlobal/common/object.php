@@ -256,24 +256,6 @@ class LigminchaGlobalObject {
 	}
 
 	/**
-	 * Set the object's data field
-	 */
-	public function setData( $data ) {
-		if( is_array( $data ) ) $data = json_encode( $data );
-		$this->data = $data;
-	}
-
-	/**
-	 * Get an object's data
-	 */
-	public function getData() {
-		$data = $this->data;
-		$c1 = substr( $data, 0, 1 );
-		if( $c1 == '[' || $c1 == '{' ) $data = json_decode( $data, true );
-		return $data;
-	}
-
-	/**
 	 * Convert a DB row assoc array into a LigminchaGlobalObject or sub-class
 	 */
 	public static function newFromFields( $fields ) {

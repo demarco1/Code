@@ -3,9 +3,11 @@ var lg = {};
 var mw = window.mw;
 
 /**
- * Models
+ * Backbone Models
  */
-lg.Server = Backbone.Model.extend({
+
+// This is the model common to all global objects
+lg.GlobalObject = Backbone.Model.extend({
 	defaults: {
 		title: '',
 		completed: false
@@ -15,20 +17,32 @@ lg.Server = Backbone.Model.extend({
 	}
 });
 
+// Server sub-class
+lg.Server = lg.GlobalObject.extend({
+});
+
+// User sub-class
+lg.User = lg.GlobalObject.extend({
+});
+
+// Session sub-class
+lg.Session = lg.GlobalObject.extend({
+});
+
 /**
- * Collections
+ * LigminchaGlobal - Backbone Collection for all the distributed objects locally available
  */
-lg.ServerList = Backbone.Collection.extend({
-	model: lg.Server,
+lg.LigminchaGlobal = Backbone.Collection.extend({
+	model: lg.GlobalObject,
 	localStorage: new Store("ligminchaGlobal")
 });
 
 // instance of the Collection
-lg.serverList = new lg.ServerList();
+lg.ligminchaGlobal = new lg.LigminchaGlobal();
 
 
 /**
- * Views
+ * Backbone Views
  */
 
 // renders individual server item
