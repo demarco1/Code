@@ -3,6 +3,8 @@
  */
 
 'use strict';
+
+// The app is all contained in this object
 var lg = {};
 
 // Return the reference to an objects model given its GUID
