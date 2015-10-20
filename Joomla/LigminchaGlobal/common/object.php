@@ -147,39 +147,6 @@ class LigminchaGlobalObject {
 	}
 
 	/**
-	 * This is the update interface used by incoming sync objects being processed
-	 * - Create a local object from the sync object so we can call the regular update method on it
-	 */
-	public static function updateFromSync( $fields, $origin ) {
-		$obj = LigminchaGlobalObject::newFromFields( $fields );
-		$obj->exists = (bool)LigminchaGlobalDistributed::getObject( $obj->id );
-		$obj->update( $origin );
-	}
-
-	/**
-	 * Delete objects matching the condition array
-	 * - this is used for processing sync objects and normal delete calls alike
-	 */
-	public static function del( $cond, $origin = false, $silent = false ) {
-		$db = JFactory::getDbo();
-		$table = LigminchaGlobalDistributed::sqlTable();
-
-		// Make the condition SQL syntax, bail if nothing
-		$sqlcond = LigminchaGlobalDistributed::sqlCond( $cond );
-		if( empty( $sqlcond ) ) return false;
-
-		// TODO: validate cond
-		// TODO: check no LG_LOCAL in results
-
-		// Do the deletion
-		$db->setQuery( "DELETE FROM $table WHERE $sqlcond" );
-		$db->query();
-
-		// Add sync object(s) depending on the context of this change
-		if( !$silent ) LigminchaGlobalSync::create( 'D', $cond, $origin );
-	}
-
-	/**
 	 * Set, reset or return a flag bit
 	 */
 	public function flag( $flag, $set = null ) {

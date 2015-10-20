@@ -34,10 +34,10 @@ class LigminchaGlobalSync extends LigminchaGlobalObject {
 	 * - more sync objects may be created for re-routing purposes
 	 */
 	public static function process( $crud, $fields, $origin ) {
-		if( $crud == 'U' ) $method = 'updateFromSync';
+		if( $crud == 'U' ) $method = 'update';
 		elseif( $crud == 'D' ) $method = 'del';
 		else die( "Unknown CRUD method \"$crud\"" );
-		call_user_func( "LigminchaGlobalObject::$method", $fields, $origin );
+		call_user_func( "LigminchaGlobalDistributed::$method", $fields, $origin );
 	}
 
 	/**

@@ -74,7 +74,7 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 	 * - destroy all sessions associated with this user/server in case there are more than one somehow
 	 */
 	public static function delCurrent() {
-		LigminchaGlobalObject::del( array(
+		LigminchaGlobalDistributed::del( array(
 			'type' => LG_SESSION,
 			'ref1' => LigminchaGlobalServer::getCurrent()->id,
 			'owner' => LigminchaGlobalUser::getCurrent()->id

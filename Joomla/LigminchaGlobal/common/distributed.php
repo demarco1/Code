@@ -202,7 +202,7 @@ class LigminchaGlobalDistributed {
 			$result = self::post( $url, array( self::$cmd => $data ) );
 
 			// If result is success, remove all sync objects destined for this target server
-			if( $result == LG_SUCCESS ) LigminchaGlobalObject::del( array( 'type' => LG_SYNC, 'ref1' => $target ), false, true );
+			if( $result == LG_SUCCESS ) LigminchaGlobalDistributed::del( array( 'type' => LG_SYNC, 'ref1' => $target ), false, true );
 			else die( "Failed to post outgoing sync data ($result)" );
 		}
 
@@ -377,6 +377,39 @@ class LigminchaGlobalDistributed {
 		$data = $row['data'];
 		if( substr( $data, 0, 1 ) == '{' || substr( $data, 0, 1 ) == '[' ) $row['data'] = json_decode( $data, true );
 		return $row;
+	}
+
+	/**
+	 * This is the update interface used by incoming sync objects being processed
+	 * - Create a local object from the sync object so we can call the regular update method on it
+	 */
+	public static function update( $fields, $origin ) {
+		$obj = LigminchaGlobalObject::newFromFields( $fields );
+		$obj->exists = (bool)self::getObject( $obj->id );
+		$obj->update( $origin );
+	}
+
+	/**
+	 * Delete objects matching the condition array
+	 * - this is used for processing sync objects and normal delete calls alike
+	 */
+	public static function del( $cond, $origin = false, $silent = false ) {
+		$db = JFactory::getDbo();
+		$table = self::sqlTable();
+
+		// Make the condition SQL syntax, bail if nothing
+		$sqlcond = self::sqlCond( $cond );
+		if( empty( $sqlcond ) ) return false;
+
+		// TODO: validate cond
+		// TODO: check no LG_LOCAL in results
+
+		// Do the deletion
+		$db->setQuery( "DELETE FROM $table WHERE $sqlcond" );
+		$db->query();
+
+		// Add sync object(s) depending on the context of this change
+		if( !$silent ) LigminchaGlobalSync::create( 'D', $cond, $origin );
 	}
 }
 
