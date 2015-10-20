@@ -91,6 +91,9 @@ lg.AppView = Backbone.View.extend({
  * App initialisation
  */
 
+// Remove automatic data synchronisation with the back-end
+Backbone.sync = function(method, model, options) { };
+
 // Initialise our app
 lg.appView = new lg.AppView();
 

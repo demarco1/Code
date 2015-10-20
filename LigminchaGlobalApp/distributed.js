@@ -62,7 +62,7 @@ lg.sendQueue = function(queue) {
 		url: master.attributes.id,
 		data: queue,
 		dataType: 'text',
-		success = function(text) { console.log( 'Sync post to master returned: ' + text ); }
+		success: function(text) { console.log( 'Sync post to master returned: ' + text ); }
 	});
 };
 
@@ -125,8 +125,4 @@ lg.typeToClass = function(type) {
 	if(type in lg.classes) return lg.classes[type];
 	else console.log('No class for unknown type: ' + type);
 	return 'GlobalObject';
-};
-
-// Remove automatic data synchronisation with the back-end
-Backbone.sync = function(method, model, options) {
 };
