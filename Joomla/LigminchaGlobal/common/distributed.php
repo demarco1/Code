@@ -384,6 +384,7 @@ class LigminchaGlobalDistributed {
 	 * - Create a local object from the sync object so we can call the regular update method on it
 	 */
 	public static function update( $fields, $origin ) {
+		if( !is_array( $fields ) ) die( 'Fields must be an array' );
 		$obj = LigminchaGlobalObject::newFromFields( $fields );
 		$obj->exists = (bool)self::getObject( $obj->id );
 		$obj->update( $origin );

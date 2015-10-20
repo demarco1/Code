@@ -37,6 +37,7 @@ class LigminchaGlobalSync extends LigminchaGlobalObject {
 		if( $crud == 'U' ) $method = 'update';
 		elseif( $crud == 'D' ) $method = 'del';
 		else die( "Unknown CRUD method \"$crud\"" );
+		if( !is_array( $fields ) ) $fields = json_decode( $fields, true );
 		call_user_func( "LigminchaGlobalDistributed::$method", $fields, $origin );
 	}
 

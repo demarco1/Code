@@ -117,7 +117,7 @@ class LigminchaGlobalObject {
 			$this->flag( LG_NEW, false );
 			$this->modified = self::timestamp();
 
-			$sqlVals = $this-sqlValues( false );
+			$sqlVals = $this->sqlValues( false );
 			$db->setQuery( "UPDATE $table SET $sqlVals WHERE `id`=0x{$this->id}" );
 			$db->query();
 		}
@@ -227,7 +227,7 @@ class LigminchaGlobalObject {
 	 */
 	public static function newFromFields( $fields ) {
 		$class = 'LigminchaGlobalObject';
-		if( array_key_exists( 'type', self::$classes ) ) {
+		if( array_key_exists( $fields['type'], self::$classes ) ) {
 			$c = 'LigminchaGlobal' . self::$classes[$fields['type']];
 			if( !class_exists( $c ) ) $class = $c;
 		}
