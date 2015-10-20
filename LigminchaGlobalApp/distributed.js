@@ -93,7 +93,6 @@ lg.del = function(cond) {
 	var list = this.select(cond);
 	for( var i in list ) {
 		console.log('Deleting: ' + list[i].id);
-		console.log(lg.ligminchaGlobal);
 		lg.ligminchaGlobal.remove(list[i]);
 	}
 };

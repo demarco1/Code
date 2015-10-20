@@ -23,9 +23,6 @@ require_once( "$common/session.php" );
 require_once( "$common/log.php" );
 require_once( "$common/sso.php" );
 
-// SSO: Check if this session has an SSO cookie and make the current session and user from it if so
-LigminchaGlobalSSO::makeSessionFromCookie();
-
 // Instantiate the distributed class
 new LigminchaGlobalDistributed();
 

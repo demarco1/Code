@@ -1,5 +1,13 @@
 'use strict';
 
+var LG_LOG      = 1;
+var LG_SERVER   = 2;
+var LG_USER     = 3;
+var LG_SESSION  = 4;
+var LG_SYNC     = 5;
+var LG_VERSION  = 6;
+var LG_DATABASE = 7;
+
 /**
  * Backbone Views
  */
@@ -7,9 +15,32 @@
 // renders individual server item
 lg.ServerView = Backbone.View.extend({
 	tagName: 'li',
-	template: _.template($('#item-template').html()),
+	//template: _.template($('#item-template').html()),
 	render: function(){
-		this.$el.html(this.template(this.model.toJSON()));
+		//this.$el.html(this.template(this.model.toJSON()));
+		var server = this.model.attributes;
+		var html = server.tag;
+		var users = lg.select({type: LG_USER, ref1: server.id});
+		if(users) {
+			html += '<ul>';
+			for( var i in users ) {
+				var user = users[i].attributes;
+				html += '<li>' + user.id + '</li>';
+				var sessions = lg.select({type: LG_SESSION, owner: user.id});
+				if(sessions) {
+					html += '<ul>';
+					for( var j in sessions ) {
+						var session = sessions[i].attributes;
+						html += '<li>' + session.id + '</li>';
+					}
+					html += '</ul>';
+				}
+				
+			}
+			html += '</ul>';
+		}
+
+		this.$el.html(html);
 		return this; // enable chained calls
 	},
 	initialize: function(){
@@ -28,18 +59,19 @@ lg.ServerView = Backbone.View.extend({
 lg.AppView = Backbone.View.extend({
 	el: '#objectapp',
 	initialize: function () {
-		lg.ligminchaGlobal.on('add', this.addAll, this);
-		lg.ligminchaGlobal.on('remove', this.addAll, this);
-		lg.ligminchaGlobal.on('reset', this.addAll, this);
+		lg.ligminchaGlobal.on('add', this.render, this);
+		lg.ligminchaGlobal.on('remove', this.render, this);
 		//lg.ligminchaGlobal.fetch(); // Loads list from local storage
 	},
-	addOne: function(obj){
-		var view = new lg.ServerView({model: obj}); // <======================================================================================================
-		$('#server-list').append(view.render().el);
-	},
-	addAll: function(){
-		$('#server-list').html(''); // clean the server list
-		lg.ligminchaGlobal.each(this.addOne, this);
+
+	// Add all the server objects to the list using each server object as its own model
+	render: function(){
+		$('#server-list').html('');
+		var servers = lg.select({type: LG_SERVER});
+		for( var i in servers ) {
+			var view = new lg.ServerView({model: servers[i]});
+			$('#server-list').append(view.render().el);
+		}
 	},
 });
 

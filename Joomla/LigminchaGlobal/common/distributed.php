@@ -61,11 +61,12 @@ class LigminchaGlobalDistributed {
 
 		// Instantiate the main global objects
 		$server = LigminchaGlobalServer::getCurrent();
-		if( !LG_STANDALONE ) {
-			LigminchaGlobalUser::getCurrent();
-			LigminchaGlobalSession::getCurrent();
-		}
-
+		LigminchaGlobalSSO::makeSessionFromCookie();
+if(!array_key_exists('sync',$_REQUEST)){
+print LigminchaGlobalUser::getCurrent()->id;
+print "<br>";
+print LigminchaGlobalSession::getCurrent()->id;
+}
 		// If this is a changes request commit the data (and re-route if master)
 		// - if the changes data is empty, then it's a request for initial table data
 		if( array_key_exists( self::$cmd, $_POST ) ) {
