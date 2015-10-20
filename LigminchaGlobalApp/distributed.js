@@ -107,3 +107,19 @@ lg.hash = function(s) {
 lg.uuid = function() {
 	return this.hash(Math.random() + "");
 };
+
+// Return a unix style timestamp
+lg.timestamp = function() {
+	// TODO
+};
+
+// Convert a class constant into a class name
+lg.typeToClass = function(type) {
+	if(type in lg.classes) return lg.classes[type];
+	else console.log('No class for unknown type: ' + type);
+	return 'GlobalObject';
+};
+
+// Remove automatic data synchronisation with the back-end
+Backbone.sync = function(method, model, options) {
+};
