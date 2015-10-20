@@ -18,8 +18,12 @@ lg.GlobalObject = Backbone.Model.extend({
 		else return (this.flags & flag) ? true : false;
 	},
 
-	update: function(fields) {
+	update: function(fields, local) {
 		this.attributes = fields;
+
+		// If this change originated locally, send notification to the master server
+		// TODO: needs testing and origin, session added
+		if(local) lg.sendQueue([0,0,fields);
 	},
 });
 

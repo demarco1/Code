@@ -53,7 +53,7 @@ lg.recvQueue = function(queue) {
 	}
 };
 
-// Send the list of sync-objects (The JS version of the PHP LigminchaGlobalDistributed::sendQueue)
+// Send a list of sync-objects (The JS version of the PHP LigminchaGlobalDistributed::sendQueue)
 lg.sendQueue = function(queue) {
 };
 
@@ -72,7 +72,6 @@ lg.process = function(crud, json, origin) {
 	var fields = this.decodeData(json);
 	if(crud == 'U') {
 		console.log('Update received for ' + fields.id);
-
 		var obj = lg.getObject(fields.id);
 		if(obj) {
 			console.log('Updating ' + fields.id);
@@ -81,7 +80,6 @@ lg.process = function(crud, json, origin) {
 			console.log('Creating ' + fields.id);
 			lg.ligminchaGlobal.create(fields);
 		}
-
 	} else if(crud == 'D') {
 		console.log('Delete received');
 		lg.del(fields);
