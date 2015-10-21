@@ -66,19 +66,19 @@ lg.sendQueue = function(queue) {
 	});
 };
 
-// Encodes data into the format requred by distributed.php
+// Encodes data into JSON format if it's an object
 lg.encodeData = function(json) {
-	return JSON.stringify(json);
+	return this.isObject(json) ? JSON.stringify(json) : json;
 };
 
-// Decodes distributed queue data
+// Decodes data if it's JSON encoded
 lg.decodeData = function(data) {
-	return JSON.parse(data);
+	return (data.charAt(0) === '{' || data.charAt(0) === '[') ? JSON.parse(data) : data;
 };
 
 // Process an inbound sync object (JS version of LigminchaGlobalSync::process)
 lg.process = function(crud, json, origin) {
-	var fields = this.decodeData(json);
+	var fields = json;//this.decodeData(json);
 	if(crud == 'U') {
 		console.log('Update received for ' + fields.id);
 		var obj = lg.getObject(fields.id);
@@ -91,6 +91,7 @@ lg.process = function(crud, json, origin) {
 		}
 	} else if(crud == 'D') {
 		console.log('Delete received');
+		console.log(fields);
 		lg.del(fields);
 	} else console.log('Unknown CRUD method "' + crud + '"');
 };
@@ -125,4 +126,9 @@ lg.typeToClass = function(type) {
 	if(type in lg.classes) return lg.classes[type];
 	else console.log('No class for unknown type: ' + type);
 	return 'GlobalObject';
+};
+
+// Return whether the passed item is an object or not
+lg.isObject = function isObject(item) {
+	return item === Object(item);
 };

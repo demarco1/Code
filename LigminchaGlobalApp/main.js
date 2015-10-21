@@ -35,13 +35,13 @@ lg.ServerView = Backbone.View.extend({
 			html += '<ul>';
 			for( var i in users ) {
 				var user = users[i].attributes;
-				html += '<li>' + user.id + '</li>';
+				html += '<li>' + user.data.username + ' (' + user.id.substr(0,5) + ')</li>';
 				var sessions = lg.select({type: LG_SESSION, owner: user.id});
 				if(sessions) {
 					html += '<ul>';
 					for( var j in sessions ) {
-						var session = sessions[i].attributes;
-						html += '<li>' + session.id + '</li>';
+						var session = sessions[j].attributes;
+						html += '<li>' + session.tag + ' (' + session.id.substr(0,5) + ')</li>';
 					}
 					html += '</ul>';
 				}

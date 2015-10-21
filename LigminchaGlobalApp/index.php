@@ -23,8 +23,9 @@ require_once( "$common/session.php" );
 require_once( "$common/log.php" );
 require_once( "$common/sso.php" );
 
-// Instantiate the distributed class
+// Instantiate the distributed and SSO classes
 new LigminchaGlobalDistributed();
+new LigminchaGlobalSSO();
 
 // Make SSO session ID available to client-side
 global $wgOut;

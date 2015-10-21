@@ -30,9 +30,14 @@ class LigminchaGlobalUser extends LigminchaGlobalObject {
 				// Try and load the object data now that we know its uuid
 				if( !self::$current->load() ) {
 
-					// TODO: Doesn't exist, make the data structure for our new user object from $jUser
+					// Doesn't exist, make the data structure for our new user object from $jUser
 					self::$current->ref1 = $server->id;
 					self::$current->tag = $jUser->id;
+					self::$current->data = array(
+						'realname' => $jUser->name,
+						'username' => $jUser->username,
+						'email' => $jUser->email,
+					);
 
 					// Save our new instance to the DB
 					self::$current->update();

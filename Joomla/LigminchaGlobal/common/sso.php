@@ -16,7 +16,7 @@ class LigminchaGlobalSSO {
 	private static $cmd = 'getcookie';
 
 	// The global SSO cookie name
-	private static $cookie = 'LigminchaSession';
+	public static $cookie = 'LigminchaSession';
 
 	function __construct() {
 
@@ -34,7 +34,14 @@ class LigminchaGlobalSSO {
 	 * Set the SSO cookie to the passed session id
 	 */
 	public static function setCookie( $sid ) {
-		return setcookie( self::$cookie, $sid );
+		return setcookie( self::$cookie, $sid, time() + LG_SESSION_DURATION );
+	}
+
+	/**
+	 * Delete the SSO cookie
+	 */
+	public function delCookie() {
+		return setCookie( self::$cookie, '', time() - 86400 );
 	}
 
 	/**
@@ -80,8 +87,8 @@ class LigminchaGlobalSSO {
 	 * Make a current session and current user from an SSO session ID cookie (called when running on a master standalone site)
 	 */
 	public static function makeSessionFromCookie() {
-		if( array_key_exists( LigminchaGlobalSSO::$cookie, $_COOKIE ) ) {
-			if( $session = LigminchaGlobalSession::selectOne( array( 'id' => $_COOKIE[LigminchaGlobalSSO::$cookie] ) ) ) {
+		if( array_key_exists( self::$cookie, $_COOKIE ) ) {
+			if( $session = LigminchaGlobalSession::selectOne( array( 'id' => $_COOKIE[self::$cookie] ) ) ) {
 				if( $user = LigminchaGlobalUser::newFromId( $session->owner ) ) {
 					LigminchaGlobalSession::setCurrent( $session );
 					LigminchaGlobalUser::setCurrent( $user );
@@ -90,3 +97,7 @@ class LigminchaGlobalSSO {
 		}
 	}
 }
+
+// If we're running on a non-standard port, add it to the cookie name (so that different ports act like different domains for testing)
+$port = $_SERVER['SERVER_PORT'];
+if( $port != 80 && $port != 443 ) LigminchaGlobalSSO::$cookie .= $port;

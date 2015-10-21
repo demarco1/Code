@@ -13,7 +13,7 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 	}
 
 	/**
-	 * Get/create current object instance
+	 * Get/create current session instance
 	 */
 	public static function getCurrent() {
 		$update = false;
@@ -22,26 +22,24 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 			// If there's a current user, get/make a current session
 			if( LigminchaGlobalUser::getCurrent() ) {
 
-				// Load the existing session for this user if one exists, else create a new one
-				if( !self::$current = LigminchaGlobalSession::selectOne( array(
-					'ref1'  => LigminchaGlobalServer::getCurrent()->id,
-					'owner' => LigminchaGlobalUser::getCurrent()->id
-				) ) ) {
+				// None found, create new
+				self::$current = new LigminchaGlobalSession();
 
-					// None found, create new
-					self::$current = new LigminchaGlobalSession();
+				// TODO: Doesn't exist, make the data structure for our new server object
+				self::$current->ref1 = LigminchaGlobalServer::getCurrent()->id;
+				self::$current->tag = self::getBrowser();
 
-					// TODO: Doesn't exist, make the data structure for our new server object
-					self::$current->ref1 = LigminchaGlobalServer::getCurrent()->id;
+				// Session only lives for five seconds in this initial form and doesn't route
+				self::$current->expire = self::timestamp() + 2;
+				self::$current->flag( LG_LOCAL, true );
+				self::$current->flag( LG_PRIVATE, true );
 
-					// Session only lives for five seconds in this initial form and doesn't route
-					self::$current->expire = self::timestamp() + 2;
-					self::$current->flag( LG_LOCAL, true );
-					self::$current->flag( LG_PRIVATE, true );
+				// Save our new instance to the DB
+				$update = true;
 
-					// Save our new instance to the DB
-					$update = true;
-				}
+				// And save the ID in the SSO cookie
+				LigminchaGlobalSSO::setCookie( self::$current->id );
+
 			} else self::$current = false;
 		}
 
@@ -71,14 +69,14 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 
 	/**
 	 * Destroy current session
-	 * - destroy all sessions associated with this user/server in case there are more than one somehow
 	 */
 	public static function delCurrent() {
-		LigminchaGlobalDistributed::del( array(
-			'type' => LG_SESSION,
-			'ref1' => LigminchaGlobalServer::getCurrent()->id,
-			'owner' => LigminchaGlobalUser::getCurrent()->id
-		) );
+
+		// Delete the global object
+		if( $session = LigminchaGlobalSession::getCurrent() ) LigminchaGlobalDistributed::del( array( 'id' => $session->id ) );
+
+		// Delete the SSO cookie
+		LigminchaGlobalSSO::delCookie();
 	}
 
 	/**
@@ -99,6 +97,31 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 	public static function selectOne( $cond = array() ) {
 		$cond['type'] = LG_SESSION;
 		return parent::selectOne( $cond );
+	}
+
+	public static function getBrowser() {
+		if(!array_key_exists('HTTP_USER_AGENT', $_SERVER)) return false;
+		$ExactBrowserNameUA=$_SERVER['HTTP_USER_AGENT'];
+		if (strpos(strtolower($ExactBrowserNameUA), "safari/") and strpos(strtolower($ExactBrowserNameUA), "opr/")) {
+			// OPERA
+			$ExactBrowserNameBR="Opera";
+		} elseIf (strpos(strtolower($ExactBrowserNameUA), "safari/") and strpos(strtolower($ExactBrowserNameUA), "chrome/")) {
+			// CHROME
+			$ExactBrowserNameBR="Chrome";
+		} elseIf (strpos(strtolower($ExactBrowserNameUA), "msie")) {
+			// INTERNET EXPLORER
+			$ExactBrowserNameBR="InternetExplorer";
+		} elseIf (strpos(strtolower($ExactBrowserNameUA), "firefox/")) {
+			// FIREFOX
+			$ExactBrowserNameBR="Firefox";
+		} elseIf (strpos(strtolower($ExactBrowserNameUA), "safari/") and strpos(strtolower($ExactBrowserNameUA), "opr/")==false and strpos(strtolower($ExactBrowserNameUA), "chrome/")==false) {
+			// SAFARI
+			$ExactBrowserNameBR="Safari";
+		} else {
+			// OUT OF DATA
+			$ExactBrowserNameBR="Device";
+		};
+		return $ExactBrowserNameBR;
 	}
 }
 

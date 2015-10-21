@@ -267,6 +267,16 @@ class LigminchaGlobalDistributed {
 	}
 
 	/**
+	 * Decode the data field of the passed DB row
+	 * - it may already be an array since it may have arrived from incoming sync queue
+	 */
+	public static function decodeDataField( $data ) {
+		if( is_array( $data ) ) return $data;
+		if( substr( $data, 0, 1 ) == '{' || substr( $data, 0, 1 ) == '[' ) $data = json_decode( $data, true );
+		return $data;
+	}
+
+	/**
 	 * POST data to the passed URL
 	 */
 	private static function post( $url, $data ) {
@@ -371,8 +381,7 @@ class LigminchaGlobalDistributed {
 		$db->setQuery( "SELECT $all FROM $table WHERE `id`=0x$id" );
 		$db->query();
 		if( !$row = $db->loadAssoc() ) return false;
-		$data = $row['data'];
-		if( substr( $data, 0, 1 ) == '{' || substr( $data, 0, 1 ) == '[' ) $row['data'] = json_decode( $data, true );
+		$row['data'] = self::decodeDataField( $row['data'] );
 		return $row;
 	}
 
@@ -410,4 +419,6 @@ class LigminchaGlobalDistributed {
 		if( !$silent ) LigminchaGlobalSync::create( 'D', $cond, $origin );
 	}
 }
+
+
 

@@ -233,6 +233,7 @@ class LigminchaGlobalObject {
 		}
 		$obj = new $class();
 		foreach( $fields as $field => $val ) $obj->$field = $val;
+		$obj->data = LigminchaGlobalDistributed::decodeDataField( $obj->data );
 		return $obj;
 	}
 
