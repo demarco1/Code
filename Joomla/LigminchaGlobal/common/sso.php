@@ -94,6 +94,7 @@ class LigminchaGlobalSSO {
 					LigminchaGlobalUser::setCurrent( $user );
 				}
 			}
+			if( !$session || !$user ) self::delCookie();
 		}
 	}
 }

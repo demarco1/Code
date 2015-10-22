@@ -25,19 +25,18 @@ lg.classes = {
 // renders individual server item
 lg.ServerView = Backbone.View.extend({
 	tagName: 'li',
-	//template: _.template($('#item-template').html()),
 	render: function(){
-		//this.$el.html(this.template(this.model.toJSON()));
 		var server = this.model.attributes;
-		var html = server.tag;
+		var html = '<a href="http://' + server.tag + '">' + server.tag + '</a>';
 		var users = lg.select({type: LG_USER, ref1: server.id});
 		if(users) {
 			html += '<ul>';
 			for( var i in users ) {
 				var user = users[i].attributes;
-				html += '<li>' + user.data.username + ' (' + user.id.substr(0,5) + ')</li>';
 				var sessions = lg.select({type: LG_SESSION, owner: user.id});
-				if(sessions) {
+				var col = sessions.length ? 'green' : 'red';
+				html += '<li style="color:' + col + '">' + user.data.username + ' (' + user.id.substr(0,5) + ')</li>';
+				if(sessions.length) {
 					html += '<ul>';
 					for( var j in sessions ) {
 						var session = sessions[j].attributes;
