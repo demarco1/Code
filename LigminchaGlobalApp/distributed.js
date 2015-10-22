@@ -42,6 +42,19 @@ lg.match = function(obj, cond) {
 	return match;
 };
 
+// Delete any objects that have pass thier expiry time
+lg.expire = function() {
+	var objects = lg.ligminchaGlobal.toArray();
+	var ts = this.timestamp();
+	for(var i in objects) {
+		var obj = objects[i];
+		if(obj.attributes.expire > 0 && obj.attributes.expire < ts) {
+			console.log(obj.attributes.id + ' expired');
+			lg.ligminchaGlobal.remove(obj);
+		}
+	}
+};
+
 // Receive sync-object queue from a remote server (The JS version of the PHP LigminchaGlobalDistributed::recvQueue)
 lg.recvQueue = function(queue) {
 	var origin = queue.shift();
@@ -132,4 +145,10 @@ lg.typeToClass = function(type) {
 // Return whether the passed item is an object or not
 lg.isObject = function isObject(item) {
 	return item === Object(item);
+};
+
+// Per-second ticker function
+lg.ticker = function() {
+	setTimeout(lg.ticker, 1000);
+	lg.expire();
 };

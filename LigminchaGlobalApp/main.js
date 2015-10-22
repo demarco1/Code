@@ -113,3 +113,6 @@ if(typeof webSocket === 'object') {
 	// Subscribe to the LigminchaGlobal messages and send them to the recvQueue function
 	webSocket.subscribe( 'LigminchaGlobal', function(data) { lg.recvQueue(data.msg) });
 }
+
+// Initialise the per-second ticker
+lg.ticker();
