@@ -40,8 +40,7 @@ lg.ObjectView = Backbone.View.extend({
 	tagName: 'div',
 	render: function() {
 		var obj = this.model.attributes;
-		var html = 'foo bar baz';
-		console.log('foo');
+		var html = lg.typeToClass(obj.type);
 		this.$el.html(html).dialog({
 			modal: true,
 			resizable: false,

@@ -8,15 +8,7 @@ var LG_SYNC     = 5;
 var LG_VERSION  = 6;
 var LG_DATABASE = 7;
 
-lg.classes = {
-	LG_LOG      : 'Log',
-	LG_SERVER   : 'Server',
-	LG_USER     : 'User',
-	LG_SESSION  : 'Session',
-	LG_SYNC     : 'Sync',
-	LG_VERSION  : 'Version',
-	LG_DATABASE : 'Database',
-};
+lg.classes = [0, 'Log', 'Server', 'User', 'Session', 'Sync', 'Version', 'Database'];
 
 // renders the full list of servers calling ServerView for each one.
 lg.AppView = Backbone.View.extend({
