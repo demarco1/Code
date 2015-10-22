@@ -61,6 +61,7 @@ class LigminchaGlobalDistributed {
 
 		// Instantiate the main global objects
 		$server = LigminchaGlobalServer::getCurrent();
+		LigminchaGlobalUser::checkAll();
 		LigminchaGlobalSSO::makeSessionFromCookie();
 
 		// If this is a changes request commit the data (and re-route if master)

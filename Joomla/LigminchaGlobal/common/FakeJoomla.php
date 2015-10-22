@@ -26,11 +26,22 @@ class JFactory {
 	}
 
 	/**
-	 * Return a fake user with id set to zero
+	 * Return a fake user with id set to zero if no ID supplied, or info supplied from DB otherwise
 	 */
-	public static function getUser() {
+	public static function getUser( $id = 0 ) {
 		$jUser = new StdClass();
-		$jUser->id = 0;
+		$jUser->id = $id;
+		if( $id ) {
+			$id = intval( $id );
+			$db = self::getDbo();
+			$db->setQuery( "SELECT name,username,email FROM `#__users` WHERE id=$id" );
+			$db->query();
+			if( $result = $db->loadAssoc() ) {
+				$jUser->name = $result['name'];
+				$jUser->username = $result['username'];
+				$jUser->email = $result['email'];
+			}
+		}
 		return $jUser;
 	}
 }
@@ -74,7 +85,7 @@ class Database {
 	public function setQuery( $sql ) {
 
 		// Make the table references into refs to ligmincha_global with the proper prefix
-		$this->query = preg_replace( '/`#__.+?`/', '`' . $this->prefix . LigminchaGlobalDistributed::$table . '`', $sql );
+		$this->query = preg_replace( '/`#__(.+?)`/', '`' . $this->prefix . '$1`', $sql );
 	}
 
 	public function query() {
