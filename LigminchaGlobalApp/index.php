@@ -81,7 +81,7 @@ else {
 		<!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
 		<script type="text/javascript" src="resources/sha1.js"></script>
 		<script type="text/javascript" src="resources/jquery.js"></script>
-		<script type="text/javascript" src="resources/jquery-ui/ui/jquery-ui.js"></script>
+		<script type="text/javascript" src="resources/jquery-ui/ui/minified/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="resources/underscore.js"></script>
 		<script type="text/javascript" src="resources/backbone.js"></script>
 		<script type="text/javascript" src="resources/WebSocket/websocket.js"><!-- WebSocket object from the MediaWiki WebSockets extension --></script>

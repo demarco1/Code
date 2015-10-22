@@ -22,12 +22,12 @@ lg.classes = {
  * Backbone Views
  */
 
-// renders individual server item
+// Renders individual server item with contained users and sessions
 lg.ServerView = Backbone.View.extend({
 	tagName: 'li',
-	render: function(){
+	render: function() {
 		var server = this.model.attributes;
-		var html = '<a href="http://' + server.tag + '">' + server.data.name + '</a>';
+		var html = '<a id="' + server.id + '" href="http://' + server.tag + '">' + server.data.name + '</a>';
 		var users = lg.select({type: LG_USER, ref1: server.id});
 		if(users) {
 			html += '<ul>';
@@ -48,8 +48,13 @@ lg.ServerView = Backbone.View.extend({
 			}
 			html += '</ul>';
 		}
-
 		this.$el.html(html);
+		$('li', this.$el).click(function() {
+			var id = $(this).attr('id');
+			if(id) {
+				var view = new lg.ObjectView({model: lg.get(id)});
+			}
+		});
 		return this; // enable chained calls
 	},
 	initialize: function(){
@@ -62,6 +67,31 @@ lg.ServerView = Backbone.View.extend({
 	destroy: function(){
 		this.model.destroy();
 	}
+});
+
+lg.ObjectView = Backbone.View.extend({
+	tagName: 'div',
+	render: function() {
+		var object = this.model.attributes;
+		var html = 'foo bar baz';
+		this.$el.html(html).dialog({
+			modal: true,
+			resizable: false,
+			width: 400,
+			title: obj.id.substr(0,5),
+			buttons: {
+				'close': function() {
+					$(this).dialog('close');
+					this.remove();
+				},
+			}
+		});
+		return this;
+	},
+	initialize: function(){
+		this.model.on('change', this.render, this);
+		this.model.on('destroy', this.remove, this);
+	},
 });
 
 // renders the full list of servers calling ServerView for each one.
