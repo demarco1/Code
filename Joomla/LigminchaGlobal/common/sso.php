@@ -40,7 +40,7 @@ class LigminchaGlobalSSO {
 	/**
 	 * Delete the SSO cookie
 	 */
-	public function delCookie() {
+	public static function delCookie() {
 		return setCookie( self::$cookie, '', time() - 86400 );
 	}
 

@@ -66,6 +66,11 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 				// Make it easy to find this server by domain
 				self::$current->tag = $_SERVER['HTTP_HOST'];
 
+				// Server information
+				self::$current->data = array(
+					'name' => $config->get( 'sitename' )
+				);
+
 				// Save our new instance to the DB
 				self::$current->update();
 			}

@@ -27,7 +27,7 @@ lg.ServerView = Backbone.View.extend({
 	tagName: 'li',
 	render: function(){
 		var server = this.model.attributes;
-		var html = '<a href="http://' + server.tag + '">' + server.tag + '</a>';
+		var html = '<a href="http://' + server.tag + '">' + server.data.name + '</a>';
 		var users = lg.select({type: LG_USER, ref1: server.id});
 		if(users) {
 			html += '<ul>';

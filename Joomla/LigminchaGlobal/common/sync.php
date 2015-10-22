@@ -11,7 +11,7 @@ class LigminchaGlobalSync extends LigminchaGlobalObject {
 	 * - this will be automatically put into the database for sending unless $target is false
 	 */
 	function __construct( $crud, $fields, $target ) {
-		if( $fields['type'] == LG_SYNC ) die( 'Can\'t construct sync object containing a sync object!' );
+		if( array_key_exists( 'type', $fields ) && $fields['type'] == LG_SYNC ) die( 'Can\'t construct sync object containing a sync object!' );
 		$this->type = LG_SYNC;
 		parent::__construct();
 
