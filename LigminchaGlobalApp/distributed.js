@@ -118,7 +118,8 @@ lg.uuid = function() {
 
 // Return a unix style timestamp
 lg.timestamp = function() {
-	// TODO
+	var date = new Date;
+	return date.getTime()/1000;
 };
 
 // Convert a class constant into a class name
