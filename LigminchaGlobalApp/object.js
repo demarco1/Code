@@ -35,4 +35,30 @@ lg.LigminchaGlobal = Backbone.Collection.extend({
 // Instance of the Collection
 lg.ligminchaGlobal = new lg.LigminchaGlobal();
 
-lg.ligminchaGlobal.update = null;
+// Base view class for individual objects
+lg.ObjectView = Backbone.View.extend({
+	tagName: 'div',
+	render: function() {
+		var obj = this.model.attributes;
+		var html = 'foo bar baz';
+		console.log('foo');
+		this.$el.html(html).dialog({
+			modal: true,
+			resizable: false,
+			width: 400,
+			title: obj.id.substr(0,5),
+			buttons: {
+				'close': function() {
+					$(this).dialog('close');
+					this.remove();
+				},
+			}
+		});
+		return this;
+	},
+	initialize: function(){
+		this.render();
+		this.model.on('change', this.render, this);
+		this.model.on('destroy', this.remove, this);
+	},
+});

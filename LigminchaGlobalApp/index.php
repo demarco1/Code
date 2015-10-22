@@ -54,7 +54,7 @@ else {
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>LigminchaGlobalApp</title>
 		<link rel="stylesheet" href="styles/main.css" />
-		<link rel="stylesheet" href="resources/jquery-ui/themes/base/jquery-ui.css" />
+		<link rel="stylesheet" href="resources/jquery-ui/jquery-ui.min.css" />
 	</head>
 	<body>
 		<!-- App HTML structure -->
@@ -81,7 +81,7 @@ else {
 		<!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
 		<script type="text/javascript" src="resources/sha1.js"></script>
 		<script type="text/javascript" src="resources/jquery.js"></script>
-		<script type="text/javascript" src="resources/jquery-ui/ui/minified/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="resources/jquery-ui/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="resources/underscore.js"></script>
 		<script type="text/javascript" src="resources/backbone.js"></script>
 		<script type="text/javascript" src="resources/WebSocket/websocket.js"><!-- WebSocket object from the MediaWiki WebSockets extension --></script>
