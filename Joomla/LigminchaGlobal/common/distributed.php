@@ -109,9 +109,7 @@ class LigminchaGlobalDistributed {
 
 		// Collect initial data to populate table from master server
 		$master = LigminchaGlobalServer::masterDomain();
-		if( $data = self::post( $master, array( self::$cmd => '' ) ) ) {
-			self::recvQueue( $data );
-		}
+		if( $data = self::post( $master, array( self::$cmd => '' ) ) ) self::recvQueue( $data );
 		else die( 'Failed to get initial table content from master' );
 
 		new LigminchaGlobalLog( 'ligmincha_global table created', 'Database' );
@@ -214,6 +212,7 @@ class LigminchaGlobalDistributed {
 
 		// Decode the data
 		$queue = $data = self::decodeData( $data );
+		if( !is_array( $queue ) ) die( "Problem with received sync data: $data" );
 		$origin = array_shift( $queue );
 		$session = array_shift( $queue );
 

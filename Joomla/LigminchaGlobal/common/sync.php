@@ -10,12 +10,16 @@ class LigminchaGlobalSync extends LigminchaGlobalObject {
 	 * Construct a new sync object
 	 * - this will be automatically put into the database for sending unless $target is false
 	 */
-	function __construct( $crud, $fields, $target ) {
-		if( array_key_exists( 'type', $fields ) && $fields['type'] == LG_SYNC ) die( 'Can\'t construct sync object containing a sync object!' );
+	function __construct( $crud = null, $fields = null, $target = null ) {
+		if( $fields && array_key_exists( 'type', $fields ) && $fields['type'] == LG_SYNC ) die( 'Can\'t construct sync object containing a sync object!' );
 		$this->type = LG_SYNC;
 		parent::__construct();
 
+		// We have to allow construction with no args so newFromFields can work
+		if( is_null( $crud ) ) return;
+
 		// Set the cmd and data
+		if( is_null( $fields ) || is_null( $target ) ) die( 'fields and target are mandatory parameters for LG_SYNC object construction' );
 		if( $target ) $this->ref1 = $target->id;
 		if( $crud == 'U' ) $this->ref2 = $fields['id'];
 		$this->tag = $crud;
