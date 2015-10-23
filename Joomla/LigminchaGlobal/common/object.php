@@ -229,7 +229,7 @@ class LigminchaGlobalObject {
 		$class = 'LigminchaGlobalObject';
 		if( array_key_exists( $fields['type'], self::$classes ) ) {
 			$c = 'LigminchaGlobal' . self::$classes[$fields['type']];
-			if( !class_exists( $c ) ) $class = $c;
+			if( class_exists( $c ) ) $class = $c;
 		}
 		$obj = new $class();
 		foreach( $fields as $field => $val ) $obj->$field = $val;

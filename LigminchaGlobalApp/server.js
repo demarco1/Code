@@ -39,10 +39,7 @@ lg.ServerView = Backbone.View.extend({
 		this.$el.html(html);
 		$('span', this.$el).css('cursor','pointer').click(function() {
 			var id = $(this).attr('id');
-			if(id) {
-				console.log('Object ' + id.substr(0,5) + ' clicked');
-				var view = new lg.ObjectView({model: lg.getObject(id)});
-			}
+			if(id) new lg.ObjectView({model: lg.getObject(id)});
 		});
 		return this; // enable chained calls
 	},

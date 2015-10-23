@@ -40,14 +40,21 @@ lg.ObjectView = Backbone.View.extend({
 	tagName: 'div',
 	render: function() {
 		var obj = this.model.attributes;
-		var html = lg.typeToClass(obj.type);
+		var html = '';
+		var cls = lg.typeToClass(obj.type);
+		if('details' in obj) html += obj.details();
+		else {
+			// generic object
+		}
 		this.$el.html(html).dialog({
 			modal: true,
 			resizable: false,
 			width: 400,
-			title: obj.id.substr(0,5),
+			title: cls + ' properties',
 			buttons: {
-				'close': function() {
+				'save': function() {
+				},
+				'cancel': function() {
 					$(this).dialog('close');
 					this.remove();
 				},

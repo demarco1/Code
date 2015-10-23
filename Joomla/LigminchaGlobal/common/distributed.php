@@ -109,7 +109,9 @@ class LigminchaGlobalDistributed {
 
 		// Collect initial data to populate table from master server
 		$master = LigminchaGlobalServer::masterDomain();
-		if( $data = self::post( $master, array( self::$cmd => '' ) ) ) self::recvQueue( $data );
+		if( $data = self::post( $master, array( self::$cmd => '' ) ) ) {
+			self::recvQueue( $data );
+		}
 		else die( 'Failed to get initial table content from master' );
 
 		new LigminchaGlobalLog( 'ligmincha_global table created', 'Database' );
@@ -120,14 +122,12 @@ class LigminchaGlobalDistributed {
 	 */
 	private function initialTableData() {
 
-		// Just populate new tables with the master (should be current server) server for now
-		$master = LigminchaGlobalServer::getMaster();
+		// Just populate new tables with all the server, user and version objects
+		$objects = LigminchaGlobalObject::select( array( 'type' => array( LG_SERVER, LG_USER, LG_VERSION ) ) );
 
-		// Create a normal update sync object from this object, but with no target so it won't be added to the database for sending
-		$rev = new LigminchaGlobalSync( 'U', $master->fields(), false );
-
-		// Create a sync queue that will be processed by the client in the normal way
-		$queue = array( LigminchaGlobalServer::getCurrent()->id, 0, $rev );
+		// Create a normal update sync queue from these objects, but with no target so they won't be added to the database for sending
+		$queue = array( LigminchaGlobalServer::getCurrent()->id, 0 );
+		foreach( $objects as $obj ) $queue[] = new LigminchaGlobalSync( 'U', $obj->fields(), false );
 
 		return $queue;
 	}
