@@ -45,6 +45,9 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 		if( is_null( self::$master ) ) {
 			$domain = self::masterDomain();
 			self::$master = self::getCurrent()->isMaster ? self::getCurrent() : self::selectOne( array( 'tag' => $domain ) );
+
+			// Put our server on the update queue after we've established the master
+			if( self::$master ) self::getCurrent()->update();
 		}
 		return self::$master;
 	}
@@ -71,8 +74,8 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 					'name' => $config->get( 'sitename' )
 				);
 
-				// Save our new instance to the DB
-				self::$current->update();
+				// Save our new instance to the DB (if we have a master yet)
+				if( self::getMaster() ) self::$current->update();
 			}
 		}
 		return self::$current;

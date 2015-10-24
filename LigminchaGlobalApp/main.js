@@ -20,7 +20,8 @@ lg.AppView = Backbone.View.extend({
 	},
 
 	// Add all the server objects to the list using each server object as its own model
-	render: function(){
+	render: function() {
+		lg.upgradeObjects(); // Ensure all objects are the appropriate model sub-class
 		$('#server-list').html('');
 		var servers = lg.select({type: LG_SERVER});
 		for( var i in servers ) {

@@ -42,7 +42,7 @@ lg.ObjectView = Backbone.View.extend({
 		var obj = this.model.attributes;
 		var html = '';
 		var cls = lg.typeToClass(obj.type);
-		if('details' in obj) html += obj.details();
+		if('properties' in this.model) html += this.model.properties();
 		else {
 			// generic object
 		}

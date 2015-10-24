@@ -64,12 +64,18 @@ class LigminchaGlobalDistributed {
 		LigminchaGlobalUser::checkAll();
 		LigminchaGlobalSSO::makeSessionFromCookie();
 
-		// If this is a changes request commit the data (and re-route if master)
-		// - if the changes data is empty, then it's a request for initial table data
+		// If this is a changes request,
 		if( array_key_exists( self::$cmd, $_POST ) ) {
+
+			// Commit the data (and re-route if master)
 			$data = $_POST[self::$cmd];
 			if( $data ) print self::recvQueue( $_POST[self::$cmd] );
+
+			// If the changes data is empty, then it's a request for initial table data
 			elseif( $server->isMaster ) print self::encodeData( $this->initialTableData() );
+
+			// If we're the master, always send queue incase any re-routing
+			if( $server->isMaster ) self::sendQueue();
 			exit;
 		}
 	}
@@ -211,13 +217,13 @@ class LigminchaGlobalDistributed {
 	private static function recvQueue( $data ) {
 
 		// Decode the data
-		$queue = $data = self::decodeData( $data );
+		$queue = $orig = self::decodeData( $data );
 		if( !is_array( $queue ) ) die( "Problem with received sync data: $data" );
 		$origin = array_shift( $queue );
 		$session = array_shift( $queue );
 
 		// Forward this queue to the WebSocket if it's active
-		self::sendToWebSocket( $data, $session );
+		self::sendToWebSocket( $orig, $session );
 
 		// Process each of the sync objects (this may lead to further re-routing sync objects being made)
 		foreach( $queue as $sync ) {

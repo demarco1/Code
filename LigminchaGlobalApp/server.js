@@ -9,6 +9,11 @@ lg.Server = lg.GlobalObject.extend({
 	// Return the master server object
 	getMaster: function() {
 	},
+
+	// Render server-sprcific properties
+	properties: function() {
+		return 'foo';
+	},
 });
 
 // Renders individual server item with contained users and sessions
