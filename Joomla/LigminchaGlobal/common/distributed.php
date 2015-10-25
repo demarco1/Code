@@ -129,6 +129,9 @@ class LigminchaGlobalDistributed {
 		// Just populate new tables with all the server, user and version objects
 		$objects = LigminchaGlobalObject::select( array( 'type' => array( LG_SERVER, LG_USER, LG_VERSION ) ) );
 
+		// Ensure that the master server is first
+		usort( $objects, function( $a, $b ) { return property_exists( $a, 'isMaster' ) ? -1 : 1; } );
+
 		// Create a normal update sync queue from these objects, but with no target so they won't be added to the database for sending
 		$queue = array( LigminchaGlobalServer::getCurrent()->id, 0 );
 		foreach( $objects as $obj ) $queue[] = new LigminchaGlobalSync( 'U', $obj->fields(), false );

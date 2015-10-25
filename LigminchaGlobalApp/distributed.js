@@ -13,16 +13,24 @@ lg.getObject = function(id) {
 	return this.selectOne({id: id});
 };
 
-// Create a model object of the correct sub-class
+// Create a model object of the correct sub-class given its attributes
 lg.createObject = function(atts) {
-	// TODO: this used eval to check the model existed and make a new one if so, globalObj if not
+	var cls = this.typeToClass(atts.type);
+	var obj = eval('lg.isObject(lg.' + cls + ') ? new lg.' + cls + ' : new lg.GlobalObject');
+	for(var i in atts) obj[i] = atts[i];
+	return obj;
 };
 
 // Ensure all the objects in the main collection are of the appropriate model sub-classes
 lg.upgradeObjects = function() {
-	// TODO: this scanned the array for all that dont have upgraded prop
-	// for each, created a new obj with createObject then replaced all contents in the current obj
-	// then added upgraded: true
+	var objects = lg.ligminchaGlobal.toArray();
+	for(var i in objects) {
+		if(!('upgraded' in objects[i])) {
+			var obj = this.createObject(objects[i].attributes);
+			for(var j in obj) objects[i][j] = obj[j];
+			objects[i].upgraded = true;
+		}
+	}
 };
 
 // Return the objects that match the passed criteria
