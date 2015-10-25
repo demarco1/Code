@@ -16,7 +16,7 @@ lg.getObject = function(id) {
 // Create a model object of the correct sub-class given its attributes
 lg.createObject = function(atts) {
 	var cls = this.typeToClass(atts.type);
-	var obj = eval('lg.isObject(lg.' + cls + ') ? new lg.' + cls + ' : new lg.GlobalObject');
+	var obj = new(this.isObject(lg[cls]) ? lg[cls] : lg.GlobalObject);
 	for(var i in atts) obj[i] = atts[i];
 	return obj;
 };
