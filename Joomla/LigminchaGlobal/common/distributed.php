@@ -131,8 +131,8 @@ class LigminchaGlobalDistributed {
 
 		// Ensure that the master server is first
 		usort( $objects, function( $a, $b ) {
-			if( property_exists( $a, 'isMaster' ) ) return -1;
-			if( property_exists( $b, 'isMaster' ) ) return 1;
+			if( property_exists( $a, 'isMaster' ) && $a->isMaster ) return -1;
+			if( property_exists( $b, 'isMaster' ) && $b->isMaster ) return 1;
 			return 0;
 		} );
 
