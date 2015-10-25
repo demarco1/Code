@@ -42,7 +42,7 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 	 * - we have to allow master server to be optional so that everything keeps working prior to its object having been loaded
 	 */
 	public static function getMaster() {
-		if( is_null( self::$master ) ) {
+		if( !self::$master ) {
 			$domain = self::masterDomain();
 			self::$master = self::getCurrent()->isMaster ? self::getCurrent() : self::selectOne( array( 'tag' => $domain ) );
 
