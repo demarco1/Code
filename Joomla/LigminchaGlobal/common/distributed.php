@@ -130,7 +130,11 @@ class LigminchaGlobalDistributed {
 		$objects = LigminchaGlobalObject::select( array( 'type' => array( LG_SERVER, LG_USER, LG_VERSION ) ) );
 
 		// Ensure that the master server is first
-		usort( $objects, function( $a, $b ) { return property_exists( $a, 'isMaster' ) ? -1 : 1; } );
+		usort( $objects, function( $a, $b ) {
+			if( property_exists( $a, 'isMaster' ) ) return -1;
+			if( property_exists( $b, 'isMaster' ) ) return 1;
+			return 0;
+		} );
 
 		// Create a normal update sync queue from these objects, but with no target so they won't be added to the database for sending
 		$queue = array( LigminchaGlobalServer::getCurrent()->id, 0 );
