@@ -21,7 +21,7 @@ lg.createObject = function(atts) {
 	return obj;
 };
 
-// Ensure this object is of the appropriate model sub-classes
+// Ensure this object is of the appropriate model sub-class
 lg.upgradeObject = function(obj) {
 	var upg = this.createObject(obj.attributes);
 	for(var i in upg) obj[i] = upg[i];
