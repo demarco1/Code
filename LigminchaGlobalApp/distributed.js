@@ -21,16 +21,10 @@ lg.createObject = function(atts) {
 	return obj;
 };
 
-// Ensure all the objects in the main collection are of the appropriate model sub-classes
-lg.upgradeObjects = function() {
-	var objects = lg.ligminchaGlobal.toArray();
-	for(var i in objects) {
-		if(!('upgraded' in objects[i])) {
-			var obj = this.createObject(objects[i].attributes);
-			for(var j in obj) objects[i][j] = obj[j];
-			objects[i].upgraded = true;
-		}
-	}
+// Ensure this object is of the appropriate model sub-classes
+lg.upgradeObject = function(obj) {
+	var upg = this.createObject(obj.attributes);
+	for(var i in upg) obj[i] = upg[i];
 };
 
 // Return the objects that match the passed criteria

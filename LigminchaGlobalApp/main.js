@@ -14,14 +14,18 @@ lg.classes = [0, 'Log', 'Server', 'User', 'Session', 'Sync', 'Version', 'Databas
 lg.AppView = Backbone.View.extend({
 	el: '#objectapp',
 	initialize: function () {
-		lg.ligminchaGlobal.on('add', this.render, this);
+		lg.ligminchaGlobal.on('add', this.add, this);
 		lg.ligminchaGlobal.on('remove', this.render, this);
 		//lg.ligminchaGlobal.fetch(); // Loads list from local storage
 	},
 
+	add: function(obj) {
+		lg.upgradeObject(obj); // Ensure this object is the appropriate model sub-class
+		this.render();
+	},
+
 	// Add all the server objects to the list using each server object as its own model
 	render: function() {
-		lg.upgradeObjects(); // Ensure all objects are the appropriate model sub-class
 		$('#server-list').html('');
 		var servers = lg.select({type: LG_SERVER});
 		for( var i in servers ) {
