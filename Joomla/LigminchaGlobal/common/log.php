@@ -4,7 +4,7 @@
  */
 class LigminchaGlobalLog extends LigminchaGlobalObject {
 
-	function __construct( $message, $tag = '' ) {
+	function __construct( $message = false, $tag = '' ) {
 
 		// This goes first so that parent constructor will raise an error if the current uuid type doesn't match
 		$this->type = LG_LOG;
@@ -12,13 +12,15 @@ class LigminchaGlobalLog extends LigminchaGlobalObject {
 		// Give the new object an ID
 		parent::__construct();
 
-		// Set the cmd and data
-		$this->ref1 = LigminchaGlobalServer::getCurrent()->id;
-		$this->tag = $tag;
-		$this->data = $message;
+		if( $message ) {
+			// Set the cmd and data
+			$this->ref1 = LigminchaGlobalServer::getCurrent()->id;
+			$this->tag = $tag;
+			$this->data = $message;
 
-		// Store the new log entry in the database
-		$this->update();
+			// Store the new log entry in the database
+			$this->update();
+		}
 	}
 
 	/**
