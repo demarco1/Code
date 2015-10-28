@@ -28,7 +28,7 @@ lg.AppView = Backbone.View.extend({
 	render: function() {
 		$('#server-list').html('');
 		var servers = lg.select({type: LG_SERVER});
-		for( var i in servers ) {
+		for(var i in servers) {
 			var view = new lg.ServerView({model: servers[i]});
 			$('#server-list').append(view.render().el);
 		}

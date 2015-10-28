@@ -16,8 +16,9 @@ lg.getObject = function(id) {
 // Create a model object of the correct sub-class given its attributes
 lg.createObject = function(atts) {
 	var cls = this.typeToClass(atts.type);
-	var obj = new(this.isObject(lg[cls]) ? lg[cls] : lg.GlobalObject);
+	var obj = this.isObject(lg[cls]) ? new lg[cls](atts) : new lg.GlobalObject(atts);
 	for(var i in atts) obj[i] = atts[i];
+	obj.id = atts.id;
 	return obj;
 };
 
@@ -50,7 +51,7 @@ lg.selectOne = function(cond) {
 // TODO: this should allow OR like the PHP equivalents do
 lg.match = function(obj, cond) {
 	var match = true;
-	for( var i in cond ) {
+	for(var i in cond) {
 		if(obj.attributes[i] != cond[i]) match = false;
 	}
 	return match;
