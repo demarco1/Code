@@ -58,7 +58,7 @@ else {
 	</head>
 	<body>
 		<!-- App HTML structure -->
-		<section id=objectapp">
+		<section id="objectapp">
 			<header id="header">
 				<h1>Servers</h1>
 			</header>
