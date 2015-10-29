@@ -90,6 +90,7 @@ else {
 		<script type="text/javascript" src="server.js"></script>
 		<script type="text/javascript" src="user.js"></script>
 		<script type="text/javascript" src="session.js"></script>
+		<script type="text/javascript" src="version.js"></script>
 		<script type="text/javascript" src="main.js"><!-- Main app code --></script>
 	</body>
 </html><?php

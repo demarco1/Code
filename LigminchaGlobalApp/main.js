@@ -16,11 +16,11 @@ lg.AppView = Backbone.View.extend({
 	initialize: function () {
 		lg.ligminchaGlobal.on('add', this.add, this);
 		lg.ligminchaGlobal.on('remove', this.render, this);
-		//lg.ligminchaGlobal.fetch(); // Loads list from local storage
 	},
 
+	// When a new object is added to the collection, upgrade it to the proper model sub-class and re-render the list
 	add: function(obj) {
-		lg.upgradeObject(obj); // Ensure this object is the appropriate model sub-class
+		lg.upgradeObject(obj);
 		this.render();
 	},
 

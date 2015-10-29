@@ -42,11 +42,12 @@ lg.ObjectView = Backbone.View.extend({
 		var obj = this.model.attributes;
 		var html = '';
 		var cls = lg.typeToClass(obj.type);
-		if('properties' in this.model) html += this.model.properties();
+		if('properties' in this.model) this.model.properties(this.$el);
 		else {
 			// generic object
+			this.$el.html('Generic object');
 		}
-		this.$el.html(html).dialog({
+		this.$el.dialog({
 			modal: true,
 			resizable: false,
 			width: 400,
