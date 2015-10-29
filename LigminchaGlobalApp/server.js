@@ -12,7 +12,7 @@ lg.Server = lg.GlobalObject.extend({
 
 	// Render server-sprcific properties
 	properties: function($el) {
-		var button = $('<button>New version</button>').click(function() { console.log(lg);lg.Version.createNew(); });
+		var button = $('<button>New version</button>').click(function() { lg.Version.createNew(); });
 		$el.append(button);
 	},
 });

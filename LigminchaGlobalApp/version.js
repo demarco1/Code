@@ -4,6 +4,7 @@ lg.Version = lg.GlobalObject.extend({
 
 });
 
+// This is a "static" method for opening a dialog to create a new LG_VERSION global object
 lg.Version.createNew = function() {
 	$('<div>test</div>').dialog({
 		modal: true,
