@@ -164,10 +164,10 @@ class LigminchaGlobalObject {
 		$table = LigminchaGlobalDistributed::sqlTable();
 		$all = LigminchaGlobalDistributed::sqlFields();
 		$sqlcond = LigminchaGlobalDistributed::sqlCond( $cond );
-		if( empty( $sqlcond ) ) return false;
+		if( empty( $sqlcond ) ) return array();
 		$db->setQuery( "SELECT $all FROM $table WHERE $sqlcond" );
 		$db->query();
-		if( !$result = $db->loadAssocList() ) return false;
+		if( !$result = $db->loadAssocList() ) return array();
 		foreach( $result as $i => $assoc ) {
 			$result[$i] = self::newFromFields( $assoc );
 			$result[$i]->exists = true;
@@ -180,7 +180,7 @@ class LigminchaGlobalObject {
 	 */
 	public static function selectOne( $cond ) {
 		$result = self::select( $cond );
-		return $result ? $result[0] : false;
+		return $result ? $result[0] : array();
 	}
 
 	/**

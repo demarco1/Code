@@ -114,7 +114,7 @@ class LigminchaGlobalDistributed {
 
 		// TODO: Create an LG_DATABASE object to represent this new node in the distributed database
 
-		// If not the master, collect initial data to populate table from master server
+		// Otherwise, collect initial data to populate table from master server
 		if( !LigminchaGlobalServer::getCurrent()->isMaster ) {
 			$master = LigminchaGlobalServer::masterDomain();
 			if( $data = self::post( $master, array( self::$cmd => '' ) ) ) self::recvQueue( $data );

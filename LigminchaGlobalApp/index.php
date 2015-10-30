@@ -19,6 +19,7 @@ require_once( "$common/sync.php" );
 require_once( "$common/server.php" );
 require_once( "$common/user.php" );
 require_once( "$common/session.php" );
+require_once( "$common/version.php" );
 require_once( "$common/log.php" );
 require_once( "$common/sso.php" );
 

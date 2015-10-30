@@ -46,8 +46,20 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 			$domain = self::masterDomain();
 			self::$master = self::getCurrent()->isMaster ? self::getCurrent() : self::selectOne( array( 'tag' => $domain ) );
 
-			// Put our server on the update queue after we've established the master
-			if( self::$master ) self::getCurrent()->update();
+			// Give our server a version and put our server on the update queue after we've established the master
+			if( self::$master ) {
+
+				// Set the version (just use the first ver object for now while testing)
+				if( $versions = LigminchaGlobalVersion::select() ) self::$current->ref1 = $versions[0]->id;
+
+				// No version objects, create one now
+				else {
+					$ver = new LigminchaGlobalVersion( '0.0.0' );
+					self::$current->ref1 = $ver->id;
+				}
+
+				self::getCurrent()->update();
+			}
 		}
 		return self::$master;
 	}
@@ -65,7 +77,7 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 
 			// If the object was newly created, populate with default initial data and save
 			if( !self::$current->tag ) {
-
+				
 				// Make it easy to find this server by domain
 				self::$current->tag = $_SERVER['HTTP_HOST'];
 
