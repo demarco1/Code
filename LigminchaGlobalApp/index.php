@@ -2,7 +2,7 @@
 ini_set( 'error_reporting', E_ALL );
 ini_set( 'display_errors', true );
 
-// This is a standalone script to give the JS app a database-connection in the back end
+// This tells the system that we're running the database without the Joomla framework present
 define( 'LG_STANDALONE', true );
 
 // Give an classes the chance to add script that runs before the dependencies are loaded
@@ -72,12 +72,12 @@ else {
 			<h1><%- data.name %></h1>
 			<div><a href="http://<%- tag %>"><%- tag %></a></div>
 			<table class="server">
-			<tr><th>IP address:</th><td>1.2.3.4</td></tr>
-			<tr><th>System:</th><td><%- data.system %></td></tr>
-			<tr><th>PHP version:</th><td><%- data.php %></td></tr>
-			<tr><th>MySQL version:</th><td><%- data.mysql %></td></tr>
-			<tr><th>Web-server:</th><td><%- data.webserver %></td></tr>
-			<tr><th>Joomla version:</th><td><%- data.joomla %></td></tr>
+				<tr><th>IP address:</th><td>1.2.3.4</td></tr>
+				<tr><th>System:</th><td><%- data.system %></td></tr>
+				<tr><th>PHP version:</th><td><%- data.php %></td></tr>
+				<tr><th>MySQL version:</th><td><%- data.mysql %></td></tr>
+				<tr><th>Web-server:</th><td><%- data.webserver %></td></tr>
+				<tr><th>Joomla version:</th><td><%- data.joomla %></td></tr>
 			</table>
 		</script>  
 
