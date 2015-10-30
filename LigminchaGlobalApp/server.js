@@ -11,9 +11,15 @@ lg.Server = lg.GlobalObject.extend({
 	},
 
 	// Render server-sprcific properties
-	properties: function($el) {
+	properties: function(popup) {
+
+		// Render the main table from the attributes
+		var template = _.template($('#server-popup').html());
+        popup.html(template(this.attributes));
+
+		// Append the new version button
 		var button = $('<button>New version</button>').click(function() { lg.Version.createNew(); });
-		$el.append(button);
+		popup.append(button);
 	},
 });
 

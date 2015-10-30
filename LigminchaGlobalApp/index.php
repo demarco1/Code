@@ -67,9 +67,18 @@ else {
 			</section>
 		</section>
 
-		<!-- Templates -->
-		<script type="text/template" id="item-template">
-			<div class="view"><%- id %></div>
+		<!-- Template for the server popup infobox -->
+		<script type="text/template" id="server-popup">
+			<h1><%- data.name %></h1>
+			<div><a href="http://<%- tag %>"><%- tag %></a></div>
+			<table class="server">
+			<tr><th>IP address:</th><td>1.2.3.4</td></tr>
+			<tr><th>System:</th><td><%- data.system %></td></tr>
+			<tr><th>PHP version:</th><td><%- data.php %></td></tr>
+			<tr><th>MySQL version:</th><td><%- data.mysql %></td></tr>
+			<tr><th>Web-server:</th><td><%- data.webserver %></td></tr>
+			<tr><th>Joomla version:</th><td><%- data.joomla %></td></tr>
+			</table>
 		</script>  
 
 		<!-- Scripts -->
