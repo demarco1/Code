@@ -88,7 +88,7 @@ else {
 			<?php echo $script;?>
 		</script>
 		<!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
-		<script type="text/javascript" src="resources/sha1.js"></script>
+		<script type="text/javascript" src="resources/crypto.js"></script>
 		<script type="text/javascript" src="resources/jquery.js"></script>
 		<script type="text/javascript" src="resources/jquery-ui/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="resources/underscore.js"></script>
