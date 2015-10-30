@@ -42,7 +42,7 @@ if( array_key_exists( 'sync', $_POST ) ) {
 else {
 
 	// These are the global objects made initially available to the app
-	$objects = LigminchaGlobalObject::select( array( 'type' => array( LG_SERVER, LG_USER, LG_SESSION ) ) );
+	$objects = LigminchaGlobalObject::select( array( 'type' => array( LG_SERVER, LG_USER, LG_SESSION, LG_VERSION ) ) );
 	$wgOut->addJsConfigVars( 'GlobalObjects', $objects );
 
 ?><!DOCTYPE html>
@@ -75,7 +75,13 @@ else {
 					<tr><th>PHP version:</th><td><%- data.php %></td></tr>
 					<tr><th>MySQL version:</th><td><%- data.mysql %></td></tr>
 					<tr><th>Web-server:</th><td><%- data.webserver %></td></tr>
-					<tr><th>Joomla version:</th><td><%- data.joomla %></td></tr>
+					<tr>
+						<th>Joomla version:</th>
+						<td>
+							<select><%=lg.Version.versionOptions(data.ref1)%></select>
+							<button class="new-version">New...</button>
+						</td>
+					</tr>
 				</table>
 			</div>
 		</script>  

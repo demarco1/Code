@@ -16,10 +16,11 @@ lg.Server = lg.GlobalObject.extend({
 		// Render the main table from the attributes
 		var template = _.template($('#server-popup-template').html());
         popup.html(template(this.attributes));
+	},
 
-		// Append the new version button
-		var button = $('<button>New version</button>').click(function() { lg.Version.createNew(); });
-		popup.append(button);
+	// Activate the new-version button
+	activate: function(popup) {
+		$('#server-popup button.new-version').click(function() { lg.Version.createNew(); });
 	},
 });
 

@@ -61,6 +61,7 @@ lg.ObjectView = Backbone.View.extend({
 				},
 			}
 		});
+		if('activate' in this.model) this.model.activate(this.$el);
 		return this;
 	},
 	initialize: function(){
