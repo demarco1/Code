@@ -60,6 +60,7 @@ class LigminchaGlobalDistributed {
 		$this->expire();
 
 		// Instantiate the main global objects
+		LigminchaGlobalServer::getMaster();
 		$server = LigminchaGlobalServer::getCurrent();
 		LigminchaGlobalUser::checkAll();
 		LigminchaGlobalSSO::makeSessionFromCookie();

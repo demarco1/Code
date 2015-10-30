@@ -73,14 +73,15 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 				self::$current->data = self::serverData();
 
 				// Save our new instance to the DB (if we have a master yet)
-				if( self::getMaster() ) self::$current->update();
+				if( self::$master ) self::$current->update();
 			}
 		}
 
 		// If we have a master, ensure the server data is up to date
-		if( self::getMaster() ) {
+		if( self::$master ) {
 			static $checked = false;
 			if( !$checked ) {
+				$checked = true;
 				if( json_encode( self::$current->data ) !== json_encode( self::serverData() ) ) {
 					self::$current->data = self::serverData();
 					self::$current->update();
@@ -104,13 +105,15 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 	 * Get the server and env data
 	 */
 	public static function serverData() {
+		$config = JFactory::getConfig();
+		$version = new JVersion;
 		return array(
 			'name'      => $config->get( 'sitename' ),
 			'webserver' => $_SERVER['SERVER_SOFTWARE'],
 			'system'    => php_uname('s') . ' (' . php_uname('m') . ')',
 			'php'       => preg_replace( '#^([0-9.]+).*$#', '$1', phpversion() ),
 			'mysql'     => mysqli_init()->client_info,
-			'joomla'    => JVersion::getShortVersion(),
+			'joomla'    => $version->getShortVersion(),
 		);
 	}
 
