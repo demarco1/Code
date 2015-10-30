@@ -5,11 +5,10 @@ ini_set( 'display_errors', true );
 // This tells the system that we're running the database without the Joomla framework present
 define( 'LG_STANDALONE', true );
 
-// Give an classes the chance to add script that runs before the dependencies are loaded
+// Give components the chance to add script that runs before the dependencies are loaded
 $script = '';
 
 // Load the Fake Joomla environment and all the common classes from the Joomla extension
-// All these classes are only used for SSO
 // - changes coming in from the app are just bounced cross-domain to the Joomla
 // - changes destined to the app are sent from the Joomla via the WebSocket daemon not from here
 // - although we can send the initial servers, users and sessions from here
@@ -31,13 +30,10 @@ new LigminchaGlobalSSO();
 global $wgOut;
 $wgOut->addJsConfigVars( 'session', LigminchaGlobalSession::getCurrent() ? LigminchaGlobalSession::getCurrent()->id : 0 );
 
-// Send accumulated revisions
-//LigminchaGlobalDistributed::sendQueue();
-
 // Receive changes from the app
 if( array_key_exists( 'sync', $_POST ) ) {
 
-	// TODO: We just bounce these to the Joomla
+	// TODO: save the changes sent by the client side to the distributed DB
 
 }
 
