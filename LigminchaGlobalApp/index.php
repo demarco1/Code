@@ -9,7 +9,7 @@ define( 'LG_STANDALONE', true );
 $script = '';
 
 // Load the Fake Joomla environment and all the common classes from the Joomla extension
-// - changes coming in from the app are just bounced cross-domain to the Joomla
+// - changes coming in from the app are saved directly into the distributed db table
 // - changes destined to the app are sent from the Joomla via the WebSocket daemon not from here
 // - although we can send the initial servers, users and sessions from here
 $common = dirname( __DIR__ ) . '/Joomla/LigminchaGlobal/common';
