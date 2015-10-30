@@ -114,10 +114,12 @@ class LigminchaGlobalDistributed {
 
 		// TODO: Create an LG_DATABASE object to represent this new node in the distributed database
 
-		// Collect initial data to populate table from master server
-		$master = LigminchaGlobalServer::masterDomain();
-		if( $data = self::post( $master, array( self::$cmd => '' ) ) ) self::recvQueue( $data );
-		else die( 'Failed to get initial table content from master' );
+		// If not the master, collect initial data to populate table from master server
+		if( !LigminchaGlobalServer::getCurrent()->isMaster ) {
+			$master = LigminchaGlobalServer::masterDomain();
+			if( $data = self::post( $master, array( self::$cmd => '' ) ) ) self::recvQueue( $data );
+			else die( 'Failed to get initial table content from master' );
+		}
 
 		new LigminchaGlobalLog( 'ligmincha_global table created', 'Database' );
 	}
