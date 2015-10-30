@@ -137,7 +137,7 @@ class LigminchaGlobalDistributed {
 		} );
 
 		// Create a normal update sync queue from these objects, but with no target so they won't be added to the database for sending
-		$queue = array( LigminchaGlobalServer::getCurrent()->id, 0 );
+		$queue = array( 0, LigminchaGlobalServer::getCurrent()->id, 0 );
 		foreach( $objects as $obj ) $queue[] = new LigminchaGlobalSync( 'U', $obj->fields(), false );
 
 		return $queue;
@@ -192,7 +192,7 @@ class LigminchaGlobalDistributed {
 		foreach( $queue as $sync ) {
 			$target = LigminchaGlobalServer::newFromId( $sync->ref1 )->id;
 			if( array_key_exists( $target, $streams ) ) $streams[$target][] = $sync;
-			else $streams[$target] = array( $server, $session, $sync );
+			else $streams[$target] = array( 0, $server, $session, $sync );
 		}
 
 		//print '<pre>'; print_r($streams); print '</pre>';
@@ -226,6 +226,7 @@ class LigminchaGlobalDistributed {
 		// Decode the data
 		$queue = $orig = self::decodeData( $data );
 		if( !is_array( $queue ) ) die( "Problem with received sync data: $data" );
+		$ip = array_shift( $queue );
 		$origin = array_shift( $queue );
 		$session = array_shift( $queue );
 

@@ -72,6 +72,7 @@ lg.expire = function() {
 
 // Receive sync-object queue from a remote server (The JS version of the PHP LigminchaGlobalDistributed::recvQueue)
 lg.recvQueue = function(queue) {
+	var ip = queue.shift();
 	var origin = queue.shift();
 	var session = queue.shift();
 
@@ -84,6 +85,7 @@ lg.recvQueue = function(queue) {
 // Send a list of sync-objects (The JS version of the PHP LigminchaGlobalDistributed::sendQueue)
 // TODO: needs testing
 lg.sendQueue = function(queue) {
+	// TODO: insert the ip, origin, session
 	var master = lg.Server.getMaster();
 	$.ajax({
 		type: 'POST',
