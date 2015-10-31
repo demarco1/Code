@@ -1,4 +1,12 @@
 /**
+ * Map
+ */
+div.map {
+	width: 900px;
+	height: 600px;
+}
+
+/**
  * Server map info window
  */
 div.gm-style-iw span.title {
@@ -11,7 +19,7 @@ div.gm-style-iw span.title:hover {
 }
 
 /**
- * Server popup
+ * Server details popup
  */
 #server-popup h1 {
 	font-size: 16pt;
@@ -39,12 +47,4 @@ div.gm-style-iw span.title:hover {
 	font-size: 12pt;
 	border: 1px solid #ccc;
 	padding: 2px 0 2px 5px;
-}
-
-/**
- * Map
- */
-div.map {
-	width: 900px;
-	height: 600px;
 }

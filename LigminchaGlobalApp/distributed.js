@@ -103,15 +103,25 @@ lg.recvQueue = function(queue) {
 	}
 };
 
-// Send a list of sync-objects (The JS version of the PHP LigminchaGlobalDistributed::sendQueue)
+// Send an object (the JS side doesn't do sendQueue since it's a real-time connection, but still needs to be compatible data)
 // TODO: needs testing
-lg.sendQueue = function(queue) {
-	// TODO: insert the ip, origin, session
+lg.sendObject = function(obj) {
 	var master = lg.Server.getMaster();
+
+	// Create an LG_SYNC object for the object we want to send
+	var sync = lg.createObjct({
+		type: LG_SYNC,
+		ref1: master.id,
+		ref2: obj.id,
+		data: obj.attributes,
+		tag: 'U',
+	});
+
+	// Send a recvQueue format array with the sync object in it
 	$.ajax({
 		type: 'POST',
-		url: master.attributes.id,
-		data: queue,
+		url: 'http://' + master.tag,
+		data: [0, 0, 0, sync],
 		dataType: 'text',
 		success: function(text) { console.log( 'Sync post to master returned: ' + text ); }
 	});

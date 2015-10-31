@@ -45,6 +45,9 @@ else {
 	$objects = LigminchaGlobalObject::select( array( 'type' => array( LG_SERVER, LG_USER, LG_SESSION, LG_VERSION ) ) );
 	$wgOut->addJsConfigVars( 'GlobalObjects', $objects );
 
+	// Make the ID of the master server known to the client-side
+	$wgOut->addJsConfigVars( 'masterServer', LigminchaGlobalServer::getMaster()->id );
+
 ?><!DOCTYPE html>
 <html lang="en">
 	<head>

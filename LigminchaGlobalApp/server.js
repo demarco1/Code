@@ -2,14 +2,6 @@
 
 lg.Server = lg.GlobalObject.extend({
 
-	// Return the current server object
-	getCurrent: function() {
-	},
-
-	// Return the master server object
-	getMaster: function() {
-	},
-
 	// Render server-sprcific properties
 	properties: function(popup) {
 
@@ -23,6 +15,13 @@ lg.Server = lg.GlobalObject.extend({
 		$('#server-popup button.new-version').click(function() { lg.Version.createNew(); });
 	},
 });
+
+// Return the master server object
+lg.Server.getMaster = function() {
+	if(!('master' in this)) this.master = lg.getObject(mw.config.get('masterServer');
+	return this.master;
+},
+
 
 // Renders individual server item with contained users and sessions
 lg.ServerView = Backbone.View.extend({
