@@ -215,7 +215,7 @@ class LigminchaGlobalDistributed {
 
 			// If result is success, remove all sync objects destined for this target server
 			if( $result == LG_SUCCESS ) LigminchaGlobalDistributed::del( array( 'type' => LG_SYNC, 'ref1' => $target ), false, true );
-			else die( "Failed to post outgoing sync data ($result)" );
+			else die( "Failed to post outgoing sync data to $url result($result)" );
 		}
 
 		return true;

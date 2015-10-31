@@ -10,6 +10,10 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 	// Master server
 	private static $master = null;
 
+	// Do we need to update this server object after we have a master?
+	private static $deferred = false;
+
+	// Are we the master server?
 	public $isMaster = false;
 
 	function __construct() {
@@ -58,7 +62,8 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 					self::$current->ref1 = $ver->id;
 				}
 
-				self::getCurrent()->update();
+				// If this server object was created before we knew this master, we need to send
+				if( self::$deferred ) self::getCurrent()->update();
 			}
 		}
 		return self::$master;
@@ -85,7 +90,10 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 				self::$current->data = self::serverData();
 
 				// Save our new instance to the DB (if we have a master yet)
-				if( self::$master ) self::$current->update();
+				//if( !self::$current->isMaster ) {
+					if( self::$master ) self::$current->update();
+					else self::$deferred = true;
+				//}
 			}
 		}
 

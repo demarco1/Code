@@ -42,7 +42,6 @@ $(document).ready( function() {
 		 * Update the markers (dependent on zoom level)
 		 */
 		function updateMarkers() {
-			console.log('called update');
 			var i, view, marker, n = 0;
 			var servers = lg.select({type: LG_SERVER});
 			for(i in servers) {

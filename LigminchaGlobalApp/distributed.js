@@ -109,7 +109,7 @@ lg.sendObject = function(obj) {
 	var master = lg.Server.getMaster();
 
 	// Create an LG_SYNC object for the object we want to send
-	var sync = lg.createObjct({
+	var sync = lg.createObject({
 		type: LG_SYNC,
 		ref1: master.id,
 		ref2: obj.id,
@@ -138,8 +138,7 @@ lg.decodeData = function(data) {
 };
 
 // Process an inbound sync object (JS version of LigminchaGlobalSync::process)
-lg.process = function(crud, json, origin) {
-	var fields = json;//this.decodeData(json);
+lg.process = function(crud, fields, origin) {
 	if(crud == 'U') {
 		console.log('Update received for ' + fields.id);
 		var obj = lg.getObject(fields.id);
