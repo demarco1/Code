@@ -1,4 +1,16 @@
 /**
+ * Server map info window
+ */
+div.gm-style-iw span.title {
+	color: blue;
+	font-size: 10pt;
+	font-weight: bold;
+}
+div.gm-style-iw span.title:hover {
+	text-decoration: underline;
+}
+
+/**
  * Server popup
  */
 #server-popup h1 {
