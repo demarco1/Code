@@ -31,22 +31,12 @@ new LigminchaGlobalSSO();
 global $wgOut;
 $wgOut->addJsConfigVars( 'session', LigminchaGlobalSession::getCurrent() ? LigminchaGlobalSession::getCurrent()->id : 0 );
 
-// Receive changes from the app
-if( array_key_exists( 'sync', $_POST ) ) {
+// These are the global objects made initially available to the app
+$objects = LigminchaGlobalObject::select( array( 'type' => array( LG_SERVER, LG_USER, LG_SESSION, LG_VERSION ) ) );
+$wgOut->addJsConfigVars( 'GlobalObjects', $objects );
 
-	// TODO: save the changes sent by the client side to the distributed DB
-
-}
-
-// If there is no query-string or the method is unknown, render the HTML for the single-page application
-else {
-
-	// These are the global objects made initially available to the app
-	$objects = LigminchaGlobalObject::select( array( 'type' => array( LG_SERVER, LG_USER, LG_SESSION, LG_VERSION ) ) );
-	$wgOut->addJsConfigVars( 'GlobalObjects', $objects );
-
-	// Make the ID of the master server known to the client-side
-	$wgOut->addJsConfigVars( 'masterServer', LigminchaGlobalServer::getMaster()->id );
+// Make the ID of the master server known to the client-side
+$wgOut->addJsConfigVars( 'masterServer', LigminchaGlobalServer::getMaster()->id );
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -104,5 +94,4 @@ else {
 		<script type="text/javascript" src="map.js"></script>
 		<script type="text/javascript" src="main.js"><!-- Main app code --></script>
 	</body>
-</html><?php
-}
+</html>

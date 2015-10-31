@@ -70,7 +70,7 @@ class LigminchaGlobalDistributed {
 
 			// Commit the data (and re-route if master)
 			$data = $_POST[self::$cmd];
-			if( $data ) print self::recvQueue( $_POST[self::$cmd] );
+			if( $data ) print self::recvQueue( $data );
 
 			// If the changes data is empty, then it's a request for initial table data
 			elseif( $server->isMaster ) print self::encodeData( $this->initialTableData() );
@@ -280,7 +280,7 @@ class LigminchaGlobalDistributed {
 	 * Decode incoming data
 	 */
 	private static function decodeData( $data ) {
-		return json_decode( $data, true );
+		return is_array( $data ) ? $data : json_decode( $data, true );
 	}
 
 	/**

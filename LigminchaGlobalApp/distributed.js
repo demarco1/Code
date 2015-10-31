@@ -109,19 +109,19 @@ lg.sendObject = function(obj) {
 	var master = lg.Server.getMaster();
 
 	// Create an LG_SYNC object for the object we want to send
-	var sync = lg.createObject({
+	var sync = {
 		type: LG_SYNC,
 		ref1: master.id,
 		ref2: obj.id,
 		data: obj.attributes,
 		tag: 'U',
-	});
+	};
 
 	// Send a recvQueue format array with the sync object in it
 	$.ajax({
 		type: 'POST',
-		url: 'http://' + master.tag,
-		data: [0, 0, 0, sync],
+		url: '/index.php',
+		data: {sync: [0, 0, 0, sync]},
 		dataType: 'text',
 		success: function(text) { console.log( 'Sync post to master returned: ' + text ); }
 	});
