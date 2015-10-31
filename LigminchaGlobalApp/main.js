@@ -10,31 +10,6 @@ var LG_DATABASE = 7;
 
 lg.classes = [0, 'Log', 'Server', 'User', 'Session', 'Sync', 'Version', 'Database'];
 
-// renders the full list of servers calling ServerView for each one.
-lg.AppView = Backbone.View.extend({
-	el: '#objectapp',
-	initialize: function () {
-		lg.ligminchaGlobal.on('add', this.add, this);
-		lg.ligminchaGlobal.on('remove', this.render, this);
-	},
-
-	// When a new object is added to the collection, upgrade it to the proper model sub-class and re-render the list
-	add: function(obj) {
-		lg.upgradeObject(obj);
-		this.render();
-	},
-
-	// Add all the server objects to the list using each server object as its own model
-	render: function() {
-		$('#server-list').html('');
-		var servers = lg.select({type: LG_SERVER});
-		for(var i in servers) {
-			var view = new lg.ServerView({model: servers[i]});
-			$('#server-list').append(view.render().el);
-		}
-	},
-});
-
 
 
 /**
@@ -44,8 +19,8 @@ lg.AppView = Backbone.View.extend({
 // Remove automatic data synchronisation with the back-end
 Backbone.sync = function(method, model, options) { };
 
-// Initialise our app
-lg.appView = new lg.AppView();
+// When a new object is added to the collection, upgrade it to the proper model sub-class and re-render the list
+lg.ligminchaGlobal.on('add', lg.upgradeObject, lg);
 
 // Populate the ligminchaGlobal collection with the initial objects sent from the backend
 var objects = mw.config.get('GlobalObjects');

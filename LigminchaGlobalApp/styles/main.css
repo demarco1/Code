@@ -28,3 +28,11 @@
 	border: 1px solid #ccc;
 	padding: 2px 0 2px 5px;
 }
+
+/**
+ * Map
+ */
+div.map {
+	width: 900px;
+	height: 600px;
+}

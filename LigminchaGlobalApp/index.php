@@ -54,17 +54,10 @@ else {
 		<link rel="stylesheet" href="resources/jquery-ui/jquery-ui.min.css" />
 	</head>
 	<body>
-		<!-- App HTML structure -->
-		<section id="objectapp">
-			<header id="header">
-				<h1>Servers</h1>
-			</header>
-			<section id="main">
-				<ul id="server-list"></ul>
-			</section>
-		</section>
+		<!-- Map -->
+		<div class="map"></div>
 
-		<!-- Template for the server popup infobox -->
+		<!-- Templates -->
 		<script type="text/template" id="server-popup-template">
 			<div id="server-popup">
 				<h1><%- data.name %></h1>
@@ -92,7 +85,7 @@ else {
 			<!-- Information added dynamically by the PHP -->
 			<?php echo $script;?>
 		</script>
-		<!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 		<script type="text/javascript" src="resources/crypto.js"></script>
 		<script type="text/javascript" src="resources/jquery.js"></script>
 		<script type="text/javascript" src="resources/jquery-ui/jquery-ui.min.js"></script>
@@ -105,6 +98,7 @@ else {
 		<script type="text/javascript" src="user.js"></script>
 		<script type="text/javascript" src="session.js"></script>
 		<script type="text/javascript" src="version.js"></script>
+		<script type="text/javascript" src="map.js"></script>
 		<script type="text/javascript" src="main.js"><!-- Main app code --></script>
 	</body>
 </html><?php
