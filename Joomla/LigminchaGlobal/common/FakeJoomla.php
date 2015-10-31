@@ -115,5 +115,6 @@ class Database {
 	}
 
 	public function quote( $s ) {
+		return "'" . mysqli_real_escape_string( $this->conn, $s ) . "'";
 	}
 }

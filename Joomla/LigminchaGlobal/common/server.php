@@ -89,8 +89,8 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 			}
 		}
 
-		// If we have a master, ensure the server data is up to date
-		if( self::$master ) {
+		// If we have a master and we're not in standalone, ensure the server data is up to date
+		if( self::$master && !LG_STANDALONE ) {
 			static $checked = false;
 			if( !$checked ) {
 				$checked = true;
