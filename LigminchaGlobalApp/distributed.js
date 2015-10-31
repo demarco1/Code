@@ -46,6 +46,27 @@ lg.selectOne = function(cond) {
 	return list[0];
 };
 
+// Render a select list of global objects from the passed query
+// - atts is the attributes to give the select element
+// - cur is the current value to be selected if any
+// - key is the attribute of the object to use as the displayed value (tag by default)
+lg.selectList = function(query, atts, cur, key) {
+	if(key === undefined) key = 'tag';
+	var html = '<select';
+	for(var i in atts) html += ' ' + i + '="' + atts[i] + '"';
+	html += '>'
+	var opts = lg.select(query);
+	for(var i in opts) {
+		var optatts = opts[i].attributes;
+		var opt = (key in optatts) ? optatts[key] : optatts.data[key];
+		var s = opt == cur ? ' selected' : '';
+		html += '<option value="' + optatts.id + '"' + s + '>' + opt + '</option>';
+	}
+	html += '</select>';
+	return html;
+};
+
+
 // Return whether the passed object matches the passed criteria
 // TODO: this wouldn't be needed if we were maintaining parameter indexes for the object collection
 // TODO: this should allow OR like the PHP equivalents do

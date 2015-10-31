@@ -21,11 +21,3 @@ lg.Version.createNew = function() {
 		}
 	});
 };
-
-// Return an options list of all the LG_VERSION objects with the passed one selected
-lg.Version.versionOptions = function(selected) {
-	var options = '';
-	var versions = lg.select({type: LG_VERSION});
-	for(var i in versions) options += '<option>' + versions[i].attributes.tag + '</option>';
-	return options;
-};
