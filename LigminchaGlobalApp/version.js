@@ -20,6 +20,9 @@ lg.Version.createNew = function() {
 					tag: '0.0.1'
 				});
 				lg.sendObject(ver);
+				console.log('New version created: ' + ver.id.substr(0,5));
+				$(this).dialog('close');
+				this.remove();
 			},
 			'cancel': function() {
 				$(this).dialog('close');

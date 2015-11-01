@@ -4,6 +4,9 @@
 
 'use strict';
 
+var LG_SUCCESS  = 'ok';
+var LG_ERROR    = 'error';
+
 var LG_LOG      = 1;
 var LG_SERVER   = 2;
 var LG_USER     = 3;
@@ -134,7 +137,9 @@ lg.sendObject = function(obj) {
 		url: '/index.php',
 		data: {sync: [0, 0, mw.data.wsClientID, sync]},
 		dataType: 'text',
-		success: function(text) { console.log( 'Sync post to master returned: ' + text ); }
+		success: function(text) {
+			if(text != LG_SUCCESS) console.log('Sync post to master not ok: ' + text);
+		}
 	});
 };
 
