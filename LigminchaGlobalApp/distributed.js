@@ -128,10 +128,11 @@ lg.sendObject = function(obj) {
 	};
 
 	// Send a recvQueue format array with the sync object in it
+	// - we use the WebSocket client ID as the session ID so the WebSocket daemon doesn't bounce the message back to us
 	$.ajax({
 		type: 'POST',
 		url: '/index.php',
-		data: {sync: [0, 0, 0, sync]},
+		data: {sync: [0, 0, mw.data.wsClientID, sync]},
 		dataType: 'text',
 		success: function(text) { console.log( 'Sync post to master returned: ' + text ); }
 	});
