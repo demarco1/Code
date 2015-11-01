@@ -23,11 +23,12 @@ require_once( "$common/version.php" );
 require_once( "$common/log.php" );
 require_once( "$common/sso.php" );
 
-// Instantiate the distributed and SSO classes
+// Instantiate the distributed class
+// - note that if there is any incoming sync data, this will process it (and reroute if necessary) and exit
 new LigminchaGlobalDistributed();
-new LigminchaGlobalSSO();
 
 // Make SSO session ID available to client-side
+new LigminchaGlobalSSO();
 global $wgOut;
 $wgOut->addJsConfigVars( 'session', LigminchaGlobalSession::getCurrent() ? LigminchaGlobalSession::getCurrent()->id : 0 );
 
