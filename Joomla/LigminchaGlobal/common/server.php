@@ -26,7 +26,7 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 	 * Determine whether or not this is the master site
 	 */
 	private function checkMaster() {
-		$this->isMaster = ( $_SERVER['HTTP_HOST'] == self::masterDomain() );
+		$this->isMaster = LG_STANDALONE || ( $_SERVER['HTTP_HOST'] == self::masterDomain() );
 	}
 
 	/**

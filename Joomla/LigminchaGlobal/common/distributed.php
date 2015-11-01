@@ -76,7 +76,7 @@ class LigminchaGlobalDistributed {
 			elseif( $server->isMaster ) print self::encodeData( $this->initialTableData() );
 
 			// If we're the master, always send queue incase any re-routing
-			if( LG_STANDALONE || $server->isMaster ) self::sendQueue();
+			if( $server->isMaster ) self::sendQueue();
 			exit;
 		}
 	}
