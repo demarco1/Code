@@ -215,3 +215,25 @@ lg.ticker = function() {
 	setTimeout(lg.ticker, 1000);
 	lg.expire();
 };
+
+// Load a template and precompile ready for use
+lg.templates = [];
+lg.template = function(template, args, func) {
+
+	// If the template is already loaded and compiled, process it now
+	if(template in this.templates) func(this.templates[template](args));
+
+	// Otherwise load the template, and when it's loaded compile it ready for use
+	else {
+		$.ajax({
+			type: 'GET',
+			url: '/templates/' + template + '.html',
+			context: this,
+			dataType: 'html',
+			success: function(html) {
+				this.templates[template] = _.template(html);
+				func(this.templates[template](args));
+			}
+		});
+	}
+};

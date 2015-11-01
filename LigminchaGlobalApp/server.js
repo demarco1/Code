@@ -7,12 +7,9 @@ lg.Server = lg.GlobalObject.extend({
 		Backbone.Model.apply( this, arguments );
 	},
 
-	// Render server-sprcific properties
+	// Render server-specific properties
 	properties: function(popup) {
-
-		// Render the main table from the attributes
-		var template = _.template($('#server-popup-template').html());
-        popup.html(template(this.attributes));
+        lg.template('server-popup', this.attributes, function(html) { popup.html(html); });
 	},
 
 	// Activate the new-version button
