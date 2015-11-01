@@ -1,17 +1,5 @@
 'use strict';
 
-var LG_LOG      = 1;
-var LG_SERVER   = 2;
-var LG_USER     = 3;
-var LG_SESSION  = 4;
-var LG_SYNC     = 5;
-var LG_VERSION  = 6;
-var LG_DATABASE = 7;
-
-lg.classes = [0, 'Log', 'Server', 'User', 'Session', 'Sync', 'Version', 'Database'];
-
-
-
 /**
  * App initialisation
  */

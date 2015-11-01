@@ -4,8 +4,18 @@
 
 'use strict';
 
+var LG_LOG      = 1;
+var LG_SERVER   = 2;
+var LG_USER     = 3;
+var LG_SESSION  = 4;
+var LG_SYNC     = 5;
+var LG_VERSION  = 6;
+var LG_DATABASE = 7;
+
 // The app is all contained in this object
-var lg = {};
+var lg = {
+	classes: [0, 'Log', 'Server', 'User', 'Session', 'Sync', 'Version', 'Database'],
+};
 
 // Return the reference to an objects model given its GUID
 // TODO: we should maintain indexes for the main parameters for this method and select/selectOne

@@ -228,6 +228,7 @@ class LigminchaGlobalDistributed {
 
 		// Decode the data
 		$queue = $orig = self::decodeData( $data );
+
 		if( !is_array( $queue ) ) die( "Problem with received sync data: $data" );
 		$ip = array_shift( $queue );
 		$origin = array_shift( $queue );
@@ -277,7 +278,7 @@ class LigminchaGlobalDistributed {
 	}
 
 	/**
-	 * Decode incoming data
+	 * Decode incoming data (unless it's already an array which is the case when it comes from Ajax)
 	 */
 	private static function decodeData( $data ) {
 		return is_array( $data ) ? $data : json_decode( $data, true );

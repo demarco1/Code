@@ -1,8 +1,13 @@
 'use strict';
 
 lg.User = lg.GlobalObject.extend({
-
-	// Return the current user object
-	getCurrent: function() {
-	},
+	constructor: function(attributes, options) {
+		attributes.type = LG_USER;
+		Backbone.Model.apply( this, arguments );
+	}
 });
+
+// Return the current user object
+lg.User.getCurrent = function() {
+	// TODO
+};

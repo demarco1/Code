@@ -2,6 +2,11 @@
 
 lg.Server = lg.GlobalObject.extend({
 
+	constructor: function(attributes, options) {
+		attributes.type = LG_SERVER;
+		Backbone.Model.apply( this, arguments );
+	},
+
 	// Render server-sprcific properties
 	properties: function(popup) {
 

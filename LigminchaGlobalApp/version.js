@@ -1,7 +1,10 @@
 'use strict';
 
 lg.Version = lg.GlobalObject.extend({
-
+	constructor: function(attributes, options) {
+		attributes.type = LG_VERSION;
+		Backbone.Model.apply( this, arguments );
+	}
 });
 
 // This is a "static" method for opening a dialog to create a new LG_VERSION global object
