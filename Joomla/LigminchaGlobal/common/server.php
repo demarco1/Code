@@ -90,10 +90,7 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 				self::$current->data = self::serverData();
 
 				// Save our new instance to the DB (if we have a master yet)
-				//if( !self::$current->isMaster ) {
-					if( self::$master ) self::$current->update();
-					else self::$deferred = true;
-				//}
+				if( self::$master ) self::$current->update(); else self::$deferred = true;
 			}
 		}
 
