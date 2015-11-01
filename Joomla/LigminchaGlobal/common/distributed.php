@@ -76,7 +76,7 @@ class LigminchaGlobalDistributed {
 			elseif( $server->isMaster ) print self::encodeData( $this->initialTableData() );
 
 			// If we're the master, always send queue incase any re-routing
-			if( $server->isMaster ) self::sendQueue();
+			if( LG_STANDALONE || $server->isMaster ) self::sendQueue();
 			exit;
 		}
 	}
@@ -210,8 +210,13 @@ class LigminchaGlobalDistributed {
 			// TODO: encrypt using shared secret or public key
 			$data = self::encodeData( $stream );
 
-			// Post the queue data to the server
-			$result = self::post( $url, array( self::$cmd => $data ) );
+			// If we're standalone or the master, ensure no data is routed to the master, mark it as successful so the sync objects are cleared
+			if( ( LG_STANDALONE || LigminchaGlobalServer::getCurrent()->isMaster ) && $url == LigminchaGlobalServer::masterDomain() ) {
+				$result = LG_SUCCESS;
+			}
+
+			// Otherwise post the queue data to the server
+			else $result = self::post( $url, array( self::$cmd => $data ) );
 
 			// If result is success, remove all sync objects destined for this target server
 			if( $result == LG_SUCCESS ) LigminchaGlobalDistributed::del( array( 'type' => LG_SYNC, 'ref1' => $target ), false, true );
