@@ -68,7 +68,7 @@ lg.selectList = function(query, atts, cur, key) {
 	var html = '<select';
 	for(var i in atts) html += ' ' + i + '="' + atts[i] + '"';
 	html += '>'
-	var opts = lg.select(query);
+	var opts = this.select(query);
 	for(var i in opts) {
 		var optatts = opts[i].attributes;
 		var opt = (key in optatts) ? optatts[key] : optatts.data[key];
@@ -79,6 +79,12 @@ lg.selectList = function(query, atts, cur, key) {
 	return html;
 };
 
+// Get a list of the tags fro Github
+lg.tagList = function() {
+	var html = '';
+	for(var i in mw.config.get('tags')) html += '<option>' + i + '</option>';
+	return html;
+};
 
 // Return whether the passed object matches the passed criteria
 // TODO: this wouldn't be needed if we were maintaining parameter indexes for the object collection
@@ -117,7 +123,6 @@ lg.recvQueue = function(queue) {
 };
 
 // Send an object (the JS side doesn't do sendQueue since it's a real-time connection, but still needs to be compatible data)
-// TODO: needs testing
 lg.sendObject = function(obj) {
 	var master = lg.Server.getMaster();
 
@@ -217,13 +222,18 @@ lg.ticker = function() {
 };
 
 // Load a template and precompile ready for use
-lg.templates = [];
-lg.template = function(template, args, func) {
+// - template is the name of the template to load (/templates/NAME.html will be loaded)
+// - args is the object containing the parameters to populate the template with
+// - fn is the callback function that uses the final html result
+lg.template = function(template, args, fn) {
 
-	// If the template is already loaded and compiled, process it now
-	if(template in this.templates) func(this.templates[template](args));
+	// Create a list for the templates if not already existent
+	if(!('templates' in this)) this.templates = [];
 
-	// Otherwise load the template, and when it's loaded compile it ready for use
+	// If the template is already loaded and compiled, process the final result immediately
+	if(template in this.templates) fn(this.templates[template](args));
+
+	// Otherwise load the template, and when it's loaded compile it and return the result
 	else {
 		$.ajax({
 			type: 'GET',
@@ -231,8 +241,12 @@ lg.template = function(template, args, func) {
 			context: this,
 			dataType: 'html',
 			success: function(html) {
+
+				// Compile the template
 				this.templates[template] = _.template(html);
-				func(this.templates[template](args));
+
+				// Process the template with our args and send through the callback
+				fn(this.templates[template](args));
 			}
 		});
 	}

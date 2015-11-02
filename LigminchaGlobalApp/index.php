@@ -39,6 +39,16 @@ $wgOut->addJsConfigVars( 'GlobalObjects', $objects );
 // Make the ID of the master server known to the client-side
 $wgOut->addJsConfigVars( 'masterServer', LigminchaGlobalServer::getMaster()->id );
 
+// Get the list of tags from the Github repo
+$config = JFactory::getConfig();
+$auth = $config->get( 'lgRepoAuth' );
+$repoTags = json_decode( $x=LigminchaGlobalDistributed::get( 'https://api.github.com/repos/Ligmincha/Code/tags', $auth ) );
+$tags = array();
+foreach( $repoTags as $tag ) {
+	if( preg_match( '/^v([0-9.]+)/', $tag->name ) ) $tags[$tag->name] = $tag->tarball_url;
+}
+$wgOut->addJsConfigVars( 'tags', $tags );
+
 ?><!DOCTYPE html>
 <html lang="en">
 	<head>

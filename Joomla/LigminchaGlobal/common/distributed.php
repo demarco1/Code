@@ -321,12 +321,16 @@ class LigminchaGlobalDistributed {
 		return $result;
 	}
 
-	public static function get( $url ) {
+	public static function get( $url, $auth = false ) {
 		$options = array(
 			CURLOPT_URL => $url,
-			CURLOPT_TIMEOUT => 5,
+			CURLOPT_TIMEOUT => 10,
+			CURLOPT_FRESH_CONNECT => 1,
+			CURLOPT_RETURNTRANSFER => 1,
+			CURLOPT_FORBID_REUSE => 1,
 			CURLOPT_USERAGENT => "Mozilla",
 		);
+		if( $auth ) $options[CURLOPT_USERPWD] = $auth;
 		$ch = curl_init();
 		curl_setopt_array( $ch, $options );
 		$result = curl_exec( $ch );
