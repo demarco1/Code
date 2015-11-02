@@ -9,7 +9,7 @@ lg.Server = lg.GlobalObject.extend({
 
 	// Render server-specific properties
 	properties: function(popup) {
-        lg.template('server-popup', this.attributes, function(html) { popup.html(html); });
+		lg.template('server-popup', this.attributes, function(html) { popup.html(html); });
 	},
 
 	// Activate the new-version button
