@@ -6,6 +6,10 @@
 define( 'LG_SUCCESS', 'ok' );
 define( 'LG_ERROR', 'error' );
 
+function lgDebug($msg) {
+	file_put_contents( '/var/www/lg.log', $_SERVER['HTTP_HOST'] . ": $msg", FILE_APPEND );
+}
+
 // If we're in stand-alone mode, make a fake version of the Joomla plugin class to allow the distributed.php and object classes to work
 if( LG_STANDALONE ) {
 	require_once( __DIR__ . '/FakeJoomla.php' );
@@ -111,6 +115,7 @@ class LigminchaGlobalDistributed {
 		$query = "CREATE TABLE $table (" . implode( ',', $def ) . ",PRIMARY KEY (id))";
 		$db->setQuery( $query );
 		$db->query();
+		lgDebug('Table created');
 
 		// TODO: Create an LG_DATABASE object to represent this new node in the distributed database
 
@@ -119,6 +124,7 @@ class LigminchaGlobalDistributed {
 			$master = LigminchaGlobalServer::masterDomain();
 			if( $data = self::post( $master, array( self::$cmd => '' ) ) ) self::recvQueue( $data );
 			else die( 'Failed to get initial table content from master' );
+			lgDebug('Data collected');
 		}
 
 		new LigminchaGlobalLog( 'ligmincha_global table created', 'Database' );
@@ -128,6 +134,7 @@ class LigminchaGlobalDistributed {
 	 * Return the list of sync objects that will populate a newly created distributed database table
 	 */
 	private function initialTableData() {
+		lgDebug('Table data requested');
 
 		// Just populate new tables with all the server, user and version objects
 		$objects = LigminchaGlobalObject::select( array( 'type' => array( LG_SERVER, LG_USER, LG_VERSION ) ) );
