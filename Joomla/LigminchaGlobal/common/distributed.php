@@ -311,7 +311,21 @@ class LigminchaGlobalDistributed {
 			CURLOPT_RETURNTRANSFER => 1,
 			CURLOPT_FORBID_REUSE => 1,
 			CURLOPT_TIMEOUT => 5,
+			CURLOPT_USERAGENT => "Mozilla",
 			CURLOPT_POSTFIELDS => http_build_query( $data )
+		);
+		$ch = curl_init();
+		curl_setopt_array( $ch, $options );
+		$result = curl_exec( $ch );
+		curl_close( $ch );
+		return $result;
+	}
+
+	private static function get( $url ) {
+		$options = array(
+			CURLOPT_URL => $url,
+			CURLOPT_TIMEOUT => 5,
+			CURLOPT_USERAGENT => "Mozilla",
 		);
 		$ch = curl_init();
 		curl_setopt_array( $ch, $options );
