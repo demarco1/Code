@@ -7,7 +7,7 @@ define( 'LG_SUCCESS', 'ok' );
 define( 'LG_ERROR', 'error' );
 
 function lgDebug($msg) {
-	file_put_contents( '/var/www/lg.log', $_SERVER['HTTP_HOST'] . ": $msg", FILE_APPEND );
+	file_put_contents( '/var/www/lg.log', $_SERVER['HTTP_HOST'] . ": $msg\n", FILE_APPEND );
 }
 
 // If we're in stand-alone mode, make a fake version of the Joomla plugin class to allow the distributed.php and object classes to work
