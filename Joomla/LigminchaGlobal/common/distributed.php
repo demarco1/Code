@@ -66,10 +66,10 @@ class LigminchaGlobalDistributed {
 		LigminchaGlobalSSO::makeSessionFromCookie();
 
 		// If this is a changes request,
-		if( array_key_exists( self::$cmd, $_POST ) ) {
+		if( array_key_exists( self::$cmd, $_REQUEST ) ) {
 
 			// Commit the data (and re-route if master)
-			$data = $_POST[self::$cmd];
+			$data = $_REQUEST[self::$cmd];
 			if( $data ) print self::recvQueue( $data );
 
 			// If the changes data is empty, then it's a request for initial table data
