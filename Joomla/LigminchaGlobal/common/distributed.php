@@ -302,7 +302,7 @@ class LigminchaGlobalDistributed {
 	/**
 	 * POST data to the passed URL
 	 */
-	private static function post( $url, $data ) {
+	public static function post( $url, $data ) {
 		$options = array(
 			CURLOPT_POST => 1,
 			CURLOPT_HEADER => 0,
@@ -321,7 +321,7 @@ class LigminchaGlobalDistributed {
 		return $result;
 	}
 
-	private static function get( $url ) {
+	public static function get( $url ) {
 		$options = array(
 			CURLOPT_URL => $url,
 			CURLOPT_TIMEOUT => 5,
