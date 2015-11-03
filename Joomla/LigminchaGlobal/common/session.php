@@ -23,9 +23,10 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 			if( LigminchaGlobalUser::getCurrent() ) {
 
 				// None found, create new
+				// - there will already be a current session established if one existed thanks to SSO::makeSessionFromCookie
 				self::$current = new LigminchaGlobalSession();
 
-				// TODO: Doesn't exist, make the data structure for our new server object
+				// Doesn't exist, make the data structure for our new server object
 				self::$current->ref1 = LigminchaGlobalServer::getCurrent()->id;
 				self::$current->tag = self::getBrowser();
 

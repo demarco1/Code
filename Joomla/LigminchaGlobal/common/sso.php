@@ -92,6 +92,7 @@ class LigminchaGlobalSSO {
 				if( $user = LigminchaGlobalUser::newFromId( $session->owner ) ) {
 					LigminchaGlobalSession::setCurrent( $session );
 					LigminchaGlobalUser::setCurrent( $user );
+					lgDebug( 'Session established from existing SSO cookie', $session );
 				}
 			}
 			if( !$session || !$user ) self::delCookie();
