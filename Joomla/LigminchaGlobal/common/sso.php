@@ -70,6 +70,7 @@ class LigminchaGlobalSSO {
 					$iframe = "<iframe src=\"$url?{$cmd}={$session->id}\" frameborder=\"0\" width=\"1\" height=\"1\"></iframe>";
 					$app = JFactory::getApplication( 'site' );
 					$app->setBody( str_replace( '</body>', "$iframe\n</body>", $app->getBody() ) );
+					lgDebug( "SSO cookie request iFrame added to page ($url)", $session );
 				}
 
 				// Set the expiry to a longer time that distributed sessions last
