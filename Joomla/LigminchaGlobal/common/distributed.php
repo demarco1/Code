@@ -224,7 +224,7 @@ class LigminchaGlobalDistributed {
 			$data = self::encodeData( $stream );
 
 			// If we're standalone or the master, ensure no data is routed to the master, mark it as successful so the sync objects are cleared
-			if( ( LG_STANDALONE || LigminchaGlobalServer::getCurrent()->isMaster ) && $url == LigminchaGlobalServer::masterDomain() ) {
+			if( LigminchaGlobalServer::getCurrent()->isMaster && $url == LigminchaGlobalServer::masterDomain() ) {
 				$result = LG_SUCCESS;
 			}
 
@@ -252,8 +252,10 @@ class LigminchaGlobalDistributed {
 		$origin = array_shift( $queue );
 		$session = array_shift( $queue );
 
-		// Forward this queue to the WebSocket if it's active
-		self::sendToWebSocket( $orig, $session );
+		// If we're the master, forward this queue to the WebSocket if it's active
+		if( LigminchaGlobalServer::getCurrent()->isMaster ) {
+			self::sendToWebSocket( $orig, $session );
+		}
 
 		// Process each of the sync objects (this may lead to further re-routing sync objects being made)
 		foreach( $queue as $sync ) {
