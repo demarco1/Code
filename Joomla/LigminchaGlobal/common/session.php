@@ -39,7 +39,8 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 
 				// And save the ID in the SSO cookie
 				LigminchaGlobalSSO::setCookie( self::$current->id );
-
+				
+				lgDebug( 'New session created and SSO cookie set', self::$current );
 			} else self::$current = false;
 		}
 
