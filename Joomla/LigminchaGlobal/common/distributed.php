@@ -55,7 +55,7 @@ class LigminchaGlobalDistributed {
 	);
 
 	function __construct() {
-		lgDebug( 'Request started' );
+		lgDebug( 'Request started: ' . $_SERVER['REQUEST_URI'] );
 
 		// Make singleton available if we need it
 		self::$instance = $this;
