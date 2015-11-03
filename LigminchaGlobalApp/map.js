@@ -6,8 +6,8 @@ $(document).ready( function() {
 			type: "HYBRID",
 			width: "300px",
 			height: "200px",
-			lat: -36.915862268297936,
-			lon: 175.10421752929688,
+			lat: -36.87632505501232,
+			lon: 175.08773803710938,
 			zoom: 10
 		};
 		canvas.html('').css('background','none');
