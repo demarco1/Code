@@ -141,7 +141,7 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 			'webserver' => $_SERVER['SERVER_SOFTWARE'],
 			'system'    => php_uname('s') . ' (' . php_uname('m') . ')',
 			'php'       => preg_replace( '#^([0-9.]+).*$#', '$1', phpversion() ),
-			'mysql'     => preg_replace( '|^(.+?\d\.\S+)|', '$1', mysqli_init()->client_info ),
+			'mysql'     => preg_replace( '|^(.+?\d\.\S+).*$|', '$1', mysqli_init()->client_info ),
 			'joomla'    => $version->getShortVersion(),
 		);
 	}
