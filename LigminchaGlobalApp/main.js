@@ -11,6 +11,11 @@ String.prototype.ucwords = function() {
 }
 
 /**
+ * Preload images
+ */
+(new Image()).src = '/images/loader.gif';
+
+/**
  * App initialisation
  */
 
