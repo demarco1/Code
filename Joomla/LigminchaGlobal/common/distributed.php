@@ -55,7 +55,8 @@ class LigminchaGlobalDistributed {
 	);
 
 	function __construct() {
-		lgDebug( 'Request started: ' . join( ',', array_keys( $_REQUEST ) ) );
+		$sa = LG_STANDALONE ? ' (standalone)' : '';
+		lgDebug( "Request started$sa: " . join( ',', array_keys( $_REQUEST ) ) );
 
 		// Make singleton available if we need it
 		self::$instance = $this;

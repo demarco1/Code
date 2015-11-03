@@ -96,10 +96,10 @@ class LigminchaGlobalSSO {
 					LigminchaGlobalSession::setCurrent( $session );
 					LigminchaGlobalUser::setCurrent( $user );
 					lgDebug( 'Session established from existing SSO cookie', $session );
-				}
-			}
+				} else lgDebug( 'SSO session cookie found, but user is no longer logged in (' . substr( $_COOKIE[self::$cookie], 0, 5 ) . ')' );
+			} else lgDebug( 'SSO session cookie found, but not in database (' . substr( $_COOKIE[self::$cookie], 0, 5 ) . ')' );
 			if( !$session || !$user ) self::delCookie();
-		}
+		} else lgDebug( 'No SSO session cookie found' );
 	}
 }
 
