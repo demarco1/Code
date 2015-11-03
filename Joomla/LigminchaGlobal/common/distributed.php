@@ -55,6 +55,7 @@ class LigminchaGlobalDistributed {
 	);
 
 	function __construct() {
+		lgDebug( 'Request started' );
 
 		// Make singleton available if we need it
 		self::$instance = $this;
