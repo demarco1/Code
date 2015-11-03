@@ -58,7 +58,8 @@ $wgOut->addJsConfigVars( 'tags', $tags );
 		<link rel="stylesheet" href="resources/jquery-ui/jquery-ui.min.css" />
 	</head>
 	<body>
-		<!-- Map -->
+		<!-- Page structure -->
+		<div class="welcome"></div>
 		<div class="map"></div>
 
 		<!-- Scripts -->
