@@ -34,6 +34,7 @@ class LigminchaGlobalSSO {
 	 * Set the SSO cookie to the passed session id
 	 */
 	public static function setCookie( $sid ) {
+		lgDebug( 'SSO cookie set: ' . substr( $sid, 0, 5 ) );
 		return setcookie( self::$cookie, $sid, time() + LG_SESSION_DURATION );
 	}
 
@@ -41,6 +42,7 @@ class LigminchaGlobalSSO {
 	 * Delete the SSO cookie
 	 */
 	public static function delCookie() {
+		lgDebug( 'SSO cookie deleted: ' . substr( $_COOKIE[self::$cookie], 0, 5 ) );
 		return setCookie( self::$cookie, '', time() - 86400 );
 	}
 
