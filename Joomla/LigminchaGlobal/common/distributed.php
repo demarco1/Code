@@ -273,8 +273,10 @@ class LigminchaGlobalDistributed {
 			WebSocket::$clientID = $session;
 
 			// Send queue to all clients
+			lgDebug( 'Sending to WebSocket' );
 			WebSocket::send( 'LigminchaGlobal', $queue );
-		}
+			lgDebug( 'Sent to WebSocket' );
+		} else lgDebug( 'Not sending to WebSocket: not active' );
 	}
 
 	/**
@@ -300,7 +302,7 @@ class LigminchaGlobalDistributed {
 	private static function decodeData( $data ) {
 		lgDebug( 'Decoding data' );
 		$data = is_array( $data ) ? $data : json_decode( $data, true );
-		lgDebug( 'Data decoded (Items: ' . count($data) . ')' );
+		lgDebug( 'Data decoded (Objects: ' . ( count($data) - 3 ) . ')' );
 		return $data;
 	}
 
