@@ -26,6 +26,13 @@ div.gm-style-iw span.title {
 div.gm-style-iw span.title:hover {
 	text-decoration: underline;
 }
+div.gm-style-iw ul {
+	padding-left: 12px;
+}
+ul.sessions {
+	font-size: 8pt;
+	line-height: 8pt;
+}
 
 /**
  * Server details popup
