@@ -4,7 +4,7 @@ lg.User = lg.GlobalObject.extend({
 	constructor: function(attributes, options) {
 		attributes.type = LG_USER;
 		Backbone.Model.apply( this, arguments );
-	}
+	},
 
 	// Render user-specific properties
 	properties: function(popup) {
