@@ -52,7 +52,7 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 
 			// Give our server a version and put our server on the update queue after we've established the master
 			if( self::$master ) {
-				lgDebug('Master obtained');
+				lgDebug( 'Master obtained', self::$master );
 
 				// Set the version (just use the first ver object for now while testing)
 				if( $versions = LigminchaGlobalVersion::select() ) self::$current->ref1 = $versions[0]->id;
@@ -65,8 +65,9 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 
 				// If this server object was created before we knew this master, we need to send
 				if( self::$deferred ) {
-					self::getCurrent()->update();
-					lgDebug('Server object updated');
+					$server = self::getCurrent();
+					$server->update();
+					lgDebug( 'Server object updated', $server );
 				}
 			}
 		}
@@ -86,7 +87,7 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 
 			// If the object was newly created, populate with default initial data and save
 			if( !self::$current->tag ) {
-				lgDebug('Server object created');
+				lgDebug( 'Server object created', self::$current );
 				
 				// Make it easy to find this server by domain
 				self::$current->tag = $_SERVER['HTTP_HOST'];
@@ -97,12 +98,12 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 				// Save our new instance to the DB (if we have a master yet)
 				if( self::$master ) {
 					self::$current->update();
-					lgDebug('Server object updated');
+					lgDebug( 'Server object updated', self::$master );
 				} else {
 					self::$deferred = true;
-					lgDebug('Server object update deferred, master unknown');
+					lgDebug( 'Server object update deferred, master unknown' );
 				}
-			} else lgDebug('Server object retrieved from database');
+			} else lgDebug( 'Server object retrieved from database', self::$current );
 		}
 
 		// If we have a master and we're not in standalone, ensure the server data is up to date

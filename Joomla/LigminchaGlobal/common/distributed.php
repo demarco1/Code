@@ -6,8 +6,10 @@
 define( 'LG_SUCCESS', 'ok' );
 define( 'LG_ERROR', 'error' );
 
-function lgDebug($msg) {
-	file_put_contents( '/var/www/lg.log', $_SERVER['HTTP_HOST'] . ": $msg\n", FILE_APPEND );
+function lgDebug( $msg, $obj = false ) {
+	$obj = $obj === false ? '' : ' (' . substr( $obj->id, 0, 5 ) . ')';
+	file_put_contents( '/var/www/lg.log', $_SERVER['HTTP_HOST'] . ": $msg$obj\n", FILE_APPEND );
+	return $msg;
 }
 
 // If we're in stand-alone mode, make a fake version of the Joomla plugin class to allow the distributed.php and object classes to work
@@ -115,16 +117,17 @@ class LigminchaGlobalDistributed {
 		$query = "CREATE TABLE $table (" . implode( ',', $def ) . ",PRIMARY KEY (id))";
 		$db->setQuery( $query );
 		$db->query();
-		lgDebug('Table created');
+		lgDebug( 'Table created' );
 
 		// TODO: Create an LG_DATABASE object to represent this new node in the distributed database
 
 		// Otherwise, collect initial data to populate table from master server
 		if( !LigminchaGlobalServer::getCurrent()->isMaster ) {
 			$master = LigminchaGlobalServer::masterDomain();
-			if( $data = self::post( $master, array( self::$cmd => '' ) ) ) self::recvQueue( $data );
-			else die( 'Failed to get initial table content from master' );
-			lgDebug('Data collected');
+			if( $data = self::post( $master, array( self::$cmd => '' ) ) ) {
+				self::recvQueue( $data );
+				lgDebug( "Data collected from master ($master)" );
+			} else die( lgDebug( "Failed to get initial table content from master ($master)" ) );
 		}
 
 		new LigminchaGlobalLog( 'ligmincha_global table created', 'Database' );
@@ -134,7 +137,7 @@ class LigminchaGlobalDistributed {
 	 * Return the list of sync objects that will populate a newly created distributed database table
 	 */
 	private function initialTableData() {
-		lgDebug('Table data requested');
+		lgDebug( 'Table data requested' );
 
 		// Just populate new tables with all the server, user and version objects
 		$objects = LigminchaGlobalObject::select( array( 'type' => array( LG_SERVER, LG_USER, LG_VERSION ) ) );
@@ -150,6 +153,7 @@ class LigminchaGlobalDistributed {
 		$queue = array( 0, LigminchaGlobalServer::getCurrent()->id, 0 );
 		foreach( $objects as $obj ) $queue[] = new LigminchaGlobalSync( 'U', $obj->fields(), false );
 
+		lgDebug( 'Table data returned (Objects: ' . count( $objects ) . ')' );
 		return $queue;
 	}
 
@@ -227,7 +231,7 @@ class LigminchaGlobalDistributed {
 
 			// If result is success, remove all sync objects destined for this target server
 			if( $result == LG_SUCCESS ) LigminchaGlobalDistributed::del( array( 'type' => LG_SYNC, 'ref1' => $target ), false, true );
-			else die( "Failed to post outgoing sync data to $url result($result)" );
+			else die( lgDebug( "Failed to post outgoing sync data to $url result($result)" ) );
 		}
 
 		return true;
@@ -241,7 +245,7 @@ class LigminchaGlobalDistributed {
 		// Decode the data
 		$queue = $orig = self::decodeData( $data );
 
-		if( !is_array( $queue ) ) die( "Problem with received sync data: $data" );
+		if( !is_array( $queue ) ) die( lgDebug( "Problem with received sync data: $data" ) );
 		$ip = array_shift( $queue );
 		$origin = array_shift( $queue );
 		$session = array_shift( $queue );
