@@ -298,7 +298,10 @@ class LigminchaGlobalDistributed {
 	 * Decode incoming data (unless it's already an array which is the case when it comes from Ajax)
 	 */
 	private static function decodeData( $data ) {
-		return is_array( $data ) ? $data : json_decode( $data, true );
+		lgDebug( 'Decoding data' );
+		$data = is_array( $data ) ? $data : json_decode( $data, true );
+		lgDebug( 'Data decoded (Items: ' . count($data) . ')' );
+		return $data;
 	}
 
 	/**
