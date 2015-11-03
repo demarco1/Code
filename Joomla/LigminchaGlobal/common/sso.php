@@ -66,7 +66,7 @@ class LigminchaGlobalSSO {
 
 				// Otherwise we need to make the request to the master in the iFrame
 				if( !LigminchaGlobalServer::getCurrent()->isMaster ) {
-					$url = plgSystemLigminchaGlobal::$instance->params->get( 'lgCookieServer' );
+					$url = LigminchaGlobalServer::masterDomain();
 					$iframe = "<iframe src=\"$url?{$cmd}={$session->id}\" frameborder=\"0\" width=\"1\" height=\"1\"></iframe>";
 					$app = JFactory::getApplication( 'site' );
 					$app->setBody( str_replace( '</body>', "$iframe\n</body>", $app->getBody() ) );

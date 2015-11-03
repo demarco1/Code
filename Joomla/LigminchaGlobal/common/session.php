@@ -75,7 +75,10 @@ class LigminchaGlobalSession extends LigminchaGlobalObject {
 	public static function delCurrent() {
 
 		// Delete the global object
-		if( $session = LigminchaGlobalSession::getCurrent() ) LigminchaGlobalDistributed::del( array( 'id' => $session->id ) );
+		if( $session = LigminchaGlobalSession::getCurrent() ) {
+			lgDebug( 'Session destroyed', $session );
+			LigminchaGlobalDistributed::del( array( 'id' => $session->id ) );
+		}
 
 		// Delete the SSO cookie
 		LigminchaGlobalSSO::delCookie();
