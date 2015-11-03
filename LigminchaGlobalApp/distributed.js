@@ -235,6 +235,7 @@ lg.template = function(template, args, fn) {
 
 	// Otherwise load the template, and when it's loaded compile it and return the result
 	else {
+		fn('<div class="loading"></div>');
 		$.ajax({
 			type: 'GET',
 			url: '/templates/' + template + '.html',

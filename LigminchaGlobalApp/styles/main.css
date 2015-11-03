@@ -7,6 +7,15 @@ div.map {
 }
 
 /**
+ * Ajax loader
+ */
+div.loader {
+	width: 100%;
+	height: 100%;
+	background: url(../images/loader.gif) no-repeat center;
+}
+
+/**
  * Server map info window
  */
 div.gm-style-iw span.title {
