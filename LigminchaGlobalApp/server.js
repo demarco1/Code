@@ -38,7 +38,7 @@ lg.ServerView = Backbone.View.extend({
 				var user = users[i].attributes;
 				var sessions = lg.select({type: LG_SESSION, owner: user.id});
 				var col = sessions.length ? 'green' : 'red';
-				html += '<li style="color:' + col + '"><span id="' + user.id + '">' + user.data.username + ' (' + user.id.substr(0,5) + ')</span></li>';
+				html += '<li style="color:' + col + '"><span id="' + user.id + '">' + user.data.realname + '</span></li>';
 				if(sessions.length) {
 					html += '<ul>';
 					for( var j in sessions ) {
