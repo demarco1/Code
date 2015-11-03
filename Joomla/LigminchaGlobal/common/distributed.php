@@ -126,8 +126,8 @@ class LigminchaGlobalDistributed {
 			$master = LigminchaGlobalServer::masterDomain();
 			lgDebug( "Requesting initial table data from master ($master)" );
 			if( $data = self::post( $master, array( self::$cmd => '' ) ) ) {
+				lgDebug( "Data successfully received from master ($master)" );
 				self::recvQueue( $data );
-				lgDebug( "Data collected from master ($master)" );
 			} else die( lgDebug( "Failed to get initial table content from master ($master)" ) );
 		}
 
