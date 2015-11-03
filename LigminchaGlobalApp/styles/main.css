@@ -9,10 +9,10 @@ div.map {
 /**
  * Ajax loader
  */
-div.loader {
+div.loading {
 	width: 100%;
 	height: 100px;
-	background: url(../images/loader.gif) no-repeat center;
+	background: #ccc url(../images/loader.gif) no-repeat center;
 }
 
 /**
