@@ -79,9 +79,9 @@ $(document).ready( function() {
 		 */
 		function tempPosition(domain) {
 			console.log(domain);
-			if(domain == 'organicdesign.co.nz') return new google.maps.LatLng(-36.86424015502006, 174.86114501953125);
-			else if(domain == 'organicdesign.tv') return new google.maps.LatLng(-37.13732976724878, 175.60134887695312);
-			else if(domain == 'organicdesign.wiki') return new google.maps.LatLng(-36.758690821098405, 175.18524169921875);
+			if(domain == 'ligmincha.organicdesign.co.nz') return new google.maps.LatLng(-36.86424015502006, 174.86114501953125);
+			else if(domain == 'ligmincha.organicdesign.tv') return new google.maps.LatLng(-37.13732976724878, 175.60134887695312);
+			else if(domain == 'ligmincha.organicdesign.wiki') return new google.maps.LatLng(-36.758690821098405, 175.18524169921875);
 		}
 	});
 });
