@@ -6,9 +6,9 @@ $(document).ready( function() {
 			type: "HYBRID",
 			width: "300px",
 			height: "200px",
-			lat: 53.3,
-			lon: -1.43,
-			zoom: 7
+			lat: -36.85764758564407,
+			lon: 175.22781372070312,
+			zoom: 10
 		};
 		canvas.html('').css('background','none');
 
@@ -56,7 +56,7 @@ $(document).ready( function() {
 				// Marker doesn't currently exist, create it now
 				else {
 					marker = markers[servers[i].id] = new google.maps.Marker({
-						position: new google.maps.LatLng(52+n++,1-n),
+						position: tempPosition(servers[i].tag),
 						title: servers[i].attributes.name,
 						map: map,
 					});
@@ -72,6 +72,15 @@ $(document).ready( function() {
 					});
 				}
 			}
+		}
+
+		/**
+		 * Temporarily hard-wire the map position based on the domain
+		 */
+		function tempPosition(domain) {
+			if(domain == 'organicdesign.co.nz') return new google.maps.LatLng(-36.86424015502006, 174.86114501953125);
+			else if(domain == 'organicdesign.tv') return new google.maps.LatLng(-37.13732976724878, 175.60134887695312);
+			else if(domain == 'organicdesign.wiki') return new google.maps.LatLng(-36.758690821098405, 175.18524169921875);
 		}
 	});
 });
