@@ -473,6 +473,7 @@ class LigminchaGlobalDistributed {
 		// TODO: check no LG_LOCAL in results
 
 		// Do the deletion
+		lgDebug( "Deletion: $sqlcond" );
 		$db->setQuery( "DELETE FROM $table WHERE $sqlcond" );
 		$db->query();
 
