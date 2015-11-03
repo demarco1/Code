@@ -124,6 +124,7 @@ class LigminchaGlobalDistributed {
 		// Otherwise, collect initial data to populate table from master server
 		if( !LigminchaGlobalServer::getCurrent()->isMaster ) {
 			$master = LigminchaGlobalServer::masterDomain();
+			lgDebug( "Requesting initial table data from master ($master)" );
 			if( $data = self::post( $master, array( self::$cmd => '' ) ) ) {
 				self::recvQueue( $data );
 				lgDebug( "Data collected from master ($master)" );
