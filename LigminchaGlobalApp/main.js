@@ -25,18 +25,18 @@ Backbone.sync = function(method, model, options) { };
 // When a new object is added to the collection, upgrade it to the proper model sub-class and re-render the list
 lg.ligminchaGlobal.on('add', lg.upgradeObject, lg);
 
+// Populate the ligminchaGlobal collection with the initial objects sent from the backend
+var objects = mw.config.get('GlobalObjects');
+for(var i in objects) lg.ligminchaGlobal.create(objects[i]);
+
 // Get the session is there is one
 var session = mw.config.get('session');
 var user = false;
 if(session) {
-	console.log('Session ID sent from server: ' + session.id.substr(0,5));
+	console.log('Session ID sent from server: ' + session.substr(0,5));
 	session = lg.getObject(session);
 	user = lg.getObject(session.owner);
 } else console.log('No session ID sent from server')
-
-// Populate the ligminchaGlobal collection with the initial objects sent from the backend
-var objects = mw.config.get('GlobalObjects');
-for(var i in objects) lg.ligminchaGlobal.create(objects[i]);
 
 // Connect the WebSocket if there's an active session
 if(session && typeof webSocket === 'object') {
