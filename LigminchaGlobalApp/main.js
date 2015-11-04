@@ -32,10 +32,10 @@ for(var i in objects) lg.ligminchaGlobal.create(objects[i]);
 // Get the session is there is one
 lg.session = mw.config.get('session');
 lg.user = false;
-if(session) {
+if(lg.session) {
 	console.log('Session ID sent from server: ' + lg.session.substr(0,5));
-	lg.session = lg.getObject(session);
-	lg.user = lg.getObject(session.owner);
+	lg.session = lg.getObject(lg.session);
+	lg.user = lg.getObject(lg.session.owner);
 } else console.log('No session ID sent from server')
 
 // Connect the WebSocket if there's an active session
