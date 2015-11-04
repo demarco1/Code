@@ -30,7 +30,9 @@ lg.ServerView = Backbone.View.extend({
 	tagName: 'li',
 	render: function() {
 		var server = this.model.attributes;
-		var html = '<span class="title" id="' + server.id + '" href="http://' + server.tag + '">' + server.data.name + '</span>';
+		var html = lg.session
+			? '<span class="title" id="' + server.id + '">' + server.data.name + '</span>'
+			: '<a href="http://' + server.tag + '" target="_newtab">' + server.data.name + '</a>';
 		var users = lg.select({type: LG_USER, ref1: server.id});
 		if(users) {
 			html += '<ul>';
