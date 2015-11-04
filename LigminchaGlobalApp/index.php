@@ -29,11 +29,17 @@ new LigminchaGlobalDistributed();
 
 // Make SSO session ID available to client-side
 new LigminchaGlobalSSO();
+$session = LigminchaGlobalSession::getCurrent() ? LigminchaGlobalSession::getCurrent()->id : 0;
 global $wgOut;
-$wgOut->addJsConfigVars( 'session', LigminchaGlobalSession::getCurrent() ? LigminchaGlobalSession::getCurrent()->id : 0 );
+$wgOut->addJsConfigVars( 'session', $session );
 
-// These are the global objects made initially available to the app
-$objects = LigminchaGlobalObject::select( array( 'type' => array( LG_SERVER, LG_USER, LG_SESSION, LG_VERSION ) ) );
+// These are the global objects made initially available to the app (only server objects are available if not logged in)
+$types = array( LG_SERVER );
+if( $session ) {
+	$types[] = LG_USER;
+	$types[] = LG_SESSION;
+}
+$objects = LigminchaGlobalObject::select( array( 'type' => $types ) );
 $wgOut->addJsConfigVars( 'GlobalObjects', $objects );
 
 // Make the ID of the master server known to the client-side
