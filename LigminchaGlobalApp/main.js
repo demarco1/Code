@@ -29,7 +29,7 @@ lg.ligminchaGlobal.on('add', lg.upgradeObject, lg);
 var session = mw.config.get('session');
 var user = false;
 if(session) {
-	console.log('Session ID sent from server: ' + session.id.substr(0,5);
+	console.log('Session ID sent from server: ' + session.id.substr(0,5));
 	session = lg.getObject(session);
 	user = lg.getObject(session.owner);
 } else console.log('No session ID sent from server')
