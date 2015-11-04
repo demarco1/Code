@@ -224,18 +224,18 @@ lg.ticker = function() {
 // Load a template and precompile ready for use
 // - template is the name of the template to load (/templates/NAME.html will be loaded)
 // - args is the object containing the parameters to populate the template with
-// - fn is the callback function that uses the final html result
-lg.template = function(template, args, fn) {
+// - target is a jQuery selector string, a jQuery element or a function
+lg.template = function(template, args, target) {
 
 	// Create a list for the templates if not already existent
 	if(!('templates' in this)) this.templates = [];
 
 	// If the template is already loaded and compiled, process the final result immediately
-	if(template in this.templates) fn(this.templates[template](args));
+	if(template in this.templates) this.templateRender(this.templates[template](args), target);
 
 	// Otherwise load the template, and when it's loaded compile it and return the result
 	else {
-		fn('<div class="loading"></div>');
+		this.templateRender('<div class="loading"></div>', target);
 		$.ajax({
 			type: 'GET',
 			url: '/templates/' + template + '.html',
@@ -247,8 +247,15 @@ lg.template = function(template, args, fn) {
 				this.templates[template] = _.template(html);
 
 				// Process the template with our args and send through the callback
-				fn(this.templates[template](args));
+				this.templateRender(this.templates[template](args), target);
 			}
 		});
 	}
+};
+lg.templateRender = function(html, target) {
+	var type = typeof target;
+	if(type == 'string') $(target).html(html);
+	else if(type == 'object') target.html(html);
+	else if(type == 'function') target(html);
+	else console.log('lg.template can\'t process type "' + type + '"');
 };

@@ -56,4 +56,4 @@ if(lg.session && typeof webSocket === 'object') {
 }
 
 // Populate the welcome notice depending on if there's a session
-lg.template(lg.session ? 'welcome-user' : 'welcome-anon', lg.user, function(html) { $('div.welcome').html(html); });
+lg.template(lg.session ? 'welcome-user' : 'welcome-anon', lg.user, 'div.welcome');
