@@ -105,7 +105,7 @@ class LigminchaGlobalSSO {
 				} else lgDebug( 'SSO session cookie found, but user is no longer logged in (' . substr( $_COOKIE[self::$cookie], 0, 5 ) . ')' );
 			} else lgDebug( 'SSO session cookie found, but not in database (' . substr( $_COOKIE[self::$cookie], 0, 5 ) . ')' );
 			if( !$session || !$user ) self::delCookie();
-		} else lgDebug( 'No SSO session cookie found ' . json_encode( $_COOKIE ) );
+		} else lgDebug( 'No SSO session cookie found ' . var_export( $_COOKIE, true ) );
 	}
 }
 
