@@ -280,7 +280,7 @@ class plgSystemCorreios extends JPlugin {
 	 * Get the weight costs from the Correios site and update the config data
 	 */
 	private function updateWeightCosts() {
-		$debug = in_array( 'debug', $_GET );
+		$debug = in_array( 'debug', $_REQUEST );
 		$info = $info2 = $err = '';
 		$correios = 'http://www.correios.com.br/para-voce/consultas-e-solicitacoes/precos-e-prazos';
 
