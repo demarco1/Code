@@ -31,7 +31,7 @@ class plgSystemCorreios extends JPlugin {
 		self::$bookCats = preg_split( '/\s*,\s*/', $this->params->get( "cartaCats" ) );
 
 		// And the Carta registrada prices
-		foreach( array( 100, 150, 200, 250, 300, 350, 400, 450 ) as $d ) {
+		foreach( array( 0, 50, 100, 150, 200, 250, 300, 350, 400, 450 ) as $d ) {
 				self::$cartaPrices[$d] = str_replace( ',', '.', $this->params->get( "carta$d" ) );
 				self::$cartaPricesMod[$d] = str_replace( ',', '.', $this->params->get( "cartam$d" ) );
 		}
