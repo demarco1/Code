@@ -303,9 +303,9 @@ class plgSystemCorreios extends JPlugin {
 
 						// Set the Módico price checking for changes
 						$k = "cartam$e";
-						if( $debug ) print "$e: " . $n[1][$i] . ' + ' . $tracking . "\n";
-						$n[1][$i] = number_format( (float)(str_replace( ',', '.', $n[1][$i] ) + $tracking), 2, ',', '' );
 						$v = $n[1][$i];
+						if( $debug ) print "$e: $v + $tracking\n";
+						$v = number_format( (float)(str_replace( ',', '.', $v ) + $tracking), 2, ',', '' );
 						$o = $this->params->get( $k );
 						if( $v != $o ) {
 							$this->params->set( $k, $v );
@@ -314,8 +314,8 @@ class plgSystemCorreios extends JPlugin {
 
 						// Set the Nacional price checking for changes
 						$k = "carta$e";
-						if( $debug ) print "$e: " . $n[2][$i] . "\n";
 						$v = $n[2][$i];
+						if( $debug ) print "$e: $v\n";
 						$o = $this->params->get( $k );
 						if( $v != $o ) {
 							$this->params->set( $k, $v );
