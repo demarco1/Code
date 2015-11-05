@@ -297,25 +297,24 @@ class plgSystemCorreios extends JPlugin {
 
 						// Get the index into the price config in 50 gram divisions
 						$d = $i;
+						$e = $d ? $d : 20;
 
 						// Set the Módico price checking for changes
 						$n[1][$i] = number_format( (float)(str_replace( ',', '.', $n[1][$i] ) + $tracking), 2, ',', '' );
-						$k = "cartam$d";
+						$k = "cartam$e";
 						$v = $n[1][$i];
 						$o = $this->params->get( $k );
 						if( $v != $o ) {
 							$this->params->set( $k, $v );
-							$e = $d ? $d : 20;
 							$info .= "Registro Módico price for $e-" . ($d + 50) . "g changed from $o to $v\n";
 						}
 
 						// Set the Nacional price checking for changes
-						$k = "carta$d";
+						$k = "carta$e";
 						$v = $n[2][$i];
 						$o = $this->params->get( $k );
 						if( $v != $o ) {
 							$this->params->set( $k, $v );
-							$e = $d ? $d : 20;
 							$info2 .= "Registro Nacional price for $e-" . ($d + 50) . "g changed from $o to $v\n";
 						}
 					}
