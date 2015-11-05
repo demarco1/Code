@@ -296,7 +296,7 @@ class plgSystemCorreios extends JPlugin {
 					foreach( $n[1] as $i => $v ) {
 
 						// Get the index into the price config in 50 gram divisions
-						$d = 50 * $i;
+						$d = $i;
 
 						// Set the Módico price checking for changes
 						$n[1][$i] = number_format( (float)(str_replace( ',', '.', $n[1][$i] ) + $tracking), 2, ',', '' );
