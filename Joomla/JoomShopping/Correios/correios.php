@@ -71,7 +71,7 @@ class plgSystemCorreios extends JPlugin {
 			$path = JPATH_ROOT . '/components/com_jshopping/shippings/sm_correios';
 			$file = 'sm_correios.php';
 			if( !is_dir( $path ) ) mkdir( $path );
-			if( !is_link( "$path/$file" ) symlink( __DIR__ . "/$file" , "$path/$file" );
+			if( !is_link( "$path/$file" ) ) symlink( __DIR__ . "/$file" , "$path/$file" );
 		}
 
 	}
