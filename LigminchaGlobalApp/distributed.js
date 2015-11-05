@@ -237,9 +237,7 @@ lg.template = function(template, args, target) {
 
 	// Function to do the final rendering once the html is populated with the args
 	function render(html, target) {
-		var type = typeof target;
-		if(type == 'function') target(html);
-		else $(target).html(html);
+		typeof target == 'function' ? target(html) : $(target).html(html);
 	}
 
 	// Create a list for the templates if not already existent
