@@ -232,16 +232,14 @@ lg.msg = function(msg, type) {
 // Load a template and precompile ready for use
 // - template is the name of the template to load (/templates/NAME.html will be loaded)
 // - args is the object containing the parameters to populate the template with
-// - target is a jQuery selector string, a jQuery element or a function
+// - target is either a function to pass the final result to, or a jQuery selector or element to set the html for
 lg.template = function(template, args, target) {
 
 	// Function to do the final rendering once the html is populated with the args
 	function render(html, target) {
 		var type = typeof target;
-		if(type == 'string') $(target).html(html);
-		else if(type == 'object') target.html(html);
-		else if(type == 'function') target(html);
-		else console.log('lg.template can\'t process type "' + type + '"');
+		if(type == 'function') target(html);
+		else $(target).html(html);
 	}
 
 	// Create a list for the templates if not already existent
