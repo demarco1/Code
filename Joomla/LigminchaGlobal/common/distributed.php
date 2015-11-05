@@ -56,7 +56,8 @@ class LigminchaGlobalDistributed {
 
 	function __construct() {
 		$sa = LG_STANDALONE ? ' (standalone)' : '';
-		lgDebug( "Request started$sa: " . join( ',', array_keys( $_REQUEST ) ) );
+		$ip = $_SERVER['REMOTE_ADDR'];
+		lgDebug( "Request started for $ip$sa: " . join( ',', array_keys( $_REQUEST ) ) );
 
 		// Make singleton available if we need it
 		self::$instance = $this;
