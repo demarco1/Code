@@ -27,7 +27,6 @@
 					label="&lt;b&gt;Precos de Carta registrada&lt;/b&gt;:"
 					description="Precos de Carta Registrada"
 				/>
-				<field name="carta0" type="text" default="2,00" description="Preço de até 20 gramas" label="até 20g" size="10" />
 				<field name="carta20" type="text" default="3,00" description="Preço de 20 até 50 gramas" label="20g-50g" size="10" />
 				<field name="carta50" type="text" default="4,00" description="Preço de 50 até 100 gramas" label="50g-100g" size="10" />
 				<field name="carta100" type="text" default="6,15" description="Preço de 100 até 150 gramas" label="100g-150g" size="10" />
@@ -43,7 +42,6 @@
 					label="&lt;b&gt;Precos de Carta registrada (módico)&lt;/b&gt;:"
 					description="Precos de Carta Registrada (módico)"
 				/>
-				<field name="cartam0" type="text" default="1,00" description="Preço de até 20 gramas" label="até 20g" size="10" />
 				<field name="cartam20" type="text" default="2,00" description="Preço de 20 até 50 gramas" label="20g-50g" size="10" />
 				<field name="cartam50" type="text" default="3,00" description="Preço de 50 até 100 gramas" label="50g-100g" size="10" />
 				<field name="cartam100" type="text" default="4,35" description="Preço de 100 até 150 gramas" label="100g-150g" size="10" />

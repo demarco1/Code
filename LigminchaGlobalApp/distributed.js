@@ -221,6 +221,14 @@ lg.ticker = function() {
 	lg.expire();
 };
 
+lg.msg = function(msg, type) {
+	if( type === undefined ) type = 'success';
+	//$('.notify-container').remove();
+	msg = $('<div class="notify-container"><div class="' + type + 'box">' + msg + '</div></div>');
+	$('#firstHeading').after(msg);
+	msg.delay(5000).fadeOut(300);
+};
+
 // Load a template and precompile ready for use
 // - template is the name of the template to load (/templates/NAME.html will be loaded)
 // - args is the object containing the parameters to populate the template with

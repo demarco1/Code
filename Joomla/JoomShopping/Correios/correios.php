@@ -71,7 +71,7 @@ class plgSystemCorreios extends JPlugin {
 			$path = JPATH_ROOT . '/components/com_jshopping/shippings/sm_correios';
 			$file = 'sm_correios.php';
 			if( !is_dir( $path ) ) mkdir( $path );
-			copy( __DIR__ . "/$file", "$path/$file" );
+			symlink( __DIR__ . "/$file" , "$path/$file" );
 		}
 
 	}
@@ -289,14 +289,14 @@ class plgSystemCorreios extends JPlugin {
 
 			// Get the weight/costs table (starting at the 100-150 gram entry)
 			$weights = file_get_contents( "$correios/servicos-nacionais_pasta/carta" );
-			if( preg_match( '|Carta não Comercial.+?Mais de 100 até 150</td>\s*(.+?)<tr class="rodape-tabela">|si', $weights, $m ) ) {
+			if( preg_match( '|Carta não Comercial.+?Mais de 20 até 50</td>\s*(.+?)<tr class="rodape-tabela">|si', $weights, $m ) ) {
 				if( preg_match_all( '|<td>([0-9,]+)</td>\s*<td>([0-9,]+)</td>\s*<td>[0-9,]+</td>\s*<td>[0-9,]+</td>\s*<td>[0-9,]+</td>\s*|is', $m[1], $n ) ) {
 
 					// Update the plugin's parameters with the formatted results
 					foreach( $n[1] as $i => $v ) {
 
 						// Get the index into the price config in 50 gram divisions
-						$d = 100 + 50 * $i;
+						$d = 50 * $i;
 
 						// Set the Módico price checking for changes
 						$n[1][$i] = number_format( (float)(str_replace( ',', '.', $n[1][$i] ) + $tracking), 2, ',', '' );
@@ -305,7 +305,8 @@ class plgSystemCorreios extends JPlugin {
 						$o = $this->params->get( $k );
 						if( $v != $o ) {
 							$this->params->set( $k, $v );
-							$info .= "Registro Módico price for $d-" . ($d + 50) . "g changed from $o to $v\n";
+							$e = $d ? $d : 20;
+							$info .= "Registro Módico price for $e-" . ($d + 50) . "g changed from $o to $v\n";
 						}
 
 						// Set the Nacional price checking for changes
@@ -314,7 +315,8 @@ class plgSystemCorreios extends JPlugin {
 						$o = $this->params->get( $k );
 						if( $v != $o ) {
 							$this->params->set( $k, $v );
-							$info2 .= "Registro Nacional price for $d-" . ($d + 50) . "g changed from $o to $v\n";
+							$e = $d ? $d : 20;
+							$info2 .= "Registro Nacional price for $e-" . ($d + 50) . "g changed from $o to $v\n";
 						}
 					}
 
