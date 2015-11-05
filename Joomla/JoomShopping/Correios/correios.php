@@ -280,6 +280,7 @@ class plgSystemCorreios extends JPlugin {
 	 * Get the weight costs from the Correios site and update the config data
 	 */
 	private function updateWeightCosts() {
+		$debug = in_array( 'debug', $_GET ) ? "Debugging output\n" : false;
 		$info = $info2 = $err = '';
 		$correios = 'http://www.correios.com.br/para-voce/consultas-e-solicitacoes/precos-e-prazos';
 
@@ -301,8 +302,9 @@ class plgSystemCorreios extends JPlugin {
 						$e = $d ? $d : 20;
 
 						// Set the Módico price checking for changes
-						$n[1][$i] = number_format( (float)(str_replace( ',', '.', $n[1][$i] ) + $tracking), 2, ',', '' );
 						$k = "cartam$e";
+						if( $debug ) $debug .= "$e: " . $n[1][$i] . ' + ' . $tracking . "\n";
+						$n[1][$i] = number_format( (float)(str_replace( ',', '.', $n[1][$i] ) + $tracking), 2, ',', '' );
 						$v = $n[1][$i];
 						$o = $this->params->get( $k );
 						if( $v != $o ) {
@@ -312,6 +314,7 @@ class plgSystemCorreios extends JPlugin {
 
 						// Set the Nacional price checking for changes
 						$k = "carta$e";
+						if( $debug ) $debug .= "$e: " . $n[2][$i] . "\n";
 						$v = $n[2][$i];
 						$o = $this->params->get( $k );
 						if( $v != $o ) {
@@ -321,7 +324,10 @@ class plgSystemCorreios extends JPlugin {
 					}
 
 					// If changes, write them to the plugin's parameters field in the extensions table
-					if( $info || $info2 ) {
+					if( $debug ) {
+						print $debug;
+						exit;
+					} elseif( $info || $info2 ) {
 						$params = (string)$this->params;
 						$db = JFactory::getDbo();
 						$db->setQuery( "UPDATE `#__extensions` SET `params`='$params' WHERE `name`='plg_system_correios'" );
