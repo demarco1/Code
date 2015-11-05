@@ -280,8 +280,7 @@ class plgSystemCorreios extends JPlugin {
 	 * Get the weight costs from the Correios site and update the config data
 	 */
 	private function updateWeightCosts() {
-		print_r($_REQUEST);
-		$debug = 1;//in_array( 'debug', $_REQUEST );
+		$debug = array_key_exists( 'debug', $_REQUEST );
 		$info = $info2 = $err = '';
 		$correios = 'http://www.correios.com.br/para-voce/consultas-e-solicitacoes/precos-e-prazos';
 
@@ -299,7 +298,7 @@ class plgSystemCorreios extends JPlugin {
 					foreach( $n[1] as $i => $v ) {
 
 						// Get the index into the price config in 50 gram divisions
-						$d = 50 * ( $i - 1 );
+						$d = 50 * $i;
 						$e = $d ? $d : 20;
 
 						// Set the Módico price checking for changes
