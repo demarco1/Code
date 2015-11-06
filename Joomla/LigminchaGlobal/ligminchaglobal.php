@@ -70,6 +70,14 @@ class plgSystemLigminchaGlobal extends JPlugin {
 	public function onAfterRender() {
 		LigminchaGlobalSSO::appendTokenRequest();
 		LigminchaGlobalDistributed::sendQueue();
+
+		// Add the toolbar to the body if we have a user
+		if( $user = LigminchaGlobalUser::getCurrent() ) {
+			$toolbar = LigminchaGlobalSSO::toolbar();
+			$app = JFactory::getApplication( 'site' );
+			$app->setBody( preg_replace( '#<body.*?>#', "$0\n$toolbar\n", $app->getBody() ) );
+			lgDebug( "Global toolbar added to page" );
+		}
 	}
 
 	/**

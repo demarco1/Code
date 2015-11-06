@@ -48,7 +48,7 @@ $wgOut->addJsConfigVars( 'masterServer', LigminchaGlobalServer::getMaster()->id 
 // Get the list of tags from the Github repo
 $config = JFactory::getConfig();
 $auth = $config->get( 'lgRepoAuth' );
-$repoTags = json_decode( $x=LigminchaGlobalDistributed::get( 'https://api.github.com/repos/Ligmincha/Code/tags', $auth ) );
+$repoTags = array(); //json_decode( LigminchaGlobalDistributed::get( 'https://api.github.com/repos/Ligmincha/Code/tags', $auth ) );
 $tags = array();
 foreach( $repoTags as $tag ) {
 	if( preg_match( '/^v([0-9.]+)/', $tag->name ) ) $tags[$tag->name] = $tag->tarball_url;
@@ -63,7 +63,7 @@ $wgOut->addJsConfigVars( 'tags', $tags );
 		<link rel="stylesheet" href="styles/main.css" />
 		<link rel="stylesheet" href="resources/jquery-ui/jquery-ui.min.css" />
 	</head>
-	<body>
+	<body><?php echo LigminchaGlobalSSO::toolbar(); ?>
 		<!-- Page structure -->
 		<div id="notify" style="display:none"></div>
 		<div class="map"></div>

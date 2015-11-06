@@ -107,6 +107,22 @@ class LigminchaGlobalSSO {
 			if( !$session || !$user ) self::delCookie();
 		} else lgDebug( 'No SSO session cookie found ' . var_export( $_COOKIE, true ) );
 	}
+
+	/**
+	 * Render the Ligmincha Global SSO toolbar
+	 */
+	public static function toolbar() {
+		if( $user = LigminchaGlobalUser::getCurrent() ) {
+			$spacer = 'width:0px;border-left:1px solid #333;border-right:1px solid #555;margin:0 15px;font-size:1px;';
+			$spl = "<div style=\"float:left;$spacer\">&nbsp;</div>";
+			$spr = "<div style=\"float:right;$spacer\">&nbsp;</div>";
+			$toolbar = "<div style=\"float:left;padding-left:20px;\">Ligmincha Global Toolbar</div>{$spl}<div style=\"float:left\">Sites&nbsp;&nbsp;▼</div>{$spl}";
+			$toolbar .= "<div style=\"float:right;padding-right:20px\">" . $user->data['realname'] . "&nbsp;&nbsp;▼</div>{$spr}";
+			$toolbar = "<div style=\"position:absolute;top:0px;left:0px;width:100%;background-color:#464646;background-image: -moz-linear-gradient(center bottom , #373737, #464646 5px); color: #ccc; font: 13px/28px sans-serif; height: 28px;\">$toolbar</div>";
+			$toolbar = "<div style=\"padding:0;margin:0;height:28px;\"></div>$toolbar";
+			return $toolbar;
+		}
+	}
 }
 
 // If we're running on a non-standard port, add it to the cookie name (so that different ports act like different domains for testing)
