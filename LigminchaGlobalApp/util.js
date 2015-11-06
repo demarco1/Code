@@ -10,8 +10,8 @@ String.prototype.ucwords = function() {
 lg.message = function(msg, delay, type) {
 	if(typeof delay !== 'number') delay = 0;
 	if(type === undefined) type = 'info';
-	msg = $('<div class="notify-container"><div class="' + type + 'box">' + msg + '</div></div>');
-	$('#notify').html(msg).fadeIn(300);
+	msg = $('<div class="' + type + ' message">' + msg + '</div>');
+	$('#notify').hide().html(msg).fadeIn(300);
 	if(delay) msg.delay(delay).fadeOut(300);
 };
 
