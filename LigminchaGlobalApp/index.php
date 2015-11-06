@@ -65,7 +65,7 @@ $wgOut->addJsConfigVars( 'tags', $tags );
 	</head>
 	<body>
 		<!-- Page structure -->
-		<div class="welcome"></div>
+		<div id="notify" style="display:none"></div>
 		<div class="map"></div>
 
 		<!-- Scripts -->
@@ -88,6 +88,7 @@ $wgOut->addJsConfigVars( 'tags', $tags );
 		<script type="text/javascript" src="session.js"></script>
 		<script type="text/javascript" src="version.js"></script>
 		<script type="text/javascript" src="map.js"></script>
+		<script type="text/javascript" src="util.js"></script>
 		<script type="text/javascript" src="main.js"><!-- Main app code --></script>
 	</body>
 </html>

@@ -81,6 +81,7 @@ $(document).ready( function() {
 			if(domain == 'ligmincha.organicdesign.co.nz') return new google.maps.LatLng(-36.888408043138206, 174.69085693359375);
 			else if(domain == 'ligmincha.organicdesign.tv') return new google.maps.LatLng(-37.13732976724878, 175.60134887695312);
 			else if(domain == 'ligmincha.organicdesign.wiki') return new google.maps.LatLng(-36.82137828938331, 175.15228271484375);
+			else return new google.maps.LatLng(opt.lat, opt.lon);
 		}
 	});
 });

@@ -79,13 +79,6 @@ lg.selectList = function(query, atts, cur, key) {
 	return html;
 };
 
-// Get a list of the tags fro Github
-lg.tagList = function() {
-	var html = '';
-	for(var i in mw.config.get('tags')) html += '<option>' + i + '</option>';
-	return html;
-};
-
 // Return whether the passed object matches the passed criteria
 // TODO: this wouldn't be needed if we were maintaining parameter indexes for the object collection
 // TODO: this should allow OR like the PHP equivalents do
@@ -221,48 +214,5 @@ lg.ticker = function() {
 	lg.expire();
 };
 
-lg.msg = function(msg, type) {
-	if( type === undefined ) type = 'success';
-	//$('.notify-container').remove();
-	msg = $('<div class="notify-container"><div class="' + type + 'box">' + msg + '</div></div>');
-	$('#firstHeading').after(msg);
-	msg.delay(5000).fadeOut(300);
-};
 
-// Load a template and precompile ready for use
-// - template is the name of the template to load (/templates/NAME.html will be loaded)
-// - args is the object containing the parameters to populate the template with
-// - target is either a function to pass the final result to, or a jQuery selector or element to set the html for
-lg.template = function(template, args, target) {
-
-	// Function to do the final rendering once the html is populated with the args
-	function render(html, target) {
-		typeof target == 'function' ? target(html) : $(target).html(html);
-	}
-
-	// Create a list for the templates if not already existent
-	if(!('templates' in this)) this.templates = [];
-
-	// If the template is already loaded and compiled, process the final result immediately
-	if(template in this.templates) render(this.templates[template](args), target);
-
-	// Otherwise load the template, and when it's loaded compile it and return the result
-	else {
-		render('<div class="loading"></div>', target);
-		$.ajax({
-			type: 'GET',
-			url: '/templates/' + template + '.html',
-			context: this,
-			dataType: 'html',
-			success: function(html) {
-
-				// Compile the template
-				this.templates[template] = _.template(html);
-
-				// Process the template with our args and send through the callback
-				render(this.templates[template](args), target);
-			}
-		});
-	}
-};
 

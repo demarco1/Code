@@ -15,11 +15,7 @@
 
 					// Function to do the final rendering once the html is populated with the args
 					function render(html, target) {
-						var type = typeof target;
-						if(type == 'string') $(target).html(html);
-						else if(type == 'object') target.html(html);
-						else if(type == 'function') target(html);
-						else console.log('lg.template can\'t process type "' + type + '"');
+						typeof target == 'function' ? target(html) : $(target).html(html);
 					}
 
 					// Create a list for the templates if not already existent
@@ -48,7 +44,7 @@
 					}
 				};
 
-				lg.template( 'welcome-user', { data: { realname: 'Henry McFoobas' } }, '#foo' );			
+				lg.template( 'welcome-user', { data: { realname: 'Henry McFoobas' } }, '#foo' );
 			});
 		</script>
 	</head>

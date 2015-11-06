@@ -1,16 +1,6 @@
 'use strict';
 
 /**
- * Some useful string functions
- */
-String.prototype.ucfirst = function() {
-	return this.charAt(0).toUpperCase() + this.slice(1);
-};
-String.prototype.ucwords = function() {
-	return this.split(' ').map(function(s) { return s.ucfirst(); }).join(' ');
-};
-
-/**
  * Preload images
  */
 (new Image()).src = '/images/loader.gif';
@@ -56,4 +46,6 @@ if(lg.session && typeof webSocket === 'object') {
 }
 
 // Populate the welcome notice depending on if there's a session
-lg.template(lg.session ? 'welcome-user' : 'welcome-anon', lg.user, 'div.welcome');
+lg.template(lg.session ? 'welcome-user' : 'welcome-anon', lg.user, function(html) {
+	lg.message(html, lg.session ? 5000 : 0);
+});
