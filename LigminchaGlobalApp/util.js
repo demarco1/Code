@@ -20,19 +20,9 @@ lg.message = function(msg, delay, type) {
 // - args is the object containing the parameters to populate the template with
 // - target is either a function to pass the final result to, or a jQuery selector or element to set the html for
 lg.template = function(template, args, target) {
-
-	// Function to do the final rendering once the html is populated with the args
-	function render(html, target) {
-		typeof target == 'function' ? target(html) : $(target).html(html);
-	}
-
-	// Create a list for the templates if not already existent
+	function render(html, target) { typeof target == 'function' ? target(html) : $(target).html(html); }
 	if(!('templates' in this)) this.templates = [];
-
-	// If the template is already loaded and compiled, process the final result immediately
 	if(template in this.templates) render(this.templates[template](args), target);
-
-	// Otherwise load the template, and when it's loaded compile it and return the result
 	else {
 		render('<div class="loading"></div>', target);
 		$.ajax({
@@ -41,11 +31,7 @@ lg.template = function(template, args, target) {
 			context: this,
 			dataType: 'html',
 			success: function(html) {
-
-				// Compile the template
 				this.templates[template] = _.template(html);
-
-				// Process the template with our args and send through the callback
 				render(this.templates[template](args), target);
 			}
 		});
