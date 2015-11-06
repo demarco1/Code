@@ -24,7 +24,7 @@ div.map {
 	line-height: 16pt;
 	color: #333;
 	border: 1px solid #ccc;
-	background: #eee url(/images/info.png) 30px center no-repeat;
+	background: #FDFDDD url(/images/info.png) 30px center no-repeat;
 	border-radius: 10px;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
