@@ -44,7 +44,7 @@ class LigminchaGlobalSSO {
 		$domain = $config->get( 'lgCookieDomain', '' );
 		$d = ( $domain ? " ($domain)" : '' );
 		lgDebug( "SSO cookie set$d: " . substr( $sid, 0, 5 ) );
-		return setcookie( self::$cookie, $sid, time() + LG_SESSION_DURATION, '', $domain );
+		return setcookie( self::$cookie, $sid, time() + LG_SESSION_DURATION, '/', $domain );
 	}
 
 	/**
