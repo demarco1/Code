@@ -50,7 +50,7 @@ if(lg.session && typeof webSocket === 'object') {
 
 	// test
 	if(mw.config.get('toolbar')) {
-		parent.jQuery('#aside').css('border','red');
+		parent.jQuery('#aside').css('background-color','red');
 	}
 }
 
