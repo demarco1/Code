@@ -51,8 +51,6 @@ $wgOut->addJsConfigVars( 'masterServer', LigminchaGlobalServer::getMaster()->id 
 	<body>
 		<!-- Page structure -->
 		<div id="toolbar"></div>
-		<div id="notify"></div>
-
 		<!-- Scripts -->
 		<script type="text/javascript" src="resources/fakemediawiki.js"><!-- Make MediaWiki environment look present for websocket.js --></script>
 		<script type="text/javascript">
