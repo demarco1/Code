@@ -48,7 +48,7 @@ class LigminchaGlobalMediaWiki {
 
 		// Add the toolbar to the body if we have a user
 		$out->mBodytext = preg_replace( '#<body.*?>#', "$0\n$toolbar\n", $out->mBodytext );
-		lgDebug( "Global toolbar iFrame added to MediaWiki page" );
+		lgDebug( "Global toolbar iFrame added to MediaWiki page" . $out->mBodytext );
 		return true;
 	}
 }
