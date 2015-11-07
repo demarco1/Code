@@ -51,6 +51,7 @@ if(lg.session && typeof webSocket === 'object') {
 	// test
 	if(mw.config.get('toolbar')) {
 		console.log(parent);
+		$('#aside').css('border','red');
 	}
 }
 
