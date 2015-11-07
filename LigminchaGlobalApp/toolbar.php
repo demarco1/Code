@@ -1,42 +1,9 @@
 <?php
-ini_set( 'error_reporting', E_ALL );
-ini_set( 'display_errors', true );
+// Load the code common to standalone functionality
+include( __DIR__ . '/standalone.php' );
 
-// This tells the system that we're running the database without the Joomla framework present
-define( 'LG_STANDALONE', true );
-
-// Give components the chance to add script that runs before the dependencies are loaded
-$script = '';
-
-// Load the Fake Joomla environment and all the common classes from the Joomla extension
-// - changes coming in from the app are saved directly into the distributed db table
-// - changes destined to the app are sent from the Joomla via the WebSocket daemon not from here
-// - although we can send the initial servers, users and sessions from here
-$common = dirname( __DIR__ ) . '/Joomla/LigminchaGlobal/common';
-require_once( "$common/distributed.php" );
-require_once( "$common/object.php" );
-require_once( "$common/sync.php" );
-require_once( "$common/server.php" );
-require_once( "$common/user.php" );
-require_once( "$common/session.php" );
-require_once( "$common/version.php" );
-require_once( "$common/log.php" );
-require_once( "$common/sso.php" );
-
-// Instantiate the main classes
-// - note that if there is any incoming sync data, this will process it (and reroute if necessary) and exit
-new LigminchaGlobalSSO();
-new LigminchaGlobalDistributed();
-
-// Make SSO session ID available to client-side
-if( !LigminchaGlobalSession::getCurrent() ) die('no session'); // There is no toolbar unless we have a global session
-$session = LigminchaGlobalSession::getCurrent()->id;
-
-global $wgOut;
-$wgOut->addJsConfigVars( 'session', $session );
+// Tell the client-side that this is a toolbar only
 $wgOut->addJsConfigVars( 'toolbar', true );
-$wgOut->addJsConfigVars( 'wsPort', 1729 );
-$wgOut->addJsConfigVars( 'wsRewrite', true );
 
 // These are the global objects made initially available to the app (only server objects are available if not logged in)
 $objects = LigminchaGlobalObject::select( array( 'type' => array( LG_SERVER, LG_USER, LG_SESSION ) ) );
