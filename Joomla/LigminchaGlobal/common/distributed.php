@@ -17,6 +17,12 @@ if( LG_STANDALONE ) {
 	require_once( __DIR__ . '/FakeJoomla.php' );
 }
 
+// Need fake MediaWiki environment here
+if( !defined( 'MEDIAWIKI' ) ) {
+	require_once( __DIR__ . '/FakeMediaWiki.php' );
+}
+
+
 class LigminchaGlobalDistributed {
 
 	// Make singleton available if we need it
@@ -265,11 +271,6 @@ class LigminchaGlobalDistributed {
 	 * Send data to the local WebSocket daemon if active
 	 */
 	private static function sendToWebSocket( $queue, $session ) {
-
-		// Need fake MediaWiki environment here
-		if( !defined( 'MEDIAWIKI' ) ) {
-			require_once( __DIR__ . '/FakeMediaWiki.php' );
-		}
 
 		// Lazy-load the Fake MediaWiki environment and the OD Websocket class from the MediaWiki extension
 		if( !defined( 'WEBSOCKET_VERSION' ) ) {
