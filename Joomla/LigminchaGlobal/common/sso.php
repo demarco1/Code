@@ -120,7 +120,7 @@ class LigminchaGlobalSSO {
 
 			// Add the iframe requesting the toolbar with some spacing above
 			$toolbar = "<div style=\"padding:0;margin:0;height:28px;\"></div>";
-			$toolbar .= "<iframe src=\"http://{$url}/toolbar.php\" frameborder=\"0\" width=\"1\" height=\"1\"></iframe>";
+			$toolbar .= "<iframe src=\"http://{$global}/toolbar.php\" frameborder=\"0\" width=\"1\" height=\"1\"></iframe>";
 
 			// Add the toolbar to the body if we have a user
 			$app = JFactory::getApplication( 'site' );
