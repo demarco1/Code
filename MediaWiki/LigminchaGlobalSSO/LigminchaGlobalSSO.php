@@ -20,11 +20,11 @@ $wgExtensionCredits['other'][] = array(
 class LigminchaGlobalMediaWiki {
 	
 	function __construct() {
-		Hooks::register( 'BeforePageDisplay', $this );
+		Hooks::register( 'AfterFinalPageOutput', $this );
 	}
 
-	public function onBeforePageDisplay( $out, $skin ) {
-		print_r($skin);
+	public function onAfterFinalPageOutput( $foo ) {
+		print_r($foo);
 		global $wgLigminchaGlobalApp, $wgLigminchaGlobalCommonDir;
 
 		require_once( "$wgLigminchaGlobalCommonDir/distributed.php" );
