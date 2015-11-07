@@ -21,7 +21,7 @@ lg.message = function(msg, delay, type) {
 // - target is either a function to pass the final result to, or a jQuery selector or element to set the html for
 lg.template = function(template, args, target) {
 	function render(html, target) { typeof target == 'function' ? target(html) : $(target).html(html); }
-	if(!('templates' in this)) this.templates = [];
+	if(!('templates' in this)) this.templates = mw.config.get('templates');
 	if(template in this.templates) render(this.templates[template](args), target);
 	else {
 		render('<div class="loading"></div>', target);

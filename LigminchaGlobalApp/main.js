@@ -43,15 +43,16 @@ if(lg.session && typeof webSocket === 'object') {
 
 	// Initialise the per-second ticker
 	lg.ticker();
-
-	// Render the toolbar
-	var data = {
-		name: lg.user.data.realname,
-		sangha: 'http://' + lg.getObject(lg.user.ref1).tag
-	};
-	lg.template('global-toolbar', data, '#toolbar');
-	$('#toolbar').fadeIn(300);
 }
+
+// Render the toolbar
+var data = {
+	name: lg.user.data.realname,
+	sangha: 'http://' + lg.getObject(lg.user.ref1).tag
+};
+lg.template('global-toolbar', data, '#toolbar');
+$('#toolbar').fadeIn(300);
+
 
 // Populate the welcome notice depe	nding on if there's a session
 /*

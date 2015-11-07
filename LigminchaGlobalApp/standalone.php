@@ -28,10 +28,13 @@ require_once( "$common/sso.php" );
 new LigminchaGlobalSSO();
 new LigminchaGlobalDistributed();
 
-// Make SSO session ID available to client-side
+// Make SSO session ID and some other config available to client-side
 $session = LigminchaGlobalSession::getCurrent() ? LigminchaGlobalSession::getCurrent()->id : 0;
-
-global $wgOut;
 $wgOut->addJsConfigVars( 'session', $session );
 $wgOut->addJsConfigVars( 'wsPort', 1729 );
 $wgOut->addJsConfigVars( 'wsRewrite', true );
+
+// We can pre-load some templates here
+$wgOut->addJsConfigVars( 'templates', array(
+	'global-toolbar' => file_get_contents( __DIR__ . '/templates/global-toolbar.html' )
+) );
