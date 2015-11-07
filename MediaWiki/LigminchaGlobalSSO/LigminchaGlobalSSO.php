@@ -47,7 +47,7 @@ class LigminchaGlobalMediaWiki {
 	}
 
 	public function setup() {
-		Hooks::register( 'BeforePageDisplay', $this );
+		//Hooks::register( 'BeforePageDisplay', $this );
 	}
 
 	public function onBeforePageDisplay( $out, $skin ) {
