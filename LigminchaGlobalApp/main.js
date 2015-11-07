@@ -46,7 +46,7 @@ if(lg.session && typeof webSocket === 'object') {
 
 	// Render the toolbar
 	var data = {
-		name: lg.user.data.realname},
+		name: lg.user.data.realname,
 		sangha: 'http://' + lg.getObject(lg.user.ref1).tag
 	};
 	lg.template('global-toolbar', data, '#toolbar');
