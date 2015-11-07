@@ -39,3 +39,29 @@ new LigminchaGlobalDistributed();
 // Make SSO session ID available to client-side
 $session = LigminchaGlobalSession::getCurrent() ? LigminchaGlobalSession::getCurrent()->id : 0;
 
+class LigminchaGlobalMediaWiki {
+	
+	function __construct() {
+		global $wgExtensionFunctions;
+		$wgExtensionFunctions[] = array( $this, 'setup' );
+	}
+
+	public function setup() {
+		//Hooks::register( 'BeforePageDisplay', $this );
+	}
+
+	public function onBeforePageDisplay( $out, $skin ) {
+		global $wgLigminchaGlobalApp;
+
+		// Add the iframe requesting the toolbar with some spacing above
+		$toolbar = "<iframe allowTransparency=\"true\" src=\"http://{$wgLigminchaGlobalApp}/toolbar.php\" frameborder=\"0\" width=\"100%\" height=\"200\"></iframe>";
+		$toolbar = "<div style=\"position: absolute;z-index: 1000;top: 0px;left: 0px;width: 100%;height: 200px;\">$toolbar</div>";
+		$toolbar .= "<div style=\"padding:0;margin:0;height:28px;\"></div>";
+
+		// Add the toolbar to the body if we have a user
+		$out->mBodytext = preg_replace( '#<body.*?>#', "$0\n$toolbar\n", $out->mBodytext );
+		lgDebug( "Global toolbar iFrame added to MediaWiki page" );
+	}
+}
+
+new LigminchaGlobalMediaWiki();

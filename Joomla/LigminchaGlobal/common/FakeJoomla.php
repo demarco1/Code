@@ -21,7 +21,7 @@ class JFactory {
 	 * Return a config object populated with the config from the Joomlas config file
 	 */
 	public static function getConfig() {
-		if( !self::$config ) self::$config = new Config();
+		if( !self::$config ) self::$config = new FakeConfig();
 		return self::$config;
 	}
 
@@ -46,7 +46,7 @@ class JFactory {
 	}
 }
 
-class Config {
+class FakeConfig {
 
 	private $config;
 
