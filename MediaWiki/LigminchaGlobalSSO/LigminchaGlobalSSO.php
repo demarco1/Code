@@ -23,7 +23,7 @@ class LigminchaGlobalMediaWiki {
 		Hooks::register( 'AfterFinalPageOutput', $this );
 	}
 
-	public function onAfterFinalPageOutput( $buffer ) {
+	public function onAfterFinalPageOutput( &$buffer ) {
 		global $wgLigminchaGlobalApp, $wgLigminchaGlobalCommonDir;
 
 		require_once( "$wgLigminchaGlobalCommonDir/distributed.php" );
