@@ -45,7 +45,11 @@ if(lg.session && typeof webSocket === 'object') {
 	lg.ticker();
 
 	// Render the toolbar
-	lg.template('global-toolbar', lg.user, '#toolbar');
+	var data = {
+		name: lg.user.data.realname},
+		sangha: 'http://' + lg.getObject(lg.user.ref1).tag
+	};
+	lg.template('global-toolbar', data, '#toolbar');
 	$('#toolbar').fadeIn(300);
 }
 
