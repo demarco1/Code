@@ -24,6 +24,7 @@ class LigminchaGlobalMediaWiki {
 	}
 
 	public function onBeforePageDisplay( $out, $skin ) {
+		print_r($out);
 		global $wgLigminchaGlobalApp, $wgLigminchaGlobalCommonDir;
 
 		require_once( "$wgLigminchaGlobalCommonDir/distributed.php" );
