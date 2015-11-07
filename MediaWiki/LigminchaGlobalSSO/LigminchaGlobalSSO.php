@@ -6,7 +6,7 @@ define( 'LGSSO_VERSION', '0.0.1, 2015-11-07' );
 // This tells LG the system that we're running the database without the Joomla framework present
 define( 'LG_STANDALONE', true );
 
-$wgLigminchaGlobalApp = 'global.ligmincha.org';
+if( !isset( $wgLigminchaGlobalApp ) ) $wgLigminchaGlobalApp = 'global.ligmincha.org';
 
 $wgExtensionCredits['other'][] = array(
 	'name'        => 'LigminchaGlobalSSO',
