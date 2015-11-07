@@ -32,9 +32,6 @@ new LigminchaGlobalDistributed();
 if( !LigminchaGlobalSession::getCurrent() ) die('no session'); // There is no toolbar unless we have a global session
 $session = LigminchaGlobalSession::getCurrent()->id;
 
-if( !defined( 'MEDIAWIKI' ) ) {
-	require_once( "$common/FakeMediaWiki.php" );
-}
 global $wgOut;
 $wgOut->addJsConfigVars( 'session', $session );
 $wgOut->addJsConfigVars( 'toolbar', true );
