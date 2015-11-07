@@ -46,6 +46,7 @@ if(lg.session && typeof webSocket === 'object') {
 
 	// Render the toolbar
 	lg.template('global-toolbar', lg.user, '#toolbar');
+	$('#toolbar').fadeIn(300);
 }
 
 // Populate the welcome notice depe	nding on if there's a session
