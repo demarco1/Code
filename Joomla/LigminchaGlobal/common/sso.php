@@ -113,13 +113,60 @@ class LigminchaGlobalSSO {
 	 */
 	public static function toolbar() {
 		if( $user = LigminchaGlobalUser::getCurrent() ) {
+			$dropdown = ".dd, .dd ul {
+	padding: 5px 0 0 0;
+	margin: 0;
+	list-style: none;
+}
+.dd a {
+	display: block;
+	padding: 5px;
+	text-decoration: none;
+	line-height: 13px;
+	color: #ccc;
+	cursor: pointer;
+}
+.dd a:hover {
+	text-decoration: underline;
+}
+.dd li {
+	/*float: left;*/
+	text-align: left;
+	margin-bottom: 0;
+	cursor: default;
+}
+#sites li ul {
+	position: absolute;
+	left: -999em;
+}
+#personal li ul {
+	position: absolute;
+	right: -999em;
+}
+.dd li ul {
+	position: absolute;
+	background: #464646;
+	background-image: -moz-linear-gradient(center bottom , #373737, #464646 5px);
+	padding-bottom: 5px;
+}
+.dd li ul li {
+	padding: 0 20px 0 10px;
+	margin-left: -1px;
+}
+#sites li:hover ul, .dd li.sfhover ul {
+	left: 200px;
+}
+#personal li:hover ul, .dd li.sfhover ul {
+	right: 20px;
+}";
 			$spacer = 'width:0px;border-left:1px solid #333;border-right:1px solid #555;margin:0 15px;font-size:1px;';
 			$spl = "<div style=\"float:left;$spacer\">&nbsp;</div>";
 			$spr = "<div style=\"float:right;$spacer\">&nbsp;</div>";
-			$toolbar = "<div style=\"float:left;padding-left:20px;\">Ligmincha Global Toolbar</div>{$spl}<div style=\"float:left\">Sites&nbsp;&nbsp;▼</div>{$spl}";
-			$toolbar .= "<div style=\"float:right;padding-right:20px\">" . $user->data['realname'] . "&nbsp;&nbsp;▼</div>{$spr}";
+			$toolbar = "<div style=\"float:left;padding-left:20px;\">Ligmincha Global Toolbar</div>{$spl}<ul style=\"float:left\" id=\"sites\" class=\"dd\"><li>Sites&nbsp;&nbsp;▼<ul><li><a>Wiki</a></li><li><a>Forum</a></li><li><a>Sangha</a></li></ul></li></ul>{$spl}";
+			$toolbar .= "<ul class=\"dd\" id=\"personal\" style=\"float:right;padding-right:20px\"><li>" . $user->data['realname'] . "&nbsp;&nbsp;▼<ul><li><a>Log out</a></li></ul></li></ul>{$spr}";
 			$toolbar = "<div style=\"position:absolute;top:0px;left:0px;width:100%;background-color:#464646;background-image: -moz-linear-gradient(center bottom , #373737, #464646 5px); color: #ccc; font: 13px/28px sans-serif; height: 28px;\">$toolbar</div>";
 			$toolbar = "<div style=\"padding:0;margin:0;height:28px;\"></div>$toolbar";
+			$toolbar = "<style>$dropdown</style>$toolbar";
 			return $toolbar;
 		}
 	}
