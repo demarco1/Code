@@ -1,12 +1,8 @@
 <?php
 if ( !defined( 'MEDIAWIKI' ) ) die( 'Not an entry point.' );
-
 define( 'LGSSO_VERSION', '0.0.1, 2015-11-07' );
-
-// This tells LG the system that we're running the database without the Joomla framework present
-define( 'LG_STANDALONE', true );
-
-if( !isset( $wgLigminchaGlobalApp ) ) $wgLigminchaGlobalApp = 'global.ligmincha.org';
+define( 'LG_STANDALONE', true ); // Joomla is no present for this request
+if( !isset( $wgLigminchaGlobalApp ) ) $wgLigminchaGlobalApp = 'global.ligmincha.org'; // The domain of the global app
 
 $wgExtensionCredits['other'][] = array(
 	'name'        => 'LigminchaGlobalSSO',
@@ -26,6 +22,7 @@ class LigminchaGlobalMediaWiki {
 	public function onAfterFinalPageOutput( $output ) {
 		global $wgLigminchaGlobalApp, $wgLigminchaGlobalCommonDir;
 
+		// Load the LigminchaGlobal framework if we've rendered a page
 		require_once( "$wgLigminchaGlobalCommonDir/distributed.php" );
 		require_once( "$wgLigminchaGlobalCommonDir/object.php" );
 		require_once( "$wgLigminchaGlobalCommonDir/sync.php" );
@@ -35,9 +32,6 @@ class LigminchaGlobalMediaWiki {
 		require_once( "$wgLigminchaGlobalCommonDir/version.php" );
 		require_once( "$wgLigminchaGlobalCommonDir/log.php" );
 		require_once( "$wgLigminchaGlobalCommonDir/sso.php" );
-
-		// Instantiate the main classes
-		// - note that if there is any incoming sync data, this will process it (and reroute if necessary) and exit
 		new LigminchaGlobalSSO();
 		new LigminchaGlobalDistributed();
 
@@ -46,10 +40,11 @@ class LigminchaGlobalMediaWiki {
 		$toolbar = "<div style=\"position: absolute;z-index: 1000;top: 0px;left: 0px;width: 100%;height: 200px;\">$toolbar</div>";
 		$toolbar .= "<div style=\"padding:0;margin:0;height:12px;\"></div>";
 
-		// Add the toolbar to the body if we have a user
+		// Add the toolbar to the body
 		$buffer = ob_get_clean();
 		ob_start();
   		echo preg_replace( '#<body.*?>#', "$0\n$toolbar\n", $buffer );
+
 		lgDebug( "Global toolbar iFrame added to MediaWiki page" );
 		return true;
 	}
