@@ -48,7 +48,7 @@ $wgOut->addJsConfigVars( 'masterServer', LigminchaGlobalServer::getMaster()->id 
 		<title>LigminchaGlobal Toolbar</title>
 		<link rel="stylesheet" href="styles/main.css" />
 	</head>
-	<body>
+	<body style="background:transparent">
 		<!-- Page structure -->
 		<div id="toolbar"></div>
 		<!-- Scripts -->

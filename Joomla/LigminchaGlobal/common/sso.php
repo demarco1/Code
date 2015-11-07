@@ -125,8 +125,8 @@ class LigminchaGlobalSSO {
 			$global = $config->get( 'lgGlobalApp', 'global.ligmincha.org' );
 
 			// Add the iframe requesting the toolbar with some spacing above
-			$toolbar = "<iframe src=\"http://{$global}/toolbar.php\" frameborder=\"0\" width=\"100%\" height=\"28\"></iframe>";
-			$toolbar = "<div style=\"position: absolute;z-index: 1000;top: 0px;left: 0px;width: 100%;height: 28px;\">$toolbar</div>";
+			$toolbar = "<iframe allowTransparency=\"true\" src=\"http://{$global}/toolbar.php\" frameborder=\"0\" width=\"100%\" height=\"200\"></iframe>";
+			$toolbar = "<div style=\"position: absolute;z-index: 1000;top: 0px;left: 0px;width: 100%;height: 200px;\">$toolbar</div>";
 			$toolbar .= "<div style=\"padding:0;margin:0;height:28px;\"></div>";
 
 			// Add the toolbar to the body if we have a user
