@@ -20,6 +20,12 @@ class LigminchaGlobalSSO {
 
 	function __construct() {
 
+		// If the cookie is a not standard name, set it now
+		$config = JFactory::getConfig();
+		if( $cookie = $config->get( 'lgCookie', false ) ) self::$cookie = $cookie;
+		$domain = $config->get( 'lgCookieDomain', '' );
+		lgDebug( "Using cookie \"" . self::$cookie . "\" with domain \"{$domain}\"" );
+
 		// Make singleton available if we need it
 		self::$instance = $this;
 
@@ -125,11 +131,8 @@ class LigminchaGlobalSSO {
 			// Add the toolbar to the body if we have a user
 			$app = JFactory::getApplication( 'site' );
 			$app->setBody( preg_replace( '#<body.*?>#', "$0\n$toolbar\n", $app->getBody() ) );
-			lgDebug( "Global toolbar iFrame dded to page" );
+			lgDebug( "Global toolbar iFrame added to page" );
 		}
 	}
 }
 
-// If we're running on a non-standard port, add it to the cookie name (so that different ports act like different domains for testing)
-$port = $_SERVER['SERVER_PORT'];
-if( $port != 80 && $port != 443 ) LigminchaGlobalSSO::$cookie .= $port;
