@@ -1,10 +1,71 @@
 /**
- * Map
+ * Global toolbar
  */
-div.map {
-	width: 900px;
-	height: 600px;
+#toolbar {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	background-color: #464646;
+	background-image: -moz-linear-gradient(center bottom , #373737, #464646 5px);
+	color: #ccc;
+	font: 13px/28px sans-serif;
+	height: 28px;
 }
+#main {
+	float: left;
+	padding-left: 20px;
+}
+#personal {
+	float: right;
+	padding-right: 20px;
+}
+.dd, .dd ul {
+	padding: 5px 0 0 0;
+	margin: 0;
+	list-style: none;
+}
+.dd a {
+	display: block;
+	padding: 5px;
+	text-decoration: none;
+	line-height: 13px;
+	color: #ccc;
+	cursor: pointer;
+}
+.dd a:hover {
+	text-decoration: underline;
+}
+.dd li {
+	/*float: left;*/
+	text-align: left;
+	margin-bottom: 0;
+	cursor: default;
+}
+.dd li ul {
+	position: absolute;
+	background: #464646;
+	background-image: -moz-linear-gradient(center bottom , #373737, #464646 5px);
+	padding-bottom: 5px;
+	top: -999px;
+}
+.dd li ul li {
+	padding: 0 20px 0 10px;
+	margin-left: -1px;
+}
+.dd li:hover ul, .dd li.sfhover ul {
+	top: 50px;
+}
+
+
+
+
+
+
+
+
+
+
 
 /**
  * Notification
@@ -13,6 +74,7 @@ div.map {
 	margin: 3px 0;
 }
 #notify {
+	display: none;
 	width: 100%;
 	text-align: center;
 	margin-bottom: 20px;
@@ -38,6 +100,14 @@ div.map {
 	font-weight: bold;
 	color: #666;
 	text-align: center;
+}
+
+/**
+ * Map
+ */
+div.map {
+	width: 900px;
+	height: 600px;
 }
 
 /**
