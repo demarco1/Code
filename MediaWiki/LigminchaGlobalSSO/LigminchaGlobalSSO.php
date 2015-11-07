@@ -23,8 +23,7 @@ class LigminchaGlobalMediaWiki {
 		Hooks::register( 'AfterFinalPageOutput', $this );
 	}
 
-	public function onAfterFinalPageOutput( $foo ) {
-		print_r($foo);
+	public function onAfterFinalPageOutput( $buffer ) {
 		global $wgLigminchaGlobalApp, $wgLigminchaGlobalCommonDir;
 
 		require_once( "$wgLigminchaGlobalCommonDir/distributed.php" );
@@ -47,7 +46,7 @@ class LigminchaGlobalMediaWiki {
 		$toolbar = "<div style=\"position: absolute;z-index: 1000;top: 0px;left: 0px;width: 100%;height: 200px;\">$toolbar</div>";
 
 		// Add the toolbar to the body if we have a user
-		$out->mBodytext = $toolbar . $out->mBodytext;
+		$buffer = preg_replace( '#<body.*?>#', "$0\n$toolbar\n", $buffer );
 		lgDebug( "Global toolbar iFrame added to MediaWiki page" );
 		return true;
 	}
