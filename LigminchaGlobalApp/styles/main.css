@@ -87,15 +87,6 @@ body {
 }
 
 
-
-
-
-
-
-
-
-
-
 /**
  * Notification
  */
@@ -135,7 +126,7 @@ body {
  * Map
  */
 div.map {
-	width: 900px;
+	width: 100%;
 	height: 600px;
 }
 
