@@ -42,10 +42,15 @@ $session = LigminchaGlobalSession::getCurrent() ? LigminchaGlobalSession::getCur
 class LigminchaGlobalMediaWiki {
 	
 	function __construct() {
-		Hooks::register( 'BeforePageDisplay', __CLASS__ . '::onBeforePageDisplay' );
+		global $wgExtensionFunctions;
+		$wgExtensionFunctions[] = array( $this, 'setup' );
 	}
 
-	public static function onBeforePageDisplay( $out, $skin ) {
+	public function setup() {
+		Hooks::register( 'BeforePageDisplay', $this );
+	}
+
+	public function onBeforePageDisplay( $out, $skin ) {
 		global $wgLigminchaGlobalApp;
 
 		// Add the iframe requesting the toolbar with some spacing above
