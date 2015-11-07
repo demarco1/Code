@@ -266,9 +266,13 @@ class LigminchaGlobalDistributed {
 	 */
 	private static function sendToWebSocket( $queue, $session ) {
 
+		// Need fake MediaWiki environment here
+		if( !defined( 'MEDIAWIKI' ) ) {
+			require_once( __DIR__ . '/FakeMediaWiki.php' );
+		}
+
 		// Lazy-load the Fake MediaWiki environment and the OD Websocket class from the MediaWiki extension
 		if( !defined( 'WEBSOCKET_VERSION' ) ) {
-			require_once( __DIR__ . '/FakeMediaWiki.php' );
 			require_once( __DIR__ . '/WebSocket/WebSocket.php' );
 			WebSocket::$log = '/var/www/extensions/MediaWiki/WebSocket/ws.log'; // tmp to match my current daemon
 			WebSocket::$rewrite = true;

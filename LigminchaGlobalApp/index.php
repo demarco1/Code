@@ -30,6 +30,10 @@ new LigminchaGlobalDistributed();
 
 // Make SSO session ID available to client-side
 $session = LigminchaGlobalSession::getCurrent() ? LigminchaGlobalSession::getCurrent()->id : 0;
+
+if( !defined( 'MEDIAWIKI' ) ) {
+	require_once( __DIR__ . '/FakeMediaWiki.php' );
+}
 global $wgOut;
 $wgOut->addJsConfigVars( 'session', $session );
 
