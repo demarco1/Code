@@ -2,7 +2,7 @@
 	<h1><%- data.name %></h1>
 	<div><a href="http://<%-tag%>"><%-tag%></a></div>
 	<table class="server">
-		<tr><th>Global ID:</th><td><%=id.substr(0,5)%></td></tr>
+		<tr><th>Global ID:</th><td><%=id.short()%></td></tr>
 		<tr><th>IP address:</th><td>1.2.3.4</td></tr>
 		<tr><th>System:</th><td><%-data.system%></td></tr>
 		<tr><th>PHP version:</th><td><%-data.php%></td></tr>

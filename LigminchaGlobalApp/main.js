@@ -23,7 +23,7 @@ for(var i in objects) lg.ligminchaGlobal.create(objects[i]);
 lg.session = mw.config.get('session');
 lg.user = false;
 if(lg.session) {
-	console.log('Session ID sent from server: ' + lg.session.substr(0,5));
+	console.log('Session ID sent from server: ' + lg.session.short());
 	lg.session = lg.getObject(lg.session);
 	lg.user = lg.getObject(lg.session.owner);
 } else console.log('No session ID sent from server')
@@ -33,7 +33,7 @@ if(lg.session && typeof webSocket === 'object') {
 
 	// The wsClientID is the SSO session id + a unique ID for this socket
 	// TODO: we won't need the second socket ID later because there will be only one socket per session
-	mw.data.wsClientID = mw.data.session + ':' + lg.hash(lg.uuid()).substr(0,5);
+	mw.data.wsClientID = mw.data.session + ':' + lg.hash(lg.uuid()).short();
 
 	// Creation the connection
 	lg.ws = webSocket.connect();

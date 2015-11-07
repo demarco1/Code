@@ -45,7 +45,7 @@ lg.ServerView = Backbone.View.extend({
 					html += '<ul class="sessions">';
 					for( var j in sessions ) {
 						var session = sessions[j].attributes;
-						html += '<li>' + session.tag + ' (' + session.id.substr(0,5) + ')</li>';
+						html += '<li>' + session.tag + ' (' + session.id.short() + ')</li>';
 					}
 					html += '</ul>';
 				}

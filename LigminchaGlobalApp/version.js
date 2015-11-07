@@ -20,7 +20,7 @@ lg.Version.createNew = function() {
 					tag: '0.0.1'
 				});
 				lg.sendObject(ver);
-				console.log('New version created: ' + ver.id.substr(0,5));
+				console.log('New version created: ' + ver.id.short());
 				$(this).dialog('close');
 				this.remove();
 			},

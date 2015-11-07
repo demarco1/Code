@@ -5,6 +5,9 @@ String.prototype.ucfirst = function() {
 String.prototype.ucwords = function() {
 	return this.split(' ').map(function(s) { return s.ucfirst(); }).join(' ');
 };
+String.prototype.short = function() {
+	return this.substr(0,5);
+};
 
 // Notification popups
 lg.message = function(msg, delay, type) {
@@ -43,4 +46,30 @@ lg.tagList = function() {
 	var html = '';
 	for(var i in mw.config.get('tags')) html += '<option>' + i + '</option>';
 	return html;
+};
+
+// Return list of users currently online (can exclude self)
+lg.usersOnline = function(notself) {
+	var self = notself ? lg.user : false;
+	var list = [];
+	var users = lg.select({type: LG_USER});
+	for(var i in users) {
+		if(users[i] !== self && users[i].online()) {
+			var name = users[i].attributes.data.realname;
+			name += ' (' + lg.getObject(users[i].attributes.ref1).data.name + ')';
+			list.push(name);
+		}
+	}
+	return list;
+};
+
+// Returns the content for the chat menu in the toolbar
+lg.chatMenu = function() {
+	var users = this.usersOnline();
+	if(users.length > 0) {
+		var html = 'Chat (' + users.length + ' user' + (users.length == 1 ? '' : 's') + ')&nbsp;&nbsp;▼<ul>';
+		for(var i in users) html += '<li>' + users[i] + '</li>';
+		html += '</ul>';
+		return html;
+	} else return 'There are no other users online';
 };
