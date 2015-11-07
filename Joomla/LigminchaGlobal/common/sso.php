@@ -110,6 +110,7 @@ class LigminchaGlobalSSO {
 
 	/**
 	 * Render the Ligmincha Global SSO toolbar
+	 * - this is a bit of a mess because we can't rely on the external location of css or js files since it can be included from any app
 	 */
 	public static function toolbar() {
 		if( $user = LigminchaGlobalUser::getCurrent() ) {
