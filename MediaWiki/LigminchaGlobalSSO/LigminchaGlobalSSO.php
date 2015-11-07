@@ -39,7 +39,7 @@ new LigminchaGlobalDistributed();
 // Make SSO session ID available to client-side
 $session = LigminchaGlobalSession::getCurrent() ? LigminchaGlobalSession::getCurrent()->id : 0;
 
-class LigminchaGlobalSSO {
+class LigminchaGlobalMediaWiki {
 	
 	function __construct() {
 		Hooks::register( 'BeforePageDisplay', $this );
@@ -59,4 +59,4 @@ class LigminchaGlobalSSO {
 	}
 }
 
-new LigminchaGlobalSSO();
+new LigminchaGlobalMediaWiki();
