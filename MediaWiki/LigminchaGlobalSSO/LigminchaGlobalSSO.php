@@ -42,12 +42,7 @@ $session = LigminchaGlobalSession::getCurrent() ? LigminchaGlobalSession::getCur
 class LigminchaGlobalMediaWiki {
 	
 	function __construct() {
-		global $wgExtensionFunctions;
-		$wgExtensionFunctions[] = array( $this, 'setup' );
-	}
-
-	public function setup() {
-		//Hooks::register( 'BeforePageDisplay', $this );
+		Hooks::register( 'BeforePageDisplay', $this );
 	}
 
 	public function onBeforePageDisplay( $out, $skin ) {
