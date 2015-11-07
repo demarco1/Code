@@ -17,19 +17,6 @@ if( LG_STANDALONE ) {
 	require_once( __DIR__ . '/FakeJoomla.php' );
 }
 
-// Need fake MediaWiki environment here
-if( !defined( 'MEDIAWIKI' ) ) {
-	require_once( __DIR__ . '/FakeMediaWiki.php' );
-}
-
-// Lazy-load the Fake MediaWiki environment and the OD Websocket class from the MediaWiki extension
-if( !defined( 'WEBSOCKET_VERSION' ) ) {
-	require_once( __DIR__ . '/WebSocket/WebSocket.php' );
-	WebSocket::$log = '/var/www/extensions/MediaWiki/WebSocket/ws.log'; // tmp to match my current daemon
-	WebSocket::$rewrite = true;
-}
-
-
 class LigminchaGlobalDistributed {
 
 	// Make singleton available if we need it
@@ -279,14 +266,19 @@ class LigminchaGlobalDistributed {
 	 */
 	private static function sendToWebSocket( $queue, $session ) {
 
-		// If we haven't initialised the WebSocket extension, do it now
-		static $setup = false;
-		if( $setup ) {
-			WebSocket::setup();
-			$setup = true;
+		// Need fake MediaWiki environment here
+		if( !defined( 'MEDIAWIKI' ) ) {
+			require_once( __DIR__ . '/FakeMediaWiki.php' );
 		}
 
-		// If it's active, send data to it
+		// Lazy-load the Fake MediaWiki environment and the OD Websocket class from the MediaWiki extension
+		if( !defined( 'WEBSOCKET_VERSION' ) ) {
+			require_once( __DIR__ . '/WebSocket/WebSocket.php' );
+			WebSocket::$log = '/var/www/extensions/MediaWiki/WebSocket/ws.log'; // tmp to match my current daemon
+			WebSocket::$rewrite = true;
+			WebSocket::setup();
+		}
+
 		if( WebSocket::isActive() ) {
 
 			// Set the ID of this WebSocket message to the session ID of the sender so the WS server doesn't bounce it back to them

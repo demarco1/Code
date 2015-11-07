@@ -33,6 +33,7 @@ $session = LigminchaGlobalSession::getCurrent() ? LigminchaGlobalSession::getCur
 
 global $wgOut;
 $wgOut->addJsConfigVars( 'session', $session );
+$wgOut->addJsConfigVars( 'wsPort', WebSocket::$port );
 
 // These are the global objects made initially available to the app (only server objects are available if not logged in)
 $types = array( LG_SERVER );
