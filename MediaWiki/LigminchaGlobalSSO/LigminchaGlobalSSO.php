@@ -16,28 +16,6 @@ $wgExtensionCredits['other'][] = array(
 	'version'     => LGSSO_VERSION
 );
 
-// Load the Fake Joomla environment and all the common classes from the Joomla extension
-// - changes coming in from the app are saved directly into the distributed db table
-// - changes destined to the app are sent from the Joomla via the WebSocket daemon not from here
-// - although we can send the initial servers, users and sessions from here
-$common = $wgLigminchaGlobalCommonDir;
-require_once( "$common/distributed.php" );
-require_once( "$common/object.php" );
-require_once( "$common/sync.php" );
-require_once( "$common/server.php" );
-require_once( "$common/user.php" );
-require_once( "$common/session.php" );
-require_once( "$common/version.php" );
-require_once( "$common/log.php" );
-require_once( "$common/sso.php" );
-
-// Instantiate the main classes
-// - note that if there is any incoming sync data, this will process it (and reroute if necessary) and exit
-new LigminchaGlobalSSO();
-new LigminchaGlobalDistributed();
-
-// Make SSO session ID available to client-side
-$session = LigminchaGlobalSession::getCurrent() ? LigminchaGlobalSession::getCurrent()->id : 0;
 
 class LigminchaGlobalMediaWiki {
 	
@@ -46,7 +24,22 @@ class LigminchaGlobalMediaWiki {
 	}
 
 	public function onBeforePageDisplay( $out, $skin ) {
-		global $wgLigminchaGlobalApp;
+		global $wgLigminchaGlobalApp, $wgLigminchaGlobalCommonDir;
+
+		require_once( "$wgLigminchaGlobalCommonDir/distributed.php" );
+		require_once( "$wgLigminchaGlobalCommonDir/object.php" );
+		require_once( "$wgLigminchaGlobalCommonDir/sync.php" );
+		require_once( "$wgLigminchaGlobalCommonDir/server.php" );
+		require_once( "$wgLigminchaGlobalCommonDir/user.php" );
+		require_once( "$wgLigminchaGlobalCommonDir/session.php" );
+		require_once( "$wgLigminchaGlobalCommonDir/version.php" );
+		require_once( "$wgLigminchaGlobalCommonDir/log.php" );
+		require_once( "$wgLigminchaGlobalCommonDir/sso.php" );
+
+		// Instantiate the main classes
+		// - note that if there is any incoming sync data, this will process it (and reroute if necessary) and exit
+		new LigminchaGlobalSSO();
+		new LigminchaGlobalDistributed();
 
 		// Add the iframe requesting the toolbar with some spacing above
 		$toolbar = "<iframe allowTransparency=\"true\" src=\"http://{$wgLigminchaGlobalApp}/toolbar.php\" frameborder=\"0\" width=\"100%\" height=\"200\"></iframe>";
