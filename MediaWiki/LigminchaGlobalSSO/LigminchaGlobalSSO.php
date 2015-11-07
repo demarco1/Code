@@ -54,7 +54,7 @@ class LigminchaGlobalSSO {
 		$toolbar .= "<div style=\"padding:0;margin:0;height:28px;\"></div>";
 
 		// Add the toolbar to the body if we have a user
-		$out->mBodytext = preg_replace('#<body.*?>#', "$0\n$toolbar\n", $out->mBodytext ) );
+		$out->mBodytext = preg_replace( '#<body.*?>#', "$0\n$toolbar\n", $out->mBodytext );
 		lgDebug( "Global toolbar iFrame added to MediaWiki page" );
 	}
 }
