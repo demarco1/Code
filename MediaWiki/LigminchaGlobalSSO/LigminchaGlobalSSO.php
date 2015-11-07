@@ -44,11 +44,10 @@ class LigminchaGlobalMediaWiki {
 		// Add the iframe requesting the toolbar with some spacing above
 		$toolbar = "<iframe allowTransparency=\"true\" src=\"http://{$wgLigminchaGlobalApp}/toolbar.php\" frameborder=\"0\" width=\"100%\" height=\"200\"></iframe>";
 		$toolbar = "<div style=\"position: absolute;z-index: 1000;top: 0px;left: 0px;width: 100%;height: 200px;\">$toolbar</div>";
-		$toolbar .= "<div style=\"padding:0;margin:0;height:28px;\"></div>";
 
 		// Add the toolbar to the body if we have a user
-		$out->mBodytext = preg_replace( '#<body.*?>#', "$0\n$toolbar\n", $out->mBodytext );
-		lgDebug( "Global toolbar iFrame added to MediaWiki page" . $out->mBodytext );
+		$out->mBodytext = $toolbar . $out->mBodytext;
+		lgDebug( "Global toolbar iFrame added to MediaWiki page" );
 		return true;
 	}
 }
