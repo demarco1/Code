@@ -65,11 +65,12 @@ body {
 	padding: 5px;
 	text-decoration: none;
 	line-height: 13px;
-	color: #bbb;
+	color: #aaa;
 	cursor: pointer;
 }
 .dd a:hover {
 	text-decoration: underline;
+	color: #eee;
 }
 .dd li {
 	float: left;
