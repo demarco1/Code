@@ -20,6 +20,7 @@ var objects = lg.getConfig('GlobalObjects');
 for(var i in objects) lg.ligminchaGlobal.create(objects[i]);
 
 // Get the session is there is one
+lg.toolbar = lg.getConfig('toolbar', false);
 lg.session = lg.getConfig('session');
 lg.user = false;
 if(lg.session) {
@@ -46,5 +47,5 @@ if(lg.session && typeof webSocket === 'object') {
 }
 
 // Render the parent's toolbar
-lg.template('global-toolbar', {}, lg.updateParent);
+lg.template('global-toolbar', {}, lg.toolbar ? lg.updateParent : '#toolbar');
 
