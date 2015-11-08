@@ -14,7 +14,7 @@ body {
 	width: 100%;
 	background-color: #464646;
 	background-image: -moz-linear-gradient(center bottom , #373737, #464646 5px);
-	color: #ccc;
+	color: #bbb;
 	font: 13px/28px sans-serif;
 	height: 28px;
 }
@@ -65,7 +65,7 @@ body {
 	padding: 5px;
 	text-decoration: none;
 	line-height: 13px;
-	color: #aaa;
+	color: #bbb;
 	cursor: pointer;
 }
 .dd a:hover {
