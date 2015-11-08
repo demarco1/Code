@@ -16,10 +16,15 @@ lg.User = lg.GlobalObject.extend({
 		return lg.select({type: LG_SESSION, owner: this.id}).length > 0;
 	},
 
-	// Full name optionally including sangha
-	fullName: function(sangha) {
+	// Returns the server this user registered with
+	server: function() {
+		return lg.getObject(this.attributes.ref1);
+	},
+
+	// Full name optionally including server
+	fullName: function(server) {
 		var name = this.attributes.data.realname;
-		if(sangha) name += ' (' + lg.getObject(this.attributes.ref1).data.name + ')';
+		if(server) name += ' (' + this.server.data.name + ')';
 		return name;
 	},
 

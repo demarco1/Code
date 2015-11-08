@@ -86,13 +86,15 @@ lg.chatMenu = function() {
 // Returns the content for the personal menu in the toolbar
 lg.personalMenu = function() {
 	return lg.user
-		? lg.user.fullName(true) + '&nbsp;&nbsp;▼<ul><li><a>Profile</a></li><li><a>Log out</a></li></ul>'
-		: '<span class="anon">You are not logged in</span>';
+		? lg.user.fullName(true) + '&nbsp;&nbsp;▼<ul>\
+			<li><a>Profile</a></li>\
+			<li><a href="http://' + lg.user.server.tag + '/index.php/login">Log out</a></li>\
+		</ul>' : '<span class="anon">You are not logged in</span>';
 };
 
 // Returns link to local sangha site if logged in
 lg.sanghaLink = function() {
-	return lg.user ? '<li><a href="<%-sangha%>" target="_parent">Your local sangha</a></li>' : '';
+	return lg.user ? '<li><a href="http://' + " target="_parent">' + lg.user.server.data.name + '</a></li>' : '';
 };
 
 // Returns the admin menu if logged in
