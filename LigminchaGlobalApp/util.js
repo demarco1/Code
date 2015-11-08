@@ -121,3 +121,4 @@ if(lg.toolbar) {
 		lg.proxy.post({selector: selector, html: html});
 	};
 }
+setTimeout(function() { lg.proxy.post('foo') }, 3000);
