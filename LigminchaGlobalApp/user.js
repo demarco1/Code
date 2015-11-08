@@ -26,7 +26,7 @@ lg.User = lg.GlobalObject.extend({
 		var name = this.attributes.data.realname;
 		if(formatted) {
 			name = '<span class="hl">' + name + '</span>';
-			name += ' (' + this.server().data.name + ')';
+			name += ' (' + this.server().data.name.replace(/^Ligmincha\s+/, '') + ')';
 		}
 		return name;
 	},
