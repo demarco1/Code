@@ -168,17 +168,19 @@ lg.process = function(crud, fields, origin) {
 		console.log('Delete received');
 		console.log(fields);
 		lg.del(fields);
-		if(fields.type == LG_SESSION) lg.updateChatMenu();
 	} else console.log('Unknown CRUD method "' + crud + '"');
 };
 
 // Delete the objects that match the passed criteria
 lg.del = function(cond) {
 	var list = this.select(cond);
-	for( var i in list ) {
+	var sessions = false;
+	for(var i in list) {
+		if(list[i].type == LG_SESSION) sessions = true;
 		console.log('Deleting: ' + list[i].id);
 		lg.ligminchaGlobal.remove(list[i]);
 	}
+	if(sessions) lg.updateChatMenu();
 };
 
 // Hash that is compatible with the server-side

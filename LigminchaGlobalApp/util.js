@@ -71,12 +71,12 @@ lg.chatMenu = function() {
 	if(lg.user) {
 		var users = this.usersOnline(true);
 		if(users.length > 0) {
-			var html = '<li id="#chat">Chat (' + users.length + ' user' + (users.length == 1 ? '' : 's') + ')&nbsp;&nbsp;▼<ul>';
+			var html = '<li id="chat">Chat (' + users.length + ' user' + (users.length == 1 ? '' : 's') + ')&nbsp;&nbsp;▼<ul>';
 			for(var i in users) html += '<li>' + users[i] + '</li>';
 			html += '</ul></li>';
 			return html;
-		} else return '<li id="#chat">There are no other users online</li>';
-	} else return '<li id="#chat" style="display:none"></li>';
+		} else return '<li id="chat">There are no other users online</li>';
+	} else return '<li id="chat" style="display:none"></li>';
 };
 
 // Re-render the chatmenu
