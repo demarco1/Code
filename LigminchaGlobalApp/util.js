@@ -57,11 +57,11 @@ lg.tagList = function() {
 
 // Return list of users currently online (can exclude self)
 lg.usersOnline = function(notself) {
-	var self = notself ? lg.user.id : false;
+	var self = notself ? lg.user : false;
 	var list = [];
 	var users = lg.select({type: LG_USER});
 	for(var i in users) {
-		if(users[i].id !== self && users[i].online()) list.push(users[i].fullName(true));
+		if(users[i] !== self && users[i].online()) list.push(users[i].fullName(true));
 	}
 	return list;
 };
@@ -69,7 +69,7 @@ lg.usersOnline = function(notself) {
 // Returns the content for the chat menu in the toolbar
 lg.chatMenu = function() {
 	if(lg.user) {
-		var users = this.usersOnline();
+		var users = this.usersOnline(true);
 		if(users.length > 0) {
 			var html = '<li id="#chat">Chat (' + users.length + ' user' + (users.length == 1 ? '' : 's') + ')&nbsp;&nbsp;▼<ul>';
 			for(var i in users) html += '<li>' + users[i] + '</li>';
