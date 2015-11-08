@@ -70,7 +70,7 @@ body {
 }
 .dd a:hover {
 	text-decoration: underline;
-	color: #eee;
+	color: #ccc;
 }
 .dd li {
 	float: left;
