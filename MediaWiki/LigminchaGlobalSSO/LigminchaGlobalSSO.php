@@ -44,7 +44,7 @@ class LigminchaGlobalMediaWiki {
 		$buffer = ob_get_clean();
 		ob_start();
   		$buffer = preg_replace( '#<body.*?>#', "$0\n$toolbar\n", $buffer );
-		$buffer = str_replace( '<div class="portlet"', '<div style="display:none"', $buffer );
+		$buffer = str_replace( 'id="p-personal"', 'style="display:none"', $buffer );
 		echo $buffer;
 
 		lgDebug( "Global toolbar iFrame added to MediaWiki page" );
