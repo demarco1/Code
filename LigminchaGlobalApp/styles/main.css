@@ -18,6 +18,12 @@ body {
 	font: 13px/28px sans-serif;
 	height: 28px;
 }
+#toolbar .hl {
+	color: #fff;
+}
+#toolbar .w {
+	color: #ff3;
+}
 #main {
 	float: left;
 }
@@ -31,9 +37,6 @@ body {
 #personal li {
 	margin: 0 0 0 2px;
 	border-left: 1px solid #333;
-}
-#personal .anon {
-	color: #ff3;
 }
 .dd {
 	background: #555;

@@ -86,10 +86,10 @@ lg.chatMenu = function() {
 // Returns the content for the personal menu in the toolbar
 lg.personalMenu = function() {
 	return lg.user
-		? lg.user.fullName(true) + '&nbsp;&nbsp;▼<ul>\
+		? '<span class="hl">' + lg.user.fullName() + '</span> (' + lg.user.server().data.name + ')&nbsp;&nbsp;▼<ul>\
 			<li><a>Profile</a></li>\
 			<li><a href="http://' + lg.user.server().tag + '/index.php/login" target="_parent">Log out</a></li>\
-		</ul>' : '<span class="anon">You are not logged in</span>';
+		</ul>' : '<span class="w">You are not logged in</span>';
 };
 
 // Returns link to local sangha site if logged in
