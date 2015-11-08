@@ -81,7 +81,8 @@ lg.chatMenu = function() {
 
 // Re-render the chatmenu
 lg.updateChatMenu = function() {
-	$('#chat').replaceWith(this.chatMenu());
+	if(lg.getConfig('toolbar')) this.updateParent('#toolbar #chat', this.chatMenu());
+	else $('#chat').replaceWith(this.chatMenu());
 	console.log('Sessions changed, updated chat menu');
 };
 
@@ -110,3 +111,7 @@ lg.adminMenu = function() {
 		</ul>\
 	</li>' : '';
 };
+
+// Updates the content in the parent frame using porthole.js
+lg.updateParent = function(selector, html) { lg.proxy.post({selector: selector, html: html}); };
+window.onload = function() { lg.proxy = new Porthole.WindowProxy(lg.getConfig('toolbar')) };

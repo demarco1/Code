@@ -45,14 +45,6 @@ if(lg.session && typeof webSocket === 'object') {
 	lg.ticker();
 }
 
-// Render the toolbar
-lg.template('global-toolbar', {}, '#toolbar');
-$('#toolbar').fadeIn(300);
+// Render the parent's toolbar
+lg.template('global-toolbar', {}, lg.updateParent);
 
-
-// Populate the welcome notice depe	nding on if there's a session
-/*
-lg.template(lg.session ? 'welcome-user' : 'welcome-anon', lg.user, function(html) {
-	lg.message(html, lg.session ? 15000 : 0);
-});
-*/

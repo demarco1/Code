@@ -36,14 +36,15 @@ class LigminchaGlobalMediaWiki {
 		new LigminchaGlobalDistributed();
 
 		// Add the iframe requesting the toolbar with some spacing above
-		$toolbar = "<iframe id=\"g_tb_if\" name=\"g_tb_if\" src=\"http://{$wgLigminchaGlobalApp}/toolbar2.php\" frameborder=\"0\" width=\"1\" height=\"1\"></iframe>";
-		$toolbar = "<div id=\"g_tb\" style=\"position: absolute;z-index: 1000;top: 0px;left: 0px;width: 100%;height: 28px;\">$toolbar</div>";
+		$parent = urlencode( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
+		$toolbar = "<iframe id=\"g_tb_if\" name=\"g_tb_if\" src=\"http://{$wgLigminchaGlobalApp}/toolbar.php?parent={$parent}\" frameborder=\"0\" width=\"1\" height=\"1\"></iframe>";
+		$toolbar .= "<div id=\"g_tb\" style=\"position: absolute;z-index: 1000;top: 0px;left: 0px;width: 100%;height: 28px;\"><div id=\"toolbar\"></div></div>";
 		$toolbar .= "<div style=\"padding:0;margin:0;height:30px;\"></div>";
 
 		// Add porthole script to allow the toolbar remote script to modify our local toolbar's content
 		$toolbar .= '<script type="text/javascript" src="http://{$wgLigminchaGlobalApp}/resources/porthole.js"></script>
 		<script type="text/javascript">
-			function onMessage(msg) { $(msg.data.selector).html(msg.data.html); }
+			function onMessage(msg) { $(msg.data.selector).replaceWith(msg.data.html); }
 			var windowProxy;
 			window.onload = function() { 
 				windowProxy = new Porthole.WindowProxy("http://{$wgLigminchaGlobalApp}/resources/porthole-proxy.html", "g_tb_if");
