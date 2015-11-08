@@ -58,7 +58,7 @@ body {
 .dd ul li {
 	background: none;
 }
-.dd a {
+.dd ul a {
 	display: block;
 	padding: 5px;
 	text-decoration: none;
@@ -66,7 +66,7 @@ body {
 	color: #ccc;
 	cursor: pointer;
 }
-.dd a:hover {
+.dd ul a:hover {
 	text-decoration: underline;
 }
 .dd li {
