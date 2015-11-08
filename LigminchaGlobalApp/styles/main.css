@@ -60,13 +60,15 @@ body {
 }
 .dd ul a {
 	display: block;
+}
+.dd a {
 	padding: 5px;
 	text-decoration: none;
 	line-height: 13px;
 	color: #ccc;
 	cursor: pointer;
 }
-.dd ul a:hover {
+.dd a:hover {
 	text-decoration: underline;
 }
 .dd li {
