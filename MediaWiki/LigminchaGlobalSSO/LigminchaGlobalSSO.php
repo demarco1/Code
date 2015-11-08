@@ -44,7 +44,10 @@ class LigminchaGlobalMediaWiki {
 		// Add porthole script to allow the toolbar remote script to modify our local toolbar's content
 		$toolbar .= "<script type=\"text/javascript\" src=\"http://{$wgLigminchaGlobalApp}/resources/porthole.js\"></script>
 		<script type=\"text/javascript\">
-			function onMessage(msg) { $(msg.data.selector).replaceWith(msg.data.html); }
+			function onMessage(msg) {
+				console.log('message received from toolbar to update ' + msg.data.selector);
+				$(msg.data.selector).replaceWith(msg.data.html);
+			}
 			var windowProxy;
 			window.onload = function() { 
 				windowProxy = new Porthole.WindowProxy(\"http://{$wgLigminchaGlobalApp}/resources/porthole-proxy.html\", \"g_tb_if\");

@@ -115,5 +115,8 @@ lg.adminMenu = function() {
 // Updates the content in the parent frame using porthole.js
 if(lg.toolbar) {
 	lg.proxy = new Porthole.WindowProxy(lg.toolbar);
-	lg.updateParent = function(selector, html) { lg.proxy.post({selector: selector, html: html}); };
+	lg.updateParent = function(selector, html) {
+		console.log('posting toolbar data to parent frame (' + lg.toolbar + ')');
+		lg.proxy.post({selector: selector, html: html});
+	};
 }
