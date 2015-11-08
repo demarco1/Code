@@ -42,15 +42,15 @@ class LigminchaGlobalMediaWiki {
 		$toolbar .= "<div style=\"padding:0;margin:0;height:30px;\"></div>";
 
 		// Add porthole script to allow the toolbar remote script to modify our local toolbar's content
-		$toolbar .= '<script type="text/javascript" src="http://{$wgLigminchaGlobalApp}/resources/porthole.js"></script>
-		<script type="text/javascript">
+		$toolbar .= "<script type=\"text/javascript\" src=\"http://{$wgLigminchaGlobalApp}/resources/porthole.js\"></script>
+		<script type=\"text/javascript\">
 			function onMessage(msg) { $(msg.data.selector).replaceWith(msg.data.html); }
 			var windowProxy;
 			window.onload = function() { 
-				windowProxy = new Porthole.WindowProxy("http://{$wgLigminchaGlobalApp}/resources/porthole-proxy.html", "g_tb_if");
+				windowProxy = new Porthole.WindowProxy(\"http://{$wgLigminchaGlobalApp}/resources/porthole-proxy.html\", \"g_tb_if\");
 				windowProxy.addEventListener(onMessage);
 			};
-		</script>';
+		</script>";
 
 		// Add the toolbar to the body
 		$buffer = ob_get_clean();
