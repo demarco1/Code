@@ -1,54 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>LigminchaGlobalApp Test</title>
-		<script type="text/javascript" src="resources/jquery.js"></script>
-		<script type="text/javascript" src="resources/underscore.js"></script>
-		<script type="text/javascript" src="resources/backbone.js"></script>
+		<title>Porthole Demo</title>
+		<script type="text/javascript" src="/resources/porthole.js"></script>
 		<script type="text/javascript">
-			$(document).ready(function() {
+			function onMessage(messageEvent) {  
+				/*
+			   messageEvent.origin: Protocol and domain origin of the message
+			   messageEvent.data: Message itself
+			   messageEvent.source: Window proxy object, useful to post a response 
+			   */
+			   console.log(messageEvent);
+			}
 
-				lg = {};
+			var windowProxy;
+			window.onload=function(){ 
+				// Create a proxy window to send to and receive 
+				// messages from the iFrame
+				windowProxy = new Porthole.WindowProxy(
+					'http://www.organicdesign.co.nz/files/proxy.html', 'guestFrame');
 
-				lg.template = function(template, args, target) {
+				// Register an event handler to receive messages;
+				windowProxy.addEventListener(onMessage);
+			};
 
-					// Function to do the final rendering once the html is populated with the args
-					function render(html, target) {
-						typeof target == 'function' ? target(html) : $(target).html(html);
-					}
-
-					// Create a list for the templates if not already existent
-					if(!('templates' in this)) this.templates = [];
-
-					// If the template is already loaded and compiled, process the final result immediately
-					if(template in this.templates) render(this.templates[template](args), target);
-
-					// Otherwise load the template, and when it's loaded compile it and return the result
-					else {
-						render('<div class="loading"></div>', target);
-						$.ajax({
-							type: 'GET',
-							url: '/templates/' + template + '.html',
-							context: this,
-							dataType: 'html',
-							success: function(html) {
-
-								// Compile the template
-								this.templates[template] = _.template(html);
-
-								// Process the template with our args and send through the callback
-								render(this.templates[template](args), target);
-							}
-						});
-					}
-				};
-
-				lg.template( 'welcome-user', { data: { realname: 'Henry McFoobas' } }, '#foo' );
-			});
 		</script>
 	</head>
 	<body>
-		<div id="foo"></div>
+		<iframe id="guestFrame" name="guestFrame" width="100%" height="50" src="http://www.organicdesign.co.nz/files/test.html"></iframe>
 	</body>
 </html>
