@@ -57,15 +57,11 @@ lg.tagList = function() {
 
 // Return list of users currently online (can exclude self)
 lg.usersOnline = function(notself) {
-	var self = notself ? lg.user : false;
+	var self = notself ? lg.user.id : false;
 	var list = [];
 	var users = lg.select({type: LG_USER});
 	for(var i in users) {
-		if(users[i] !== self && users[i].online()) {
-			var name = users[i].attributes.data.realname;
-			name += ' (' + lg.getObject(users[i].attributes.ref1).data.name + ')';
-			list.push(name);
-		}
+		if(users[i].id !== self && users[i].online()) list.push(users[i].fullName(true));
 	}
 	return list;
 };
@@ -92,10 +88,11 @@ lg.updateChatMenu = function() {
 // Returns the content for the personal menu in the toolbar
 lg.personalMenu = function() {
 	return lg.user
-		? '<span class="hl">' + lg.user.fullName() + '</span> (' + lg.user.server().data.name + ')&nbsp;&nbsp;▼<ul>\
-			<li><a>Profile</a></li>\
-			<li><a href="http://' + lg.user.server().tag + '/index.php/login" target="_parent">Log out</a></li>\
-		</ul>' : '<span class="w">You are not logged in</span>';
+		? lg.user.fullName(true) + '&nbsp;&nbsp;▼<ul>\
+				<li><a>Profile</a></li>\
+				<li><a href="http://' + lg.user.server().tag + '/index.php/login" target="_parent">Log out</a></li>\
+			</ul>'
+		: '<span class="w">You are not logged in</span>';
 };
 
 // Returns link to local sangha site if logged in

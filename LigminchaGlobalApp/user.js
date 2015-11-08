@@ -21,10 +21,13 @@ lg.User = lg.GlobalObject.extend({
 		return lg.getObject(this.attributes.ref1);
 	},
 
-	// Full name optionally including server
-	fullName: function(server) {
+	// Full name optionally with html formatting
+	fullName: function(formatted) {
 		var name = this.attributes.data.realname;
-		if(server) name += ' (' + this.server().data.name + ')';
+		if(formatted) {
+			name = '<span class="hl">' + name + '</span>';
+			name += ' (' + this.server().data.name + ')';
+		}
 		return name;
 	},
 
