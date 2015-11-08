@@ -20,7 +20,7 @@ lg.Server = lg.GlobalObject.extend({
 
 // Return the master server object
 lg.Server.getMaster = function() {
-	if(!('master' in this)) this.master = lg.getObject(mw.config.get('masterServer'));
+	if(!('master' in this)) this.master = lg.getObject(lg.getConfig('masterServer'));
 	return this.master;
 },
 

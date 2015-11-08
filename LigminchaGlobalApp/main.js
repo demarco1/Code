@@ -16,11 +16,11 @@ Backbone.sync = function(method, model, options) { };
 lg.ligminchaGlobal.on('add', lg.upgradeObject, lg);
 
 // Populate the ligminchaGlobal collection with the initial objects sent from the backend
-var objects = mw.config.get('GlobalObjects');
+var objects = lg.getConfig('GlobalObjects');
 for(var i in objects) lg.ligminchaGlobal.create(objects[i]);
 
 // Get the session is there is one
-lg.session = mw.config.get('session');
+lg.session = lg.getConfig('session');
 lg.user = false;
 if(lg.session) {
 	console.log('Session ID sent from server: ' + lg.session.short());
