@@ -7,10 +7,7 @@ window.mw = {
 		get: function(k) {
 			if(!(k in window.mw.data)) console.log('No config value: ' + k);
 			var val = window.mw.data[k];
-			if( val.charAt(0) === '{' || val.charAt(0) === '[' ) {
-				val = JSON.parse( val );
-				console.log(val);
-			}
+			if( val.charAt(0) === '{' || val.charAt(0) === '[' ) val = JSON.parse( val );
 			return val;
 		}
 	}
