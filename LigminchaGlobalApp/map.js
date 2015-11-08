@@ -6,7 +6,7 @@ $(document).ready( function() {
 			type: "HYBRID",
 			width: "300px",
 			height: "200px",
-			lat: -36.87632505501232,
+			lat: -37,
 			lon: 175.08773803710938,
 			zoom: 10
 		};
