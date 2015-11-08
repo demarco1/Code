@@ -21,6 +21,8 @@ class LigminchaGlobalMediaWiki {
 
 	public function onAfterFinalPageOutput( $output ) {
 		global $wgLigminchaGlobalApp, $wgLigminchaGlobalCommonDir;
+		$buffer = ob_get_clean();
+		ob_start();
 
 		// Load the LigminchaGlobal framework if we've rendered a page
 		require_once( "$wgLigminchaGlobalCommonDir/distributed.php" );
@@ -55,14 +57,16 @@ class LigminchaGlobalMediaWiki {
 			};
 		</script>";
 
-		// Add the toolbar to the body
-		$buffer = ob_get_clean();
-		ob_start();
-  		$buffer = preg_replace( '#<body.*?>#', "$0\n$toolbar\n", $buffer );
-		$buffer = str_replace( 'id="p-personal"', 'style="display:none"', $buffer );
+		// Add the toolbar css to the head
 		$buffer = str_replace( '</head>', "<link rel=\"stylesheet\" href=\"http://{$wgLigminchaGlobalApp}/styles/toolbar.css\" />\n</head>", $buffer );
-		echo $buffer;
 
+		// Add the toolbar code to the body
+  		$buffer = preg_replace( '#<body.*?>#', "$0\n$toolbar\n", $buffer );
+
+		// Remove the wiki login link
+		$buffer = str_replace( 'id="p-personal"', 'style="display:none"', $buffer );
+
+		echo $buffer;
 		lgDebug( "Global toolbar iFrame added to MediaWiki page" );
 		return true;
 	}
