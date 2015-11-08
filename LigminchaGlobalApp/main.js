@@ -46,5 +46,7 @@ if(lg.session && typeof webSocket === 'object') {
 }
 
 // Render the parent's toolbar
-lg.template('global-toolbar', {}, lg.toolbar ? function(html) { lg.updateParent('#toolbar', html); } : '#toolbar');
+$(document).ready(function() {
+	lg.template('global-toolbar', {}, lg.toolbar ? function(html) { lg.updateParent('#toolbar', html); } : '#toolbar');
+});
 
