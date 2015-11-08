@@ -17,7 +17,7 @@ class MediaWiki {
 
 	function addJsConfigVars( $name, $value ) {
 		global $script;
-		if( is_array( $value ) ) $value = json_encode( $value );
+		$value = is_array( $value ) ? json_encode( $value ) : addslashes( $values );
 		$script .= "\nwindow.mw.data.$name='$value';";
 	}
 
