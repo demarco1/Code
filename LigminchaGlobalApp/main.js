@@ -42,7 +42,7 @@ if(lg.session && typeof webSocket === 'object') {
 	webSocket.subscribe( 'LigminchaGlobal', function(data) { lg.recvQueue(data.msg) });
 
 	// Reconnect if disconnected
-	lg.ws.disconnected(function() {
+	webSocket.disconnected(function() {
 		lg.ws = webSocket.connect();
 	});
 
