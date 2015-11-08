@@ -88,7 +88,7 @@ lg.personalMenu = function() {
 	return lg.user
 		? lg.user.fullName(true) + '&nbsp;&nbsp;▼<ul>\
 			<li><a>Profile</a></li>\
-			<li><a href="http://' + lg.user.server().tag + '/index.php/login">Log out</a></li>\
+			<li><a href="http://' + lg.user.server().tag + '/index.php/login" target="_parent">Log out</a></li>\
 		</ul>' : '<span class="anon">You are not logged in</span>';
 };
 
