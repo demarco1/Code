@@ -118,22 +118,20 @@ class LigminchaGlobalSSO {
 	 * Render an iFrame that requests the global toolbar
 	 */
 	public static function toolbar() {
-		if( $user = LigminchaGlobalUser::getCurrent() ) {
 
-			// Get the url of the global app
-			$config = JFactory::getConfig();
-			$global = $config->get( 'lgGlobalApp', 'global.ligmincha.org' );
+		// Get the url of the global app
+		$config = JFactory::getConfig();
+		$global = $config->get( 'lgGlobalApp', 'global.ligmincha.org' );
 
-			// Add the iframe requesting the toolbar with some spacing above
-			$toolbar = "<iframe allowTransparency=\"true\" src=\"http://{$global}/toolbar.php\" frameborder=\"0\" width=\"100%\" height=\"200\"></iframe>";
-			$toolbar = "<div style=\"position: absolute;z-index: 1000;top: 0px;left: 0px;width: 100%;height: 200px;\">$toolbar</div>";
-			$toolbar .= "<div style=\"padding:0;margin:0;height:28px;\"></div>";
+		// Add the iframe requesting the toolbar with some spacing above
+		$toolbar = "<iframe allowTransparency=\"true\" src=\"http://{$global}/toolbar.php\" frameborder=\"0\" width=\"100%\" height=\"200\"></iframe>";
+		$toolbar = "<div style=\"position: absolute;z-index: 1000;top: 0px;left: 0px;width: 100%;height: 200px;\">$toolbar</div>";
+		$toolbar .= "<div style=\"padding:0;margin:0;height:28px;\"></div>";
 
-			// Add the toolbar to the body if we have a user
-			$app = JFactory::getApplication( 'site' );
-			$app->setBody( preg_replace( '#<body.*?>#', "$0\n$toolbar\n", $app->getBody() ) );
-			lgDebug( "Global toolbar iFrame added to page" );
-		}
+		// Add the toolbar to the body if we have a user
+		$app = JFactory::getApplication( 'site' );
+		$app->setBody( preg_replace( '#<body.*?>#', "$0\n$toolbar\n", $app->getBody() ) );
+		lgDebug( "Global toolbar iFrame added to page" );
 	}
 }
 
