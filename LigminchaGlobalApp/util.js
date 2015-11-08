@@ -76,3 +76,26 @@ lg.chatMenu = function() {
 		return html;
 	} else return 'There are no other users online';
 };
+
+// Returns the content for the personal menu in the toolbar
+lg.personalMenu = function() {
+	return lg.user
+		? lg.user.fullName(true) + '&nbsp;&nbsp;▼<ul><li><a>Profile</a></li><li><a>Log out</a></li></ul>'
+		: '<span class="anon">You are not logged in</span>';
+};
+
+// Returns link to local sangha site if logged in
+lg.sanghaLink = function() {
+	return lg.user ? '<li><a href="<%-sangha%>" target="_parent">Your local sangha</a></li>' : '';
+};
+
+// Returns the admin menu if logged in
+lg.adminMenu = function() {
+	return lg.user ? '<li>Admin&nbsp;&nbsp;▼\
+		<ul>\
+			<li><a>Control panel</a></li>\
+			<li><a>Manage users</a></li>\
+			<li><a>Manage servers</a></li>\
+		</ul>\
+	</li>' : '';
+};

@@ -32,6 +32,9 @@ body {
 	margin: 0 0 0 2px;
 	border-left: 1px solid #333;
 }
+#personal .anon {
+	color: #c00;
+}
 .dd {
 	background: #555;
 	padding: 0;

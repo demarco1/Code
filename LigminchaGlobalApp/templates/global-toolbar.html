@@ -4,16 +4,10 @@
 		<ul>
 			<li><a href="http://ligminchaglobal.organicdesign.co.nz/index.php" target="_parent">LigminchaGlobal application</a></li>
 			<li><a href="http://ligminchawiki.organicdesign.co.nz" target="_parent">Documentation wiki</a></li>
-			<li><a href="<%-sangha%>" target="_parent">Your local sangha</a></li>
+			<%=lg.sanghaLink()%>
 		</ul>
 	</li>
-	<li>Admin&nbsp;&nbsp;▼
-		<ul>
-			<li><a>Control panel</a></li>
-			<li><a>Manage users</a></li>
-			<li><a>Manage servers</a></li>
-		</ul>
-	</li>
+	<%=lg.adminMenu()%>
 	<li>Recent activity&nbsp;&nbsp;▼
 		<ul>
 			<li><a>Mary edited foo</a></li>
@@ -24,10 +18,5 @@
 	<li><%=lg.chatMenu()%></li>
 </ul>
 <ul id="personal" class="dd">
-	<li><%-name%>&nbsp;&nbsp;▼
-		<ul>
-			<li><a>Profile</a></li>
-			<li><a>Log out</a></li>
-		</ul>
-	</li>
+	<li><%=lg.personalMenu()%></li>
 </ul>
