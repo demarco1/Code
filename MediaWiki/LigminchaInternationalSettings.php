@@ -27,7 +27,7 @@ $wgGroupPermissions['user']['upload_by_url']       = true;
 $wgGroupPermissions['*']['createpage']             = false;
 $wgGroupPermissions['user']['createpage']          = true;
 $wgGroupPermissions['sysop']['createpage']         = true;
-$wgGroupPermissions['*']['createaccount']          = true;
+$wgGroupPermissions['sysop']['createaccount']      = true;
 
 // Set up a private sysop-only Admin namespace
 define( 'NS_ADMIN', 1020 );
