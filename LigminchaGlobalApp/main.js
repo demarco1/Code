@@ -45,10 +45,12 @@ if(lg.session && typeof webSocket === 'object') {
 	lg.ticker();
 }
 
-// Render the parent's toolbar
-window.onload = function() {
-	lg.template('global-toolbar', {}, lg.toolbar ? function(html) {
-		lg.updateParent('#lg-toolbar', '<div id="lg-toolbar">' + html + '</div>');
-	} : '#lg-toolbar');
-};
+// Render the parent's toolbar either directly now, or in the parent page after page ready
+if(lg.toolbar) {
+	window.onload = function() {
+		lg.template('global-toolbar', {}, function(html) {
+			lg.updateParent('#lg-toolbar', '<div id="lg-toolbar">' + html + '</div>');
+		});
+	};
+} else lg.template('global-toolbar', {}, '#lg-toolbar');
 
