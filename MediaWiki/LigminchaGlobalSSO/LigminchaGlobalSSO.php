@@ -38,12 +38,14 @@ class LigminchaGlobalMediaWiki {
 		// Add the iframe requesting the toolbar with some spacing above
 		$toolbar = "<iframe allowTransparency=\"true\" src=\"http://{$wgLigminchaGlobalApp}/toolbar.php\" frameborder=\"0\" width=\"100%\" height=\"200\"></iframe>";
 		$toolbar = "<div style=\"position: absolute;z-index: 1000;top: 0px;left: 0px;width: 100%;height: 200px;\">$toolbar</div>";
-		$toolbar .= "<div style=\"padding:0;margin:0;height:12px;\"></div>";
+		$toolbar .= "<div style=\"padding:0;margin:0;height:30px;\"></div>";
 
 		// Add the toolbar to the body
 		$buffer = ob_get_clean();
 		ob_start();
-  		echo preg_replace( '#<body.*?>#', "$0\n$toolbar\n", $buffer );
+  		$buffer = preg_replace( '#<body.*?>#', "$0\n$toolbar\n", $buffer );
+		$buffer = str_replace( '<div class="portlet"', '<div style="display:none"', $buffer );
+		echo $buffer;
 
 		lgDebug( "Global toolbar iFrame added to MediaWiki page" );
 		return true;
