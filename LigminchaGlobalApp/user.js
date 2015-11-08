@@ -24,7 +24,7 @@ lg.User = lg.GlobalObject.extend({
 	// Full name optionally including server
 	fullName: function(server) {
 		var name = this.attributes.data.realname;
-		if(server) name += ' (' + this.server.data.name + ')';
+		if(server) name += ' (' + this.server().data.name + ')';
 		return name;
 	},
 
