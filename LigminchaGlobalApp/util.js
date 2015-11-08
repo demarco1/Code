@@ -75,11 +75,11 @@ lg.chatMenu = function() {
 	if(lg.user) {
 		var users = this.usersOnline();
 		if(users.length > 0) {
-			var html = 'Chat (' + users.length + ' user' + (users.length == 1 ? '' : 's') + ')&nbsp;&nbsp;▼<ul>';
+			var html = '<li>Chat (' + users.length + ' user' + (users.length == 1 ? '' : 's') + ')&nbsp;&nbsp;▼<ul>';
 			for(var i in users) html += '<li>' + users[i] + '</li>';
-			html += '</ul>';
+			html += '</ul></li>';
 			return html;
-		} else return 'There are no other users online';
+		} else return '<li>There are no other users online</li>';
 	} else return '';
 };
 
