@@ -94,7 +94,7 @@ lg.personalMenu = function() {
 
 // Returns link to local sangha site if logged in
 lg.sanghaLink = function() {
-	return lg.user ? '<li><a href="http://' + " target="_parent">' + lg.user.server.data.name + '</a></li>' : '';
+	return lg.user ? '<li><a href="http://' + lg.user.server.tag + '" target="_parent">' + lg.user.server.data.name + '</a></li>' : '';
 };
 
 // Returns the admin menu if logged in
