@@ -162,13 +162,13 @@ lg.process = function(crud, fields, origin) {
 		} else {
 			console.log('Creating ' + fields.id);
 			lg.ligminchaGlobal.create(fields);
-			if(fields.type == LG_SESSION) lg.udateChatMenu();
+			if(fields.type == LG_SESSION) lg.updateChatMenu();
 		}
 	} else if(crud == 'D') {
 		console.log('Delete received');
 		console.log(fields);
 		lg.del(fields);
-		if(fields.type == LG_SESSION) lg.udateChatMenu();
+		if(fields.type == LG_SESSION) lg.updateChatMenu();
 	} else console.log('Unknown CRUD method "' + crud + '"');
 };
 
