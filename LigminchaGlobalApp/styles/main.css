@@ -86,6 +86,7 @@ body {
 }
 .dd li:hover ul, .dd li.sfhover ul {
 	top: 25px;
+	left: auto;
 }
 
 
