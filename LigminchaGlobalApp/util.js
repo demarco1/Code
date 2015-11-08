@@ -28,6 +28,7 @@ lg.message = function(msg, delay, type) {
 lg.template = function(template, args, target) {
 	function render(html, target) { typeof target == 'function' ? target(html) : $(target).html(html); }
 	if(!('templates' in this)) {
+		this.templates = {};
 		var t = lg.getConfig('templates');
 		for(var i in t) this.templates[i] = _.template(t[i]);
 	}
