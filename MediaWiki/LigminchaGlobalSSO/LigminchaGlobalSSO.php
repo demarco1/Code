@@ -38,7 +38,7 @@ class LigminchaGlobalMediaWiki {
 		// Add the iframe requesting the toolbar with some spacing above
 		$parent = urlencode( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
 		$toolbar = "<iframe id=\"g_tb_if\" name=\"g_tb_if\" src=\"http://{$wgLigminchaGlobalApp}/toolbar.php?parent={$parent}\" frameborder=\"0\" width=\"1\" height=\"1\"></iframe>";
-		$toolbar .= "<div id=\"g_tb\" style=\"position: absolute;z-index: 1000;top: 0px;left: 0px;width: 100%;height: 28px;\"><div id=\"toolbar\"></div></div>";
+		$toolbar .= "<div id=\"g_tb\" style=\"position: absolute;z-index: 1000;top: 0px;left: 0px;width: 100%;height: 28px;\"><div id=\"lg-toolbar\"></div></div>";
 		$toolbar .= "<div style=\"padding:0;margin:0;height:30px;\"></div>";
 
 		// Add porthole script to allow the toolbar remote script to modify our local toolbar's content
@@ -60,6 +60,7 @@ class LigminchaGlobalMediaWiki {
 		ob_start();
   		$buffer = preg_replace( '#<body.*?>#', "$0\n$toolbar\n", $buffer );
 		$buffer = str_replace( 'id="p-personal"', 'style="display:none"', $buffer );
+		$buffer = str_replace( '</head>', "<link rel=\"stylesheet\" href=\"http://{$wgLigminchaGlobalApp}/styles/toolbar.css\" />\n</head>", $buffer );
 		echo $buffer;
 
 		lgDebug( "Global toolbar iFrame added to MediaWiki page" );

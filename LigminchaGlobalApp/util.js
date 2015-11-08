@@ -81,7 +81,7 @@ lg.chatMenu = function() {
 
 // Re-render the chatmenu
 lg.updateChatMenu = function() {
-	if(lg.toolbar) this.updateParent('#toolbar #chat', this.chatMenu());
+	if(lg.toolbar) this.updateParent('#lg-toolbar #chat', this.chatMenu());
 	else $('#chat').replaceWith(this.chatMenu());
 	console.log('Sessions changed, updated chat menu');
 };

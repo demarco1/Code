@@ -17,11 +17,10 @@ $wgOut->addJsConfigVars( 'masterServer', LigminchaGlobalServer::getMaster()->id 
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>LigminchaGlobal Toolbar</title>
-		<link rel="stylesheet" href="styles/main.css" />
 	</head>
-	<body style="background:transparent">
+	<body>
 		<!-- Page structure -->
-		<div id="toolbar"></div>
+		<div id="lg-toolbar"></div>
 		<!-- Scripts -->
 		<script type="text/javascript" src="resources/fakemediawiki.js"><!-- Make MediaWiki environment look present for websocket.js --></script>
 		<script type="text/javascript">

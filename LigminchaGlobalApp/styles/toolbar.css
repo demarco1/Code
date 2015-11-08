@@ -1,0 +1,91 @@
+#lg-toolbar {
+	position: absolute;
+	z-index: 1000;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	background-color: #464646;
+	background-image: -moz-linear-gradient(center bottom , #373737, #464646 5px);
+	color: #bbb;
+	font: 13px/28px sans-serif;
+	height: 28px;
+}
+#lg-toolbar .hl {
+	color: #fff;
+}
+#lg-toolbar .w {
+	color: #ff3;
+}
+#lg-toolbar #main {
+	float: left;
+}
+#lg-toolbar #main li {
+	margin: 0 2px 0 0;
+	border-right: 1px solid #333;
+}
+#lg-toolbar #personal {
+	float: right;
+}
+#lg-toolbar #personal li {
+	margin: 0 0 0 2px;
+	border-left: 1px solid #333;
+}
+#lg-toolbar .dd {
+	background: #555;
+	padding: 0;
+	margin: 0;
+}
+#lg-toolbar .dd li {
+	padding: 0 20px;
+	background: #464646;
+	background-image: -moz-linear-gradient(center bottom , #373737, #464646 5px);
+}
+#lg-toolbar .dd, #lg-toolbar .dd ul {
+	margin: 0;
+	list-style: none;
+}
+#lg-toolbar .dd ul {
+	padding: 0;
+}
+#lg-toolbar .dd ul li {
+	background: none;
+}
+#lg-toolbar .dd ul a {
+	display: block;
+}
+#lg-toolbar .dd a {
+	padding: 5px;
+	text-decoration: none;
+	line-height: 13px;
+	color: #bbb;
+	cursor: pointer;
+}
+#lg-toolbar .dd a:hover {
+	text-decoration: underline;
+	color: #ddd;
+}
+#lg-toolbar .dd li {
+	float: left;
+	text-align: left;
+	margin-bottom: 0;
+	cursor: default;
+}
+#lg-toolbar .dd li ul {
+	position: absolute;
+	background: #464646;
+	background-image: -moz-linear-gradient(center bottom , #373737, #464646 5px);
+	padding-bottom: 5px;
+	top: -999px;
+}
+#lg-toolbar .dd li ul li {
+	padding: 0 20px 0 10px;
+	margin-left: -1px;
+	float: none;
+}
+#lg-toolbar .dd li:hover ul, #lg-toolbar .dd li.sfhover ul {
+	top: 25px;
+	left: auto;
+}
+#lg-toolbar #personal li:hover ul, #lg-toolbar #personal li.sfhover ul {
+	right: 10px;
+}
