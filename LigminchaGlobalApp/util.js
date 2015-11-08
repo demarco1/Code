@@ -72,13 +72,15 @@ lg.usersOnline = function(notself) {
 
 // Returns the content for the chat menu in the toolbar
 lg.chatMenu = function() {
-	var users = this.usersOnline();
-	if(users.length > 0) {
-		var html = 'Chat (' + users.length + ' user' + (users.length == 1 ? '' : 's') + ')&nbsp;&nbsp;▼<ul>';
-		for(var i in users) html += '<li>' + users[i] + '</li>';
-		html += '</ul>';
-		return html;
-	} else return 'There are no other users online';
+	if(lg.user) {
+		var users = this.usersOnline();
+		if(users.length > 0) {
+			var html = 'Chat (' + users.length + ' user' + (users.length == 1 ? '' : 's') + ')&nbsp;&nbsp;▼<ul>';
+			for(var i in users) html += '<li>' + users[i] + '</li>';
+			html += '</ul>';
+			return html;
+		} else return 'There are no other users online';
+	} else return '';
 };
 
 // Returns the content for the personal menu in the toolbar
