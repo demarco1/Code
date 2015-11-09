@@ -132,7 +132,7 @@ lg.sendObject = function(obj) {
 	// - we use the WebSocket client ID as the session ID so the WebSocket daemon doesn't bounce the message back to us
 	$.ajax({
 		type: 'POST',
-		url: '/index.php',
+		url: lg.host + '/index.php',
 		data: {sync: [0, 0, mw.data.wsClientID, sync]},
 		dataType: 'text',
 		success: function(text) {
