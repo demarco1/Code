@@ -39,7 +39,8 @@ class LigminchaGlobalMediaWiki {
 
 		// Add the iframe requesting the toolbar with some spacing above
 		$parent = urlencode( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
-		$toolbar = "<iframe id=\"g_tb_if\" name=\"g_tb_if\" src=\"http://{$wgLigminchaGlobalApp}/toolbar.php?parent={$parent}\" frameborder=\"0\" width=\"1\" height=\"1\"></iframe>";
+		$toolbar = "<iframe id=\"g_tb_if\" name=\"g_tb_if\" src=\"http://{$wgLigminchaGlobalApp}/toolbar.php\" frameborder=\"0\" width=\"1\" height=\"1\"></iframe>";
+		$toolbar .= "<iframe id=\"g_tb_ifp\" name=\"g_tb_ifp\" src=\"http://{$wgLigminchaGlobalApp}/resources/porthole.php?parent={$parent}\" frameborder=\"0\" width=\"1\" height=\"1\"></iframe>";
 		$toolbar .= "<div id=\"g_tb\" style=\"position: absolute;z-index: 1000;top: 0px;left: 0px;width: 100%;height: 28px;\"><div id=\"lg-toolbar\"></div></div>";
 		$toolbar .= "<div style=\"padding:0;margin:0;height:15px;\"></div>";
 
