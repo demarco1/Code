@@ -44,7 +44,10 @@ $lgToolbarBody .= "<div style=\"padding:0;margin:0;height:15px;\"></div>";
 
 $lgToolbarHead = "<link rel=\"stylesheet\" href=\"http://{$lgGlobalAppDomain}/styles/toolbar.css\" />
 		<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/fakemediawiki.js\"><!-- Make MediaWiki environment look present for websocket.js --></script>
-		<script type=\"text/javascript\">{$script}</script>
+		<script type=\"text/javascript\">
+		{$script}
+		var $ = jQuery;
+		</script>
 		<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/crypto.js\"></script>
 		<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/underscore.js\"></script>
 		<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/backbone.js\"></script>
