@@ -36,7 +36,7 @@ $lgToolbarBody .= "<script type=\"text/javascript\">
 			var data = JSON.parse(e.data);
 			console.log('Message received from toolbar to update ' + data.selector);
 			$(data.selector).replaceWith(data.html);
-			if(!$('#lg-toolbar').is(':visible')) $('#lg-toolbar').fadeIn(300);
+			if(!$('#lg-toolbar').is(':visible')) $('#lg-toolbar').fadeIn(1000);
 		}
 	}
 </script>";
