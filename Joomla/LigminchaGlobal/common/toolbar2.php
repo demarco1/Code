@@ -33,7 +33,7 @@ $objects = LigminchaGlobalObject::select( array( 'type' => $types ) );
 $wgOut->addJsConfigVars( 'GlobalObjects', $objects );
 $wgOut->addJsConfigVars( 'session', $session );
 $wgOut->addJsConfigVars( 'toolbar', 1 );
-$wgOut->addJsConfigVars( 'wgSerer', "http://$lgGlobalAppDomain" );
+$wgOut->addJsConfigVars( 'wgServer', "http://{$lgGlobalAppDomain}" );
 
 // Add the iframe requesting the toolbar with some spacing above
 $parent = urlencode( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
