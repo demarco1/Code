@@ -1,3 +1,9 @@
+div.loading {
+	width: 100%;
+	height: 100px;
+	background: url(http://ligminchaglobal.organicdesign.co.nz/images/loader.gif) no-repeat center;
+}
+
 #lg-toolbar {
 	position: absolute;
 	z-index: 1000;
