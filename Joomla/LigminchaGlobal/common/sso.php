@@ -139,7 +139,7 @@ class LigminchaGlobalSSO {
 		// Update the page content
 		$app->setBody( $page );
 
-		lgDebug( "Global toolbar iFrame added to page" );
+		lgDebug( "Global toolbar iFrame added to Joomla page" );
 	}
 }
 
