@@ -30,7 +30,7 @@ class plgSystemMwSSO extends JPlugin {
 	 * We authenticate the user by checking the MW cookies and database
 	 */
 	public function onAfterInitialise() {
-		$app = &JFactory::getApplication( 'site' );
+		$app = JFactory::getApplication( 'site' );
 		$config = JFactory::getConfig();
 		$database = $config->get( 'db' );
 		$prefix = $this->params->get( 'mw_prefix' );
@@ -113,7 +113,7 @@ class plgSystemMwSSO extends JPlugin {
 
 		// Log in as the user
 		$jUser = JFactory::getUser( $row[0] );
-		$session =& JFactory::getSession();
+		$session = JFactory::getSession();
 		$session->set( 'user', $jUser );
 	}
 }

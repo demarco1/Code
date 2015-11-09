@@ -145,12 +145,19 @@ class plgSystemCorreios extends JPlugin {
 		$packages = array();
 
 		// Ensure that all the items are stdClass objects (since orders are, but cart isn't)
+		// - and that there are no 0g items in the list
+		$tmp = array();
 		foreach( $items as $i => $item ) {
 			if( is_array( $item ) ) {
 				if( array_key_exists( 'quantity', $item ) ) $item['product_quantity'] = $item['quantity'];
 				$items[$i] = self::arrayToObject( $item );
 			}
+			if( $item->weight ) $tmp[] = $item;
 		}
+		$items = $tmp;
+
+		// If all the items were 0g, return an empty package
+		if( count( $items ) == 0 ) return array();
 
 		// Keep creating packages until no items left to add
 		while( self::minWeight( $items ) !== false ) {
