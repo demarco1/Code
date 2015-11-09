@@ -116,8 +116,8 @@ lg.adminMenu = function() {
 lg.toolbar = lg.getConfig('toolbar', false);
 if(lg.toolbar) {
 	lg.updateParent = function(selector, html) {
-		console.log('posting toolbar data to parent frame');
+		console.log('posting toolbar data to parent frame (' + lg.toolbar + ') to update ' + selector);
 		var data = JSON.stringify({selector: selector, html: html});
-		window.parent.postMessage(data, '*');
+		window.parent.postMessage(data, lg.toolbar);
 	};
 }
