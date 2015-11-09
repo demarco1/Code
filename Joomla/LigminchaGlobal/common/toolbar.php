@@ -30,7 +30,7 @@ $lgToolbarBody .= "<div style=\"padding:0;margin:0;height:15px;\"></div>";
 
 // Add porthole script to allow the toolbar remote script to modify our local toolbar's content
 $lgToolbarBody .= "<script type=\"text/javascript\">
-	window.addEventListener('message', receiveMessage, false);
+	//window.addEventListener('message', receiveMessage, false);
 	window.g_tb_first = 0;
 	function receiveMessage(e) {
 		if(e.origin === 'http://{$lgGlobalAppDomain}') {
