@@ -140,7 +140,6 @@ class LigminchaGlobalSSO {
 		$app->setBody( $page );
 
 		lgDebug( "Global toolbar iFrame added to page" );
-		exit;
 	}
 }
 
