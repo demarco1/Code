@@ -59,6 +59,6 @@ if(lg.toolbar && lg.toolbar != 1) {
 	};
 } else {
 	lg.template('global-toolbar', {}, '#lg-toolbar');
-	$('#lg-toolbar').animate({top: 0}, 500);
+	$('#g_tb').animate({top: 0}, 500);
 }
 
