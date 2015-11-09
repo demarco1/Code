@@ -138,7 +138,7 @@ class LigminchaGlobalSSO {
 
 		$page = preg_replace( '#^window.setInterval.+?$#m', '', $page );
 
-print $page;
+print "======\n$page";
 exit;
 
 		// Update the page content
