@@ -57,5 +57,8 @@ if(lg.toolbar) {
 			lg.updateParent('#lg-toolbar', '<div id="lg-toolbar">' + html + '</div>');
 		});
 	};
-} else lg.template('global-toolbar', {}, '#lg-toolbar');
+} else {
+	lg.template('global-toolbar', {}, '#lg-toolbar');
+	//$('#lg-toolbar').animate({top: 0}, 500);
+}
 
