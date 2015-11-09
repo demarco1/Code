@@ -35,7 +35,7 @@ $wgOut->addJsConfigVars( 'tags', $tags );
 	</head>
 	<body>
 		<!-- Page structure -->
-		<div id="toolbar"></div>
+		<div id="lg-toolbar"></div>
 		<div id="notify"></div>
 		<div class="map"></div>
 
