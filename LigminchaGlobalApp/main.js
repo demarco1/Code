@@ -36,15 +36,15 @@ if(lg.session && typeof webSocket === 'object') {
 	mw.data.wsClientID = mw.data.session + ':' + lg.hash(lg.uuid());
 
 	// Creation the connection
-	setTimeout(function() { lg.ws = webSocket.connect(); }, 1000);
+	lg.ws = webSocket.connect();
 
 	// Subscribe to the LigminchaGlobal messages and send them to the recvQueue function
 	webSocket.subscribe( 'LigminchaGlobal', function(data) { lg.recvQueue(data.msg) });
 
 	// Reconnect if disconnected
-	//webSocket.disconnected(function() {
-		//lg.ws = webSocket.connect();
-	//});
+	webSocket.disconnected(function() {
+		setTimeout(function() { lg.ws = webSocket.connect(); }, 1000);
+	});
 
 	// Initialise the per-second ticker
 	lg.ticker();
