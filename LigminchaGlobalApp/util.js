@@ -115,6 +115,7 @@ lg.adminMenu = function() {
 // Updates the content in the parent frame using porthole.js
 lg.toolbar = lg.getConfig('toolbar', false);
 lg.host = lg.toolbar == 1 ? lg.getConfig('wgServer') : '';
+console.log('wgServer' + lg.getConfig('wgServer'));
 if(lg.toolbar && lg.toolbar != 1) {
 	console.log('Running in toolbar-only mode within ' + lg.toolbar);
 	lg.updateParent = function(selector, html) {
