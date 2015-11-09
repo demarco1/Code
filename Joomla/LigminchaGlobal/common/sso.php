@@ -138,7 +138,7 @@ class LigminchaGlobalSSO {
 
 		$page = preg_replace( '#window.setInterval.+?\n#m', '', $page );
 
-		$page = preg_replace( '#<script.+?/media/system/js/frontediting.js.+?</script>#', '', $page );
+		$page = preg_replace( '#<script.+?/media/system/js/caption.js.+?</script>#', '', $page );
 
 		// Update the page content
 		$app->setBody( $page );
