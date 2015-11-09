@@ -44,8 +44,7 @@ class LigminchaGlobalMediaWiki {
 		$toolbar .= "<div style=\"padding:0;margin:0;height:15px;\"></div>";
 
 		// Add porthole script to allow the toolbar remote script to modify our local toolbar's content
-		$toolbar .= "<script type=\"text/javascript\" src=\"http://{$wgLigminchaGlobalApp}/resources/porthole.js\"></script>
-		<script type=\"text/javascript\">
+		$toolbar .= "<script type=\"text/javascript\">
 			window.addEventListener('message', receiveMessage, false);
 			function receiveMessage(e) {
 			 // if (e.origin === 'http://my.iframe.org')
