@@ -43,7 +43,7 @@ if(lg.session && typeof webSocket === 'object') {
 
 	// Reconnect if disconnected
 	webSocket.disconnected(function() {
-		lg.ws = webSocket.connect();
+		//lg.ws = webSocket.connect();
 	});
 
 	// Initialise the per-second ticker
