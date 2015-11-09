@@ -3,6 +3,7 @@
  * This class encapsulates all the distributed database functionality for the LigminchaGlobal extension
  */
 
+define( 'LG_VERSION', '0.0.0' );
 define( 'LG_SUCCESS', 'ok' );
 define( 'LG_ERROR', 'error' );
 

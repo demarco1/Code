@@ -6,18 +6,20 @@
  *   the page body and page head respectively
  */
 
-// Load the LigminchaGlobal framework if we've rendered a page
-require_once( __DIR__ . "/distributed.php" );
-require_once( __DIR__ . "/object.php" );
-require_once( __DIR__ . "/sync.php" );
-require_once( __DIR__ . "/server.php" );
-require_once( __DIR__ . "/user.php" );
-require_once( __DIR__ . "/session.php" );
-require_once( __DIR__ . "/version.php" );
-require_once( __DIR__ . "/log.php" );
-require_once( __DIR__ . "/sso.php" );
-new LigminchaGlobalSSO();
-new LigminchaGlobalDistributed();
+// Load the LigminchaGlobal framework if it's not already installed
+if( !defined( 'LG_VERSION' ) {
+	require_once( __DIR__ . "/distributed.php" );
+	require_once( __DIR__ . "/object.php" );
+	require_once( __DIR__ . "/sync.php" );
+	require_once( __DIR__ . "/server.php" );
+	require_once( __DIR__ . "/user.php" );
+	require_once( __DIR__ . "/session.php" );
+	require_once( __DIR__ . "/version.php" );
+	require_once( __DIR__ . "/log.php" );
+	require_once( __DIR__ . "/sso.php" );
+	new LigminchaGlobalSSO();
+	new LigminchaGlobalDistributed();
+}
 
 // Add the iframe requesting the toolbar with some spacing above
 $parent = urlencode( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
