@@ -30,7 +30,7 @@ $lgToolbarBody = "<div id=\"g_tb\" style=\"position:absolute;z-index:1000;top:-2
 $lgToolbarBody .= "<div style=\"padding:0;margin:0;height:15px;\"></div>";
 
 $lgToolbarHead = "<link rel=\"stylesheet\" href=\"http://{$lgGlobalAppDomain}/styles/toolbar.css\" />
-		<script type=\"text/javascript\" src=\"resources/fakemediawiki.js\"><!-- Make MediaWiki environment look present for websocket.js --></script>
+		<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/fakemediawiki.js\"><!-- Make MediaWiki environment look present for websocket.js --></script>
 		<script type=\"text/javascript\">
 			window.mw.data.toolbar = 1;
 			window.mw.data.session = \"{$session}\";
