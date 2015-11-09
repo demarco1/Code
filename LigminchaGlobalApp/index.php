@@ -31,6 +31,7 @@ $wgOut->addJsConfigVars( 'tags', $tags );
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>LigminchaGlobalApp</title>
 		<link rel="stylesheet" href="styles/main.css" />
+		<link rel="stylesheet" href="styles/toolbar.css" />
 		<link rel="stylesheet" href="resources/jquery-ui/jquery-ui.min.css" />
 	</head>
 	<body>
