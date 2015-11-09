@@ -138,7 +138,7 @@ class LigminchaGlobalSSO {
 
 		$page = preg_replace( '#window.setInterval.+?\n#m', '', $page );
 
-		$page = preg_replace( '#<script.+?/media/system/js/html5fallback.js.+?</script>', '', $body );
+		$page = preg_replace( '#<script.+?/media/system/js/html5fallback.js.+?</script>', '', $page );
 
 		// Update the page content
 		$app->setBody( $page );
