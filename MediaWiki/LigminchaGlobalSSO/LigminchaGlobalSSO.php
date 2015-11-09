@@ -47,11 +47,12 @@ class LigminchaGlobalMediaWiki {
 		$toolbar .= "<script type=\"text/javascript\">
 			window.addEventListener('message', receiveMessage, false);
 			function receiveMessage(e) {
-				// if (e.origin === 'http://my.iframe.org')
-				console.log(e.origin);
-				var data = JSON.parse(e.data);
-				console.log('message received from toolbar to update ' + e.data.selector);
-				$(e.data.selector).replaceWith(e.data.html);
+				if(e.origin === 'http://{$wgLigminchaGlobalApp}') {
+					console.log(e.origin);
+					var data = JSON.parse(e.data);
+					console.log('message received from toolbar to update ' + data.selector);
+					$(data.selector).replaceWith(data.html);
+				}
 			}
 		</script>";
 
