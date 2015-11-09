@@ -39,14 +39,14 @@ $wgOut->addJsConfigVars( 'wsRewrite', true );
 
 // Add the iframe requesting the toolbar with some spacing above
 $parent = urlencode( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
-$lgToolbarBody = "<div id=\"g_tb\" style=\"position:absolute;z-index:1000;top:0;left:0;width:100%;height:28px;\"><div id=\"lg-toolbar\"></div></div>";
+$lgToolbarBody = "<div id=\"g_tb\" style=\"position:absolute;z-index:1000;top:-28px;left:0;width:100%;height:28px;\"><div id=\"lg-toolbar\"></div></div>";
 $lgToolbarBody .= "<div style=\"padding:0;margin:0;height:15px;\"></div>";
 
 $lgToolbarHead = "<link rel=\"stylesheet\" href=\"http://{$lgGlobalAppDomain}/styles/toolbar.css\" />
-		<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/fakemediawiki.js\"><!-- Make MediaWiki environment look present for websocket.js --></script>
+		<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/fakemediawiki.js\"></script>
 		<script type=\"text/javascript\">
-		{$script}
-		window.$ = jQuery;
+			{$script}
+			window.$ = jQuery;
 		</script>
 		<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/crypto.js\"></script>
 		<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/underscore.js\"></script>
