@@ -8,7 +8,7 @@
 if( !isset( $lgGlobalAppDomain ) ) $lgGlobalAppDomain = 'global.ligmincha.org';
 
 // Load the LigminchaGlobal framework if it's not already installed
-if( !defined( 'LG_VERSION' ) {
+if( !defined( 'LG_VERSION' ) ) {
 	require( __DIR__ . "/distributed.php" );
 	require( __DIR__ . "/object.php" );
 	require( __DIR__ . "/sync.php" );
