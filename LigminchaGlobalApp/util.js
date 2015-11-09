@@ -118,6 +118,7 @@ if(lg.toolbar) {
 	//lg.proxy = new Porthole.WindowProxy(lg.toolbar);
 	lg.updateParent = function(selector, html) {
 		console.log('posting toolbar data to parent frame');
+		console.log(window.frames);
 		window.frames['g_tb_ifp'].proxy.post({selector: selector, html: html});
 	};
 }

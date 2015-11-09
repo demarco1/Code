@@ -31,7 +31,6 @@ $wgOut->addJsConfigVars( 'masterServer', LigminchaGlobalServer::getMaster()->id 
 		<script type="text/javascript" src="resources/jquery.js"></script>
 		<script type="text/javascript" src="resources/underscore.js"></script>
 		<script type="text/javascript" src="resources/backbone.js"></script>
-		<script type="text/javascript" src="resources/porthole.js"></script>
 		<script type="text/javascript" src="resources/WebSocket/websocket.js"><!-- WebSocket object from the MediaWiki WebSockets extension --></script>
 		<script type="text/javascript" src="distributed.js"><!-- Main distributed database functionality --></script>
 		<script type="text/javascript" src="object.js"><!-- Distributed object base class --></script>
