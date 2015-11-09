@@ -34,6 +34,8 @@ $wgOut->addJsConfigVars( 'GlobalObjects', $objects );
 $wgOut->addJsConfigVars( 'session', $session );
 $wgOut->addJsConfigVars( 'toolbar', 1 );
 $wgOut->addJsConfigVars( 'wgServer', "http://{$lgGlobalAppDomain}" );
+$wgOut->addJsConfigVars( 'wsPort', 1729 );
+$wgOut->addJsConfigVars( 'wsRewrite', true );
 
 // Add the iframe requesting the toolbar with some spacing above
 $parent = urlencode( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
