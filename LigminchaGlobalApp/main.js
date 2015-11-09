@@ -51,7 +51,7 @@ if(lg.session && typeof webSocket === 'object') {
 }
 
 // Render the parent's toolbar either directly now, or in the parent page after page ready
-if(lg.toolbar) {
+if(lg.toolbar && lg.toolbar != 1) {
 	window.onload = function() {
 		lg.template('global-toolbar', {}, function(html) {
 			lg.updateParent('#lg-toolbar', '<div id="lg-toolbar">' + html + '</div>');
