@@ -132,6 +132,7 @@ class LigminchaGlobalSSO {
 		$app = JFactory::getApplication( 'site' );
 		$app->setBody( preg_replace( '#<body.*?>#', "$0\n$toolbar\n", $app->getBody() ) );
 		lgDebug( "Global toolbar iFrame added to page" );
+		print_r($app->getBody());
 	}
 }
 
