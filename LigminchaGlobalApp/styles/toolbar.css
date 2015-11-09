@@ -10,7 +10,7 @@
 	font: 13px/28px sans-serif;
 	height: 28px;
 }
-#lg-toolbar .hl, #lg-toolbar a.hl {
+#lg-toolbar .hl, #lg-toolbar .dd .hl {
 	color: #fff;
 }
 #lg-toolbar .w {
