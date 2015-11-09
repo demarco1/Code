@@ -1,32 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Porthole Demo</title>
-		<script type="text/javascript" src="/resources/porthole.js"></script>
+		<title>iFrame test</title>
 		<script type="text/javascript">
-			function onMessage(messageEvent) {  
-				/*
-			   messageEvent.origin: Protocol and domain origin of the message
-			   messageEvent.data: Message itself
-			   messageEvent.source: Window proxy object, useful to post a response 
-			   */
-			   console.log(messageEvent);
-			}
-
-			var windowProxy;
-			window.onload=function(){ 
-				// Create a proxy window to send to and receive 
-				// messages from the iFrame
-				windowProxy = new Porthole.WindowProxy(
-					'http://www.organicdesign.co.nz/files/proxy.html', 'guestFrame');
-
-				// Register an event handler to receive messages;
-				windowProxy.addEventListener(onMessage);
-			};
-
 		</script>
 	</head>
 	<body>
-		<iframe id="guestFrame" name="guestFrame" width="100%" height="50" src="http://www.organicdesign.co.nz/files/test.html"></iframe>
+<iframe id="g_tb_if" name="g_tb_if" src="http://ligminchaglobal.organicdesign.co.nz/toolbar.php?parent=http%3A%2F%2Flocalhost%2F" frameborder="1" width="100" height="100"></iframe>
+<div id="g_tb" style="position:absolute;z-index:1000;top:-28px;left:0;width:100%;height:28px;"><div id="lg-toolbar"></div></div>
 	</body>
 </html>

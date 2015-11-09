@@ -36,7 +36,7 @@ if(lg.session && typeof webSocket === 'object') {
 	mw.data.wsClientID = mw.data.session + ':' + lg.hash(lg.uuid()).short();
 
 	// Creation the connection
-	lg.ws = webSocket.connect();
+	setTimeout(function() { lg.ws = webSocket.connect(); }, 1000);
 
 	// Subscribe to the LigminchaGlobal messages and send them to the recvQueue function
 	webSocket.subscribe( 'LigminchaGlobal', function(data) { lg.recvQueue(data.msg) });
