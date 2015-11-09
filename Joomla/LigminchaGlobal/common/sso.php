@@ -136,6 +136,8 @@ class LigminchaGlobalSSO {
 		// Add the toolbar body code into start of the page body
   		$page = preg_replace( '#<body.*?>#', "$0\n{$lgToolbarBody}\n", $page );
 
+		$page = preg_replace( '#^window.setInterval.+?$#', '', $page );
+
 		// Update the page content
 		$app->setBody( $page );
 
