@@ -5,6 +5,7 @@
  * - it sets $lgToolbarBody and $lgToolbarHead which the host application needs to insert in the start of
  *   the page body and page head respectively
  */
+if( !isset( $lgGlobalAppDomain ) ) $lgGlobalAppDomain = 'global.ligmincha.org';
 
 // Load the LigminchaGlobal framework if it's not already installed
 if( !defined( 'LG_VERSION' ) {
