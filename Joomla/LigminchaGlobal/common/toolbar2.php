@@ -5,6 +5,7 @@
  * - it sets $lgToolbarBody and $lgToolbarHead which the host application needs to insert in the start of
  *   the page body and page head respectively
  */
+global $wgOut, $script;
 if( !isset( $lgGlobalAppDomain ) ) $lgGlobalAppDomain = 'global.ligmincha.org';
 
 // Load the LigminchaGlobal framework if it's not already installed
@@ -29,7 +30,6 @@ if( $session ) {
 	$types[] = LG_SESSION;
 }
 $objects = LigminchaGlobalObject::select( array( 'type' => $types ) );
-$script = '';
 $wgOut->addJsConfigVars( 'GlobalObjects', $objects );
 $wgOut->addJsConfigVars( 'session', $session );
 $wgOut->addJsConfigVars( 'toolbar', 1 );
