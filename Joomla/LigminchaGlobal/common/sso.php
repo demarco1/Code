@@ -123,14 +123,10 @@ class LigminchaGlobalSSO {
 		$config = JFactory::getConfig();
 		$global = $config->get( 'lgGlobalApp', 'global.ligmincha.org' );
 
-		// Add the iframe requesting the toolbar with some spacing above
-		$toolbar = "<iframe allowTransparency=\"true\" src=\"http://{$global}/toolbar.php\" frameborder=\"0\" width=\"100%\" height=\"100\"></iframe>";
-		$toolbar = "<div style=\"position: absolute;z-index: 1000;top: 0px;left: 0px;width: 100%;height: 100px;\">$toolbar</div>";
-		$toolbar .= "<div style=\"padding:0;margin:0;height:28px;\"></div>";
 
 		// Add the toolbar to the body if we have a user
 		$app = JFactory::getApplication( 'site' );
-		$app->setBody( preg_replace( '#<body.*?>#', "$0\n$toolbar\n", $app->getBody() ) );
+		//$app->setBody( preg_replace( '#<body.*?>#', "$0\n$toolbar\n", $app->getBody() ) );
 		lgDebug( "Global toolbar iFrame added to page" );
 		print_r($app->getBody());
 	}
