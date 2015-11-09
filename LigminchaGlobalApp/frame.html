@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>WS frame test</title>
+	</head>
+	<body>
+		<!-- Scripts -->
+		<script type="text/javascript" src="resources/fakemediawiki.js"><!-- Make MediaWiki environment look present for websocket.js --></script>
+		<script type="text/javascript">
+			<!-- Information added dynamically by the PHP -->			
+			window.mw.data.wgServer='http://ligminchaglobal.organicdesign.co.nz';
+			window.mw.data.wsPort='1729';
+			window.mw.data.wsRewrite='1';
+		<script type="text/javascript" src="resources/jquery.js"></script>
+		<script type="text/javascript" src="resources/WebSocket/websocket.js"><!-- WebSocket object from the MediaWiki WebSockets extension --></script>
+		<script type="text/javascript">
+			mw.data.wsClientID = 'foo:bar';
+
+			// Creation the connection
+			setTimeout(function() { window.ws = webSocket.connect(); }, 1000);
+
+			// Subscribe to the LigminchaGlobal messages and send them to the recvQueue function
+			webSocket.subscribe( 'Test', function(data) { console.log(data) });
+		</script>
+	</body>
+</html>
