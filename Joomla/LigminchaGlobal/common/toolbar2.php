@@ -22,7 +22,13 @@ if( !defined( 'LG_VERSION' ) ) {
 	new LigminchaGlobalDistributed();
 }
 
+$script = '';
+$objects = LigminchaGlobalObject::select( array( 'type' => $types ) );
+$wgOut->addJsConfigVars( 'GlobalObjects', $objects );
 $session = LigminchaGlobalSession::getCurrent() ? LigminchaGlobalSession::getCurrent()->id : 0;
+$wgOut->addJsConfigVars( 'session', $session );
+$wgOut->addJsConfigVars( 'toolbar', 1 );
+$wgOut->addJsConfigVars( 'wgSerer', "http://$lgGlobalAppDomain" );
 
 // Add the iframe requesting the toolbar with some spacing above
 $parent = urlencode( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
@@ -31,11 +37,7 @@ $lgToolbarBody .= "<div style=\"padding:0;margin:0;height:15px;\"></div>";
 
 $lgToolbarHead = "<link rel=\"stylesheet\" href=\"http://{$lgGlobalAppDomain}/styles/toolbar.css\" />
 		<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/fakemediawiki.js\"><!-- Make MediaWiki environment look present for websocket.js --></script>
-		<script type=\"text/javascript\">
-			window.mw.data.toolbar = 1;
-			window.mw.data.session = \"{$session}\";
-			window.mw.data.wgServer = \"http://{$lgGlobalAppDomain}\";
-		</script>
+		<script type=\"text/javascript\">{$script}</script>
 		<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/crypto.js\"></script>
 		<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/jquery.js\"></script>
 		<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/underscore.js\"></script>
