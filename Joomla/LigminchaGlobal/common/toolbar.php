@@ -36,8 +36,8 @@ $lgToolbarBody .= "<script type=\"text/javascript\">
 		if(e.origin === 'http://{$lgGlobalAppDomain}') {
 			var data = JSON.parse(e.data);
 			console.log('Message received from toolbar to update ' + data.selector);
-			$(data.selector).replaceWith(data.html);
-			if(++window.g_tb_first==1) $('#g_tb').animate({top: 0}, 500);
+			jQuery(data.selector).replaceWith(data.html);
+			if(++window.g_tb_first==1) jQuery('#g_tb').animate({top: 0}, 500);
 		}
 	}
 </script>";
