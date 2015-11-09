@@ -46,7 +46,7 @@ $lgToolbarHead = "<link rel=\"stylesheet\" href=\"http://{$lgGlobalAppDomain}/st
 		<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/fakemediawiki.js\"><!-- Make MediaWiki environment look present for websocket.js --></script>
 		<script type=\"text/javascript\">
 		{$script}
-		var $ = jQuery;
+		window.$ = jQuery;
 		</script>
 		<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/crypto.js\"></script>
 		<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/underscore.js\"></script>
