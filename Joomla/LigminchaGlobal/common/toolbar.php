@@ -25,12 +25,12 @@ if( !defined( 'LG_VERSION' ) ) {
 // Add the iframe requesting the toolbar with some spacing above
 $parent = urlencode( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
 $lgToolbarBody = "<iframe id=\"g_tb_if\" name=\"g_tb_if\" src=\"http://{$lgGlobalAppDomain}/toolbar.php?parent={$parent}\" frameborder=\"0\" width=\"1\" height=\"1\"></iframe>";
-$lgToolbarBody .= "<div id=\"g_tb\" style=\"position:absolute;z-index:1000;top:0;left:0;width:100%;height:28px;\"><div id=\"lg-toolbar\"></div></div>";
+$lgToolbarBody .= "<div id=\"g_tb\" style=\"position:absolute;z-index:1000;top:-28px;left:0;width:100%;height:28px;\"><div id=\"lg-toolbar\"></div></div>";
 $lgToolbarBody .= "<div style=\"padding:0;margin:0;height:15px;\"></div>";
 
 // Add porthole script to allow the toolbar remote script to modify our local toolbar's content
 $lgToolbarBody .= "<script type=\"text/javascript\">
-	//window.addEventListener('message', receiveMessage, false);
+	window.addEventListener('message', receiveMessage, false);
 	window.g_tb_first = 0;
 	function receiveMessage(e) {
 		if(e.origin === 'http://{$lgGlobalAppDomain}') {

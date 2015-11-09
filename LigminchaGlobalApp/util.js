@@ -117,9 +117,9 @@ lg.toolbar = lg.getConfig('toolbar', false);
 if(lg.toolbar) {
 	console.log('Running in toolbar-only mode within ' + lg.toolbar);
 	lg.updateParent = function(selector, html) {
-		//console.log('Posting toolbar data to parent frame to update ' + selector);
-		//var data = JSON.stringify({selector: selector, html: html});
-		//window.parent.postMessage(data, lg.toolbar);
+		console.log('Posting toolbar data to parent frame to update ' + selector);
+		var data = JSON.stringify({selector: selector, html: html});
+		window.parent.postMessage(data, lg.toolbar);
 	};
 } else {
 	console.log('Running in full application mode');
