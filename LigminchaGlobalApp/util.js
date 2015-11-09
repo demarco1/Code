@@ -123,5 +123,4 @@ if(lg.toolbar) {
 	};
 } else {
 	console.log('Running in full application mode');
-	console.log(lg.getConfig('test'));
 }
