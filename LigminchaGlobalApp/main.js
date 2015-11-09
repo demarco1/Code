@@ -58,7 +58,9 @@ if(lg.toolbar && lg.toolbar != 1) {
 		});
 	};
 } else {
-	lg.template('global-toolbar', {}, '#lg-toolbar');
-	$('#g_tb').animate({top: 0}, 500);
+	lg.template('global-toolbar', {}, function(html) {
+		$('#lg-toolbar').html(html);
+		$('#g_tb').animate({top: 0}, 500);
+	});
 }
 
