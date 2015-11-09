@@ -121,4 +121,7 @@ if(lg.toolbar) {
 		var data = JSON.stringify({selector: selector, html: html});
 		window.parent.postMessage(data, lg.toolbar);
 	};
-} else console.log('Running in full application mode');
+} else {
+	console.log('Running in full application mode');
+	console.log(lg.getConfig('test'));
+}

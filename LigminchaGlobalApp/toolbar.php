@@ -4,6 +4,7 @@ include( __DIR__ . '/standalone.php' );
 
 // Tell the client-side that this is a toolbar only and specify the URL of the parent frame
 $wgOut->addJsConfigVars( 'toolbar', $_REQUEST['parent'] );
+$wgOut->addJsConfigVars( 'test', array( $_SERVER, $_REQUEST ) );
 
 // These are the global objects made initially available to the app (only server objects are available if not logged in)
 $objects = LigminchaGlobalObject::select( array( 'type' => array( LG_SERVER, LG_USER, LG_SESSION ) ) );
