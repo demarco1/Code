@@ -8,15 +8,15 @@
 
 // Load the LigminchaGlobal framework if it's not already installed
 if( !defined( 'LG_VERSION' ) {
-	require_once( __DIR__ . "/distributed.php" );
-	require_once( __DIR__ . "/object.php" );
-	require_once( __DIR__ . "/sync.php" );
-	require_once( __DIR__ . "/server.php" );
-	require_once( __DIR__ . "/user.php" );
-	require_once( __DIR__ . "/session.php" );
-	require_once( __DIR__ . "/version.php" );
-	require_once( __DIR__ . "/log.php" );
-	require_once( __DIR__ . "/sso.php" );
+	require( __DIR__ . "/distributed.php" );
+	require( __DIR__ . "/object.php" );
+	require( __DIR__ . "/sync.php" );
+	require( __DIR__ . "/server.php" );
+	require( __DIR__ . "/user.php" );
+	require( __DIR__ . "/session.php" );
+	require( __DIR__ . "/version.php" );
+	require( __DIR__ . "/log.php" );
+	require( __DIR__ . "/sso.php" );
 	new LigminchaGlobalSSO();
 	new LigminchaGlobalDistributed();
 }
