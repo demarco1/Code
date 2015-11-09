@@ -23,6 +23,7 @@ class LigminchaGlobalMediaWiki {
 		global $wgLigminchaGlobalApp, $wgLigminchaGlobalCommonDir;
 
 		// Include the code to render the toolbar
+		$lgGlobalAppDomain = $wgLigminchaGlobalApp;
 		require( "$wgLigminchaGlobalCommonDir/toolbar.php" );
 
 		// Get the page output buffer
