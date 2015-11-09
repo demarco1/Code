@@ -63,6 +63,7 @@ class sm_correios extends shippingextRoot {
 	 * Return the cost for a given a weight and shipping type
 	 */
 	private function getFreightPrice( $weight, $type ) {
+		if( $weight == 0 ) return 0;
 		$client = JSFactory::getUser();
 		$cep2 = preg_replace( '|[^\d]|', '', $client->d_zip ? $client->d_zip : $client->zip );
 
