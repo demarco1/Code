@@ -37,7 +37,7 @@ $lgToolbarBody .= "<script type=\"text/javascript\">
 			var data = JSON.parse(e.data);
 			console.log('Message received from toolbar to update ' + data.selector);
 			jQuery(data.selector).replaceWith(data.html);
-			//if(++window.g_tb_first==1) jQuery('#g_tb').animate({top: 0}, 500);
+			if(++window.g_tb_first==1) jQuery('#g_tb').animate({top: 0}, 500);
 		}
 	}
 </script>";
