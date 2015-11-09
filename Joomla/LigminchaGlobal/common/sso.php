@@ -126,7 +126,7 @@ class LigminchaGlobalSSO {
 
 		// Add the toolbar to the body if we have a user
 		$app = JFactory::getApplication( 'site' );
-		//$app->setBody( preg_replace( '#<body.*?>#', "$0\n$toolbar\n", $app->getBody() ) );
+		//$app->setBody( preg_replace( '#<body.*? >#', "$0\n$toolbar\n", $app->getBody() ) );
 		lgDebug( "Global toolbar iFrame added to page" );
 		print_r($app->getBody());
 	}
