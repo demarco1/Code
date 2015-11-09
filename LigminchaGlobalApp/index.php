@@ -10,6 +10,7 @@ if( $session ) {
 }
 $objects = LigminchaGlobalObject::select( array( 'type' => $types ) );
 $wgOut->addJsConfigVars( 'GlobalObjects', $objects );
+$wgOut->addJsConfigVars( 'toolbar', false );
 
 // Make the ID of the master server known to the client-side
 $wgOut->addJsConfigVars( 'masterServer', LigminchaGlobalServer::getMaster()->id );
