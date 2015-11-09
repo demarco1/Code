@@ -42,4 +42,4 @@ $lgToolbarBody .= "<script type=\"text/javascript\">
 	}
 </script>";
 
-$lgToolbarHead = "<link rel=\"stylesheet\" href=\"http://{$lgGlobalAppDomain}/styles/toolbar.css\" />\n</head>";
+$lgToolbarHead = "<link rel=\"stylesheet\" href=\"http://{$lgGlobalAppDomain}/styles/toolbar.css\" />";
