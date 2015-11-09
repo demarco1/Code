@@ -117,6 +117,34 @@ class LigminchaGlobalSSO {
 	/**
 	 * Render an iFrame that requests the global toolbar
 	 */
+	public static function old_toolbar() {
+
+		// Get the url of the global app
+		$config = JFactory::getConfig();
+		$lgGlobalAppDomain = $config->get( 'lgGlobalApp', 'global.ligmincha.org' );
+
+		// Include the code to render the toolbar
+		require( __DIR__ . '/toolbar2.php' );
+
+		// Add the toolbar to the body if we have a user
+		$app = JFactory::getApplication( 'site' );
+		$page = $app->getBody();
+
+		// Add the toolbar head code into the page head area
+		$page = str_replace( '</head>', "{$lgToolbarHead}\n</head>", $page );
+
+		// Add the toolbar body code into start of the page body
+  		$page = preg_replace( '#<body.*?>#', "$0\n{$lgToolbarBody}\n", $page );
+
+		// Update the page content
+		$app->setBody( $page );
+
+		lgDebug( "Global toolbar iFrame added to Joomla page" );
+	}
+
+	/**
+	 * Render an iFrame that requests the global toolbar
+	 */
 	public static function toolbar() {
 
 		// Get the url of the global app
@@ -124,7 +152,7 @@ class LigminchaGlobalSSO {
 		$lgGlobalAppDomain = $config->get( 'lgGlobalApp', 'global.ligmincha.org' );
 
 		// Include the code to render the toolbar
-		require( __DIR__ . '/toolbar.php' );
+		require( __DIR__ . '/toolbar2.php' );
 
 		// Add the toolbar to the body if we have a user
 		$app = JFactory::getApplication( 'site' );
