@@ -5,9 +5,6 @@ ini_set( 'display_errors', true );
 // This tells the system that we're running the database without the Joomla framework present
 define( 'LG_STANDALONE', true );
 
-// Give components the chance to add script that runs before the dependencies are loaded
-$script = '';
-
 // Load the Fake Joomla environment and all the common classes from the Joomla extension
 // - changes coming in from the app are saved directly into the distributed db table
 // - changes destined to the app are sent from the Joomla via the WebSocket daemon not from here

@@ -22,10 +22,15 @@ if( !defined( 'LG_VERSION' ) ) {
 	new LigminchaGlobalDistributed();
 }
 
-$script = '';
-$objects = LigminchaGlobalObject::select( array( 'type' => $types ) );
-$wgOut->addJsConfigVars( 'GlobalObjects', $objects );
 $session = LigminchaGlobalSession::getCurrent() ? LigminchaGlobalSession::getCurrent()->id : 0;
+$types = array( LG_SERVER );
+if( $session ) {
+	$types[] = LG_USER;
+	$types[] = LG_SESSION;
+}
+$objects = LigminchaGlobalObject::select( array( 'type' => $types ) );
+$script = '';
+$wgOut->addJsConfigVars( 'GlobalObjects', $objects );
 $wgOut->addJsConfigVars( 'session', $session );
 $wgOut->addJsConfigVars( 'toolbar', 1 );
 $wgOut->addJsConfigVars( 'wgSerer', "http://$lgGlobalAppDomain" );

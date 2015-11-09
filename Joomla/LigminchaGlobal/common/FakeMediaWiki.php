@@ -30,7 +30,8 @@ class MediaWiki {
 function wfMessage( $msgkey ) {
 	return new MediaWiki( $msgKey );
 }
-global $wgExtensionCredits, $wgExtensionMessagesFiles, $wgOut, $wgResourceModules, $wgExtensionAssetsPath;
+global $wgExtensionCredits, $wgExtensionMessagesFiles, $wgOut, $wgResourceModules, $wgExtensionAssetsPath, $script;
+$script = '';
 $wgExtensionCredits = array( 'other' => array() );
 $wgExtensionMessagesFiles = array();
 $wgOut = new MediaWiki();
