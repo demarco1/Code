@@ -41,9 +41,7 @@ $wgOut->addJsConfigVars( 'wsRewrite', true );
 $lgToolbarHead = "<!-- LigminchaGlobal toolbar head start -->
 	<link rel=\"stylesheet\" href=\"http://{$lgGlobalAppDomain}/styles/toolbar.css\" />
 	<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/fakemediawiki.js\"></script>
-	<script type=\"text/javascript\">
-		{$lgScript}if($ === undefined) window.$ = jQuery;
-	</script>
+	<script type=\"text/javascript\">\r\t\t{$lgScript}\t</script>
 	<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/crypto.js\"></script>
 	<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/underscore.js\"></script>
 	<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/backbone.js\"></script>
