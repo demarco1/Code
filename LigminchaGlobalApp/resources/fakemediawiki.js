@@ -10,6 +10,9 @@ if(window.mw === undefined) {
 				var val = window.mw.data[k];
 				if( val.charAt(0) === '{' || val.charAt(0) === '[' ) val = JSON.parse( val );
 				return val;
+			},
+			set: function(k, v) {
+				window.mw.data = v;
 			}
 		}
 	};
