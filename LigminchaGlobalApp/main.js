@@ -33,7 +33,7 @@ if(lg.session && typeof webSocket === 'object') {
 
 	// The wsClientID is the SSO session id + a unique ID for this socket
 	// TODO: we won't need the second socket ID later because there will be only one socket per session
-	lg.setConfig('wsClientID', lg.session + ':' + lg.hash(lg.uuid()));
+	lg.setConfig('wsClientID', lg.session.id + ':' + lg.hash(lg.uuid()));
 
 	// Creation the connection
 	lg.ws = webSocket.connect();
