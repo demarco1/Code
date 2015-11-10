@@ -48,6 +48,7 @@ $lgToolbarHead = "<!-- LigminchaGlobal toolbar head start -->
 <script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/underscore.js\"></script>
 <script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/backbone.js\"></script>
 <script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/WebSocket/websocket.js\"></script>
+<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/distributed.js\"></script>
 <!-- LigminchaGlobal toolbar head end -->";
 
 // Generate the toolbar body content
