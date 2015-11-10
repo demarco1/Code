@@ -117,7 +117,7 @@ lg.adminMenu = function() {
 $(document).ready(function() {
 	lg.toolbar = lg.getConfig('toolbar', false);
 	console.log(lg.toolbar);
-	console.log(lg.getConfig('wgServer'));
+	console.log(mw.config.get('wgServer'));
 	if(lg.toolbar) {
 		lg.host = lg.getConfig('wgServer');
 		console.log('Running in toolbar-only mode within ' + lg.host);
