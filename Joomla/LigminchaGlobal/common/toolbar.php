@@ -55,6 +55,7 @@ $lgToolbarHead = "<!-- LigminchaGlobal toolbar head start -->
 <script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/session.js\"></script>
 <script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/version.js\"></script>
 <script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/util.js\"></script>
+<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/main.js\"></script>
 <!-- LigminchaGlobal toolbar head end -->";
 
 // Generate the toolbar body content
