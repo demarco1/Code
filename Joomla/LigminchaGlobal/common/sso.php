@@ -44,7 +44,7 @@ class LigminchaGlobalSSO {
 		$domain = $config->get( 'lgCookieDomain', '' );
 		$d = ( $domain ? " ($domain)" : '' );
 		lgDebug( "SSO cookie set$d: " . substr( $sid, 0, 5 ) );
-		return setcookie( self::$cookie, $sid, time() + LG_SESSION_DURATION, '/', $domain );
+		setcookie( self::$cookie, $sid, time() + LG_SESSION_DURATION, '/', $domain );
 	}
 
 	/**
@@ -55,7 +55,8 @@ class LigminchaGlobalSSO {
 		$domain = $config->get( 'lgCookieDomain', '' );
 		$d = ( $domain ? " ($domain)" : '' );
 		lgDebug( "SSO cookie deleted$d: " . substr( $_COOKIE[self::$cookie], 0, 5 ) );
-		return setCookie( self::$cookie, '', time() - 86400, '', $domain );
+		unset( $_COOKIE[self::$cookie] );
+		setCookie( self::$cookie, '', time() - 3600, '/', $domain );
 	}
 
 	/**
