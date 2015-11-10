@@ -52,7 +52,7 @@ if(lg.session && typeof webSocket === 'object') {
 
 // Render the toolbar
 $(document).ready(function() {
-	var $ = jQuery;
+//	var $ = jQuery;
 	lg.template('global-toolbar', {}, function(html) {
 		$('#lg-toolbar').html(html);
 		$('#g_tb').animate({top: 0}, 500);
