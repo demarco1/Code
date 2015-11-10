@@ -112,16 +112,8 @@ lg.adminMenu = function() {
 	</li>' : '';
 };
 
-// Updates the content in the parent frame using porthole.js
+// Set up the host domain depending on whether we're running in toolbar or full app mode
 lg.toolbar = lg.getConfig('toolbar', false);
-lg.host = lg.toolbar == 1 ? lg.getConfig('wgServer') : '';
-if(lg.toolbar && lg.toolbar != 1) {
-	console.log('Running in toolbar-only mode within ' + lg.toolbar);
-	lg.updateParent = function(selector, html) {
-		console.log('Posting toolbar data to parent frame to update ' + selector);
-		var data = JSON.stringify({selector: selector, html: html});
-		window.parent.postMessage(data, lg.toolbar);
-	};
-} else {
-	console.log('Running in full application mode');
-}
+if(lg.toolbar) lg.host = lg.getConfig('wgServer');
+if(lg.toolbar) console.log('Running in toolbar-only mode within ' + lg.host);
+else console.log('Running in full application mode');
