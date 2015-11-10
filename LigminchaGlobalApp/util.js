@@ -114,8 +114,10 @@ lg.adminMenu = function() {
 };
 
 // Set up the host domain depending on whether we're running in toolbar or full app mode
-lg.toolbar = lg.getConfig('toolbar', false);
-if(lg.toolbar) {
+if(lg.toolbar = lg.getConfig('toolbar', false)) {
 	lg.host = lg.getConfig('wgServer');
 	console.log('Running in toolbar-only mode within ' + lg.host);
-} else console.log('Running in full application mode');
+} else {
+	lg.host = '';
+	console.log('Running in full application mode');
+}
