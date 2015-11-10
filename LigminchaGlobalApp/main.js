@@ -56,5 +56,5 @@ $(document).ready(function($, mw, lg, undefined) {
 		$('#lg-toolbar').html(html);
 		$('#g_tb').animate({top: 0}, 500);
 	});
-})(jQuery, window.mw, lg);
+}(jQuery, window.mw, lg));
 
