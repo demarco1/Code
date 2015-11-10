@@ -51,8 +51,10 @@ if(lg.session && typeof webSocket === 'object') {
 }
 
 // Render the toolbar
-lg.template('global-toolbar', {}, function(html) {
-	$('#lg-toolbar').html(html);
-	$('#g_tb').animate({top: 0}, 500);
+$(document).ready(function() {
+	lg.template('global-toolbar', {}, function(html) {
+		$('#lg-toolbar').html(html);
+		$('#g_tb').animate({top: 0}, 500);
+	});
 });
 
