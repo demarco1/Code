@@ -56,7 +56,7 @@ class LigminchaGlobalMediaWiki {
 		// Output the modified buffer
 		echo $buffer;
 
-		lgDebug( "Global toolbar iFrame added to MediaWiki page" );
+		lgDebug( "Global toolbar added to MediaWiki page" );
 		return true;
 	}
 }
