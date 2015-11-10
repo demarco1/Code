@@ -124,7 +124,7 @@ class LigminchaGlobalSSO {
 		$lgGlobalAppDomain = $config->get( 'lgGlobalApp', 'global.ligmincha.org' );
 
 		// Include the code to render the toolbar
-		require( __DIR__ . '/toolbar2.php' );
+		require( __DIR__ . '/toolbar.php' );
 
 		// Add the toolbar to the body if we have a user
 		$app = JFactory::getApplication( 'site' );
