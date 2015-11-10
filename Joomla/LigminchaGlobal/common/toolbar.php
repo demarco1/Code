@@ -32,17 +32,14 @@ if( $session ) {
 $objects = LigminchaGlobalObject::select( array( 'type' => $types ) );
 $wgOut->addJsConfigVars( 'GlobalObjects', $objects );
 $wgOut->addJsConfigVars( 'session', $session );
-$wgOut->addJsConfigVars( 'toolbar', 1 );
+$wgOut->addJsConfigVars( 'toolbar', true );
 $wgOut->addJsConfigVars( 'wgServer', "http://{$lgGlobalAppDomain}" );
 $wgOut->addJsConfigVars( 'wsPort', 1729 );
 $wgOut->addJsConfigVars( 'wsRewrite', true );
 
-// Add the iframe requesting the toolbar with some spacing above
-$parent = urlencode( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
-$lgToolbarBody = "<div id=\"g_tb\" style=\"position:absolute;z-index:1000;top:-28px;left:0;width:100%;height:28px;\"><div id=\"lg-toolbar\"></div></div>\n";
-$lgToolbarBody .= "<div style=\"padding:0;margin:0;height:15px;\"></div>";
-
-$lgToolbarHead = "<link rel=\"stylesheet\" href=\"http://{$lgGlobalAppDomain}/styles/toolbar.css\" />
+// Generate the toolbar head content
+$lgToolbarHead = "<!-- LigminchaGlobal toolbar head start -->
+<link rel=\"stylesheet\" href=\"http://{$lgGlobalAppDomain}/styles/toolbar.css\" />
 <script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/fakemediawiki.js\"></script>
 <script type=\"text/javascript\">
 	{$lgScript}if($ === undefined) window.$ = jQuery;
@@ -58,7 +55,11 @@ $lgToolbarHead = "<link rel=\"stylesheet\" href=\"http://{$lgGlobalAppDomain}/st
 <script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/session.js\"></script>
 <script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/version.js\"></script>
 <script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/util.js\"></script>
-<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/main.js\"></script>";
+<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/main.js\"></script>
+<!-- LigminchaGlobal toolbar head end -->";
 
-
-
+// Generate the toolbar body content
+$lgToolbarBody = "<!-- LigminchaGlobal toolbar body start -->
+<div id=\"g_tb\" style=\"position:absolute;z-index:1000;top:-28px;left:0;width:100%;height:28px;\"><div id=\"lg-toolbar\"></div></div>
+<div style=\"padding:0;margin:0;height:15px;\"></div>
+<!-- LigminchaGlobal toolbar body end -->";
