@@ -42,7 +42,7 @@ $lgToolbarHead = "<!-- LigminchaGlobal toolbar head start -->
 	<link rel=\"stylesheet\" href=\"http://{$lgGlobalAppDomain}/styles/toolbar.css\" />
 	<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/fakemediawiki.js\"></script>
 	<script type=\"text/javascript\">
-		{$lgScript}if($ === undefined) window.$ = jQuery;
+		{$lgScript}console.log($);if($ === undefined) window.$ = jQuery;console.log($);
 	</script>
 	<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/crypto.js\"></script>
 	<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/underscore.js\"></script>
