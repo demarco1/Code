@@ -1,6 +1,6 @@
 // Our config is using the fake MediaWiki layer
-lg.getConfig = mw.config.get;
-lg.setConfig = mw.config.set;
+//lg.getConfig = mw.config.get;
+//lg.setConfig = mw.config.set;
 
 // Some useful string functions
 String.prototype.ucfirst = function() {
