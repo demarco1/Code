@@ -9,6 +9,8 @@ String.prototype.short = function() {
 	return this.substr(0,5);
 };
 
+lg.$ = $ = jQuery;
+
 // Our config is using the fake MediaWiki layer
 lg.getConfig = function(k, d) { return mw.config.get(k, d); };
 lg.setConfig = function(k, v) { return mw.config.set(k, v); };
