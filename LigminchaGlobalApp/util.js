@@ -1,7 +1,3 @@
-// Our config is using the fake MediaWiki layer
-lg.getConfig = window.mw.config.get;
-lg.setConfig = window.mw.config.set;
-
 // Some useful string functions
 String.prototype.ucfirst = function() {
 	return this.charAt(0).toUpperCase() + this.slice(1);
@@ -12,6 +8,10 @@ String.prototype.ucwords = function() {
 String.prototype.short = function() {
 	return this.substr(0,5);
 };
+
+// Our config is using the fake MediaWiki layer
+lg.getConfig = function(k, d) { mw.config.get(k, d) };
+lg.setConfig = function(k, v) { mw.config.set(k, v) };
 
 // Notification popups
 lg.message = function(msg, delay, type) {
@@ -115,9 +115,9 @@ lg.adminMenu = function() {
 
 // Set up the host domain depending on whether we're running in toolbar or full app mode
 $(document).ready(function() {
-	lg.toolbar = mw.config.get('toolbar', false);
+	lg.toolbar = lg.getConfig('toolbar', false);
 	if(lg.toolbar) {
-		lg.host = mw.config.get('wgServer');
+		lg.host = lg.getConfig('wgServer');
 		console.log('Running in toolbar-only mode within ' + lg.host);
 	} else console.log('Running in full application mode');
 });
