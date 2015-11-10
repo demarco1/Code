@@ -44,7 +44,7 @@ $wgOut->addJsConfigVars( 'tags', $tags );
 		<script type="text/javascript" src="resources/fakemediawiki.js"><!-- Make MediaWiki environment look present for websocket.js --></script>
 		<script type="text/javascript">
 			<!-- Information added dynamically by the PHP -->
-			<?php echo $script;?>
+			<?php echo $lgScript;?>
 		</script>
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
 		<script type="text/javascript" src="resources/crypto.js"></script>

@@ -14,27 +14,41 @@ $wgExtensionCredits['other'][] = array(
 
 
 class LigminchaGlobalMediaWiki {
+
+	private $head;
+	private $body;
 	
 	function __construct() {
+		global $wgExtensionFunctions;
+		$wgExtensionFunctions[] = array( $this, 'setup' );
 		Hooks::register( 'AfterFinalPageOutput', $this );
 	}
 
-	public function onAfterFinalPageOutput( $output ) {
+	/**
+	 * Initialise the LigminchaGlobal classes and generate the toolbar content
+	 */
+	public function setup() {
 		global $wgLigminchaGlobalApp, $wgLigminchaGlobalCommonDir;
-
-		// Include the code to render the toolbar
 		$lgGlobalAppDomain = $wgLigminchaGlobalApp;
 		require( "$wgLigminchaGlobalCommonDir/toolbar.php" );
+		$this->head = $lgToolbarHead;
+		$this->body = $lgToolbarBody;
+	}
+
+	/**
+	 * Add the toolbar body content to the final page
+	 */
+	public function onAfterFinalPageOutput( $output ) {
 
 		// Get the page output buffer
 		$buffer = ob_get_clean();
 		ob_start();
 
 		// Add the toolbar head code into the page head area
-		$buffer = str_replace( '</head>', "{$lgToolbarHead}\n</head>", $buffer );
+		$buffer = str_replace( '</head>', "{$this->head}\n</head>", $buffer );
 
 		// Add the toolbar body code into start of the page body
-  		$buffer = preg_replace( '#<body.*?>#', "$0\n{$lgToolbarBody}\n", $buffer );
+  		$buffer = preg_replace( '#<body.*?>#', "$0\n{$this->body}", $buffer );
 
 		// Remove the wiki login link
 		$buffer = str_replace( 'id="p-personal"', 'style="display:none"', $buffer );
