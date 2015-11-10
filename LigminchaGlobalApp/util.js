@@ -9,10 +9,6 @@ String.prototype.short = function() {
 	return this.substr(0,5);
 };
 
-// Our config is using the fake MediaWiki layer
-lg.getConfig = function(k, d) { return mw.config.get(k, d); };
-lg.setConfig = function(k, v) { return mw.config.set(k, v); };
-
 // Notification popups
 lg.message = function(msg, delay, type) {
 	if(typeof delay !== 'number') delay = 0;
@@ -112,12 +108,3 @@ lg.adminMenu = function() {
 		</ul>\
 	</li>' : '';
 };
-
-// Set up the host domain depending on whether we're running in toolbar or full app mode
-if(lg.toolbar = lg.getConfig('toolbar', false)) {
-	lg.host = lg.getConfig('wgServer');
-	console.log('Running in toolbar-only mode within ' + lg.host);
-} else {
-	lg.host = '';
-	console.log('Running in full application mode');
-}

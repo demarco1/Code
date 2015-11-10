@@ -1,14 +1,22 @@
 'use strict';
 
 /**
- * Preload images
- */
-(new Image()).src = '/images/loader.gif';
-
-/**
  * App initialisation
  */
 $(document).ready(function($, mw, lg, undefined) {
+
+	// Our config is using the fake MediaWiki layer
+	lg.getConfig = function(k, d) { return mw.config.get(k, d); };
+	lg.setConfig = function(k, v) { return mw.config.set(k, v); };
+
+	// Set up the host domain depending on whether we're running in toolbar or full app mode
+	if(lg.toolbar = lg.getConfig('toolbar', false)) {
+		lg.host = lg.getConfig('wgServer');
+		console.log('Running in toolbar-only mode within ' + lg.host);
+	} else {
+		lg.host = '';
+		console.log('Running in full application mode');
+	}
 
 	// Remove automatic data synchronisation with the back-end
 	Backbone.sync = function(method, model, options) { };
@@ -59,3 +67,7 @@ $(document).ready(function($, mw, lg, undefined) {
 
 }(jQuery, window.mw, lg));
 
+/**
+ * Preload images
+ */
+(new Image()).src = 'http://ligminchaglobal.organicdesign.co.nz/images/loader.gif';
