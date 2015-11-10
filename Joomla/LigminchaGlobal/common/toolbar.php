@@ -44,6 +44,10 @@ $lgToolbarHead = "<!-- LigminchaGlobal toolbar head start -->
 <script type=\"text/javascript\">
 	{$lgScript}//if($ === undefined) window.$ = jQuery;
 </script>
+<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/crypto.js\"></script>
+<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/underscore.js\"></script>
+<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/backbone.js\"></script>
+<script type=\"text/javascript\" src=\"http://{$lgGlobalAppDomain}/resources/WebSocket/websocket.js\"></script>
 <!-- LigminchaGlobal toolbar head end -->";
 
 // Generate the toolbar body content
