@@ -4,7 +4,7 @@
  * App initialisation
  */
 window.$ = jQuery;
-jQuery(function() {
+jQuery(function($) {
 
 	// Our config is using the fake MediaWiki layer
 	lg.getConfig = function(k, d) { return mw.config.get(k, d); };
