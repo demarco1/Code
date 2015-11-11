@@ -65,6 +65,8 @@ jQuery(function() {
 		jQuery('#g_tb').animate({top: 0}, 500);
 	});
 
+	// Initialise the map
+	lg.initMap();
 });
 
 /**

@@ -1,4 +1,4 @@
-$(document).ready( function() {
+lg.initMap = function() {
 	jQuery('div.map').each(function() {
 		var map, opt, info, markers, canvas = jQuery(this);
 
@@ -87,5 +87,5 @@ $(document).ready( function() {
 			else return new google.maps.LatLng(opt.lat, opt.lon);
 		}
 	});
-});
+};
 
