@@ -38,10 +38,11 @@ lg.ligminchaGlobal = new lg.LigminchaGlobal();
 lg.ObjectView = Backbone.View.extend({
 	tagName: 'div',
 	render: function() {
-		var obj = this.model.attributes;
+		var obj = this.model;
+		var atts = obj.attributes;
 		var html = '';
-		var cls = lg.typeToClass(obj.type);
-		if('properties' in this.model) this.model.properties(this.$el);
+		var cls = lg.typeToClass(atts.type);
+		if('properties' in obj) obj.properties(this.$el);
 		else {
 			// generic object
 			this.$el.html('Generic object');
@@ -54,10 +55,10 @@ lg.ObjectView = Backbone.View.extend({
 			buttons: {
 				'save': function() {
 					var template = jQuery('select.template', this).val();
-					var cur = ('template' in obj.data) ? obj.data.template : 'maple';
-					if(template !== obj.data.template) {
+					var cur = ('template' in atts.data) ? atts.data.template : 'maple';
+					if(template !== atts.data.template) {
 						console.log('Template changed from "' + cur + '" to "' + template + '"');
-						obj.data.template = template;
+						atts.data.template = template;
 						obj.update();
 					}
 					jQuery(this).dialog('close');
