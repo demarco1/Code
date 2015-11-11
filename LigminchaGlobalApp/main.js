@@ -58,14 +58,14 @@ jQuery(function($, _, mw, lg, undefined) {
 		// Initialise the per-second ticker
 		lg.ticker();
 	}
-console.log($);
+
 	// Render the toolbar
 	lg.template('global-toolbar', {}, function(html) {
 		$('#lg-toolbar').html(html);
 		$('#g_tb').animate({top: 0}, 500);
 	});
 
-}(jQuery, _, window.mw, lg));
+}(jQuery, _, window.mw, window.lg));
 
 /**
  * Preload images
