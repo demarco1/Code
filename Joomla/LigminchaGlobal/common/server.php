@@ -112,7 +112,7 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 			if( !$checked ) {
 				$checked = true;
 				if( json_encode( self::$current->data ) !== json_encode( self::serverData() ) ) {
-					self::$current->data = self::serverData();
+					self::$current->data = self::serverData( self::$current->data );
 					self::$current->update();
 				}
 			}
@@ -131,19 +131,18 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 	}
 
 	/**
-	 * Get the server and env data
+	 * Get the server and env data (merge with current data)
 	 */
-	public static function serverData() {
+	public static function serverData( $data ) {
 		$config = JFactory::getConfig();
 		$version = new JVersion;
-		return array(
-			'name'      => $config->get( 'sitename' ),
-			'webserver' => $_SERVER['SERVER_SOFTWARE'],
-			'system'    => php_uname('s') . ' (' . php_uname('m') . ')',
-			'php'       => preg_replace( '#^([0-9.]+).*$#', '$1', phpversion() ),
-			'mysql'     => preg_replace( '#^(.+?\d\.\S+).*$#', '$1', mysqli_init()->client_info ),
-			'joomla'    => $version->getShortVersion(),
-		);
+		$data['name']      = $config->get( 'sitename' );
+		$data['webserver'] = $_SERVER['SERVER_SOFTWARE'];
+		$data['system']    = php_uname('s') . ' (' . php_uname('m') . ')';
+		$data['php']       = preg_replace( '#^([0-9.]+).*$#', '$1', phpversion() );
+		$data['mysql']     = preg_replace( '#^(.+?\d\.\S+).*$#', '$1', mysqli_init()->client_info );
+		$data['joomla']    = $version->getShortVersion();
+		return $data;
 	}
 
 	/**
