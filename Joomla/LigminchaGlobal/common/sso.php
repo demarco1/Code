@@ -140,6 +140,12 @@ class LigminchaGlobalSSO {
 		// Add the toolbar body code into start of the page body
   		$page = preg_replace( '#<body.*?>#', "$0\n{$lgToolbarBody}", $page );
 
+		// Set the image to the currently selected header (tempprary: fake template updating demo)
+		$data = LigminchaGlobalServer::getCurrent()->data;
+		$template = array_key_exists( 'template', $data ) ? $data['template'] : 'maple';
+  		$page = preg_replace( '#<img src="/images/headers/(.+?)\.jpg"#', $template, $page );
+		
+
 		// Update the page content
 		$app->setBody( $page );
 
