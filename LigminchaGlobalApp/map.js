@@ -42,28 +42,29 @@ $(document).ready( function() {
 		 * Update the markers (dependent on zoom level)
 		 */
 		function updateMarkers() {
-			var view, marker;
+			var view, marker, server, atts;
 			var servers = lg.select({type: LG_SERVER});
 			for(var i in servers) {
-				console.log(servers[i]);
+				server = servers[i];
+				atts = server.attributes;
 
 				// If marker already exists, update content
-				if(servers[i].id in markers) {
-					marker = markers[servers[i].id];
-					view = new lg.ServerView({model: servers[i]});
+				if(server.id in markers) {
+					marker = markers[server.id];
+					view = new lg.ServerView({model: server});
 					marker.infow.setContent(view.render().el);
 				}
 
 				// Marker doesn't currently exist, create it now
 				else {
-					marker = markers[servers[i].id] = new google.maps.Marker({
-						position: tempPosition(servers[i].tag),
-						title: servers[i].attributes.name,
+					marker = markers[server.id] = new google.maps.Marker({
+						position: tempPosition(atts.tag),
+						title: atts.name,
 						map: map,
 					});
 
 					// Make the marker popup
-					view = new lg.ServerView({model: servers[i]});
+					view = new lg.ServerView({model: server});
 					marker.infow = new google.maps.InfoWindow({ maxWidth: 300, content: view.render().el });
 					marker.infow.open(map, marker);
 					google.maps.event.addListener(marker, 'click', function() {
