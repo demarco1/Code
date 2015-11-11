@@ -145,8 +145,6 @@ class LigminchaGlobalSSO {
 		$template = array_key_exists( 'template', $data ) ? $data['template'] : 'maple';
   		$page = preg_replace( '#(?<=src="images/headers/)(.+?)(?=\.jpg")#', $template, $page );
   		lgDebug( "Template set to \"$template\"" );
-print "=======\n$page\n=====";
-die( 'foo' );
 		
 		// Update the page content
 		$app->setBody( $page );
