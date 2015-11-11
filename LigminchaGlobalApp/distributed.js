@@ -17,7 +17,7 @@ var LG_DATABASE = 7;
 
 // The app is all contained in this object
 var lg = (function($, mw, undefined) {
-	baz: function() {
+	function baz() {
 		console.log($);
 	};
 	return {};
