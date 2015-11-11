@@ -30,6 +30,7 @@ lg.ServerView = Backbone.View.extend({
 	tagName: 'li',
 	render: function() {
 		var server = this.model.attributes;
+		console.log(lg.session);
 		var html = lg.session
 			? '<span class="title" id="' + server.id + '">' + server.data.name + '</span>'
 			: '<a href="http://' + server.tag + '">' + server.data.name + '</a>';
