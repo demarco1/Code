@@ -428,6 +428,7 @@ class LigminchaGlobalDistributed {
 	 * Ensure that numeric fields are not strings (happens when they're received from some remote sources)
 	 */
 	public static function objField( $field, $val ) {
+		if( !array_key_exists( $field, self::$tableStruct ) ) return $val;
 		$type = self::$tableStruct[$field];
 		switch( substr( $type, 0, 1 ) ) {
 			case 'I': $val = intval( $val );
