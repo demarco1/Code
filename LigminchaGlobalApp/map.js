@@ -42,9 +42,10 @@ $(document).ready( function() {
 		 * Update the markers (dependent on zoom level)
 		 */
 		function updateMarkers() {
-			var i, view, marker, n = 0;
+			var view, marker;
 			var servers = lg.select({type: LG_SERVER});
-			for(i in servers) {
+			for(var i in servers) {
+				console.log(servers[i]);
 
 				// If marker already exists, update content
 				if(servers[i].id in markers) {
