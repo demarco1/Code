@@ -66,7 +66,7 @@ jQuery(function() {
 	});
 
 	// Initialise the map
-	lg.initMap();
+	window.onload = lg.initMap;
 
 	console.log('App initialised');
 });
