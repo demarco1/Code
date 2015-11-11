@@ -20,6 +20,7 @@ var lg = (function($, mw, undefined) {
 	return {};
 }(jQuery, window.mw));
 
+	console.log(jQuery);
 lg.foo = function() {
 	console.log($);
 };
