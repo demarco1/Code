@@ -261,6 +261,7 @@ class LigminchaGlobalDistributed {
 		}
 
 		// Let client know that we've processed their sync data
+		lgDebug( 'Sync data processed, returning "ok"' );
 		return 'ok';
 	}
 
