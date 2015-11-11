@@ -233,7 +233,9 @@ lgDebug(var_export($this->type, true));
 			if( class_exists( $c ) ) $class = $c;
 		}
 		$obj = new $class();
-		foreach( $fields as $field => $val ) $obj->$field = $val;
+		foreach( $fields as $field => $val ) {
+			$obj->$field = LigminchaGlobalDistributed::objField( $field, $val );
+		}
 		$obj->data = LigminchaGlobalDistributed::decodeDataField( $obj->data );
 		return $obj;
 	}

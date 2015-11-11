@@ -425,6 +425,20 @@ class LigminchaGlobalDistributed {
 	}
 
 	/**
+	 * Ensure that numeric fields are not strings (happens when they're received from some remote sources)
+	 */
+	public static function objField( $field, $val ) {
+		$type = self::$tableStruct[$field];
+		switch( substr( $type, 0, 1 ) ) {
+			case 'I': $val = intval( $val );
+					  break;
+			case 'D': $val = floatval( $val );
+					  break;
+		}
+		return $val;
+	}
+
+	/**
 	 * Format the returned SQL fields accounting for hex cols
 	 */
 	public static function sqlFields() {
