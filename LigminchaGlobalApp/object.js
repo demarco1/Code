@@ -18,11 +18,37 @@ lg.GlobalObject = Backbone.Model.extend({
 		else return (this.flags & flag) ? true : false;
 	},
 
-	// Either fields is supplied from changes coming in, or current state is queued for sending out
+	// Either fields is supplied from changes coming in, or current state is sent out
 	// TODO: needs origin, session added
 	update: function(fields) {
-		if(fields) this.attributes = fields;
-		else lg.sendQueue([0,0,fields]);
+		if(fields) {
+			this.attributes = fields;
+			return;
+		}
+
+		// Get the master server that we'll send the updated state of this object to
+		var master = lg.Server.getMaster();
+
+		// Create an LG_SYNC object for the object we want to send
+		var sync = {
+			type: LG_SYNC,
+			ref1: master.id,
+			ref2: this.id,
+			data: this.attributes,
+			tag: 'U',
+		};
+
+		// Send a recvQueue format array with the sync object in it
+		// - we use the WebSocket client ID as the session ID so the WebSocket daemon doesn't bounce the message back to us
+		jQuery.ajax({
+			type: 'POST',
+			url: lg.host + '/index.php',
+			data: {sync: [0, 0, mw.data.wsClientID, sync]},
+			dataType: 'text',
+			success: function(text) {
+				if(text != LG_SUCCESS) console.log('Sync post to master not ok: ' + text);
+			}
+		});
 	},
 });
 

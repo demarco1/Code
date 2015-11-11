@@ -95,32 +95,6 @@ lg.recvQueue = function(queue) {
 	}
 };
 
-// Send an object (the JS side doesn't do sendQueue since it's a real-time connection, but still needs to be compatible data)
-lg.sendObject = function(obj) {
-	var master = lg.Server.getMaster();
-
-	// Create an LG_SYNC object for the object we want to send
-	var sync = {
-		type: LG_SYNC,
-		ref1: master.id,
-		ref2: obj.id,
-		data: obj.attributes,
-		tag: 'U',
-	};
-
-	// Send a recvQueue format array with the sync object in it
-	// - we use the WebSocket client ID as the session ID so the WebSocket daemon doesn't bounce the message back to us
-	jQuery.ajax({
-		type: 'POST',
-		url: lg.host + '/index.php',
-		data: {sync: [0, 0, mw.data.wsClientID, sync]},
-		dataType: 'text',
-		success: function(text) {
-			if(text != LG_SUCCESS) console.log('Sync post to master not ok: ' + text);
-		}
-	});
-};
-
 // Encodes data into JSON format if it's an object
 lg.encodeData = function(json) {
 	return this.isObject(json) ? JSON.stringify(json) : json;
