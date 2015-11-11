@@ -18,12 +18,11 @@ lg.GlobalObject = Backbone.Model.extend({
 		else return (this.flags & flag) ? true : false;
 	},
 
-	update: function(fields, local) {
-		this.attributes = fields;
-
-		// If this change originated locally, send notification to the master server
-		// TODO: needs testing and origin, session added
-		if(local) lg.sendQueue([0,0,fields]);
+	// Either fields is supplied from changes coming in, or current state is queued for sending out
+	// TODO: needs origin, session added
+	update: function(fields) {
+		if(fields) this.attributes = fields;
+		else lg.sendQueue([0,0,fields]);
 	},
 });
 
@@ -59,7 +58,10 @@ lg.ObjectView = Backbone.View.extend({
 					if(template !== obj.data.template) {
 						console.log('Template changed from "' + cur + '" to "' + template + '"');
 						obj.data.template = template;
+						obj.update();
 					}
+					jQuery(this).dialog('close');
+					this.remove();
 				},
 				'cancel': function() {
 					jQuery(this).dialog('close');
