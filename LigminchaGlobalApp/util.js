@@ -13,8 +13,8 @@ String.prototype.short = function() {
 lg.message = function(msg, delay, type) {
 	if(typeof delay !== 'number') delay = 0;
 	if(type === undefined) type = 'info';
-	msg = $('<div class="' + type + ' message">' + msg + '</div>');
-	$('#notify').hide().html(msg).fadeIn(300);
+	msg = jQuery('<div class="' + type + ' message">' + msg + '</div>');
+	jQuery('#notify').hide().html(msg).fadeIn(300);
 	if(delay) msg.delay(delay).fadeOut(300);
 };
 
@@ -23,7 +23,7 @@ lg.message = function(msg, delay, type) {
 // - args is the object containing the parameters to populate the template with
 // - target is either a function to pass the final result to, or a jQuery selector or element to set the html for
 lg.template = function(template, args, target) {
-	function render(html, target) { typeof target == 'function' ? target(html) : $(target).html(html); }
+	function render(html, target) { typeof target == 'function' ? target(html) : jQuery(target).html(html); }
 	if(!('templates' in this)) {
 		this.templates = {};
 		var t = lg.getConfig('templates');
@@ -32,7 +32,7 @@ lg.template = function(template, args, target) {
 	if(template in this.templates) render(this.templates[template](args), target);
 	else {
 		render('<div class="loading"></div>', target);
-		$.ajax({
+		jQuery.ajax({
 			type: 'GET',
 			url: lg.host + '/templates/' + template + '.html',
 			context: this,
@@ -78,7 +78,7 @@ lg.chatMenu = function() {
 
 // Re-render the chatmenu
 lg.updateChatMenu = function() {
-	$('#lg-toolbar #chat').replaceWith(this.chatMenu());
+	jQuery('#lg-toolbar #chat').replaceWith(this.chatMenu());
 	console.log('Sessions changed, updated chat menu');
 };
 
