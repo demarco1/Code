@@ -118,13 +118,13 @@ class LigminchaGlobalObject {
 			$this->modified = self::timestamp();
 
 			$sqlVals = $this->sqlValues( false );
-			lgDebug($sqlVals);
 			$db->setQuery( "UPDATE $table SET $sqlVals WHERE `id`=0x{$this->id}" );
 			$db->query();
 		}
 
 		// Create a new object in the database
 		else {
+			lgDebug('new obj');
 
 			// Only set the automatic properties for locally created non-existent objects
 			if( !$origin ) {
