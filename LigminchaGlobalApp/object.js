@@ -56,7 +56,7 @@ lg.ObjectView = Backbone.View.extend({
 				'save': function() {
 				},
 				'cancel': function() {
-					$(this).dialog('close');
+					jQuery(this).dialog('close');
 					this.remove();
 				},
 			}
