@@ -67,10 +67,10 @@ lg.initMap = function() {
 					view = new lg.ServerView({model: server});
 					marker.infow = new google.maps.InfoWindow({ maxWidth: 300, content: view.render().el });
 					marker.infow.open(map, marker);
-					console.log(marker);
 					google.maps.event.addListener(marker, 'click', function() {
 						//if(info) info.close(); // only allow one popup at a time
 						info = this.infow;
+						console.log(this.infow);
 						info.open(map, this);
 					});
 				}
