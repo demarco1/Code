@@ -54,6 +54,7 @@ lg.ObjectView = Backbone.View.extend({
 			title: cls + ' properties',
 			buttons: {
 				'save': function() {
+					console.log('saving:' + jQuery('select.template', this).val());
 				},
 				'cancel': function() {
 					jQuery(this).dialog('close');

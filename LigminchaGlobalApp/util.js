@@ -107,3 +107,44 @@ lg.adminMenu = function() {
 		</ul>\
 	</li>' : '';
 };
+
+// Render a select list of global objects from the passed query
+// - atts is the attributes to give the select element
+// - cur is the current value to be selected if any
+// - key is the attribute of the object to use as the displayed value (tag by default)
+lg.selectListObj = function(query, atts, cur, key) {
+	if(key === undefined) key = 'tag';
+	var html = '<select';
+	for(var i in atts) html += ' ' + i + '="' + atts[i] + '"';
+	html += '>'
+	var opts = this.select(query);
+	for(var i in opts) {
+		var optatts = opts[i].attributes;
+		var opt = (key in optatts) ? optatts[key] : optatts.data[key];
+		var s = opt == cur ? ' selected' : '';
+		html += '<option value="' + optatts.id + '"' + s + '>' + opt + '</option>';
+	}
+	html += '</select>';
+	return html;
+};
+
+// Render a select list of array items (opts)
+// - atts is the attributes to give the select element
+// - cur is the current value to be selected if any
+lg.selectList = function(opts, atts, cur) {
+	var html = '<select';
+	for(var i in atts) html += ' ' + i + '="' + atts[i] + '"';
+	html += '>'
+	for(var i in opts) {
+		var s = opts[i] == cur ? ' selected' : '';
+		html += '<option' + s + '>' + opts[i] + '</option>';
+	}
+	html += '</select>';
+	return html;
+};
+
+// Temp demo for changing template allows changing of the header image
+lg.templateList = function(template) {
+	if(template === undefined) template = 'maple';
+	return lg.selectList(['blue-flower','maple','raindrops','walden-pond','windows'], {class: 'template'}, template);
+};
