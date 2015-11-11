@@ -3,8 +3,7 @@
 /**
  * App initialisation
  */
-window.$ = jQuery;
-jQuery(function($) {
+jQuery(function() {
 
 	// Our config is using the fake MediaWiki layer
 	lg.getConfig = function(k, d) { return mw.config.get(k, d); };
@@ -62,8 +61,8 @@ jQuery(function($) {
 
 	// Render the toolbar
 	lg.template('global-toolbar', {}, function(html) {
-		$('#lg-toolbar').html(html);
-		$('#g_tb').animate({top: 0}, 500);
+		jQuery('#lg-toolbar').html(html);
+		jQuery('#g_tb').animate({top: 0}, 500);
 	});
 
 });

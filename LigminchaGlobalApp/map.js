@@ -1,6 +1,6 @@
 $(document).ready( function() {
-	$('div.map').each(function() {
-		var map, opt, info, markers, canvas = $(this);
+	jQuery('div.map').each(function() {
+		var map, opt, info, markers, canvas = jQuery(this);
 
 		opt = {
 			type: "HYBRID",

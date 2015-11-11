@@ -131,9 +131,6 @@ class LigminchaGlobalSSO {
 		$app = JFactory::getApplication( 'site' );
 		$page = $app->getBody();
 
-		// Remove the noconflict script so $ is available
-		$page = preg_replace( '#<script.+?jquery-noconflict.js.+?</script>#', '', $page );
-
 		// Add the toolbar head code into the page head area
 		$page = str_replace( '</head>', "{$lgToolbarHead}\n</head>", $page );
 
