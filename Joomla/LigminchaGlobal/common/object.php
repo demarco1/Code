@@ -118,6 +118,7 @@ class LigminchaGlobalObject {
 			$this->modified = self::timestamp();
 
 			$sqlVals = $this->sqlValues( false );
+			lgDebug($sqlVals);
 			$db->setQuery( "UPDATE $table SET $sqlVals WHERE `id`=0x{$this->id}" );
 			$db->query();
 		}
