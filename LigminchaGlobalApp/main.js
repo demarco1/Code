@@ -3,7 +3,7 @@
 /**
  * App initialisation
  */
-$(document).ready(function($, mw, lg, undefined) {
+jQuery(document).ready(function($, mw, lg, undefined) {
 
 	// Our config is using the fake MediaWiki layer
 	lg.getConfig = function(k, d) { return mw.config.get(k, d); };
