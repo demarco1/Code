@@ -462,6 +462,7 @@ class LigminchaGlobalDistributed {
 		if( !is_array( $fields ) ) die( 'Fields must be an array' );
 		$obj = LigminchaGlobalObject::newFromFields( $fields );
 		$obj->exists = (bool)self::getObject( $obj->id );
+		lgDebug( "New object created, calling update on it" );
 		$obj->update( $origin );
 	}
 
