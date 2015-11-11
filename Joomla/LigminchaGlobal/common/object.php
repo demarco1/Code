@@ -106,7 +106,7 @@ class LigminchaGlobalObject {
 		$table = LigminchaGlobalDistributed::sqlTable();
 
 		// Bail if no type
-lgDebug(var_export($this, true));
+lgDebug(var_export($this->type, true));
 		if( $this->type < 1 ) die( 'Typeless distributed objects not allowed!' );
 
 		// Update an existing object in the database
