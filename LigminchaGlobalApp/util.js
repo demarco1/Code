@@ -100,7 +100,7 @@ lg.sanghaLinks = function() {
 	for(var i in servers) {
 		var server = servers[i];
 		var hl = local === server ? 'class="hl" ' : '';
-		html += '<li><a ' + hl + 'href="http://' + server.attributes.tag + '" target="_parent">' + serer.attributes.data.name + '</a></li>';
+		html += '<li><a ' + hl + 'href="http://' + server.attributes.tag + '" target="_parent">' + server.attributes.data.name + '</a></li>';
 	}
 	return html;
 };
