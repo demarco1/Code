@@ -18,11 +18,15 @@ var LG_DATABASE = 7;
 // The app is all contained in this object
 var lg = (function($, mw, undefined) {
 	return {
-	baz: function() {
-		console.log($);
-	}
+		extend: function(x) {
+			for(var i in x) this[i] = x[i];
+		}
 		};
 }(jQuery, window.mw));
+
+lg.extend({baz: function() {
+	console.log($);
+});
 
 lg.baz();
 
