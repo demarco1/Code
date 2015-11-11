@@ -17,6 +17,7 @@ var LG_DATABASE = 7;
 
 // The app is all contained in this object
 var lg = (function($, mw, undefined) {
+	var $ = jQuery;
 	return {
 		extend: function(x) {
 			for(var i in x) this[i] = x[i];
