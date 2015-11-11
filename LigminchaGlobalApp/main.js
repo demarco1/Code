@@ -3,7 +3,7 @@
 /**
  * App initialisation
  */
-jQuery(function($) {
+jQuery(function($, _, mw, lg, undefined) {
 
 	// Our config is using the fake MediaWiki layer
 	lg.getConfig = function(k, d) { return mw.config.get(k, d); };
@@ -65,7 +65,7 @@ jQuery(function($) {
 		$('#g_tb').animate({top: 0}, 500);
 	});
 
-});
+}(jQuery, _, window.mw, lg));
 
 /**
  * Preload images
