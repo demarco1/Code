@@ -111,7 +111,7 @@ class LigminchaGlobalServer extends LigminchaGlobalObject {
 			static $checked = false;
 			if( !$checked ) {
 				$checked = true;
-				if( json_encode( self::$current->data ) !== json_encode( self::serverData() ) ) {
+				if( json_encode( self::$current->data ) !== json_encode( self::serverData( self::$current->data ) ) ) {
 					self::$current->data = self::serverData( self::$current->data );
 					self::$current->update();
 				}
