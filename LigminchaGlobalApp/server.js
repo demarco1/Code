@@ -14,7 +14,7 @@ lg.Server = lg.GlobalObject.extend({
 
 	// Activate the new-version button
 	activate: function(popup) {
-		jQuery('#server-popup button.new-version').click(function() { lg.Version.createNew(); });
+		jQuery('#server-popup button.version').click(function() { lg.Version.createNew(); });
 	},
 });
 
