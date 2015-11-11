@@ -68,7 +68,7 @@ lg.chatMenu = function() {
 	if(lg.user) {
 		var users = this.usersOnline(true);
 		if(users.length > 0) {
-			var html = '<li id="chat">Chat (' + users.length + ' user' + (users.length == 1 ? '' : 's') + ')&nbsp;&nbsp;▼<ul>';
+			var html = '<li id="chat">Chat (<span class="hl">' + users.length + ' user' + (users.length == 1 ? '' : 's') + '</span>)&nbsp;&nbsp;▼<ul>';
 			for(var i in users) html += '<li>' + users[i] + '</li>';
 			html += '</ul></li>';
 			return html;
