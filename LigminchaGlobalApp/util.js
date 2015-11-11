@@ -92,9 +92,17 @@ lg.personalMenu = function() {
 		: '<span class="w">You are not logged in</span>';
 };
 
-// Returns link to local sangha site if logged in
-lg.sanghaLink = function() {
-	return lg.user ? '<li><a href="http://' + lg.user.server().tag + '" target="_parent">' + lg.user.server().data.name + '</a></li>' : '';
+// Returns links to local sangha sites with one highlighted if logged in
+lg.sanghaLinks = function() {
+	var servers = lg.select({type: LG_SERVER});
+	var local = lg.user ? lg.user.server() : false;
+	var html = '';
+	for(var i in servers) {
+		var server = servers[i];
+		var hl = local === server ? 'class="hl" ' : '';
+		html += '<li><a ' + hl + 'href="http://' + server.attributes.tag + '" target="_parent">' + serer.attributes.data.name + '</a></li>';
+	}
+	return html;
 };
 
 // Returns the admin menu if logged in
