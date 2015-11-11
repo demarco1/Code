@@ -55,10 +55,10 @@ lg.ObjectView = Backbone.View.extend({
 			buttons: {
 				'save': function() {
 					var template = jQuery('select.template', this).val();
-					var cur = ('template' in this.model.data) ? this.model.data.template : 'maple';
-					if(template !== this.model.data.template) {
+					var cur = ('template' in obj.data) ? obj.data.template : 'maple';
+					if(template !== obj.data.template) {
 						console.log('Template changed from "' + cur + '" to "' + template + '"');
-						this.model.data.template = template;
+						obj.data.template = template;
 					}
 				},
 				'cancel': function() {
