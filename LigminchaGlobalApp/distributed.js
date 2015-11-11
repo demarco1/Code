@@ -17,14 +17,13 @@ var LG_DATABASE = 7;
 
 // The app is all contained in this object
 var lg = (function($, mw, undefined) {
+	baz: function() {
+		console.log($);
+	};
 	return {};
 }(jQuery, window.mw));
 
-	console.log(jQuery);
-lg.foo = function() {
-	console.log($);
-};
-lg.foo();
+lg.baz();
 
 lg.classes = [0, 'Log', 'Server', 'User', 'Session', 'Sync', 'Version', 'Database'];
 
