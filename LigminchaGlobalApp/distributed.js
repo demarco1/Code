@@ -17,8 +17,10 @@ var LG_DATABASE = 7;
 
 // The app is all contained in this object
 var lg = (function($, mw, undefined) {
-	classes: [0, 'Log', 'Server', 'User', 'Session', 'Sync', 'Version', 'Database'],
+	
 }(jQuery, window.mw));
+
+lg.classes = [0, 'Log', 'Server', 'User', 'Session', 'Sync', 'Version', 'Database'];
 
 // Return the reference to an objects model given its GUID
 // TODO: we should maintain indexes for the main parameters for this method and select/selectOne
