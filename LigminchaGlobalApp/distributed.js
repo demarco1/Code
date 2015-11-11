@@ -20,6 +20,11 @@ var lg = (function($, mw, undefined) {
 	return {};
 }(jQuery, window.mw));
 
+lg.foo = function() {
+	console.log($);
+};
+lg.foo();
+
 lg.classes = [0, 'Log', 'Server', 'User', 'Session', 'Sync', 'Version', 'Database'];
 
 // Return the reference to an objects model given its GUID
