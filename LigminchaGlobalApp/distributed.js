@@ -26,7 +26,7 @@ var lg = (function($, mw, undefined) {
 
 lg.extend({baz: function() {
 	console.log($);
-});
+}});
 
 lg.baz();
 
