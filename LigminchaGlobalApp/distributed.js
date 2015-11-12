@@ -79,7 +79,7 @@ window.lg = {
 		for(var i in objects) {
 			var obj = objects[i];
 			if(obj.attributes.expire > 0 && obj.attributes.expire < ts) {
-				console.log('Object ' + obj.attributes.id.short + ' expired');
+				console.log('Object ' + obj.attributes.id.short() + ' expired');
 				lg.ligminchaGlobal.remove(obj);
 			}
 		}
