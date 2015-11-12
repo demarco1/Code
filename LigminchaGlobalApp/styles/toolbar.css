@@ -42,8 +42,7 @@
 }
 #lg-toolbar .dd li {
 	padding: 0 20px;
-	background: #464646;
-	background-image: -moz-linear-gradient(center bottom , #373737, #464646 5px);
+	background: #464646 url(http://ligminchaglobal.organicdesign.co.nz/images/toolbar-bg.png) repeat-x center;
 	line-height: 28px;
 }
 #lg-toolbar .dd, #lg-toolbar .dd ul {
