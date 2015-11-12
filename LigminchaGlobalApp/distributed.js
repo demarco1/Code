@@ -20,7 +20,7 @@ window.lg = {
 	classes: [0, 'Log', 'Server', 'User', 'Session', 'Sync', 'Version', 'Database']
 };
 
-(function(jQuery, window.lg, window.mw) {
+(function($, lg, mw) {
 
 	// Return the reference to an objects model given its GUID
 	// TODO: we should maintain indexes for the main parameters for this method and select/selectOne

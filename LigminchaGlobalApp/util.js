@@ -1,4 +1,5 @@
-(function(jQuery, window.lg, window.mw) {
+'use strict';
+(function($, lg, mw) {
 
 	// Some useful string functions
 	String.prototype.ucfirst = function() {
