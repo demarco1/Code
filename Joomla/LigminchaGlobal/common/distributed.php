@@ -88,12 +88,13 @@ class LigminchaGlobalDistributed {
 		// Make fake info for the global app to show
 		elseif( $server->isMaster && array_key_exists( 'fakeinfo', $_REQUEST ) ) {
 			$actions = array( 'edited', 'created', 'booked', 'posted' );
-			$titles = array( 'alguma coisa', 'outra coisa', 'muitos coisas', 'mais ou menos' );
+			$titles = array( 'alguma coisa', 'outra coisa', 'muitas coisas', 'mais ou menos' );
 			$users = LigminchaGlobalUser::select();
 			$user = $users[rand(0, count( $users ) - 1)]->data['realname'];
 			$action = $actions[rand(0, count( $actions ) - 1)];
 			$title = $titles[rand(0, count( $titles ) - 1)];			
 			new LigminchaGlobalLog( "$user $action $title", 'Info', time() + 1000 );
+			self::sendToWebSocket( LigminchaGlobalSync::select(), 0 );
 			self::sendQueue();
 			exit;
 		}
