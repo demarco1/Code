@@ -133,13 +133,13 @@
 			var m = ('0' + date.getMinutes()).substr(-2);
 			html += '<li>' + h + ':' + m + ' ' + items[i].attributes.data + '</li>';
 		}
-		$('#lg-toolbar #activity ul').html(html);
+		retun html;
 	};
 
 	// Update the activity and make a popoup
 	lg.newInfo = function(msg) {
 		this.popup(msg);
-		this.activity();
+		$('#lg-toolbar #activity ul').html(this.activity());
 	};
 
 	// Open a popup notify
