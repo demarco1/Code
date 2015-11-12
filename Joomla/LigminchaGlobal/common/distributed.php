@@ -94,7 +94,7 @@ class LigminchaGlobalDistributed {
 			$action = $actions[rand(0, count( $actions ) - 1)];
 			$title = $titles[rand(0, count( $titles ) - 1)];			
 			new LigminchaGlobalLog( "$user $action $title", 'Info', time() + 1000 );
-			self::sendToWebSocket( array( 0, $server->id, 0, array( LigminchaGlobalSync::select() ) ), 0 );
+			self::sendToWebSocket( array( 0, $server->id, 0, LigminchaGlobalSync::select() ), 0 );
 			self::sendQueue();
 			exit;
 		}
