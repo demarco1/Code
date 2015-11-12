@@ -123,7 +123,7 @@
 	// Returns submenu items for latest activity items sorted by time, ten at most
 	lg.activity = function() {
 		var html = '';
-		var items = lg.select({type: LG_LOG, tag: 'FakeInfo'});
+		var items = lg.select({type: LG_LOG, tag: 'Info'});
 		items.sort(function(a, b) { return b.creation - a.creation; });
 		var l = items.length;
 		if(l > 10) l = 10;
