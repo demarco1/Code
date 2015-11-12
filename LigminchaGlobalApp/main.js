@@ -69,6 +69,7 @@ jQuery(function($, lg, mw) {
 	window.onload = lg.initMap;
 
 	console.log('App initialised');
+
 }(jQuery, window.lg, window.mw));
 
 /**

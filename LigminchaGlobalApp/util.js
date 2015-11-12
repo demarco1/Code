@@ -1,4 +1,5 @@
 'use strict';
+
 (function($, lg, mw) {
 
 	// Some useful string functions
