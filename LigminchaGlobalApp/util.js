@@ -120,6 +120,16 @@
 		</li>' : '';
 	};
 
+	lg.activity = function() {
+		var html = '';
+		var items = lg.select({type: LG_LOG, tag: 'FakeInfo'});
+		items.sort(function(a, b) { return b.creation - a.creation; });
+		var l = items.length;
+		if(l > 10) l = 10;
+		for(var i = 0; i < l; i++) html += '<li>' + items[i].attributes.data + '</li>';
+		return html;
+	};
+
 	// Render a select list of global objects from the passed query
 	// - atts is the attributes to give the select element
 	// - cur is the current value to be selected if any
