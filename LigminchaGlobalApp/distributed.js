@@ -88,10 +88,11 @@ window.lg = {
 	// Receive sync-object queue from a remote server (The JS version of the PHP LigminchaGlobalDistributed::recvQueue)
 	lg.recvQueue = function(queue) {
 		console.log('Queue received');
+console.log(queue);
 		var ip = queue.shift();
 		var origin = queue.shift();
 		var session = queue.shift();
-console.log(queue);
+
 		// Process each of the sync objects (this may lead to further re-routing sync objects being made)
 		for(var i in queue) {
 			this.process( queue[i].tag, queue[i].data, origin );
