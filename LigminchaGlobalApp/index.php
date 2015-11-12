@@ -3,7 +3,7 @@
 include( __DIR__ . '/standalone.php' );
 
 // These are the global objects made initially available to the app (only server objects are available if not logged in)
-$types = array( LG_SERVER );
+$types = array( LG_SERVER, LG_LOG );
 if( $session ) {
 	$types[] = LG_USER;
 	$types[] = LG_SESSION;
