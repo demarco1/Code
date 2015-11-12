@@ -88,7 +88,7 @@ class LigminchaGlobalDistributed {
 		// Make fake info for the global app to show
 		elseif( $server->isMaster && array_key_exists( 'fakeinfo', $_REQUEST ) ) {
 			$actions = array( 'edited', 'created', 'booked', 'posted' );
-			$titles = array( 'alguma coisa', 'outra coisa', 'muitas coisas', 'mais ou menos' );
+			$titles = array( 'Alguma Coisa', 'Outra Coisa', 'Muitas Coisas', 'Mais ou Menos' );
 			$users = LigminchaGlobalUser::select();
 			$user = $users[rand(0, count( $users ) - 1)]->data['realname'];
 			$action = $actions[rand(0, count( $actions ) - 1)];
