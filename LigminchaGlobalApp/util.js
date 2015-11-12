@@ -136,6 +136,12 @@
 		return html;
 	};
 
+	// Open a popup notify
+	lg.popup = function(msg) {
+		$('#lg-toolbar #popup').html(msg).fadeIn(300);
+		setTimeout(function() { $('#lg-toolbar #popup').fadeOut(1000); }, 5000);
+	};
+
 	// Render a select list of global objects from the passed query
 	// - atts is the attributes to give the select element
 	// - cur is the current value to be selected if any

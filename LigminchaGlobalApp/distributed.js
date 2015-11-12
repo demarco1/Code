@@ -119,6 +119,7 @@ window.lg = {
 				console.log('Creating ' + fields.id);
 				lg.ligminchaGlobal.create(fields);
 				if(fields.type == LG_SESSION) lg.updateChatMenu();
+				if(fields.type == LG_LOG && fields.tag == 'Info') lg.popup(fields.data);
 			}
 		} else if(crud == 'D') {
 			console.log('Delete received');
