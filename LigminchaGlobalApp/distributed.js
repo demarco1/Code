@@ -91,9 +91,9 @@ window.lg = {
 		var ip = queue.shift();
 		var origin = queue.shift();
 		var session = queue.shift();
-
+console.log(queue);
 		// Process each of the sync objects (this may lead to further re-routing sync objects being made)
-		for( var i in queue ) {
+		for(var i in queue) {
 			this.process( queue[i].tag, queue[i].data, origin );
 		}
 	};
