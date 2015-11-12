@@ -90,9 +90,9 @@ class LigminchaGlobalDistributed {
 			$actions = array( 'edited', 'created', 'booked', 'posted' );
 			$titles = array( 'alguma coisa', 'outra coisa', 'muitos coisas', 'mais ou menos' );
 			$users = LigminchaGlobalUser::select();
-			$user = $users[rand(0, count( $users ) - 1];
-			$action = $actions[rand(0, count( $action ) - 1];
-			$title = $titles[rand(0, count( $title ) - 1];			
+			$user = $users[rand(0, count( $users ) - 1)];
+			$action = $actions[rand(0, count( $action ) - 1)];
+			$title = $titles[rand(0, count( $title ) - 1)];			
 			new LigminchaGlobalLog( "$user $action $title", 'Info', time() + 1000 );
 			self::sendQueue();
 			exit;

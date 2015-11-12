@@ -120,6 +120,7 @@
 		</li>' : '';
 	};
 
+	// Returns submenu items for latest activity items sorted by time, ten at most
 	lg.activity = function() {
 		var html = '';
 		var items = lg.select({type: LG_LOG, tag: 'FakeInfo'});
