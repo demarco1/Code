@@ -9,7 +9,7 @@ lg.Version = lg.GlobalObject.extend({
 
 // This is a "static" method for opening a dialog to create a new LG_VERSION global object
 lg.Version.createNew = function() {
-	jQuery('<div>test</div>').dialog({
+	$('<div>test</div>').dialog({
 		modal: true,
 		resizable: false,
 		width: 400,
@@ -21,11 +21,11 @@ lg.Version.createNew = function() {
 				});
 				lg.sendObject(ver);
 				console.log('New version created: ' + ver.id.short());
-				jQuery(this).dialog('close');
+				$(this).dialog('close');
 				this.remove();
 			},
 			'cancel': function() {
-				jQuery(this).dialog('close');
+				$(this).dialog('close');
 				this.remove();
 			},
 		}

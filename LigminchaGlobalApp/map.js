@@ -1,6 +1,6 @@
 lg.initMap = function() {
-	jQuery('div.map').each(function() {
-		var map, opt, info, markers, canvas = jQuery(this);
+	$('div.map').each(function() {
+		var map, opt, info, markers, canvas = $(this);
 
 		opt = {
 			type: "HYBRID",

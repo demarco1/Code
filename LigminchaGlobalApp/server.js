@@ -14,7 +14,7 @@ lg.Server = lg.GlobalObject.extend({
 
 	// Activate the new-version button
 	activate: function(popup) {
-		jQuery('#server-popup button.version').click(function() { lg.Version.createNew(); });
+		$('#server-popup button.version').click(function() { lg.Version.createNew(); });
 	},
 });
 
@@ -51,8 +51,8 @@ lg.ServerView = Backbone.View.extend({
 			html += '</ul>';
 		}
 		this.$el.html(html);
-		jQuery('span', this.$el).css('cursor','pointer').click(function() {
-			var id = jQuery(this).attr('id');
+		$('span', this.$el).css('cursor','pointer').click(function() {
+			var id = $(this).attr('id');
 			if(id) new lg.ObjectView({model: lg.getObject(id)});
 		});
 		return this; // enable chained calls

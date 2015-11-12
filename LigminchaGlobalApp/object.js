@@ -40,7 +40,7 @@ lg.GlobalObject = Backbone.Model.extend({
 
 		// Send a recvQueue format array with the sync object in it
 		// - we use the WebSocket client ID as the session ID so the WebSocket daemon doesn't bounce the message back to us
-		jQuery.ajax({
+		$.ajax({
 			type: 'POST',
 			url: lg.host + '/index.php',
 			data: {sync: [0, 0, mw.data.wsClientID, sync]},
@@ -80,18 +80,18 @@ lg.ObjectView = Backbone.View.extend({
 			title: cls + ' properties',
 			buttons: {
 				'save': function() {
-					var template = jQuery('select.template', this).val();
+					var template = $('select.template', this).val();
 					var cur = ('template' in atts.data) ? atts.data.template : 'maple';
 					if(template !== atts.data.template) {
 						console.log('Template changed from "' + cur + '" to "' + template + '"');
 						atts.data.template = template;
 						obj.update();
 					}
-					jQuery(this).dialog('close');
+					$(this).dialog('close');
 					this.remove();
 				},
 				'cancel': function() {
-					jQuery(this).dialog('close');
+					$(this).dialog('close');
 					this.remove();
 				},
 			}
