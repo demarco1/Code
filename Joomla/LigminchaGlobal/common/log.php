@@ -4,7 +4,7 @@
  */
 class LigminchaGlobalLog extends LigminchaGlobalObject {
 
-	function __construct( $message = false, $tag = '' ) {
+	function __construct( $message = false, $tag = '', $expire = false ) {
 
 		// This goes first so that parent constructor will raise an error if the current uuid type doesn't match
 		$this->type = LG_LOG;
@@ -17,6 +17,7 @@ class LigminchaGlobalLog extends LigminchaGlobalObject {
 			$this->ref1 = LigminchaGlobalServer::getCurrent()->id;
 			$this->tag = $tag;
 			$this->data = $message;
+			$this->expire = $expire;
 
 			// Store the new log entry in the database
 			$this->update();
