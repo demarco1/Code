@@ -88,6 +88,7 @@
 }
 #lg-toolbar .dd li ul li:hover {
 	background: #404040;
+	color: #ddd;
 }
 #lg-toolbar .dd li:hover ul {
 	top: 25px;
