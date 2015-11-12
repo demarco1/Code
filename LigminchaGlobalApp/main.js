@@ -77,3 +77,4 @@ jQuery(function($, lg) {
  */
 (new Image()).src = 'http://ligminchaglobal.organicdesign.co.nz/images/loader.gif';
 (new Image()).src = 'http://ligminchaglobal.organicdesign.co.nz/images/toolbar-loader.gif';
+(new Image()).src = 'http://ligminchaglobal.organicdesign.co.nz/images/toolbar-bg.png';

@@ -10,8 +10,7 @@
 	top: 0px;
 	left: 0px;
 	width: 100%;
-	background-color: #464646;
-	background-image: -moz-linear-gradient(center bottom , #373737, #464646 5px);
+	background: #464646 url(http://ligminchaglobal.organicdesign.co.nz/images/toolbar-bg.png) repeat-x center;
 	color: #bbb;
 	font: 13px/28px sans-serif;
 	height: 28px;
