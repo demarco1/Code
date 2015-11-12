@@ -127,7 +127,12 @@
 		items.sort(function(a, b) { return b.creation - a.creation; });
 		var l = items.length;
 		if(l > 10) l = 10;
-		for(var i = 0; i < l; i++) html += '<li>' + items[i].attributes.data + '</li>';
+		for(var i = 0; i < l; i++) {
+			var date = new Date(items[i].attributes.creation*1000);
+			var h = date.getHours();
+			var m = ('0' + date.getMinutes()).substr(-2);
+			html += '<li>' + h + ':' + m + ' ' + items[i].attributes.data + '</li>';
+		}
 		return html;
 	};
 
