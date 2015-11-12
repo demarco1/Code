@@ -103,15 +103,15 @@
  */
 #lg-toolbar #popup {
 	top: 40px;
-	right: 30px;
+	right: 12px;
 	position: absolute;
 	background: #464646;
 	border: 1px solid #999;
 	padding: 5px 10px;
-	border-radius: 20px;
-	-moz-border-radius: 20px;
-	-webkit-border-radius: 20px;
-	-khtml-border-radius: 20px;
+	border-radius: 19px;
+	-moz-border-radius: 19px;
+	-webkit-border-radius: 19px;
+	-khtml-border-radius: 19px;
 	color: #ccc;
 	display:none;
 }
