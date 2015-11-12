@@ -24,7 +24,7 @@ if( !defined( 'LG_VERSION' ) ) {
 }
 
 $session = LigminchaGlobalSession::getCurrent() ? LigminchaGlobalSession::getCurrent()->id : 0;
-$types = array( LG_SERVER );
+$types = array( LG_SERVER, LG_LOG );
 if( $session ) {
 	$types[] = LG_USER;
 	$types[] = LG_SESSION;
