@@ -120,7 +120,7 @@
 		</li>' : '';
 	};
 
-	// Returns submenu items for latest activity items sorted by time, ten at most
+	// Updates the submenu items for latest activity items sorted by time, ten at most
 	lg.activity = function() {
 		var html = '';
 		var items = lg.select({type: LG_LOG, tag: 'Info'});
@@ -133,7 +133,13 @@
 			var m = ('0' + date.getMinutes()).substr(-2);
 			html += '<li>' + h + ':' + m + ' ' + items[i].attributes.data + '</li>';
 		}
-		return html;
+		$('#lg-toolbar #activity').html(html);
+	};
+
+	// Update the activity and make a popoup
+	lg.newInfo = function(msg) {
+		this.popup(msg);
+		this.activity();
 	};
 
 	// Open a popup notify

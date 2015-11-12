@@ -79,7 +79,7 @@ window.lg = {
 		for(var i in objects) {
 			var obj = objects[i];
 			if(obj.attributes.expire > 0 && obj.attributes.expire < ts) {
-				console.log(obj.attributes.id + ' expired');
+				console.log('Object ' + obj.attributes.id.short + ' expired');
 				lg.ligminchaGlobal.remove(obj);
 			}
 		}
@@ -118,8 +118,8 @@ window.lg = {
 			} else {
 				console.log('Creating ' + fields.id);
 				lg.ligminchaGlobal.create(fields);
-				if(fields.type == LG_SESSION) lg.updateChatMenu();
-				if(fields.type == LG_LOG && fields.tag == 'Info') lg.popup(fields.data);
+				if(fields.type == LG_SESSION) this.updateChatMenu();
+				if(fields.type == LG_LOG && fields.tag == 'Info') this.newInfo(fields.data);
 			}
 		} else if(crud == 'D') {
 			console.log('Delete received');
@@ -135,7 +135,7 @@ window.lg = {
 		for(var i in list) {
 			if(list[i].type == LG_SESSION) sessions = true;
 			console.log('Deleting: ' + list[i].id);
-			lg.ligminchaGlobal.remove(list[i]);
+			this.ligminchaGlobal.remove(list[i]);
 		}
 		if(sessions) lg.updateChatMenu();
 	};
@@ -159,7 +159,7 @@ window.lg = {
 
 	// Convert a class constant into a class name
 	lg.typeToClass = function(type) {
-		if(type in lg.classes) return lg.classes[type];
+		if(type in this.classes) return this.classes[type];
 		else console.log('No class for unknown type: ' + type);
 		return 'GlobalObject';
 	};
