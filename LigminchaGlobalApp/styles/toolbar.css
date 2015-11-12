@@ -78,7 +78,6 @@
 #lg-toolbar .dd li ul {
 	position: absolute;
 	background: #464646;
-	background-image: -moz-linear-gradient(center bottom , #373737, #464646 5px);
 	padding-bottom: 5px;
 	top: -999px;
 }
