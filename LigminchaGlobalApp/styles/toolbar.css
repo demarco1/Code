@@ -86,10 +86,13 @@
 	margin-left: -1px;
 	float: none;
 }
-#lg-toolbar .dd li:hover ul, #lg-toolbar .dd li.sfhover ul {
+#lg-toolbar .dd li ul li:hover {
+	background: #333;
+}
+#lg-toolbar .dd li:hover ul {
 	top: 25px;
 	left: auto;
 }
-#lg-toolbar #personal li:hover ul, #lg-toolbar #personal li.sfhover ul {
+#lg-toolbar #personal li:hover ul {
 	right: 10px;
 }
