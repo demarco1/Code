@@ -25,14 +25,14 @@
 	float: left;
 }
 #lg-toolbar #main li {
-	margin: 0 2px 0 0;
+	margin: 0 1px 0 0;
 	border-right: 1px solid #333;
 }
 #lg-toolbar #personal {
 	float: right;
 }
 #lg-toolbar #personal li {
-	margin: 0 0 0 2px;
+	margin: 0 0 0 1px;
 	border-left: 1px solid #333;
 }
 #lg-toolbar .dd {
