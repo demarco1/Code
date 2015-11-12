@@ -159,4 +159,4 @@
 		return lg.selectList(['blue-flower','maple','raindrops','walden-pond','windows'], {class: 'template'}, template);
 	};
 
-}(jQuery, window.lg, window.mw);
+}(jQuery, window.lg, window.mw));

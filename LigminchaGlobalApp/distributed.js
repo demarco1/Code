@@ -174,4 +174,4 @@ window.lg = {
 		lg.expire();
 	};
 
-}(jQuery, window.lg, window.mw);
+}(jQuery, window.lg, window.mw));
