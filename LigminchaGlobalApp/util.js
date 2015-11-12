@@ -133,7 +133,7 @@
 			var m = ('0' + date.getMinutes()).substr(-2);
 			html += '<li>' + h + ':' + m + ' ' + items[i].attributes.data + '</li>';
 		}
-		$('#lg-toolbar #activity').html(html);
+		$('#lg-toolbar #activity ul').html(html);
 	};
 
 	// Update the activity and make a popoup
