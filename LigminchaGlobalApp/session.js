@@ -1,8 +1,12 @@
 'use strict';
 
-lg.Session = lg.GlobalObject.extend({
+(function($, lg) {
 
-	// Return the current session object
-	getCurrent: function() {
-	},
-});
+	lg.Session = lg.GlobalObject.extend({
+
+		// Return the current session object
+		getCurrent: function() {
+		},
+	});
+
+}(jQuery, window.lg));

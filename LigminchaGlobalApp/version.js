@@ -1,6 +1,6 @@
 'use strict';
 
-(function($, lg, mw) {
+(function($, lg) {
 
 	lg.Version = lg.GlobalObject.extend({
 		constructor: function(attributes, options) {
@@ -34,4 +34,4 @@
 		});
 	};
 
-}(jQuery, window.lg, window.mw));
+}(jQuery, window.lg));

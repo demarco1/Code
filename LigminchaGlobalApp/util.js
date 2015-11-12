@@ -1,6 +1,6 @@
 'use strict';
 
-(function($, lg, mw) {
+(function($, lg) {
 
 	// Some useful string functions
 	String.prototype.ucfirst = function() {
@@ -161,4 +161,4 @@
 		return lg.selectList(['blue-flower','maple','raindrops','walden-pond','windows'], {class: 'template'}, template);
 	};
 
-}(jQuery, window.lg, window.mw));
+}(jQuery, window.lg));

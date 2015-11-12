@@ -3,7 +3,7 @@
  */
 'use strict';
 
-(function($, lg, mw) {
+(function($, lg) {
 
 	lg.GlobalObject = Backbone.Model.extend({
 
@@ -108,4 +108,4 @@
 		},
 	});
 
-}(jQuery, window.lg, window.mw));
+}(jQuery, window.lg));

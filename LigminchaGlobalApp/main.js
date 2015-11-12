@@ -3,11 +3,11 @@
 /**
  * App initialisation
  */
-jQuery(function($, lg, mw) {
+jQuery(function($, lg) {
 
 	// Our config is using the fake MediaWiki layer
-	lg.getConfig = function(k, d) { return mw.config.get(k, d); };
-	lg.setConfig = function(k, v) { return mw.config.set(k, v); };
+	lg.getConfig = function(k, d) { return window.mw.config.get(k, d); };
+	lg.setConfig = function(k, v) { return window.mw.config.set(k, v); };
 
 	// Set up the host domain depending on whether we're running in toolbar or full app mode
 	if(lg.toolbar = lg.getConfig('toolbar', false)) {
@@ -70,7 +70,7 @@ jQuery(function($, lg, mw) {
 
 	console.log('App initialised');
 
-}(jQuery, window.lg, window.mw));
+}(jQuery, window.lg));
 
 /**
  * Preload images

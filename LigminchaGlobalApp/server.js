@@ -1,6 +1,6 @@
 'use strict';
 
-(function($, lg, mw) {
+(function($, lg) {
 
 	lg.Server = lg.GlobalObject.extend({
 
@@ -71,4 +71,4 @@
 		}
 	});
 
-}(jQuery, window.lg, window.mw));
+}(jQuery, window.lg));

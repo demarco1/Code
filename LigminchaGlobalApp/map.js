@@ -1,6 +1,6 @@
 'use strict';
 
-(function($, lg, mw) {
+(function($, lg) {
 
 	lg.initMap = function() {
 		$('div.map').each(function() {
@@ -94,4 +94,4 @@
 		});
 	};
 
-}(jQuery, window.lg, window.mw));
+}(jQuery, window.lg));
