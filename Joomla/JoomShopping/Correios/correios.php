@@ -155,8 +155,7 @@ class plgSystemCorreios extends JPlugin {
 			if( $items[$i]->weight > 0 ) $tmp[] = $items[$i];
 		}
 		$items = $tmp;
-print_r($items);
-die;
+
 		// If all the items were 0g, return an empty package
 		if( count( $items ) == 0 ) return array();
 
