@@ -48,6 +48,7 @@ class sm_correios extends shippingextRoot {
 			$packages = plgSystemCorreios::makeCartaPackages( $cart->products );
 			$costs = preg_match( '/módico/i', $type ) ? plgSystemCorreios::$cartaPricesMod : plgSystemCorreios::$cartaPrices;
 			$price = 0;
+			print_r($packages);
 			foreach( $packages as $package ) {
 				$weight = $package[0];
 				$i = 50*(int)($weight*20); // price divisions are in multiples of 50 grams
@@ -63,7 +64,7 @@ class sm_correios extends shippingextRoot {
 	 * Return the cost for a given a weight and shipping type
 	 */
 	private function getFreightPrice( $weight, $type ) {
-		//if( $weight == 0 ) return 0;
+		if( $weight == 0 ) return 0;
 		$client = JSFactory::getUser();
 		$cep2 = preg_replace( '|[^\d]|', '', $client->d_zip ? $client->d_zip : $client->zip );
 
