@@ -152,7 +152,7 @@ class plgSystemCorreios extends JPlugin {
 				if( array_key_exists( 'quantity', $item ) ) $item['product_quantity'] = $item['quantity'];
 				$items[$i] = self::arrayToObject( $item );
 			}
-			if( $items[$i]->weight ) $tmp[] = $items[$i];
+			if( $items[$i]->weight > 0 ) $tmp[] = $items[$i];
 		}
 		$items = $tmp;
 print_r($items);
