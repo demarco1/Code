@@ -147,6 +147,7 @@ class plgSystemCorreios extends JPlugin {
 		// Ensure that all the items are stdClass objects (since orders are, but cart isn't)
 		// - and that there are no 0g items in the list
 		$tmp = array();
+print_r($items);
 		foreach( $items as $i => $item ) {
 			if( is_array( $item ) ) {
 				if( array_key_exists( 'quantity', $item ) ) $item['product_quantity'] = $item['quantity'];

@@ -48,7 +48,6 @@ class sm_correios extends shippingextRoot {
 			$packages = plgSystemCorreios::makeCartaPackages( $cart->products );
 			$costs = preg_match( '/módico/i', $type ) ? plgSystemCorreios::$cartaPricesMod : plgSystemCorreios::$cartaPrices;
 			$price = 0;
-			print_r($packages);
 			foreach( $packages as $package ) {
 				$weight = $package[0];
 				$i = 50*(int)($weight*20); // price divisions are in multiples of 50 grams
