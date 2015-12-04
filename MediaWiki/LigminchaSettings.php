@@ -8,22 +8,28 @@ $wgRawHtml              = true;
 $wgDefaultSkin          = 'monobook';
 $wgLanguageCode         = 'pt-br';
 
+// Bounce clear to https
+if( !array_key_exists( 'HTTPS', $_SERVER ) || $_SERVER['HTTPS'] != 'on' ) {
+	header( "Location: https://wiki.ligmincha.com.br" . $_SERVER['REQUEST_URI'] );
+	exit;
+}
+
 // Bounce naked domain to account request page
 if( $_SERVER['REQUEST_URI'] == '/' ) {
-	header( "Location: http://wiki.ligmincha.com.br/Especial:Pedir_conta" );
+	header( "Location: https://wiki.ligmincha.com.br/Especial:Pedir_conta" );
 	exit;
 }
 
 // Make red-link edits use Visual Editor
 if( array_key_exists( 'redlink', $_GET ) && array_key_exists( 'action', $_GET ) && $_GET['action'] == 'edit' ) {
 	$url = str_replace( 'action', 'veaction', $_SERVER['REQUEST_URI'] );
-	header( "Location: http://wiki.ligmincha.com.br$url" );
+	header( "Location: https://wiki.ligmincha.com.br$url" );
 	exit;
 }
 
 // Bounce requests to the old domain to the new one
 if( $_SERVER['HTTP_HOST'] == 'ligmincha.odnz.co' ) {
-	header( "Location: http://wiki.ligmincha.com.br" . $_SERVER['REQUEST_URI'] );
+	header( "Location: https://wiki.ligmincha.com.br" . $_SERVER['REQUEST_URI'] );
 	exit;
 }
 
