@@ -131,7 +131,7 @@ JHTML::_('behavior.framework', true);
 	<div id="wrap" class="gainlayout">
 		<div id="topmenuwrap" class="gainlayout">
 			<div id="topmenu" class="gainlayout">
-				<?php echo file_get_contents( __DIR__ . '/topmenu-' . $this->language . '.html' ); ?>
+				<?php echo str_replace( 'http://', 'https://', file_get_contents( __DIR__ . '/topmenu-' . $this->language . '.html' ) ); ?>
 				<div class="clr"></div>
 			</div>
 			<?php if($this->countModules('position-0')) { ?>
