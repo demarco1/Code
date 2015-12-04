@@ -82,7 +82,13 @@ $wgVisualEditorSupportedSkins[] = 'monobook';
 wfLoadExtension( 'ExtraMagic' );
 wfLoadExtension( 'HighlightJS' );
 wfLoadExtension( 'AjaxComments' );
-$wgAjaxCommentsPollServer = 5;
+$wgAjaxCommentsPollServer = -1;
+
+include( "$IP/extensions/WebSocket/WebSocket.php" );
+WebSocket::$log = __DIR__ . '/ws.log';
+WebSocket::$rewrite = true;
+WebSocket::$ssl_cert = '/etc/letsencrypt/live/wiki.ligmincha.com.br/fullchain.pem';
+WebSocket::$ssl_key = '/etc/letsencrypt/live/wiki.ligmincha.com.br/privkey.pem';
 
 // Make Category:Público public access
 $wgHooks['UserGetRights'][] = 'wfPublicCat';
