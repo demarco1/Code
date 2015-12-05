@@ -40,6 +40,7 @@ $wgGroupPermissions['*']['upload']                 = false;
 $wgGroupPermissions['user']['upload']              = true;
 $wgGroupPermissions['user']['upload_by_url']       = true;
 $wgGroupPermissions['*']['createpage']             = false;
+$wgGroupPermissions['user']['edit']                = true;
 $wgGroupPermissions['user']['createpage']          = true;
 $wgGroupPermissions['sysop']['createpage']         = true;
 $wgGroupPermissions['joomla']['edit']              = true;
