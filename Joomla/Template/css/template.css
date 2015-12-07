@@ -1531,6 +1531,7 @@ div#content p.readmore	{text-align:right;margin-top:0;}
 }
 .jshop_list_product div.product div.price_extra_info {
 	margin-bottom: 0;
+	text-align: left;
 }
 .jshop_list_product div.product div.description {
 	margin-top: 0;
@@ -1556,6 +1557,10 @@ div#content p.readmore	{text-align:right;margin-top:0;}
 }
 .block_sorting_count_to_page .icon-arrow img {
 	margin: 0 0 0 3px;
+}
+.jshop_list_product div.row-fluid {
+    border-top: 1px solid #aaa;
+    margin-top: 10px;
 }
 
 /*
