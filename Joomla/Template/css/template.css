@@ -1508,7 +1508,11 @@ div#content p.readmore	{text-align:right;margin-top:0;}
 #payment_form .jshop_payment_method {
 	display: none;
 }
+.jshop_list_product div.block_product {
+	margin-right: 10px;
+}
 .jshop_list_product div.product div.name {
+	font-size: 14pt;
 	margin: 15px 0 5px 0;
 	text-align: left;
 }
@@ -1517,7 +1521,7 @@ div#content p.readmore	{text-align:right;margin-top:0;}
 	margin: 0 10px 5px 0;
 }
 .jshop_list_product div.product div.jshop_price {
-	font-size: 16px;
+	font-size: 13pt;
 	text-align: left;
 	margin-bottom: 0;
 }
@@ -1526,6 +1530,7 @@ div#content p.readmore	{text-align:right;margin-top:0;}
 }
 .jshop_list_product div.product div.description {
 	margin-top: 0;
+	font-size: 9pt;
 }
 .jshop_list_product div.product div.buttons {
 	text-align: left;
