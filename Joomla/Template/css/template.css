@@ -1539,8 +1539,6 @@ div#content p.readmore	{text-align:right;margin-top:0;}
 	font-size: 10pt;
 	margin: 5px 10px 0 0;
 }
-
-
 .form-horizontal div.box_products_sorting div.control-label {
 	margin-top: 8px;
 	width: 80px;
@@ -1552,7 +1550,8 @@ div#content p.readmore	{text-align:right;margin-top:0;}
 	margin-left: 80px;
 }
 .form-horizontal div.block_sorting_count_to_page div.controls {
-	margin-left: 60px;
+	margin-left: 75px;
+	width: 160px;
 }
 
 /*
