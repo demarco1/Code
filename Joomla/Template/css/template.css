@@ -1550,8 +1550,11 @@ div#content p.readmore	{text-align:right;margin-top:0;}
 	margin-left: 80px;
 }
 .form-horizontal div.block_sorting_count_to_page div.controls {
-	margin-left: 75px;
-	width: 160px;
+	margin-left: 85px;
+	width: 130px;
+}
+.block_sorting_count_to_page .icon-arrow img {
+	margin: 0 0 0 3px;
 }
 
 /*
