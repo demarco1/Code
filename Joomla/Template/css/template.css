@@ -1531,6 +1531,8 @@ div#content p.readmore	{text-align:right;margin-top:0;}
 }
 .jshop_list_product div.product div.price_extra_info {
 	margin-bottom: 0;
+}
+.jshop_list_product div.not_available {
 	text-align: left;
 }
 .jshop_list_product div.product div.description {
