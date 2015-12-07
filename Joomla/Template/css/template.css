@@ -1512,6 +1512,11 @@ div#content p.readmore	{text-align:right;margin-top:0;}
 	float: left;
 	margin: 0 10px 5px 0;
 }
+.jshop_list_product div.product div.jshop_price {
+	font-size: 16pt;
+	text-align: left;
+	margin-bottom: 0;
+}
 .jshop_list_product div.product div.price_extra_info {
 	margin-bottom: 0;
 }
@@ -1521,7 +1526,10 @@ div#content p.readmore	{text-align:right;margin-top:0;}
 .jshop_list_product div.product div.buttons {
 	text-align: left;
 }
-
+.jshop_list_product div.product div.buttons a {
+	font-size: 9pt;
+	margin: 5px 10px 0 0;
+}
 /*
  * Donation form
  */
