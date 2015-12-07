@@ -1508,6 +1508,10 @@ div#content p.readmore	{text-align:right;margin-top:0;}
 #payment_form .jshop_payment_method {
 	display: none;
 }
+
+/*
+ * JoomShopping products list for 4.x
+ */
 .jshop_list_product div.block_product {
 	margin-right: 10px;
 }
