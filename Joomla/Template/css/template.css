@@ -1508,6 +1508,10 @@ div#content p.readmore	{text-align:right;margin-top:0;}
 #payment_form .jshop_payment_method {
 	display: none;
 }
+.jshop_list_product div.product div.name {
+	margin: 15px 0 5px 0;
+	text-align: left;
+}
 .jshop_list_product div.product div.image {
 	float: left;
 	margin: 0 10px 5px 0;
