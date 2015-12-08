@@ -232,15 +232,15 @@ body {
 	padding: 0;
 }
 #search {
-    display: inline;
-    float: right;
+	display: inline;
+	float: right;
 	width: 170px;
 	height: 32px;
 	margin: 0;
 	padding: 0 0px 0 10px;;
 }
 #search input.button {
-    margin-left:2px;
+	margin-left:2px;
 }
 #search input.inputbox {
 	padding: 0 0 0 5px;
@@ -278,7 +278,7 @@ body {
 #content {
 	padding: 0 0px 10px 0px;
 	border-left: 0px solid #ddd;
-    border-right: 0px solid #ddd;
+	border-right: 0px solid #ddd;
 	background: none;
 }
 
@@ -449,7 +449,7 @@ h6 {
 }
 
 #a4j {
-    font-family: Arial, Helvetica, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	margin: 0 15px;
 	text-align: center;
 	font-size: 0.9em;
@@ -644,9 +644,10 @@ div.search label {
 	padding: 5px 14px 3px 14px;
 }
 #topmenu .menu li {
-    float: left;
+	float: left;
 	padding: 0;
 }
+
 /* ======= SIDE MENUS ================================  */
 .moduletable_menu {
 	padding: 0px 0px 5px 0px;
@@ -727,10 +728,10 @@ html>body .moduletable_menu li ul li a {
 }
 /* ========== content ======================*/
 div#content p {
-    text-align: left;
+	text-align: left;
 }
 a img {
-    border: 0;
+	border: 0;
 }
 
 /* =========== overlib ========================*/
@@ -832,7 +833,7 @@ a img {
 	float:right;
 }
 .items-row {
-    margin-bottom:10px !important;
+	margin-bottom:10px !important;
 }
 .column-1,
 .column-2,
@@ -943,7 +944,7 @@ div#content div.pagination p.counter {
 }
 /* ===================== Archive articles =================== */
 div.archive fieldset {
-    padding: 6px 0;
+	padding: 6px 0;
 	border: 0;
 }
 ul#archive-items {
@@ -953,127 +954,127 @@ ul#archive-items {
 }
 /* ===================== List all Categories =================== */
 div.categories-list ul {
-    list-style-type:none;
-    margin: 10px 0 0 0;
+	list-style-type:none;
+	margin: 10px 0 0 0;
 	padding: 0;
 }
 div.categories-list ul ul{
-    list-style-type:square;
-    margin: 0;
-    padding: 0 0 0 25px;
+	list-style-type:square;
+	margin: 0;
+	padding: 0 0 0 25px;
 }
 div.categories-list ul ul ul{
-    list-style-type:disc;
-    margin: 0;
-    padding: 0 0 0 25px;
+	list-style-type:disc;
+	margin: 0;
+	padding: 0 0 0 25px;
 }
 div.categories-list ul ul ul ul{
-    list-style-type:circle;
-    margin: 0;
-    padding: 0 0 0 25px;
+	list-style-type:circle;
+	margin: 0;
+	padding: 0 0 0 25px;
 }
 div.categories-list ul ul ul ul ul{
-    list-style-type:square;
-    margin: 0;
-    padding: 0 0 0 25px;
+	list-style-type:square;
+	margin: 0;
+	padding: 0 0 0 25px;
 }
 div.categories-list dl dt, div.categories-list dl dd { 
-    display:inline;
+	display:inline;
 	font-style: italic;
 }
 dl.article-count dt, dl.article-count dd { 
-    display:inline;
+	display:inline;
 	font-style: italic;
 }
 div.categories-list ul li span.item-title {
-    font-size: 1.3em;
+	font-size: 1.3em;
 	font-weight: bold;
 }
 div.categories-list ul li ul li span.item-title {
-    font-size: 1.25em;
+	font-size: 1.25em;
 	font-weight: bold;
 }
 div.categories-list ul li ul li ul li span.item-title {
-    font-size: 1.15em;
+	font-size: 1.15em;
 	font-weight: bold;
 }
 div.categories-list ul li ul li ul li ul li span.item-title {
-    font-size: 1.1em;
+	font-size: 1.1em;
 	font-weight: bold;
 }
 div.category-desc img.image-left {
-    float: left;
+	float: left;
 	padding-right: 5px;
 }
 div.category-desc img.image-right {
-    float: right;
+	float: right;
 	padding-left: 5px;
 }
 /* ===================== Subategories =================== */
 div.cat-children {
-    margin: 15px 0 0 0;
+	margin: 15px 0 0 0;
 	padding: 0;
 }
 div.cat-children ul {
-    list-style-type:none;
-    margin: 10px 0 0 0;
+	list-style-type:none;
+	margin: 10px 0 0 0;
 	padding: 0;
 }
 div.cat-children ul ul{
-    list-style-type:square;
-    margin: 0;
-    padding: 0 0 0 25px;
+	list-style-type:square;
+	margin: 0;
+	padding: 0 0 0 25px;
 }
 div.cat-children ul ul ul{
-    list-style-type:disc;
-    margin: 0;
-    padding: 0 0 0 25px;
+	list-style-type:disc;
+	margin: 0;
+	padding: 0 0 0 25px;
 }
 div.cat-children ul ul ul ul{
-    list-style-type:circle;
-    margin: 0;
-    padding: 0 0 0 25px;
+	list-style-type:circle;
+	margin: 0;
+	padding: 0 0 0 25px;
 }
 div.cat-children ul ul ul ul ul{
-    list-style-type:square;
-    margin: 0;
-    padding: 0 0 0 25px;
+	list-style-type:square;
+	margin: 0;
+	padding: 0 0 0 25px;
 }
 div.cat-children ul li span.item-title {
-    font-size: 1.2em;
+	font-size: 1.2em;
 	font-weight: bold;
 }
 div.cat-children ul li ul li span.item-title {
-    font-size: 1.15em;
+	font-size: 1.15em;
 	font-weight: bold;
 }
 div.cat-children ul li ul li ul li span.item-title {
-    font-size: 1.10em;
+	font-size: 1.10em;
 	font-weight: bold;
 }
 div.cat-children ul li ul li ul li ul li span.item-title {
-    font-size: 1.05em;
+	font-size: 1.05em;
 	font-weight: bold;
 }
 div.cat-children ul li dl dt, div.cat-children ul li dl dd { 
-    display:inline;
+	display:inline;
 	font-style: italic;
 }
 
 /* ===================== Category list =================== */
 table.category {
-    font-size:1em;
-    margin:10px 0px 20px 0px;
-    width:99%;
+	font-size:1em;
+	margin:10px 0px 20px 0px;
+	width:99%;
 }
 table.category th {
-    text-transform: uppercase;
-    text-align: left; 
+	text-transform: uppercase;
+	text-align: left; 
 	font-weight: bold;
 	font-size: 1.1em;
 }
 table.category td {
-    text-align: left; 
+	text-align: left; 
 	padding-top: 5px;
 }
 table.category th img {
@@ -1096,21 +1097,22 @@ div.login-fields input#username, div.login-fields input#password {
 	width: 173px;
 }
 div.login fieldset button.button {
-    margin-top: 10px;
+	margin-top: 10px;
 }
 div.logout button.button {
-    margin-top: 10px;
+	margin-top: 10px;
 }
+
 /* ===================== Login module =================== */
 form#login-form fieldset {
-    border:0;
+	border: none;
 }
 form#login-form fieldset label {
-    display: inline-block;
-	width:9em;
+	display: inline-block;
+	width: 9em;
 }
 form#login-form fieldset input#modlgn-passwd {
-    width:131px;
+	width: 131px;
 }
 form#login-form fieldset input#modlgn-username {
 	width: 131px;
@@ -1118,46 +1120,46 @@ form#login-form fieldset input#modlgn-username {
 
 /* =====================  User profile ===================== */
 #users-profile-core, #users-profile-custom {
-    margin:10px 0 15px 0;
-    padding:15px;
+	margin:10px 0 15px 0;
+	padding:15px;
 }
 #users-profile-core dl, #users-profile-custom dl {
-    margin: 0;
-    padding:0;
+	margin: 0;
+	padding:0;
 }
 #users-profile-core dt, #users-profile-custom dt {
-    float:left;
-    width:22em;
-    padding:3px 5px 3px 0;   
+	float:left;
+	width:22em;
+	padding:3px 5px 3px 0;   
 }
 #users-profile-core dd, #users-profile-custom dd {
-    padding:3px 0;  	
+	padding:3px 0;  	
 }
 #member-profile fieldset {
-    margin:10px 0 15px 0;
-    padding:15px;
+	margin:1 0px 0 15px 0;
+	padding:15px;
 }
 #users-profile-core legend, #users-profile-custom legend, .profile-edit legend {
-    font-weight:bold;
+	font-weight:bold;
 	font-size: 1.1em;
 }
 .profile-edit form#member-profile fieldset dd { 
-    padding:5px 0;
+	padding:5px 0;
 }
 .profile-edit form#member-profile fieldset dd input {
-    width:17em;
+	width:17em;
 }
 .profile-edit form#member-profile fieldset dd select {
-    width:17em;
+	width:17em;
 	height: 24px;
 }
 .profile-edit form#member-profile fieldset dt {
-    padding:5px 5px 5px 0; 
+	padding:5px 5px 5px 0; 
 	width:22em;
 	float: left;
 }
 .profile-edit span.optional {
-    font-size:0.9em;
+	font-size:0.9em;
 }
 .profile-edit #member-profile fieldset {
 	border: 1px solid #999;
@@ -1197,6 +1199,7 @@ div.reset form#user-registration fieldset {
 div.reset form#user-registration button {
 	margin-left:10px;
 }
+
 /* =====================  Single newsfeed ===================== */
 div.newsfeed ol {
 	margin-top: 10px;
@@ -1222,6 +1225,7 @@ span.feed-link, h5.feed-link {
 .moduletable_menu li.newsfeed-item {
 	padding: 0 2px;
 }
+
 /* =====================  Search results ===================== */
 dl.search-results dt.result-title {
 	font-weight:bold;
@@ -1244,11 +1248,10 @@ div.search form#searchForm fieldset.word button.button {
 	font-size: 12px;
 	line-height:18px;
 }
-/* =====================  Search results ===================== */
 div.search form#searchForm fieldset.phrases div.ordering-box{
 	margin-top: 5px;
 }
-dl.search-results dd.result-created {    color: #889;}
+dl.search-results dd.result-created {	color: #889;}
 div.search form#searchForm fieldset.word, div.search form#searchForm fieldset.phrases, div.search form#searchForm fieldset.only {
 	border: 1px solid #999;
 }
@@ -1261,6 +1264,7 @@ div.search form#searchForm fieldset.word, div.search form#searchForm fieldset.ph
 .highlight {
 	font-weight:bold;
 }
+
 /* =====================  Single Contact ===================== */
 .contact-name {	
 	font-size:1.5em;
@@ -1283,7 +1287,7 @@ div.contact-form label {
 	float: left;
 }
 div.contact-form form#contact-form dl {
-    margin: 10px 0;
+	margin: 10px 0;
 }
 div.contact-form form#contact-form dt {
 	margin-top: 7px;
@@ -1296,55 +1300,55 @@ address span {
 	font-style: normal;
 }
 div.contact form#contact-form button.button {
-    float:right !important;
-    clear:left;
-    display:block;
-    margin:15px 0 20px 0;
+	float:right !important;
+	clear:left;
+	display:block;
+	margin:15px 0 20px 0;
 }
 div.contact form#contact-form textarea {
 	height: 100px;
 }
 div.contact dl.tabs {
-    float:left;
-    margin: 20px 0 0 0;
+	float:left;
+	margin: 20px 0 0 0;
 	padding: 0;
-    clear:both;
+	clear:both;
 }
 div.contact dl.tabs dt {
-    float: left;
-    padding: 2px 10px;
-    border-left: 1px solid #ccd;
-    border-right: 1px solid #ccd;
-    border-top: 1px solid #ccd;
-    margin-right: 4px;
-    background: none;
+	float: left;
+	padding: 2px 10px;
+	border-left: 1px solid #ccd;
+	border-right: 1px solid #ccd;
+	border-top: 1px solid #ccd;
+	margin-right: 4px;
+	background: none;
 }
 div.contact dl.tabs dt a {
-    font-weight: normal;
+	font-weight: normal;
 }
 div.contact dl.tabs dt.open {
-    background: none;
-    border-bottom: 0px solid #ccd;
+	background: none;
+	border-bottom: 0px solid #ccd;
 }
 div.contact dl.tabs dt.open a {
-    color: #445;
+	color: #445;
 }
 div.contact dl.tabs dt h3{
-    margin: 2px 0;
+	margin: 2px 0;
 	padding:0;
 }
 div.contact div.current {
-    clear: both;
-    border: 1px solid #ccd;
-    padding: 15px 15px;
+	clear: both;
+	border: 1px solid #ccd;
+	padding: 15px 15px;
 	margin: 0;
 }
 div.contact dl.tabs dd {
-    clear:both;
-    padding: 0;
-    margin: 0;
+	clear:both;
+	padding: 0;
+	margin: 0;
 }
-div.contact dl.tabs dt.open a {    color: #445;
+div.contact dl.tabs dt.open a {	color: #445;
 }
 div.contact dl.tabs dt {
 	border-left: 1px solid #999;
@@ -1374,87 +1378,93 @@ h4.feed-link {
 	border-bottom: 1px dotted #9999AA;
 	padding-bottom: 5px;
 }
+
 /* ===================== tooltip =====================  */
 .tip {
-    font-size:0.8em;
-    text-align:left;
-    padding:5px;
-    max-width:400px;
+	font-size:0.8em;
+	text-align:left;
+	padding:5px;
+	max-width:400px;
 	border:1px solid #ccc;
 	background:#fff;
 }
 .tip-title {
 	font-weight:bold;
 }
+
 /* ===================== Email to a friend =====================  */
 div#mailto-window{
-    margin: 15px;
+	margin: 15px;
 }
 form#mailtoForm div.formelm label {
-    text-align: right;
-    display: inline-block;
+	text-align: right;
+	display: inline-block;
 	width:8em;
 	padding-right: 5px;
 }
 form#mailtoForm div.formelm {
-    margin: 5px 0;
+	margin: 5px 0;
 }
+
 /* ===================== Submit a weblink, Submit an article, Edit article =====================  */
 div.edit form#adminForm div.formelm label {
-    text-align: left;
-    display: inline-block;
+	text-align: left;
+	display: inline-block;
 	width:12em;
 	padding-right: 5px;
 }
 div.edit form#adminForm div.formelm {
-    margin: 5px 0;
+	margin: 5px 0;
 }
 div.edit form#adminForm div.formelm-area label {
-    text-align: left;
-    float:left;
+	text-align: left;
+	float:left;
 	width:12em;
 	padding-right: 5px;
 }
 div.edit form#adminForm div.formelm-area {
-    margin: 5px 0;
+	margin: 5px 0;
 }
 div.edit form#adminForm legend
 {
-    font-weight:bold;
+	font-weight:bold;
 	font-size: 1.1em;
 }
-div.edit form fieldset {    border: 1px solid #999;}
+div.edit form fieldset {	border: 1px solid #999;}
 
 /* ===================== Statistics module =====================  */
 dl.stats-module dt { 
-    float:left;
+	float:left;
 	padding: 0 10px 0 0;
 	font-weight:bold;
 }
 dl.stats-module_light dt { 
-    float:left;
+	float:left;
 	padding: 0 10px 0 0;
 	font-weight:bold;
 }
 dl.stats-module_dark dt { 
-    float:left;
+	float:left;
 	padding: 0 10px 0 0;
 	font-weight:bold;
 }
+
 /* ===================== Newsflash module =====================  */
 div.newsflash p { 
-    text-align: justify;
+	text-align: justify;
 }
 div.newsflash_light p { 
-    text-align: justify;
+	text-align: justify;
 }
 div.newsflash_dark p { 
-    text-align: justify;
+	text-align: justify;
 }
+
 /* ===================== Wrapper =====================  */
 div.contentpane { 
-    border: 0px solid #ccc;
+	border: 0px solid #ccc;
 }
+
 /* ===================== Slideshow =====================  */
 #slideshow-container  { 
 	width:950px; 
@@ -1498,32 +1508,34 @@ div.contentpane {
 	left:0px; 
 	z-index:1; 
 }
-
 #slcontrol {
-    height: 50px;
+	height: 50px;
 	width:950px;
-    position: absolute;
+	position: absolute;
 	top: 40%;
 	left:0px;
-    z-index: -1;
+	z-index: -1;
 }
 a#slprev {
-    background: url("../images/previous-white.png") no-repeat scroll left center transparent;
-    cursor: pointer;
-    float: left;
-    height: 50px;
-    width: 50px;
+	background: url("../images/previous-white.png") no-repeat scroll left center transparent;
+	cursor: pointer;
+	float: left;
+	height: 50px;
+	width: 50px;
 }
 a#slnext {
-    background: url("../images/next-white.png") no-repeat scroll right center transparent;
-    cursor: pointer;
-    float: right;
-    height: 50px;
-    width: 50px;
+	background: url("../images/next-white.png") no-repeat scroll right center transparent;
+	cursor: pointer;
+	float: right;
+	height: 50px;
+	width: 50px;
 }
 
 /* ===================== System message =====================  */
-div#system-message-container ul{margin:0;}
+div#system-message-container ul{
+	margin:0;
+}
+
 /* ===================== Top Menu =====================  */
 #topmenu .moduletable	{border: 0;}
 #topmenu .menu li a		{color: #fff; text-shadow: #000 1px 1px 1px; padding: 5px 14px; background: url(../images/topmenu-border.jpg) no-repeat center right;} /*  border-left: 1px solid #dabb3d; border-right: 1px solid #f9f3aa; */ 
@@ -1561,7 +1573,7 @@ div#system-message-container ul{margin:0;}
 
 /* ======= SIDE MENUS ================================  */
 .moduletable_menu {	background: none ;	color: #445;	border-bottom: 0px solid #fff;}
-.moduletable_menu h3, .moduletable_menu  h4 {	color:#fff;    background: #444;    border-bottom: 0px solid #445;	-webkit-border-radius: 4px;    -moz-border-radius: 4px;    border-radius: 4px;}
+.moduletable_menu h3, .moduletable_menu  h4 {	color:#fff;	background: #444;	border-bottom: 0px solid #445;	-webkit-border-radius: 4px;	-moz-border-radius: 4px;	border-radius: 4px;}
 .moduletable_menu li {	border-bottom: 1px dotted #99a; line-height: 1.5;}
 .moduletable_menu li ul li {	border-bottom:0px solid #ccc;	border-top:0px dashed #e4e4e4;	background: none;}
 .moduletable_menu li a {	color: #445;}
@@ -1597,7 +1609,7 @@ div.featuredbook {margin-bottom: 10px; } /* padding-top: 33px;	background: url(.
 div.featuredbook div {color: #ffffff; padding: 10px; border-radius: 5px; background-color:#9B2235;}
 div.featuredbook p {margin: 0; font-size:0.9em; line-height:1.3em;}
 div.featuredbook img {margin-right: 15px;}
-div.featuredbook h3 {	color:#fff;    background: #2c2c2c;    border-bottom: 0px solid #445;	-webkit-border-radius: 4px;    -moz-border-radius: 4px;    border-radius: 4px;}
+div.featuredbook h3 {	color:#fff;	background: #2c2c2c;	border-bottom: 0px solid #445;	-webkit-border-radius: 4px;	-moz-border-radius: 4px;	border-radius: 4px;}
 div.featuredbook a:link, div.featuredbook a:visited {	color:#fff;}
 
 
@@ -1619,7 +1631,7 @@ div.moduletable-headlines p {margin: 5px 0; border-bottom: 1px dashed #999;}
 
 .avVideo .avPlayerContainer  {background: none;}
 
-.linknorm a:link, .linknorm  a:visited {    color: #444;}
+.linknorm a:link, .linknorm  a:visited {	color: #444;}
 .sidebarlist p 	{border-bottom: 1px dashed #999999;}
 .modulenomargin	{margin-bottom: 0px;}
 
@@ -1636,7 +1648,7 @@ div#content p.readmore	{text-align:right;margin-top:0;}
  * JoomShopping
  */
 .address_block .jshop_register .name {
-    padding-right: 20px;
+	padding-right: 20px;
 }
 #payment_form .jshop_payment_method {
 	display: none;
@@ -1694,8 +1706,8 @@ div#content p.readmore	{text-align:right;margin-top:0;}
 	margin: 0 0 0 3px;
 }
 .jshop_list_product div.row-fluid {
-    border-top: 1px solid #aaa;
-    margin-top: 10px;
+	border-top: 1px solid #aaa;
+	margin-top: 10px;
 }
 
 /*
