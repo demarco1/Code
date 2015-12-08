@@ -1117,160 +1117,133 @@ form#login-form fieldset input#modlgn-username{
 }
 /* =====================  User profile ===================== */
 
-#users-profile-core,
-#users-profile-custom
-{
+#users-profile-core, #users-profile-custom {
     margin:10px 0 15px 0;
     padding:15px;
 }
-#users-profile-core dl,
-#users-profile-custom dl
-{
+#users-profile-core dl, #users-profile-custom dl {
     margin: 0;
     padding:0;
 }
-#users-profile-core dt,
-#users-profile-custom dt
-{
+#users-profile-core dt, #users-profile-custom dt {
     float:left;
     width:22em;
     padding:3px 5px 3px 0;   
 }
-
-#users-profile-core dd,
-#users-profile-custom dd
-{
+#users-profile-core dd, #users-profile-custom dd {
     padding:3px 0;  	
 }
-
-#member-profile fieldset
-{
+#member-profile fieldset {
     margin:10px 0 15px 0;
     padding:15px;
 }
-
-#users-profile-core legend,
-#users-profile-custom legend,
-.profile-edit legend
-{
+#users-profile-core legend, #users-profile-custom legend, .profile-edit legend {
     font-weight:bold;
 	font-size: 1.1em;
 }
-
-.profile-edit form#member-profile fieldset dd
-{ 
+.profile-edit form#member-profile fieldset dd { 
     padding:5px 0;
 }
-
-.profile-edit form#member-profile fieldset dd input
-{
+.profile-edit form#member-profile fieldset dd input {
     width:17em;
 }
-.profile-edit form#member-profile fieldset dd select
-{
+.profile-edit form#member-profile fieldset dd select {
     width:17em;
 	height: 24px;
 }
-.profile-edit form#member-profile fieldset dt
-{
+.profile-edit form#member-profile fieldset dt {
     padding:5px 5px 5px 0; 
 	width:22em;
 	float: left;
 }
-.profile-edit span.optional{
+.profile-edit span.optional {
     font-size:0.9em;
 }
 .profile-edit #member-profile fieldset {    border: 1px solid #999;}
 div.profile fieldset{    border: 1px solid #999;}
 /* =====================  Registration ===================== */
-div.registration form#member-registration fieldset
-{
-    margin:10px 0 15px 0;
-    padding: 15px 0 0 10px;
+div.registration form#member-registration fieldset {
+	margin:10px 0 15px 0;
+	padding: 15px 0 0 10px;
 	border:0;
 }
-div.registration form#member-registration fieldset legend
-{
-    font-weight:bold;
+div.registration form#member-registration fieldset legend {
+	font-weight:bold;
 	font-size: 1.2em;
 }
-div.registration form#member-registration fieldset dd
-{ 
-    padding:0 0 5px 0;
+div.registration form#member-registration fieldset dd { 
+	padding:0 0 5px 0;
 }
-div.registration form#member-registration fieldset dd input
-{
-    width:17em;
+div.registration form#member-registration fieldset dd input {
+	width:17em;
 }
-div.registration form#member-registration button
-{
-    margin-left:10px;
+div.registration form#member-registration button {
+	margin-left:10px;
 }
 div.remind form#user-registration fieldset {
-    border:0;
+	border:0;
 }
 div.remind form#user-registration button {
-    margin-left:10px;
+	margin-left:10px;
 }
 div.reset form#user-registration fieldset {
-    border:0;
+	border:0;
 }
 div.reset form#user-registration button {
-    margin-left:10px;
+	margin-left:10px;
 }
 /* =====================  Single newsfeed ===================== */
 div.newsfeed ol {
-    margin-top: 10px;
+	margin-top: 10px;
 }
 div.newsfeed ol li a{
-    font-weight: bold;
+	font-weight: bold;
 }
 div.newsfeed ol li div a, div.newsfeed ol li div ol li a {
-    font-weight: normal;
+	font-weight: normal;
 }
 span.feed-link, h5.feed-link {
-font-size:1em;
-font-weight: normal;
-font-family: Arial, Helvetica, sans-serif;
-text-align: left;
-padding-left: 3px;
-margin-top:4px;
-background: none;
-border-radius: none;
-text-transform:none;
-letter-spacing: 1px;
+	font-size:1em;
+	font-weight: normal;
+	font-family: Arial, Helvetica, sans-serif;
+	text-align: left;
+	padding-left: 3px;
+	margin-top:4px;
+	background: none;
+	border-radius: none;
+	text-transform:none;
+	letter-spacing: 1px;
 }
 .moduletable_menu li.newsfeed-item {
-padding: 0 2px;
+	padding: 0 2px;
 }
 /* =====================  Search results ===================== */
 dl.search-results dt.result-title {
-    font-weight:bold;
+	font-weight:bold;
 	padding-top: 10px;
 }
 dl.search-results dd.result-text {
-    padding-top: 5px;
+	padding-top: 5px;
 }
 dl.search-results dd.result-created {
-    padding-top: 5px;
+	padding-top: 5px;
 	font-size: 0.8em;
 	color: #889;
 }
 div.search form#searchForm fieldset.word,
 div.search form#searchForm fieldset.phrases,
 div.search form#searchForm fieldset.only {
-    border: 1px solid #ccc;
+	border: 1px solid #ccc;
 }
 div.search form#searchForm fieldset.word button.button {
-margin: 0px 0 0 2px;
-padding: 0px 3px;
-font-size: 12px;
-line-height:18px;
-
+	margin: 0px 0 0 2px;
+	padding: 0px 3px;
+	font-size: 12px;
+	line-height:18px;
 }
 /* =====================  Search results ===================== */
 div.search form#searchForm fieldset.phrases div.ordering-box{
-    margin-top: 5px;
+	margin-top: 5px;
 }
 dl.search-results dd.result-created {    color: #889;}
 div.search form#searchForm fieldset.word,
