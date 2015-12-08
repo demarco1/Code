@@ -97,6 +97,8 @@ body {
 #headersearch .button {
 	position: relative;
 	top: 5px;
+}
+#headersearch form.form-inline .button {
 	margin-left: 1px;
 }
 #mod-search-searchword {
