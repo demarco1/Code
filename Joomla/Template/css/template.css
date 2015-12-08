@@ -96,7 +96,18 @@ body {
 }
 #headersearch .button {
 	position: relative;
-	top: 4px;
+	top: 5px;
+}
+#mod-search-searchword {
+	background: #eee;
+	height: 22px;
+	margin-bottom: 0;
+	padding: 0 5px;
+	border: none;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-khtml-border-radius: 3px;
 }
 #header {
 	width: 750px;
