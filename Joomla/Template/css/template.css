@@ -1208,8 +1208,11 @@ div.reset form#user-registration button {
 div.newsfeed ol {
 	margin-top: 10px;
 }
-div.newsfeed ol li a{
+div.newsfeed ol li a {
 	font-weight: bold;
+}
+div.newsfeed ul li {
+	text-indent: -3px;
 }
 div.newsfeed ol li div a, div.newsfeed ol li div ol li a {
 	font-weight: normal;
