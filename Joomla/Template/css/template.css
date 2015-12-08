@@ -1587,3 +1587,16 @@ form#donation legend {
 .category-list .cat-items {
 	display: none;
 }
+
+/*
+ * Breadcrumbs for 3.x
+ */
+
+ul.breadcrumb {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+ul.breadcrumb li {
+	display: inline;
+}
