@@ -561,7 +561,9 @@ div.moduletable h3 {
 #footer div.moduletable h3 {
 	display:none;
 }
-#footerwrap {	background: none;}
+#footerwrap {
+	background: none;
+}
 
 /* ======= SEARCH =======================  */
 #search .moduletable {
@@ -569,7 +571,7 @@ div.moduletable h3 {
 	padding: 0 6px 0 0;
 	float: right;
 }
-#search .moduletable h3{
+#search .moduletable h3 {
 	display:none;
 }
 .moduletable_menu .search_menu {
@@ -665,7 +667,7 @@ div.search label {
 	position:relative;
 	line-height:1.2;
 }
-.moduletable_menu h4 a:link, .moduletable_menu  h4 a:visited, .moduletable_menu  h4 a:hover {
+.moduletable_menu h4 a:link, .moduletable_menu h4 a:visited, .moduletable_menu h4 a:hover {
 	color: #fff;
 }
 .moduletable_menu ul {
@@ -1570,23 +1572,63 @@ div#system-message-container ul{
 #topmenu ul li:hover ul	{display: block;}
 #topmenu .menu ul li:hover ul	{margin-top:-27px; margin-left: 205px; border-left: #feb949 solid 1px; box-shadow: 1px 1px 4px #333;}
 
-
 /* ======= SIDE MENUS ================================  */
-.moduletable_menu {	background: none ;	color: #445;	border-bottom: 0px solid #fff;}
-.moduletable_menu h3, .moduletable_menu  h4 {	color:#fff;	background: #444;	border-bottom: 0px solid #445;	-webkit-border-radius: 4px;	-moz-border-radius: 4px;	border-radius: 4px;}
-.moduletable_menu li {	border-bottom: 1px dotted #99a; line-height: 1.5;}
-.moduletable_menu li ul li {	border-bottom:0px solid #ccc;	border-top:0px dashed #e4e4e4;	background: none;}
-.moduletable_menu li a {	color: #445;}
-.moduletable_menu li ul li a {	background: none;}
-.moduletable_menu ul.menu li.current a {	color:#a96700;}
-.moduletable_menu ul.menu li.current * a {	color:#445;}
-.moduletable_menu li ul li a:hover, .moduletable_menu li.current ul li a:hover {	color:#a96700;}
-.moduletable_menu li a:link, .moduletable_menu li a:visited {	color: #445;	text-decoration: none; font-size:9pt;}
-.moduletable_menu li a:hover {	color: #000;	text-decoration: underline;} /* color: #a96700; */
-.moduletable_menu li a:active {	color: #a96700;	text-decoration: none;}
+.moduletable_menu {
+	background: none ;
+	color: #445;
+	border-bottom: 0px solid #fff;
+}
+.moduletable_menu h2, .moduletable_menu h3, .moduletable_menu  h4 {
+	color:#fff;
+	background: #444;
+	border-bottom: 0px solid #445;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+.moduletable_menu li {
+	border-bottom: 1px dotted #99a;
+	line-height: 1.5;
+}
+.moduletable_menu li ul li {
+	border-bottom: 0px solid #ccc;
+	border-top: 0px dashed #e4e4e4;
+	background: none;
+}
+.moduletable_menu li a {
+	color: #445;
+}
+.moduletable_menu li ul li a {
+	background: none;
+}
+.moduletable_menu ul.menu li.current a {
+	color:#a96700;
+}
+.moduletable_menu ul.menu li.current * a {
+	color:#445;
+}
+.moduletable_menu li ul li a:hover, .moduletable_menu li.current ul li a:hover {
+	color:#a96700;
+}
+.moduletable_menu li a:link, .moduletable_menu li a:visited {
+	color: #445;
+	text-decoration: none;
+	font-size: 9pt;
+}
+.moduletable_menu li a:hover {
+	color: #000;
+	text-decoration: underline;
+}
+.moduletable_menu li a:active {
+	color: #a96700;
+	text-decoration: none;
+}
 
 /* ================  login form  ==================== */
-.loginform li a:link, .loginform li a:visited { font-size: 0.8em; text-transform: none;}
+.loginform li a:link, .loginform li a:visited {
+	font-size: 0.8em;
+	text-transform: none;
+}
 
 /* ==== LINKS =======================================  */
 a:link, a:visited {	color: #a96700;	text-decoration: none;}
