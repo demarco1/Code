@@ -1211,9 +1211,6 @@ div.newsfeed ol {
 div.newsfeed ol li a {
 	font-weight: bold;
 }
-div.newsfeed ul li {
-	text-indent: -3px;
-}
 div.newsfeed ol li div a, div.newsfeed ol li div ol li a {
 	font-weight: normal;
 }
@@ -1233,6 +1230,10 @@ span.feed-link, h5.feed-link {
 .moduletable_menu li.newsfeed-item {
 	padding: 0 2px;
 }
+ul.newsfeed_menu li {
+	text-indent: -3px;
+}
+
 
 /* =====================  Search results ===================== */
 dl.search-results dt.result-title {
