@@ -667,6 +667,8 @@ div.search label {
 	position:relative;
 	line-height:1.2;
 }
+.moduletable_menu h2 a:link, .moduletable_menu h2 a:visited, .moduletable_menu h3 a:hover,
+.moduletable_menu h3 a:link, .moduletable_menu h3 a:visited, .moduletable_menu h4 a:hover,
 .moduletable_menu h4 a:link, .moduletable_menu h4 a:visited, .moduletable_menu h4 a:hover {
 	color: #fff;
 }
