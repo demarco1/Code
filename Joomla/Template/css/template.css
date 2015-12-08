@@ -97,6 +97,7 @@ body {
 #headersearch .button {
 	position: relative;
 	top: 5px;
+	margin-left: 1px;
 }
 #mod-search-searchword {
 	background: #eee;
