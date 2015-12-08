@@ -94,6 +94,10 @@ body {
 	margin: 10px 15px 0 0;
 	z-index: 100;
 }
+#headersearch .button {
+	position: relative;
+	top: 4px;
+}
 #header {
 	width: 750px;
 	margin: 0 15px;
