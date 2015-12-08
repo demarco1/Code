@@ -535,7 +535,7 @@ float: left;
 padding: 0px 0px 5px 0px;
 margin-bottom:20px;
 }
-.moduletable_menu h3, .moduletable_menu  h4 {
+.moduletable_menu h2, moduletable_menu h3, .moduletable_menu  h4 {
 font-family: Verdana, Arial, Helvetica, sans-serif;
 text-align:left;
 font-size:12px;
