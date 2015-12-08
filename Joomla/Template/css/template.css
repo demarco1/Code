@@ -1227,11 +1227,15 @@ span.feed-link, h5.feed-link {
 	text-transform: none;
 	letter-spacing: 1px;
 }
-.moduletable_menu li.newsfeed-item {
+.moduletable_menu li.newsfeed-item,
+ul.newsfeed_menu li {
 	padding: 0 2px;
 }
 ul.newsfeed_menu li {
 	text-indent: -3px;
+}
+ul.newsfeed_menu li.newsfeed-item {
+	text-indent: 0px;
 }
 
 
