@@ -1717,12 +1717,22 @@ div#content p.readmore	{text-align:right;margin-top:0;}
 #checkout a img {
 	margin-bottom: 0;
 }
+table.jshop {
+	width: 600px;
+}
 .cart .quantity .data {
 	width: 90px;
 }
 .cart_reload img {
 	position: relative;
 	top: 3px;
+}
+.cart .product_name {
+	text-align: left;
+	width: 100px;
+}
+.cart .single_price {
+	width: 85px;
 }
 #payment_form .jshop_payment_method {
 	display: none;
