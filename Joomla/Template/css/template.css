@@ -1717,6 +1717,13 @@ div#content p.readmore	{text-align:right;margin-top:0;}
 #checkout a img {
 	margin-bottom: 0;
 }
+.cart .quantity .data {
+	width: 90px;
+}
+.cart_reload > img {
+	position: relative;
+	top: 3px;
+}
 #payment_form .jshop_payment_method {
 	display: none;
 }
