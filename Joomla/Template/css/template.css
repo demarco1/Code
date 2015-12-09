@@ -1700,9 +1700,21 @@ div#content p.readmore	{text-align:right;margin-top:0;}
 /*
  * JoomShopping
  */
+.address_block .jshop_register .control-group {
+	padding-bottom: 8px;
+}
+.address_block .jshop_register .controls .input {
+	width: 250px;
+}
 .address_block .jshop_register .name {
 	padding-right: 20px;
 }
+.address_block .jshop_register .control-label {
+	float: left;
+	padding-top: 6px;
+	width: 100px;
+}
+
 #payment_form .jshop_payment_method {
 	display: none;
 }
