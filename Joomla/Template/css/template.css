@@ -1714,7 +1714,9 @@ div#content p.readmore	{text-align:right;margin-top:0;}
 	padding-top: 6px;
 	width: 100px;
 }
-
+#checkout a img {
+	margin-bottom: 0;
+}
 #payment_form .jshop_payment_method {
 	display: none;
 }
