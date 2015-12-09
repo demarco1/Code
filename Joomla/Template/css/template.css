@@ -1720,7 +1720,7 @@ div#content p.readmore	{text-align:right;margin-top:0;}
 .cart .quantity .data {
 	width: 90px;
 }
-.cart_reload > img {
+.cart_reload img {
 	position: relative;
 	top: 3px;
 }
