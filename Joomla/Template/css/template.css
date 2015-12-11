@@ -1719,6 +1719,8 @@ div#content p.readmore	{text-align:right;margin-top:0;}
 }
 #comjshop form {
 	width: 600px;
+	position: relative;
+	z-index: 100;
 }
 .cart .quantity .data {
 	width: 90px;
