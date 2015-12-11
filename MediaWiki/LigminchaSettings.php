@@ -9,27 +9,21 @@ $wgDefaultSkin          = 'monobook';
 $wgLanguageCode         = 'pt-br';
 
 // Bounce clear to https
-if( array_key_exists( 'HTTPS', $_SERVER ) && $_SERVER['HTTPS'] == 'on' ) {
-	header( "Location: http://wiki.ligmincha.com.br" . $_SERVER['REQUEST_URI'] );
+if( !array_key_exists( 'HTTPS', $_SERVER ) || $_SERVER['HTTPS'] == 'off' ) {
+	header( "Location: https://wiki.ligmincha.com.br" . $_SERVER['REQUEST_URI'] );
 	exit;
 }
 
 // Bounce naked domain to account request page
 if( $_SERVER['REQUEST_URI'] == '/' ) {
-	header( "Location: http://wiki.ligmincha.com.br/Especial:Pedir_conta" );
+	header( "Location: https://wiki.ligmincha.com.br/Especial:Pedir_conta" );
 	exit;
 }
 
 // Make red-link edits use Visual Editor
 if( array_key_exists( 'redlink', $_GET ) && array_key_exists( 'action', $_GET ) && $_GET['action'] == 'edit' ) {
 	$url = str_replace( 'action', 'veaction', $_SERVER['REQUEST_URI'] );
-	header( "Location: http://wiki.ligmincha.com.br$url" );
-	exit;
-}
-
-// Bounce requests to the old domain to the new one
-if( $_SERVER['HTTP_HOST'] == 'ligmincha.odnz.co' ) {
-	header( "Location: http://wiki.ligmincha.com.br" . $_SERVER['REQUEST_URI'] );
+	header( "Location: https://wiki.ligmincha.com.br$url" );
 	exit;
 }
 
@@ -88,8 +82,8 @@ $wgAjaxCommentsPollServer = -1;
 include( "$IP/extensions/WebSocket/WebSocket.php" );
 WebSocket::$log = __DIR__ . '/ws.log';
 WebSocket::$rewrite = true;
-WebSocket::$ssl_cert = '/etc/letsencrypt/live/wiki.ligmincha.com.br/fullchain.pem';
-WebSocket::$ssl_key = '/etc/letsencrypt/live/wiki.ligmincha.com.br/privkey.pem';
+WebSocket::$ssl_cert = '/etc/letsencrypt/live/ligmincha.com.br/fullchain.pem';
+WebSocket::$ssl_key = '/etc/letsencrypt/live/ligmincha.com.br/privkey.pem';
 
 // Make Category:Público public access
 $wgHooks['UserGetRights'][] = 'wfPublicCat';
@@ -147,7 +141,7 @@ function wfProtectAdminNamespace( Parser $parser ) {
 		if( is_object( $mediaWiki ) ) $mediaWiki->restInPeace();
 		$wgOut->disable();
 		wfResetOutputBuffers();
-		header( "Location: http://wiki.ligmincha.com.br/Página_principal" );
+		header( "Location: https://wiki.ligmincha.com.br/Página_principal" );
 	}
 	return true;
 }
