@@ -543,7 +543,7 @@ header .bx-wrapper .bx-pager.bx-default-pager a {
 	font-size: 22px;
 	display: inline-block;
 	line-height:35px;
-	margin: 10px 0;
+	margin: 7px 0;
 	height: 86px;
 	color: rgba(0, 0, 0, .8)!important;
 	min-width: 110px;
@@ -1387,7 +1387,7 @@ footer {
 }
 
 .navbar-inner-login {
-	height:62px;	
+	height: 100px;
 }
 
 .usermenu .menubar a {
