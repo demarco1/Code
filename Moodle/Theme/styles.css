@@ -544,7 +544,7 @@ header .bx-wrapper .bx-pager.bx-default-pager a {
 	display: inline-block;
 	line-height:35px;
 	margin: 10px 0;
-	min-height:35px;
+	height: 86px;
 	color: rgba(0, 0, 0, .8)!important;
 	min-width: 110px;
 }
@@ -600,7 +600,7 @@ header .bx-wrapper .bx-pager.bx-default-pager a {
 }
 
 .header-2 .logo {
-	background: url(https://ligmincha.com.br/templates/ligmincha/images/background-color.jpg) repeat-x center left;
+	background: url(img/logo.png) no-repeat center left;
 	color: #FFF;
 }
 
@@ -1381,7 +1381,7 @@ footer {
 }
 
 .navbar-fixed-top .navbar-inner, .navbar-static-top .navbar-inner, .navbar-inner-login {
-	background: #eeeeee;
+	background: url("https://ligmincha.com.br/templates/ligmincha/images/background-color.jpg") repeat-x;
 	box-shadow: none;
 	border: none;
 }
