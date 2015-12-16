@@ -528,16 +528,13 @@ header .bx-wrapper .bx-pager.bx-default-pager a {
 }
 
 .logo {
-	/*float: left;*/
 	font-size: 22px;
 	display: inline-block;
-	/*background: url(img/logo.png) no-repeat center left;*/
 	padding-left: 25px;
 	padding-top:5px;
 	min-height: 35px;
 	min-width: 110px;
 }
-
 .inner-logo {
 	float: left;
 	font-size: 22px;
@@ -555,7 +552,10 @@ header .bx-wrapper .bx-pager.bx-default-pager a {
 }
 
 .logo-text {
-	padding-left: 40px;
+	color: white !important;
+	font-size: 50px;
+	line-height: 80px;
+	padding-left: 110px;
 }
 
 .navbar {
