@@ -1,12 +1,12 @@
 /**
  * Modify the donation form based on the payment type selection
  */
-$(document).ready(function(){
+jQuery(document).ready(function(){
 	var e = 'ligminchapaulista' + '@' + 'gmail.com'; // avoid cloaking
-	var d = $('#donation');
-	var a = $('#amount', d);
-	$('#donation input[type=submit]').prop('disabled', true);
-	$('#donation .paytype').removeAttr('checked').change(function(){
+	var d = jQuery('#donation');
+	var a = jQuery('#amount', d);
+	jQuery('#donation input[type=submit]').prop('disabled', true);
+	jQuery('#donation .paytype').removeAttr('checked').change(function(){
 
 		// Action URL for the three payment types
 		var actions = [
@@ -16,10 +16,10 @@ $(document).ready(function(){
 		];
 
 		// Set the form action to the URL for the selected payment type and enable the submit button
-		d.attr('action', actions[$(this).val()]);
-		$('#donation input[type=submit]').prop('disabled', false);
+		d.attr('action', actions[jQuery(this).val()]);
+		jQuery('#donation input[type=submit]').prop('disabled', false);
 	});
-	$('#donation').submit(function(){
+	jQuery('#donation').submit(function(){
 		a.val(a.val().replace(',','.'));
 	});
 });
