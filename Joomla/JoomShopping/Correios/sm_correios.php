@@ -21,18 +21,17 @@ class sm_correios extends shippingextRoot {
 	 */
 	function getPrices( $cart, $params, $prices, &$shipping_ext_row, &$shipping_method_price ) {
 		$weight = $cart->getWeightProducts();
+		$id = $shipping_method_price->shipping_method_id;
+		$type = plgSystemCorreios::getShippingMethodName( $id );
 
 		// Redirect the page stright to payment methods if weight is zero
 		if( $weight == 0 ) {
 			static $done = false;
 			if( !$done ) {
 				$done = true;
-				header( 'Location: /finalizar-compra/step4save?sh_pr_method_id=3' );
+				header( "Location: /finalizar-compra/step4save?sh_pr_method_id=$id" );
 			}
 		}
-
-		// Get the shipping type
-		$type = plgSystemCorreios::getShippingMethodName( $shipping_method_price->shipping_method_id );
 
 		// Check if all products are in cats that allow carta registrada and that all are 500g or less
 		plgSystemCorreios::$allbooks = true;
