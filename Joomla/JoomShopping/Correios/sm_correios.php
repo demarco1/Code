@@ -22,6 +22,15 @@ class sm_correios extends shippingextRoot {
 	function getPrices( $cart, $params, $prices, &$shipping_ext_row, &$shipping_method_price ) {
 		$weight = $cart->getWeightProducts();
 
+		// Redirect the page stright to payment methods if
+		if( $weight == 0 ) {
+			static $done = false;
+			if( !$done ) {
+				$done = true;
+				header( 'Location: /finalizar-compra/step4save' );
+			}
+		}
+
 		// Get the shipping type
 		$type = plgSystemCorreios::getShippingMethodName( $shipping_method_price->shipping_method_id );
 
