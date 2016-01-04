@@ -27,7 +27,7 @@ class sm_correios extends shippingextRoot {
 			static $done = false;
 			if( !$done ) {
 				$done = true;
-				header( 'Location: /finalizar-compra/step4save&sh_pr_method_id=3' );
+				header( 'Location: /finalizar-compra/step4save?sh_pr_method_id=3' );
 			}
 		}
 
