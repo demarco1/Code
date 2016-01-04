@@ -23,7 +23,7 @@ class sm_correios extends shippingextRoot {
 		$weight = $cart->getWeightProducts();
 		$id = $shipping_method_price->shipping_method_id;
 		$type = plgSystemCorreios::getShippingMethodName( $id );
-print JshopHelpersMetadata::checkoutAddress();
+print '<pre>' . JshopHelpersMetadata::checkoutAddress() . '</pre>';
 		// Redirect the page stright to payment methods if weight is zero
 		if( $weight == 0 ) {
 			static $done = false;
