@@ -22,12 +22,12 @@ class sm_correios extends shippingextRoot {
 	function getPrices( $cart, $params, $prices, &$shipping_ext_row, &$shipping_method_price ) {
 		$weight = $cart->getWeightProducts();
 
-		// Redirect the page stright to payment methods if
+		// Redirect the page stright to payment methods if weight is zero
 		if( $weight == 0 ) {
 			static $done = false;
 			if( !$done ) {
 				$done = true;
-				header( 'Location: /finalizar-compra/step4save' );
+				header( 'Location: /finalizar-compra/step4save&sh_pr_method_id=3' );
 			}
 		}
 
