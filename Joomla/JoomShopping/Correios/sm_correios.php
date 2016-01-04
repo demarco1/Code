@@ -23,14 +23,14 @@ class sm_correios extends shippingextRoot {
 		$weight = $cart->getWeightProducts();
 		$id = $shipping_method_price->shipping_method_id;
 		$type = plgSystemCorreios::getShippingMethodName( $id );
-print JSFactory::getModel('checkoutStep', 'jshop')->getCheckoutUrl('step4save');
-die;
+
 		// Redirect the page stright to payment methods if weight is zero
 		if( $weight == 0 ) {
 			static $done = false;
 			if( !$done ) {
 				$done = true;
-				header( "Location: /finalizar-compra/step4save?sh_pr_method_id=$id" );
+				$url = JSFactory::getModel( 'checkoutStep', 'jshop' )->getCheckoutUrl( 'step4save' );
+				header( "Location: $url?sh_pr_method_id=$id" );
 			}
 		}
 
