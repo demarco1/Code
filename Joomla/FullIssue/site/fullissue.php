@@ -8,7 +8,7 @@ if( !is_numeric( $id ) ) {
 	$query->select( 'id' );
 	$query->from( '#__categories' );
 	$query->where( 'alias="' . $id . '"' );
-	$db->setQuery((string)$query);	
+	$db->setQuery( (string)$query );	
 	if(	$res = $db->loadObjectList() ) {
 		foreach( $res as $row ) $id = $row->id;
 	} else {
