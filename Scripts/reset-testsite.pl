@@ -4,7 +4,7 @@
 #
 
 # Database
-qx( /var/www/tools/prefix-admin.pl root beth joomla_ --copy joomla3 joomla_ );
+qx( /var/www/tools/prefix-admin.pl root joomla3 joomla_ --copy joomla3 test_ );
 
 # File structure
 $bak = '/home/nad/ligtest-' . time();
