@@ -153,7 +153,6 @@ JHTML::_('behavior.framework', true);
 			$app = JFactory::getApplication();
 			$pathway = $app->getPathway();
 			$path = $pathway->getPathway();
-			print_r($path);
 			for( $i=0; $i<count($path); $i++ ) {
 				if( $path[$i]->name == 'Uncategorised' ) unset( $path[$i] );
 			}

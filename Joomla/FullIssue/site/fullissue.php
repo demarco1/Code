@@ -29,9 +29,12 @@ if( $id ) {
 	$app = JFactory::getApplication();
 	$pathway = $app->getPathway();
 	$path = $pathway->getPathway();
-print_r($path);
-	$path[] = 'Fullissue';
-	$path[] = $cat;
+	$item1 = new stdClass();
+	$item1->name = 'Fullissue';
+	$path[] = $item1;
+	$item2 = new stdClass();
+	$item2->name = $cat;
+	$path[] = $item2;
 	$pathway->setPathway( $path );
 
 	// Render the articles found in the category from it's numeric ID
