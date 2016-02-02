@@ -15,8 +15,18 @@ if( !is_numeric( $id ) ) {
 	}
 }
 
-// Render the articles found in the category from it's numeric ID
 if( $id ) {
+
+	// Get category info and set page title
+	$query = $db->getQuery( true );
+	$query->select( '*' )->from( '#__categories' )->where( "id=$id" );
+	$db->setQuery( $query );
+	$row = $db->loadObject();
+	print_r($row);
+	$document = JFactory::getDocument();
+	$document->setTitle( $row->title );
+
+	// Render the articles found in the category from it's numeric ID
 	$query = $db->getQuery( true );
 	$query->select( '*' )->from( '#__content' )->where( 'catid="' . $id . '"' )->order( 'ordering' );
 	$db->setQuery( $query );
