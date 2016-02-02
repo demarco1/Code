@@ -31,11 +31,11 @@ if( $id ) {
 	$pathway = $app->getPathway();
 	$path = $pathway->getPathway();
 	$item1 = new stdClass();
-	$item1->name = 'Fullissue';
+	$item1->name = $cat;
 	$item1->link = 'https://' . $_SERVER['HTTP_HOST'] . '/' . $url;
 	$path[] = $item1;
 	$item2 = new stdClass();
-	$item2->name = $cat;
+	$item2->name = 'Full issue';
 	$path[] = $item2;
 	$pathway->setPathway( $path );
 
