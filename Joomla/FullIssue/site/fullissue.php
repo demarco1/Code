@@ -5,12 +5,12 @@ $id = $_GET['cat'];
 // If the id is not numeric, treat it as an alias and get the numeric id
 if( !is_numeric( $id ) ) {
 	$query = $db->getQuery( true );
-	$query->select( 'created_user_id' );
+	$query->select( 'id' );
 	$query->from( '#__categories' );
 	$query->where( 'alias="' . $id . '"' );
 	$db->setQuery((string)$query);	
 	if(	$res = $db->loadObjectList() ) {
-		foreach( $res as $row ) $id = $row->created_user_id;
+		foreach( $res as $row ) $id = $row->id;
 	} else {
 		echo "No catgegory found with alias \"$id\"!";
 		$id = false;
