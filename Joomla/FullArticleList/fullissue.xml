@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="3.2.0" method="upgrade">
-	<name>FullArticleList</name>
+	<name>FullIssue</name>
 	<creationDate>February 2016</creationDate>
 	<author>Aran Dunkley</author>
 	<authorEmail>aran@organicdesign.co.nz</authorEmail>
 	<authorUrl>http://www.organicdesign.co.nz/aran</authorUrl>
 	<license>GPL</license>
 	<version>0.0.1</version>
-	<description>Allows articles in a category to be listed in their full form on a single page</description>
+	<description>Allows articles in a category to be displayed on full on a single page</description>
 	<files folder="site">
-		<filename>fullarticlelist.php</filename>
+		<filename>fullissue.php</filename>
 	</files>
- 	<administration>
-		<menu link='index.php?option=com_fullarticlelist'>FullArticleList</menu>
-		<files folder="admin">
-			<filename>fullarticlelist.php</filename>
-		</files>
-	</administration> 
 </extension>
