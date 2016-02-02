@@ -22,6 +22,7 @@ if( $id ) {
 	$db->setQuery( $query );
 	$row = $db->loadObject();
 	$cat = $row->title;
+	$url = $row->alias;
 	$document = JFactory::getDocument();
 	$document->setTitle( "$cat (full issue)" );
 
@@ -31,6 +32,7 @@ if( $id ) {
 	$path = $pathway->getPathway();
 	$item1 = new stdClass();
 	$item1->name = 'Fullissue';
+	$item1->link = 'https://' . $_SERVER['HTTP_HOST'] . '/' . $url;
 	$path[] = $item1;
 	$item2 = new stdClass();
 	$item2->name = $cat;
