@@ -11,4 +11,5 @@
 	<files folder="site">
 		<filename>fullissue.php</filename>
 	</files>
+	<administration />
 </extension>
