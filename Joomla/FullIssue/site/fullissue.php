@@ -12,7 +12,7 @@ if( !is_numeric( $is ) ) {
 	if(	$res = $db->loadObjectList() ) {
 		foreach( $res as $row ) $id = $row->created_user_id;
 	} else {
-		echo "No catgegory found with alias \"$id\"!" )
+		echo "No catgegory found with alias \"$id\"!";
 		$id = false;
 	}
 }
