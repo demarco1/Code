@@ -8,13 +8,13 @@
 	<license>GPL</license>
 	<version>0.0.1</version>
 	<description>Allows articles in a category to be listed in their full form on a single page</description>
-	<files>
+	<files folder="site">
 		<filename>fullarticlelist.php</filename>
 	</files>
  	<administration>
 		<menu link='index.php?option=com_fullarticlelist'>FullArticleList</menu>
-		<files>
-			<filename>fullarticlelist_admin.php</filename>
+		<files folder="admin">
+			<filename>fullarticlelist.php</filename>
 		</files>
 	</administration> 
 </extension>
