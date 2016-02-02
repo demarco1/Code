@@ -9,6 +9,6 @@ $db->setQuery((string)$query);
 $res = $db->loadObjectList();
 foreach($res as $r){
     echo '<h3>'.$r->title.'</h3>';
-    print_r($r);
+    echo $r->fulltext;
 }
 ?>
