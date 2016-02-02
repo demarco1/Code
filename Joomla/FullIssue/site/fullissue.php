@@ -29,6 +29,7 @@ if( $id ) {
 	$app = JFactory::getApplication();
 	$pathway = $app->getPathway();
 	$path = $pathway->getPathway();
+print_r($path);
 	$path[] = 'Fullissue';
 	$path[] = $cat;
 	$pathway->setPathway( $path );
