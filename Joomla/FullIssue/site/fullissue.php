@@ -19,7 +19,6 @@ if( !is_numeric( $id ) ) {
 
 // Render the article in the category ID
 if( $id ) {
-	print $id;
 	$query = $db->getQuery( true );
 	$query->select( '*' );
 	$query->from( '#__content' );
