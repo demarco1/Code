@@ -3,7 +3,7 @@ $db = JFactory::getDbo();
 $id = $_GET['cat'];
 
 // If the id is not numeric, treat it as an alias and get the numeric id
-if( !is_numeric( $is ) ) {
+if( !is_numeric( $id ) ) {
 	$query = $db->getQuery( true );
 	$query->select( 'created_user_id' );
 	$query->from( '#__categories' );
