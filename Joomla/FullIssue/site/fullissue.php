@@ -2,7 +2,7 @@
 $db = JFactory::getDbo();
 $id = $_GET['cat'];
 
-// If the id is not numeric, treat it as an alias and get the numeric id
+// If the id is not numeric, treat it as an alias and get the numeric id fro that
 if( !is_numeric( $id ) ) {
 	$query = $db->getQuery( true );
 	$query->select( 'id' );
@@ -17,7 +17,7 @@ if( !is_numeric( $id ) ) {
 	}
 }
 
-// Render the article in the category ID
+// Render the articles found in the category from it's numeric ID
 if( $id ) {
 	$query = $db->getQuery( true );
 	$query->select( '*' );
