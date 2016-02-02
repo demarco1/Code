@@ -5,10 +5,8 @@ $id = $_GET['cat'];
 // If the id is not numeric, treat it as an alias and get the numeric id fro that
 if( !is_numeric( $id ) ) {
 	$query = $db->getQuery( true );
-	$query->select( 'id' );
-	$query->from( '#__categories' );
-	$query->where( 'alias="' . $id . '"' );
-	$db->setQuery( (string)$query );	
+	$query->select( 'id' )->from( '#__categories' )->where( 'alias="' . $id . '"' );
+	$db->setQuery( $query );	
 	if(	$res = $db->loadObjectList() ) {
 		foreach( $res as $row ) $id = $row->id;
 	} else {
@@ -20,10 +18,8 @@ if( !is_numeric( $id ) ) {
 // Render the articles found in the category from it's numeric ID
 if( $id ) {
 	$query = $db->getQuery( true );
-	$query->select( '*' );
-	$query->from( '#__content' );
-	$query->where( 'catid="' . $id . '"' );
-	$db->setQuery( (string)$query );
+	$query->select( '*' )->from( '#__content' )->where( 'catid="' . $id . '"' )->order( 'ordering' );
+	$db->setQuery( $query );
 	$res = $db->loadObjectList();
 	echo '<div class="fullissue">';
 	foreach( $res as $row ){
