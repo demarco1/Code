@@ -7,7 +7,7 @@ $wgDefaultSkin   = 'monobook';
 $wgEnableUploads = true;
 
 // Bounce clear to https
-if( !array_key_exists( 'HTTPS', $_SERVER ) || $_SERVER['HTTPS'] == 'off' ) {
+if( !array_key_exists( 'HTTPS', $_SERVER ) || $_SERVER['HTTPS'] != 'on' ) {
 	header( "Location: https://wiki.ligmincha.org" . $_SERVER['REQUEST_URI'] );
 	exit;
 }
