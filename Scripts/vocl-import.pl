@@ -37,33 +37,39 @@ close FH;
 # Get volumne, issue etc prior to first ****
 
 # Keep only content in the outer div
-@items = $html =~ /<div.*?>\s*(.+?)\s*<\/div>/sg;
 
+# Remove all spans
+$html =~ s/\s*<\/?span.*?>\s*//sg;
+
+# Remove all styles in p elements
+$html =~ s/<p style.+?>/<p>/g;
+
+# Fix p-br-p
+$html =~ s/<p>\s*<br>\s*<\/p>/<p><br><\/p>/sg;
+
+# Remove all font tags with colour 0
+$html =~ s/\s*<font color="#000000">\s*(.+?)\s*<\/font>\s*/$1/sg;
+
+# Change <strong...> to <b>
+$html =~ s/<(\/)?strong.*?>/<$1b>/g;
+
+# Normalise LINK content to just the [LINK:url] (some urls are emails)
+#$html =~ s/\[LINK:.*?(http.+?)("|<).*?]/[LINK:$1]/sg;
+#$html =~ s/\[LINK:.*?([-_.0-9a-z]+@[-_0-9a-z]+).*?\]/[LINK:mailto:$1]/sg;
+
+# Remove font tags surrounding LINK
+#$html =~ s/<font.+?>\s*(\[LINK:.+?\].*?)<\/font>/$1/g;
+
+# Remove <em>
+# Remove <a name>
+# Change <p><br></p> to just br (?)
+print $html;
+$html =~ s/\s*(<\/?[pb]r?>)*\s*\*{10,100}\s*(<\/?[pb]r?>)*\s*/<\/div><div>/sg;
+@items = $html =~ /<div.*?>\s*(.+?)\s*<\/div>/sg;
 for my $html ( @items ) {
 
-	# Remove all spans
-	$html =~ s/<\/?span.*?>//g;
+#	print "-\n-\n-\n$html\n\n";
 
-	# Remove all styles in p elements
-	$html =~ s/<p style.+?>/<p>/g;
-
-	# Remove all font tags with colour 0
-	$html =~ s/<font color="#000000">(.+?)<\/font>/$1/sg;
-
-	# Change <strong...> to <b>
-	$html =~ s/<(\/)?strong.*?>/<$1b>/g;
-
-print "\n\n\n\n$html\n";
-	# Normalise LINK content to just the [LINK:url] (some urls are emails)
-	$html =~ s/\[LINK:.*?(http.+)("|<).*?]/[LINK:$1]/g;
-	$html =~ s/\[LINK:.*?([-_.0-9a-z]+@[-_0-9a-z]+).*?\]/[LINK:mailto:$1]/g;
-
-	# Remove font tags surrounding LINK
-	$html =~ s/<font.+?>\s*(\[LINK:.+?\].*?)<\/font>/$1/g;
-
-	# Remove <em>
-	# Remove <a name>
-	# Change <p><br></p> to just br (?)
 }
 
 
