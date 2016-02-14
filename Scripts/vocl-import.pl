@@ -18,7 +18,7 @@ die "This script depends on unoconv!" unless qx( which unoconv );
 #$tmpDir =~ s/\W//g;
 #$tmpDir = "/tmp/vocl-" . substr( $tmpDir, 1, 5 );
 #mkdir $tmpDir;
-$tmpDir = '/tmp';
+$tmpDir = '/var/www';
 $file = 'vocl';
 
 # Extract the attachments and copy them to the tmp dir
@@ -44,14 +44,24 @@ $html =~ s/\s*<\/?span.*?>\s*//sg;
 # Remove all styles in p elements
 $html =~ s/<p style.+?>/<p>/g;
 
-# Fix p-br-p
-$html =~ s/<p>\s*<br>\s*<\/p>/<p><br><\/p>/sg;
+# Make p-br-p and p-nbsp-p into br
+$html =~ s/(<p>\s*<br>\s*<\/p>\s*)+/<br>\n/sg;
+$html =~ s/<p>&nbsp;<\/p>\s*/<br>\n/g;
 
 # Remove all font tags with colour 0
 $html =~ s/\s*<font color="#000000">\s*(.+?)\s*<\/font>\s*/$1/sg;
 
 # Change <strong...> to <b>
 $html =~ s/<(\/)?strong.*?>/<$1b>/g;
+
+# Change tabs within sentences to spaces and remove indenting
+$html =~ s/(\w)[\t\n]+(\w)/$1 $2/g;
+$html =~ s/^\t//mg;
+
+# Remove empty tags (they may be nested, so repeat)
+$html =~ s/<(\w+)[^>]*>\s*<\/\1>//g;
+$html =~ s/<(\w+)[^>]*>\s*<\/\1>//g;
+$html =~ s/<(\w+)[^>]*>\s*<\/\1>//g;
 
 # Normalise LINK content to just the [LINK:url] (some urls are emails)
 #$html =~ s/\[LINK:.*?(http.+?)("|<).*?]/[LINK:$1]/sg;
@@ -62,13 +72,26 @@ $html =~ s/<(\/)?strong.*?>/<$1b>/g;
 
 # Remove <em>
 # Remove <a name>
-# Change <p><br></p> to just br (?)
-print $html;
-$html =~ s/\s*(<\/?[pb]r?>)*\s*\*{10,100}\s*(<\/?[pb]r?>)*\s*/<\/div><div>/sg;
+
+#print $html;
+
+# Split into separate items
+$html =~ s/\s*(<[pb]r?>)*\s*\*{10,100}\s*(<\/[pb]r?>)*\s*/<\/div><div>/sg;
 @items = $html =~ /<div.*?>\s*(.+?)\s*<\/div>/sg;
+push @items, $1 if $html =~ /^.+<\/div>(.+?)<\/body>\s*<\/html>/s;
+
+# Loop through the items
 for my $html ( @items ) {
 
-#	print "-\n-\n-\n$html\n\n";
+	# Remove any opening tags at the end or closing fonts at the start
+	$html =~ s/(<\w+[^>]*?>\s*)*$//s;
+	$html =~ s/^(\s*<(\/(font|p|b)|br)>)*//s;
+
+	# Strip br's and whitespace from the start and end
+	$html =~ s/^\s*(<br>)*\s*//s;
+	$html =~ s/\s*(<br>)*\s*$//s;
+
+	print "-\n-\n-\n$html\n";
 
 }
 
