@@ -66,3 +66,11 @@ wfLoadExtensions( array(
 	'DynamicPageList',
 	'AjaxComments',
 ) );
+
+$wgAjaxCommentsPollServer = -1;
+
+include( "$IP/extensions/WebSocket/WebSocket.php" );
+WebSocket::$log = __DIR__ . '/ws.log';
+WebSocket::$rewrite = true;
+WebSocket::$ssl_cert = '/etc/letsencrypt/live/ligmincha.com.br/fullchain.pem';
+WebSocket::$ssl_key = '/etc/letsencrypt/live/ligmincha.com.br/privkey.pem';
