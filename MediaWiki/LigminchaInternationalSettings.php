@@ -64,4 +64,5 @@ wfLoadExtensions( array(
 	'ExtraMagic',
 	'HighlightJS',
 	'DynamicPageList',
+	'AjaxComments',
 ) );
