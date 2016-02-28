@@ -68,6 +68,11 @@ $wgDefaultUserOptions['watchdefault']              = false;
 $wgDefaultUserOptions['visualeditor-enable'] = 1; // enabled by default for all
 $wgHiddenPrefs[] = 'visualeditor-enable'; // don't allow disabling
 $wgVisualEditorNamespaces = array( NS_MAIN, NS_USER, NS_CATEGORY, NS_ADMIN );
+$wgVirtualRestConfig['modules']['parsoid'] = array(
+	'url' => 'http://localhost:8142',
+	'domain' => 'ligmincha',
+	'prefix' => 'ligmincha',
+);
 
 // Organic Design extensions
 wfLoadExtension( 'ExtraMagic' );
