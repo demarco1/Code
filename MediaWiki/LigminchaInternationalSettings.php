@@ -70,6 +70,7 @@ wfLoadExtensions( array(
 	'HighlightJS',
 	'DynamicPageList',
 	'AjaxComments',
+	'TreeAndMenu',
 ) );
 
 $wgAjaxCommentsPollServer = -1;
