@@ -61,6 +61,7 @@ include( "$IP/extensions/VisualEditor/VisualEditor.php" );
 $wgDefaultUserOptions['visualeditor-enable'] = 1; // enabled by default for all
 $wgHiddenPrefs[] = 'visualeditor-enable'; // don't allow disabling
 $wgDefaultUserOptions['visualeditor-enable-experimental'] = 1;
+$wgVisualEditorNamespaces[] = NS_ADMIN;
 
 // Extensions
 wfLoadExtensions( array(
