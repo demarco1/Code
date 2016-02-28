@@ -51,12 +51,16 @@ function wfProtectAdminNamespace( Parser $parser ) {
 	return true;
 }
 
-// Wiki editor extension
+// Wiki editor extension (parsoid setup vars in wikia.php)
 wfLoadExtension( 'WikiEditor' );
 $wgDefaultUserOptions['usebetatoolbar']            = 1;
 $wgDefaultUserOptions['usebetatoolbar-cgd']        = 1;
 $wgDefaultUserOptions['wikieditor-preview']        = 1;
 $wgDefaultUserOptions['watchdefault']              = false;
+include( "$IP/extensions/VisualEditor/VisualEditor.php" );
+$wgDefaultUserOptions['visualeditor-enable'] = 1; // enabled by default for all
+$wgHiddenPrefs[] = 'visualeditor-enable'; // don't allow disabling
+$wgDefaultUserOptions['visualeditor-enable-experimental'] = 1;
 
 // Extensions
 wfLoadExtensions( array(
