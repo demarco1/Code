@@ -52,7 +52,7 @@ function wfProtectAdminNamespace( Parser $parser ) {
 }
 
 // Wiki editor extension
-wfLoadExtensions( 'WikiEditor', 'VisualEditor' );
+wfLoadExtensions( array( 'WikiEditor', 'VisualEditor' ) );
 $wgDefaultUserOptions['usebetatoolbar']            = 1;
 $wgDefaultUserOptions['usebetatoolbar-cgd']        = 1;
 $wgDefaultUserOptions['wikieditor-preview']        = 1;
