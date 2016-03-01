@@ -42,7 +42,7 @@ $wgExtraNamespaces[NS_ADMIN + 1] = 'Admin_talk';
 Hooks::register( 'ParserFirstCallInit', 'wfProtectAdminNamespace' );
 function wfProtectAdminNamespace( Parser $parser ) {
 	global $wgTitle, $wgUser, $wgOut, $mediaWiki;
-	if( is_object( $wgTitle) && $wgTitle->getNamespace() == NS_ADMIN && !in_array( 'bureaucrat', $wgUser->getEffectiveGroups() ) ) {
+	if( is_object( $wgTitle) && $wgTitle->getNamespace() == NS_ADMIN && !in_array( 'sysop', $wgUser->getEffectiveGroups() ) ) {
 		if( is_object( $mediaWiki ) ) $mediaWiki->restInPeace();
 		$wgOut->disable();
 		wfResetOutputBuffers();
