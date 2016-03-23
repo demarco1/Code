@@ -51,6 +51,22 @@ function wfProtectAdminNamespace( Parser $parser ) {
 	return true;
 }
 
+// Confirm Account extension
+include( "$IP/extensions/ConfirmAccount/ConfirmAccount.php" );
+$wgWhitelistRead[] = 'Special:RequestAccount';
+$wgWhitelistRead[] = 'Special:UserLogout';
+$wgConfirmAccountRequestFormItems = array(
+	'UserName'        => array( 'enabled' => true ),
+	'RealName'        => array( 'enabled' => true ),
+	'Biography'       => array( 'enabled' => false ),
+	'AreasOfInterest' => array( 'enabled' => false ),
+	'CV'              => array( 'enabled' => false ),
+	'Notes'           => array( 'enabled' => false ),
+	'Links'           => array( 'enabled' => false ),
+	'TermsOfService'  => array( 'enabled' => false ),
+);
+$wgConfirmAccountContact = 'aran@organicdesign.co.nz';
+
 // Wiki editor extension
 wfLoadExtensions( array( 'WikiEditor', 'VisualEditor' ) );
 $wgDefaultUserOptions['usebetatoolbar']            = 1;
