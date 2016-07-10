@@ -298,8 +298,9 @@ class plgSystemCorreios extends JPlugin {
 
 			// Get the weight/costs table (starting at the 100-150 gram entry)
 			$weights = file_get_contents( "$correios/servicos-nacionais_pasta/carta" );
-			if( preg_match( '|<td>\s*Mais *de *20 *até *50\s*</td>\s*(.+?)<tr class="rodape-tabela">|si', $weights, $m ) ) {
-				if( preg_match_all( '|<td>([0-9,]+)</td>\s*<td>([0-9,]+)</td>\s*<td>[0-9,]+</td>\s*<td>[0-9,]+</td>\s*<td>[0-9,]+</td>\s*|is', $m[1], $n ) ) {
+			if( preg_match( '|<td>\s*Mais *de *20 *até *50\s*</td>|is', $weights, $m ) ) {
+			//if( preg_match( '|<td>\s*Mais *de *20 *até *50\s*</td>\s*(.+?)<tr class="rodape-tabela">|si', $weights, $m ) ) {
+				if( 0&&preg_match_all( '|<td>([0-9,]+)</td>\s*<td>([0-9,]+)</td>\s*<td>[0-9,]+</td>\s*<td>[0-9,]+</td>\s*<td>[0-9,]+</td>\s*|is', $m[1], $n ) ) {
 
 					// Update the plugin's parameters with the formatted results
 					foreach( $n[1] as $i => $v ) {
@@ -339,7 +340,7 @@ class plgSystemCorreios extends JPlugin {
 						$db->query();
 					}
 				} else $err .= "ERROR: Found weight/cost table but couldn't extract the data.\n\n\n\n$m[1]";
-			} else $err .= "ERROR: Couldn't find weight/cost table. (test)\n\n\n\n$weights";
+			} else $err .= "ERROR: Couldn't find weight/cost table. (test2)\n\n\n\n$weights";
 		} else $err .= "ERROR: Couldn't retrieve tracking prices.\n\n\n\n$tracking";
 
 		// If any info, email it
