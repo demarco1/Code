@@ -294,7 +294,7 @@ class plgSystemCorreios extends JPlugin {
 		// Get the tracking costs for Nacional and Módico
 		$tracking = file_get_contents( "$correios/servicos-adicionais-nacionais" );
 		if( preg_match( '|<table class="conteudo-tabela">.+?registro módico</td>.+?R\$\s*([1-9][0-9.,]+)|s', $tracking, $m ) ) {
-			$tracking = str_replace( ',', '.', $m[2] );
+			$tracking = str_replace( ',', '.', $m[1] );
 
 			// Get the weight/costs table (starting at the 100-150 gram entry)
 			$weights = file_get_contents( "$correios/servicos-nacionais_pasta/carta" );
